@@ -1,0 +1,12 @@
+# Folders
+.vscode
+node_modules
+src
+
+# Files
+*.csproj
+.git*
+.yo-rc.json
+webpack.config.json
+gulpfile.js
+tsconfig.json 

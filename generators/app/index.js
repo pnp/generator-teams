@@ -210,7 +210,7 @@ class GeneratorTeamsTab extends Generator {
     }
     writing() {
         let staticFiles = [
-            ".gitignore",
+            "_gitignore",
             "tsconfig.json",
             "gulpfile.js",
             "src/manifest/tab-44.png",
@@ -233,7 +233,7 @@ class GeneratorTeamsTab extends Generator {
             "src/app/tou.html"
         ];
         if (this.shouldUseAzure) {
-            staticFiles.push('deploy.cmd', '.deployment');
+            staticFiles.push('deploy.cmd', '_deployment');
         }
         if (this.shouldUseExpress) {
             staticFiles.push('src/app/server.ts');
@@ -252,11 +252,24 @@ class GeneratorTeamsTab extends Generator {
         };
         this.sourceRoot();
         templateFiles.forEach(t => {
-            this.fs.copyTpl(this.templatePath(t), this.destinationPath(t), substitutions);
+            this.fs.copyTpl(this.templatePath(t), this.fixFileNames(t), substitutions);
         });
         staticFiles.forEach(t => {
-            this.fs.copy(this.templatePath(t), this.destinationPath(t));
+            this.fs.copy(this.templatePath(t), this.fixFileNames(t));
         });
+    }
+    fixFileNames(filename) {
+        if (filename !== undefined) {
+            console.log(filename);
+            var basename = path.basename(filename);
+            console.log(basename);
+            if (basename[0] === '_') {
+                var filename = '.' + basename.substr(1);
+                var dirname = path.dirname(filename);
+                filename = path.join(dirname, filename);
+            }
+        }
+        return filename;
     }
     conflicts() {
     }
@@ -278,7 +291,8 @@ class GeneratorTeamsTab extends Generator {
     }
     end() {
         this.log(chalk.yellow('Thanks for using the generator'));
-        this.log(chalk.yellow('/Wictor Wilén, @wictor'));
+        this.log(chalk.yellow('/'));
+        this.log(chalk.yellow('Wictor Wilén, @wictor'));
         this.log(chalk.yellow('Have fun and make great Tabs...'));
     }
 }

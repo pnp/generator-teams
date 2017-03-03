@@ -75,7 +75,7 @@ export class GeneratorTeamsTab extends Generator {
                     message: 'The Url where you will host this tab:',
                     default: (answers: any) => {
                         return `https://${answers.name}.azurewebsites.net`;
-                    }                    
+                    }
                 },
                 {
                     type: 'input',
@@ -93,13 +93,13 @@ export class GeneratorTeamsTab extends Generator {
                         return answers.host + '/tou.html'
                     }
                 },
-                
+
                 {
                     type: 'input',
                     name: 'namespace',
                     message: 'Enter the namespace of your Tab',
                     default: (answers: any) => {
-                        var tmp: string = answers.host.substring(answers.host.indexOf('://')+3)
+                        var tmp: string = answers.host.substring(answers.host.indexOf('://') + 3)
                         var arr: string[] = tmp.split('.');
                         return lodash.reverse(arr).join('.')
                     },
@@ -149,7 +149,7 @@ export class GeneratorTeamsTab extends Generator {
     }
     public writing() {
         let staticFiles = [
-            ".gitignore",
+            "_gitignore",
             "tsconfig.json",
             "gulpfile.js",
             "src/manifest/tab-44.png",
@@ -174,7 +174,7 @@ export class GeneratorTeamsTab extends Generator {
         if (this.shouldUseAzure) {
             staticFiles.push(
                 'deploy.cmd',
-                '.deployment'
+                '_deployment'
             );
         }
         if (this.shouldUseExpress) {
@@ -202,16 +202,29 @@ export class GeneratorTeamsTab extends Generator {
         templateFiles.forEach(t => {
             this.fs.copyTpl(
                 this.templatePath(t),
-                this.destinationPath(t),
+                this.fixFileNames(t),
                 substitutions);
         });
         staticFiles.forEach(t => {
             this.fs.copy(
                 this.templatePath(t),
-                this.destinationPath(t));
+                this.fixFileNames(t));
         });
 
 
+    }
+    public fixFileNames(filename: string) {
+        if (filename !== undefined) {
+            console.log(filename);
+            var basename = path.basename(filename);
+            console.log(basename);
+            if (basename[0] === '_') {
+                var filename = '.' + basename.substr(1);
+                var dirname = path.dirname(filename);
+                filename = path.join(dirname, filename);
+            }
+        }
+        return filename
     }
     public conflicts() {
 
@@ -247,7 +260,8 @@ export class GeneratorTeamsTab extends Generator {
     }
     public end() {
         this.log(chalk.yellow('Thanks for using the generator'));
-        this.log(chalk.yellow('/Wictor Wilén, @wictor'));
+        this.log(chalk.yellow('/'));
+        this.log(chalk.yellow('Wictor Wilén, @wictor'));
         this.log(chalk.yellow('Have fun and make great Tabs...'));
     }
 }

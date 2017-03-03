@@ -1,6 +1,6 @@
 {
   "name": "generator-teams-tab",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Yeoman generator for Microsoft Teams Tabs",
   "main": "generators/app/index.js",
   "scripts": {
