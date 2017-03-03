@@ -1,0 +1,35 @@
+{
+  "name": "generator-teams-tab",
+  "version": "0.4.0",
+  "description": "Yeoman generator for Microsoft Teams Tabs",
+  "main": "generators/app/index.js",
+  "scripts": {
+  },
+  "files": [
+    "generators"
+  ],
+  "keywords": [
+    "yeoman-generator",
+    "Microsoft Teams",
+    "Office 365"
+  ],
+  "author": "Wictor Wilén (wictor@wictorwilen.se)",
+  "license": "CC-BY-4.0",
+  "devDependencies": {
+    "@types/chalk": "^0.4.31",
+    "@types/lodash": "^4.14.52",
+    "@types/yeoman-generator": "^1.0.1",
+    "@types/yosay": "0.0.28",
+    "gulp": "^3.9.1",
+    "ts-loader": "^2.0.0",
+    "typescript": "^2.1.6",
+    "webpack": "^2.2.1"
+  },
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "copy-webpack-plugin": "^4.0.1",
+    "lodash": "^4.17.4",
+    "yeoman-generator": "^1.0.0",
+    "yosay": "^2.0.0"
+  }
+}

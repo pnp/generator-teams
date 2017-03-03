@@ -1,0 +1,34 @@
+{
+    "$schema": "https://statics.teams.microsoft.com/sdk/v0.4/manifest/MicrosoftTeams.schema.json",
+    "manifestVersion": "0.4",
+    "id": "<%= namespace %>",
+    "version": "0.1",
+    "developer": {
+        "name": "<%=developer %>",
+        "websiteUrl": "<%=host %>",
+        "privacyUrl": "<%=privacy %>",
+        "termsOfUseUrl": "<%=tou %>"
+    },
+    "tabs": [
+        {
+            "id": "<%= namespace %>.tab1",
+            "name": "<%= title %>",
+            "description": {
+                "short": "Add a short description here",
+                "full": "Add a long description here"
+            },
+            "icons": {
+                "44": "tab-44.png",
+                "88": "tab-88.png"
+            },
+            "accentColor": "#223344",
+            "configUrl": "<%=host%>/config.html",
+            "canUpdateConfig": true
+        }
+    ],
+    "bots": [       
+    ],
+    "needsIdentity": false,
+    "validDomains": [
+    ]
+}

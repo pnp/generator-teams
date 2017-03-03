@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+  <!-- inject:css -->
+  <!-- endinject -->
+  <style>
+    body {
+      opacity: 1.0;
+    }
+  </style>
+</head>
+
+<body class="ts-middle">
+  <div id='app'>
+    Loading...
+  </div>
+  <script src="https://statics.teams.microsoft.com/sdk/v0.4/js/MicrosoftTeams.min.js"></script>
+  <!-- inject:js -->
+  <!-- endinject -->
+  <script type='text/javascript'>
+    var tab = new <%=libraryName%>.Tab();
+    tab.doStuff();
+  </script>
+</body>
+
+</html>
