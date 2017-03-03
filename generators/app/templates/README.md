@@ -4,6 +4,10 @@
 
 TODO: Add your documentation here
 
+## Getting started with Tab development
+
+Head on over to [official documentation](https://msdn.microsoft.com/en-us/microsoft-teams/tabs) to learn how to build Microsoft Teams Tabs.
+
 ## Building the tab
 
 ```
@@ -21,6 +25,10 @@ gulp manifest
 
 * dist/* - the files required to host the solution
 * package/* - the Teams Tab package (zip file) to be uploaded to Microsoft Teams
+
+## Express hosting
+
+If you choose to use [Express](http://expressjs.com/) hosting when you create your Tab project, a file called `./src/server.ts` will be created. Node is automatically configured to start this Express server when deployed to Azure.
 
 ## Deploying to Azure using Git
 

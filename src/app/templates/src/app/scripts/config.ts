@@ -7,7 +7,7 @@ export class Configure {
 
             var val:any = document.getElementById("data");
             microsoftTeams.settings.setSettings({
-                contentUrl: "<%=host%>/index.html?data=" + val.value,
+                contentUrl: "<%=host%>/tab.html?data=" + val.value,
                 customSettings: val.value,
                 suggestedDisplayName: `<%=title%>`,
                 removeUrl: "<%=host%>/remove.html",

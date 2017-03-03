@@ -55,11 +55,11 @@ var config = [
     {
         entry: {
             client: [
-                './src/app/client.ts'
+                './src/app/scripts/client.ts'
             ]
         },
         output: {
-            path: './dist/scripts',
+            path: './dist/web/scripts',
             filename: '[name].js',
             libraryTarget: 'umd',
             library: '<%=libraryName%>'

@@ -222,15 +222,16 @@ class GeneratorTeamsTab extends Generator {
             "package.json",
             "src/manifest/manifest.json",
             "webpack.config.js",
-            "src/app/client.ts",
-            "src/app/config.html",
-            "src/app/config.ts",
-            "src/app/index.html",
-            "src/app/index.ts",
-            "src/app/remove.html",
-            "src/app/theme.ts",
-            "src/app/privacy.html",
-            "src/app/tou.html"
+            "src/app/scripts/client.ts",
+            "src/app/scripts/config.ts",
+            "src/app/scripts/tab.ts",
+            "src/app/scripts/theme.ts",
+            "src/app/web/index.html",
+            "src/app/web/tab.html",
+            "src/app/web/remove.html",
+            "src/app/web/tou.html",
+            "src/app/web/config.html",
+            "src/app/web/privacy.html"
         ];
         if (this.shouldUseAzure) {
             staticFiles.push('deploy.cmd', '_deployment');
@@ -289,8 +290,7 @@ class GeneratorTeamsTab extends Generator {
     }
     end() {
         this.log(chalk.yellow('Thanks for using the generator'));
-        this.log(chalk.yellow('/'));
-        this.log(chalk.yellow('Wictor Wilén, @wictor'));
+        this.log(chalk.yellow('/\tWictor Wilén, @wictor'));
         this.log(chalk.yellow('Have fun and make great Tabs...'));
     }
 }
@@ -336,4 +336,3 @@ module.exports = __webpack_require__(0);
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=index.js.map

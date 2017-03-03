@@ -29,7 +29,7 @@ var config = [
             libraryTarget: 'commonjs-module'
         },
         externals: nodeModules,
-        devtool: 'source-map',
+        devtool: 'hidden-source-map',
         resolve: {
             extensions: [".ts", ".tsx", ".js"],
             alias: {

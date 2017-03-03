@@ -6,7 +6,7 @@ var inject = require('gulp-inject');
 var runSequence = require('run-sequence');
 const zip = require('gulp-zip');
 
-var injectSources = ["./dist/scripts/**/*.js"]
+var injectSources = ["./dist/web/scripts/**/*.js"]
 var typeScriptFiles = ["./src/**/*.ts"]
 var staticFiles = ["./src/app/**/*.html", "./src/**/*.json", "./src/**/*.png"]
 var htmlFiles = ["./src/app/**/*.html"]
@@ -62,7 +62,7 @@ gulp.task('static:inject', ['static:copy'], function () {
     var injectOptions = {
         ignorePath: '/bin',
         relative: false,
-        ignorePath: 'dist',
+        ignorePath: 'dist/web',
         addRootSlash: false
     };
 
