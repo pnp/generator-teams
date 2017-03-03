@@ -32,4 +32,4 @@ npm link
 ```
 ## Credits
 
-* [Richard DiZerega]() - Themes management idea 
+* [Richard DiZerega](https://blogs.msdn.microsoft.com/richard_dizeregas_blog/2017/02/07/microsoft-teams-and-custom-tab-theme/) - Themes management idea 
