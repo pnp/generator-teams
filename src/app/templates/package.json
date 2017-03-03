@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "<%= description %>",
   "scripts": {
+<% if (shouldUseExpress) { %>
     "start": "node dist/server.js",
+<% } %>
     "build": "gulp build"
   },
   "dependencies": {

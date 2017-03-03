@@ -2,6 +2,8 @@
 
 A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) created by [Wictor Wilén](http://twitter.com/wictor).
 
+Generates a Microsoft Teams tab project based on Node.js and TypeScript. Optionally add support for hosting using [Express](http://expressjs.com/).
+
 ## How to...
 
 ### Install generator

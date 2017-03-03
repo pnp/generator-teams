@@ -26,6 +26,10 @@ gulp manifest
 * dist/* - the files required to host the solution
 * package/* - the Teams Tab package (zip file) to be uploaded to Microsoft Teams
 
+## Express hosting
+
+If you choose to use [Express](http://expressjs.com/) hosting when you create your Tab project, a file called `./src/server.ts` will be created. Node is automatically configured to start this Express server when deployed to Azure.
+
 ## Deploying to Azure using Git
 
 If you want to deploy to Azure using Git follow these steps.
