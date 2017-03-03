@@ -260,9 +260,7 @@ class GeneratorTeamsTab extends Generator {
     }
     fixFileNames(filename) {
         if (filename !== undefined) {
-            console.log(filename);
             var basename = path.basename(filename);
-            console.log(basename);
             if (basename[0] === '_') {
                 var filename = '.' + basename.substr(1);
                 var dirname = path.dirname(filename);
