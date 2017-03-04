@@ -4,24 +4,24 @@ A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.micr
 
 Generates a Microsoft Teams tab project based on Node.js and TypeScript. Optionally add support for hosting using [Express](http://expressjs.com/).
 
-## How to...
+## How to
 
 ### Install generator
 
-```
+``` Shell
 npm install generator-teams-tab --global
 ```
 
 ### Use the generator
 
-```
+``` Shell
 yo teams-tab
 ```
 
 ### Build the generator
 
-```
-npm install 
+``` Shell
+npm install
 webpack
 ```
 
@@ -29,9 +29,10 @@ webpack
 
 In the generator-teams tab directory use the following command
 
-```
+``` Shell
 npm link
 ```
+
 ## Credits
 
 * [Richard DiZerega](https://blogs.msdn.microsoft.com/richard_dizeregas_blog/2017/02/07/microsoft-teams-and-custom-tab-theme/) - Themes management idea 
