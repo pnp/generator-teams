@@ -151,13 +151,13 @@ export class GeneratorTeamsTab extends Generator {
         let staticFiles = [
             "_gitignore",
             "tsconfig.json",
-            "gulpfile.js",
             "src/manifest/tab-44.png",
             "src/manifest/tab-88.png",
             "src/microsoft.teams.d.ts"
         ]
         let templateFiles = [
             "README.md",
+            "gulpfile.js",
             "package.json",
             "src/manifest/manifest.json",
             "webpack.config.js",

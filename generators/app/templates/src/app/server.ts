@@ -34,6 +34,7 @@ express.use(function (req:any, res:any, next:any) {
     res.removeHeader("X-Frame-Options"); // IE11
     return next();
 });
+
 express.use('/', Express.static(path.join(__dirname, 'web/'), {
     index: 'index.html'
 }));

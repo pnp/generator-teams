@@ -20,7 +20,7 @@ gulp.task('watch', function () {
 
 gulp.task('manifest', () => {
     gulp.src(manifestFiles)
-        .pipe(zip('tab.zip'))
+        .pipe(zip('<%=appname%>.zip'))
         .pipe(gulp.dest('package'))
 });
 
