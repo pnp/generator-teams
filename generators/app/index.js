@@ -134,6 +134,9 @@ class GeneratorTeamsTab extends Generator {
                 type: 'input',
                 name: 'developer',
                 message: 'Your (company) name',
+                validate: (input) => {
+                    return input.length > 0;
+                }
             },
             {
                 type: 'input',
