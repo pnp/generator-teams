@@ -31,6 +31,9 @@ export class GeneratorTeamsTab extends Generator {
     public initializing() {
         this.log(yosay('Welcome to the ' + chalk.yellow('Microsoft Teams Tab generator')));
     }
+    private validateUrl(url:string) {
+        return /(https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(url);
+    }
     public prompting() {
         return this.prompt(
             [
@@ -78,7 +81,8 @@ export class GeneratorTeamsTab extends Generator {
                     message: 'The Url where you will host this tab:',
                     default: (answers: any) => {
                         return `https://${answers.name}.azurewebsites.net`;
-                    }
+                    }, 
+                    validate: this.validateUrl
                 },
                 {
                     type: 'input',
@@ -86,7 +90,8 @@ export class GeneratorTeamsTab extends Generator {
                     message: 'Your privacy url:',
                     default: (answers: any) => {
                         return answers.host + '/privacy.html'
-                    }
+                    }, 
+                    validate: this.validateUrl
                 },
                 {
                     type: 'input',
@@ -94,9 +99,9 @@ export class GeneratorTeamsTab extends Generator {
                     message: 'Your terms of use url:',
                     default: (answers: any) => {
                         return answers.host + '/tou.html'
-                    }
+                    }, 
+                    validate: this.validateUrl
                 },
-
                 {
                     type: 'input',
                     name: 'namespace',
