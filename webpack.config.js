@@ -18,10 +18,7 @@ var config = [
         entry: {
             app: [
                 './src/app/index.ts'
-            ]/*,
-            router: [
-                './src/router/index.ts'
-            ]*/
+            ]
         },
         output: {
             path: './generators',
@@ -50,10 +47,10 @@ var config = [
             ]
         },
         plugins: [
-            new CopyWebpackPlugin([{ 
+            new CopyWebpackPlugin([{
                 from: 'src/app/templates',
                 to: 'app/templates'
-             }
+            }
             ])
         ]
     }

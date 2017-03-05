@@ -1,9 +1,9 @@
 import * as Generator from 'yeoman-generator';
 import * as lodash from 'lodash';
+import * as chalk from 'chalk';
+
 let yosay = require('yosay');
 let path = require('path');
-
-import * as chalk from 'chalk';
 
 export class GeneratorTeamsTab extends Generator {
     solutionName: string;
@@ -21,19 +21,17 @@ export class GeneratorTeamsTab extends Generator {
     public constructor(args: any, opts: any) {
         super(args, opts);
         opts.force = true;
-
         this.desc('Generate a Microsoft Teams Tab solution.');
-
-        this.argument('solutionName', { description: 'Solution name, as well as folder name', required: false });
-
+        this.argument('solutionName', {
+            description: 'Solution name, as well as folder name',
+            required: false
+        });
     }
 
     public initializing() {
         this.log(yosay('Welcome to the ' + chalk.yellow('Microsoft Teams Tab generator')));
     }
-    private validateUrl(url:string) {
-        return /(https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(url);
-    }
+    
     public prompting() {
         return this.prompt(
             [
@@ -71,7 +69,7 @@ export class GeneratorTeamsTab extends Generator {
                     type: 'input',
                     name: 'developer',
                     message: 'Your (company) name',
-                    validate: (input:string) => {
+                    validate: (input: string) => {
                         return input.length > 0;
                     }
                 },
@@ -81,7 +79,7 @@ export class GeneratorTeamsTab extends Generator {
                     message: 'The Url where you will host this tab:',
                     default: (answers: any) => {
                         return `https://${answers.name}.azurewebsites.net`;
-                    }, 
+                    },
                     validate: this.validateUrl
                 },
                 {
@@ -90,7 +88,7 @@ export class GeneratorTeamsTab extends Generator {
                     message: 'Your privacy url:',
                     default: (answers: any) => {
                         return answers.host + '/privacy.html'
-                    }, 
+                    },
                     validate: this.validateUrl
                 },
                 {
@@ -99,7 +97,7 @@ export class GeneratorTeamsTab extends Generator {
                     message: 'Your terms of use url:',
                     default: (answers: any) => {
                         return answers.host + '/tou.html'
-                    }, 
+                    },
                     validate: this.validateUrl
                 },
                 {
@@ -144,17 +142,17 @@ export class GeneratorTeamsTab extends Generator {
             if (this.shouldUseSubDir) {
                 this.destinationRoot(this.destinationPath(this.solutionName));
             }
-
-            //this.config.set({ libraryName });
-
         });
     }
+
     public configuring() {
 
     }
+
     public default() {
 
     }
+
     public writing() {
         let staticFiles = [
             "_gitignore",
@@ -173,9 +171,9 @@ export class GeneratorTeamsTab extends Generator {
             "src/app/scripts/config.ts",
             "src/app/scripts/tab.ts",
             "src/app/scripts/theme.ts",
-            "src/app/web/index.html",            
-            "src/app/web/tab.html",            
-            "src/app/web/remove.html",            
+            "src/app/web/index.html",
+            "src/app/web/tab.html",
+            "src/app/web/remove.html",
             "src/app/web/tou.html",
             "src/app/web/config.html",
             "src/app/web/privacy.html"
@@ -191,7 +189,6 @@ export class GeneratorTeamsTab extends Generator {
             staticFiles.push(
                 'src/app/server.ts'
             )
-            // TODO: web.config fix
         }
 
         let substitutions = {
@@ -220,23 +217,12 @@ export class GeneratorTeamsTab extends Generator {
                 this.templatePath(t),
                 this.fixFileNames(t));
         });
-
-
     }
-    public fixFileNames(filename: string) {
-        if (filename !== undefined) {
-            var basename = path.basename(filename);
-            if (basename[0] === '_') {
-                var filename = '.' + basename.substr(1);
-                var dirname = path.dirname(filename);
-                filename = path.join(dirname, filename);
-            }
-        }
-        return filename
-    }
+
     public conflicts() {
 
     }
+
     public install() {
 
         let packages = [
@@ -249,7 +235,6 @@ export class GeneratorTeamsTab extends Generator {
             'gulp-inject',
             'run-sequence'
         ];
-
 
         if (this.shouldUseExpress) {
             packages.push(
@@ -264,11 +249,27 @@ export class GeneratorTeamsTab extends Generator {
             );
         }
         this.npmInstall(packages, { 'save': true });
-
     }
+
     public end() {
         this.log(chalk.yellow('Thanks for using the generator'));
-        this.log(chalk.yellow('/\tWictor Wilén, @wictor'));
+        this.log(chalk.yellow('Wictor Wilén, @wictor'));
         this.log(chalk.yellow('Have fun and make great Tabs...'));
+    }
+
+    private validateUrl(url: string) {
+        return /(https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(url);
+    }
+
+    public fixFileNames(filename: string) {
+        if (filename !== undefined) {
+            var basename = path.basename(filename);
+            if (basename[0] === '_') {
+                var filename = '.' + basename.substr(1);
+                var dirname = path.dirname(filename);
+                filename = path.join(dirname, filename);
+            }
+        }
+        return filename
     }
 }

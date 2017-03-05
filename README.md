@@ -8,11 +8,21 @@ Generates a Microsoft Teams tab project based on Node.js and TypeScript. Optiona
 
 ### Install generator
 
+All Yeoman generators should be installed as global modules. The generator is published to the npm registry and can be installed and downloaded using this command.
+
 ``` Shell
 npm install generator-teams-tab --global
 ```
 
+If you don't have Yeoman installed it has to be installed as well:
+
+``` Shell
+npm install yeoman --global
+```
+
 ### Use the generator
+
+To create a new project using the generator, execute the following command in the command prompt and answer the questions asked.
 
 ``` Shell
 yo teams-tab
@@ -20,17 +30,38 @@ yo teams-tab
 
 ### Build the generator
 
+On order to build the generator you need to install the Webpack as a global node module:
+
+``` Shell
+npm install webpack --global
+```
+
+You need to clone the repository or download a local copy and in the source folder install the node modules:
+
 ``` Shell
 npm install
+```
+
+The generator is built and packaged using Webpack.
+
+``` Shell
 webpack
 ```
 
+The bundled generator and the template files will en up in the `./generators/` folder.
+
 ### Use it in dev mode
 
-In the generator-teams tab directory use the following command
+In the `generator-teams-tab` directory use the following command, this will link the local copy of the folder as a global node module.
 
 ``` Shell
 npm link
+```
+
+To revert the link operation:
+
+``` Shell
+npm unlink
 ```
 
 ## Credits
