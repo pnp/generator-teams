@@ -11,13 +11,13 @@ Generates a Microsoft Teams tab project based on Node.js and TypeScript. Optiona
 All Yeoman generators should be installed as global modules. The generator is published to the npm registry and can be installed and downloaded using this command.
 
 ``` Shell
-npm install generator-teams-tab --global
+npm i generator-teams-tab -g
 ```
 
 If you don't have Yeoman installed it has to be installed as well:
 
 ``` Shell
-npm install yeoman --global
+npm i yeoman -g
 ```
 
 ### Use the generator
@@ -33,13 +33,13 @@ yo teams-tab
 On order to build the generator you need to install the Webpack as a global node module:
 
 ``` Shell
-npm install webpack --global
+npm i webpack -g
 ```
 
 You need to clone the repository or download a local copy and in the source folder install the node modules:
 
 ``` Shell
-npm install
+npm i
 ```
 
 The generator is built and packaged using Webpack.
