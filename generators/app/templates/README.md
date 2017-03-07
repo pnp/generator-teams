@@ -24,7 +24,7 @@ gulp manifest
 ## Output
 
 * dist/* - the files required to host the solution
-* package/* - the Teams Tab package (zip file) to be uploaded to Microsoft Teams ([how-to](https://msdn.microsoft.com/en-us/microsoft-teams/createpackage#uploading-your-tab-package-to-microsoft-teams))
+* package/* - the Teams Tab package (zip file) to be uploaded to Microsoft Teams
 
 ## Express hosting
 
@@ -39,7 +39,7 @@ This will automatically deploy your files to Azure, download the npm pacakges, b
 1. Log into [the Azure Portal](https://portal.azure.com)
 2. Create a new *Resource Group* or use an existing one
 3. Create a new *Web App* and give it the name of your tab, the same you used when asked for URL in the Yeoman generator. In your case <%= host %>.
-4. Go to the created Web App and configure *Deployment Credentials*. Note that this is only done once per Microsoft Azure Account.
+4. Go to the created Web App and configure *Deployment Credentials*. Not that this is only done once per Microsoft Azure Account.
 5. Go to *Deployment Options*
 6. Choose *Local Git Repository* as source and click *OK*
 7. In your tab folder initialize a Git repository using `git init`

@@ -4,6 +4,8 @@ A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.micr
 
 Generates a Microsoft Teams tab project based on Node.js and TypeScript. Optionally add support for hosting using [Express](http://expressjs.com/).
 
+[![npmjs](https://nodei.co/npm/generator-teams-tab.png?downloads=true&downloadRank=true&stars=true)]((https://www.npmjs.com/package/generator-teams-tab))
+
 ## How to
 
 ### Install generator

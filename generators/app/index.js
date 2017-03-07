@@ -85,21 +85,21 @@ module.exports = GeneratorTeamsTab_1.GeneratorTeamsTab;
 
 const Generator = __webpack_require__(5);
 const lodash = __webpack_require__(3);
+const chalk = __webpack_require__(2);
 let yosay = __webpack_require__(6);
 let path = __webpack_require__(4);
-const chalk = __webpack_require__(2);
 class GeneratorTeamsTab extends Generator {
     constructor(args, opts) {
         super(args, opts);
         opts.force = true;
         this.desc('Generate a Microsoft Teams Tab solution.');
-        this.argument('solutionName', { description: 'Solution name, as well as folder name', required: false });
+        this.argument('solutionName', {
+            description: 'Solution name, as well as folder name',
+            required: false
+        });
     }
     initializing() {
         this.log(yosay('Welcome to the ' + chalk.yellow('Microsoft Teams Tab generator')));
-    }
-    validateUrl(url) {
-        return /(https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(url);
     }
     prompting() {
         return this.prompt([
@@ -210,7 +210,6 @@ class GeneratorTeamsTab extends Generator {
             if (this.shouldUseSubDir) {
                 this.destinationRoot(this.destinationPath(this.solutionName));
             }
-            //this.config.set({ libraryName });
         });
     }
     configuring() {
@@ -268,17 +267,6 @@ class GeneratorTeamsTab extends Generator {
             this.fs.copy(this.templatePath(t), this.fixFileNames(t));
         });
     }
-    fixFileNames(filename) {
-        if (filename !== undefined) {
-            var basename = path.basename(filename);
-            if (basename[0] === '_') {
-                var filename = '.' + basename.substr(1);
-                var dirname = path.dirname(filename);
-                filename = path.join(dirname, filename);
-            }
-        }
-        return filename;
-    }
     conflicts() {
     }
     install() {
@@ -299,8 +287,22 @@ class GeneratorTeamsTab extends Generator {
     }
     end() {
         this.log(chalk.yellow('Thanks for using the generator'));
-        this.log(chalk.yellow('/\tWictor Wilén, @wictor'));
+        this.log(chalk.yellow('Wictor Wilén, @wictor'));
         this.log(chalk.yellow('Have fun and make great Tabs...'));
+    }
+    validateUrl(url) {
+        return /(https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(url);
+    }
+    fixFileNames(filename) {
+        if (filename !== undefined) {
+            var basename = path.basename(filename);
+            if (basename[0] === '_') {
+                var filename = '.' + basename.substr(1);
+                var dirname = path.dirname(filename);
+                filename = path.join(dirname, filename);
+            }
+        }
+        return filename;
     }
 }
 exports.GeneratorTeamsTab = GeneratorTeamsTab;
