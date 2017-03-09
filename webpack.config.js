@@ -18,6 +18,12 @@ var config = [
         entry: {
             app: [
                 './src/app/index.ts'
+            ],
+            bot: [
+                './src/bot/index.ts'
+            ],
+            tab: [
+                './src/tab/index.ts'
             ]
         },
         output: {
@@ -26,7 +32,7 @@ var config = [
             libraryTarget: 'commonjs-module'
         },
         externals: nodeModules,
-        devtool: 'hidden-source-map',
+        devtool: 'none',
         resolve: {
             extensions: [".ts", ".tsx", ".js"],
             alias: {
@@ -50,6 +56,11 @@ var config = [
             new CopyWebpackPlugin([{
                 from: 'src/app/templates',
                 to: 'app/templates'
+            }
+            ]),
+            new CopyWebpackPlugin([{
+                from: 'src/tab/templates',
+                to: 'tab/templates'
             }
             ])
         ]

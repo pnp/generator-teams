@@ -1,5 +1,6 @@
 import {TeamsTheme} from './theme';
-export class Configure {
+
+export class <%=tabName%>Configure {
     constructor() {
         microsoftTeams.initialize();
         TeamsTheme.fix();
@@ -7,7 +8,7 @@ export class Configure {
 
             var val:any = document.getElementById("data");
             microsoftTeams.settings.setSettings({
-                contentUrl: "<%=host%>/tab.html?data=" + val.value,
+                contentUrl: "<%=host%>/<%=tabName%>Tab.html?data=" + val.value,
                 customSettings: val.value,
                 suggestedDisplayName: `<%=title%>`,
                 removeUrl: "<%=host%>/remove.html",

@@ -8,7 +8,7 @@ const zip = require('gulp-zip');
 
 var injectSources = ["./dist/web/scripts/**/*.js"]
 var typeScriptFiles = ["./src/**/*.ts"]
-var staticFiles = ["./src/app/**/*.html", "./src/**/*.json", "./src/**/*.png"]
+var staticFiles = ["./src/app/**/*.html", "./src/app/**/*.png"]
 var htmlFiles = ["./src/app/**/*.html"]
 var watcherfiles = ["./src/**/*.*"]
 var manifestFiles = ["./src/manifest/**/*.*"]
@@ -20,7 +20,7 @@ gulp.task('watch', function () {
 
 gulp.task('manifest', () => {
     gulp.src(manifestFiles)
-        .pipe(zip('<%=appname%>.zip'))
+        .pipe(zip('<%=solutionName%>.zip'))
         .pipe(gulp.dest('package'))
 });
 

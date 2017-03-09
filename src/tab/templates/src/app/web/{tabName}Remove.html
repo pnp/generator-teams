@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title><%= title %></title>
+  <title><%= tabTitle %>: Remove</title>
   <link id="themeCSS" href="https://statics.teams.microsoft.com/hashedcss/stylesheets.min-e05e0092.css" rel="stylesheet" />
   <!-- inject:css -->
   <!-- endinject -->
@@ -15,16 +15,13 @@
 </head>
 
 <body class="ts-middle">
-  <div id='app'>
-    Loading...
-  </div>
-  <script src="https://statics.teams.microsoft.com/sdk/v0.4/js/MicrosoftTeams.min.js"></script>
+   <div id='app'>
+       You can just add stuff here if you want to clean up when removing the tab. For instance when you have stored data in an external repository.
+   </div>
+   <script src="https://statics.teams.microsoft.com/sdk/v0.4/js/MicrosoftTeams.min.js"></script>
   <!-- inject:js -->
   <!-- endinject -->
-  <script type='text/javascript'>
-    var tab = new <%=libraryName%>.Tab();
-    tab.doStuff();
-  </script>
+
 </body>
 
 </html>

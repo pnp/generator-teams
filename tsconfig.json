@@ -5,11 +5,13 @@
         "moduleResolution": "node",
         "noImplicitAny": true,
         "strictNullChecks": true,
-        "sourceMap": true
+        "sourceMap": false
     },
     "exclude": [
         "node_modules",
         "src/app/templates",
+        "src/bot/templates",
+        "src/tab/templates",
         "generators"
     ]
 }

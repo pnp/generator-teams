@@ -1,22 +1,14 @@
 import * as Generator from 'yeoman-generator';
 import * as lodash from 'lodash';
 import * as chalk from 'chalk';
+import { GeneratorTeamTabOptions } from './GeneratorTeamTabOptions';
+import { Yotilities } from './Yotilities';
 
 let yosay = require('yosay');
 let path = require('path');
 
 export class GeneratorTeamsTab extends Generator {
-    solutionName: string;
-    name: string;
-    shouldUseSubDir: boolean;
-    libraryName: string;
-    shouldUseAzure: boolean;
-    shouldUseExpress: boolean;
-    namespace: string;
-    developer: string;
-    privacy: string;
-    tou: string;
-    host: string;
+    options: GeneratorTeamTabOptions = new GeneratorTeamTabOptions();
 
     public constructor(args: any, opts: any) {
         super(args, opts);
@@ -29,9 +21,11 @@ export class GeneratorTeamsTab extends Generator {
     }
 
     public initializing() {
-        this.log(yosay('Welcome to the ' + chalk.yellow('Microsoft Teams Tab generator')));
+        this.log(yosay('Welcome to the ' + chalk.yellow(`Microsoft Teams Tab generator (0.4.10)`)));
+        this.composeWith('teams-tab:tab', { 'options': this.options });
+        this.composeWith('teams-tab:bot', { 'options': this.options });
     }
-    
+
     public prompting() {
         return this.prompt(
             [
@@ -39,14 +33,14 @@ export class GeneratorTeamsTab extends Generator {
                     type: 'input',
                     name: 'solutionName',
                     default: lodash.kebabCase(this.appname),
-                    when: () => !this.solutionName,
+                    when: () => !this.options.solutionName,
                     message: 'What is your solution name?'
                 },
                 {
                     type: 'list',
                     name: 'whichFolder',
                     default: 'current',
-                    when: () => !this.solutionName,
+                    when: () => !this.options.solutionName,
                     message: 'Where do you want to place the files?',
                     choices: [
                         {
@@ -69,6 +63,7 @@ export class GeneratorTeamsTab extends Generator {
                     type: 'input',
                     name: 'developer',
                     message: 'Your (company) name',
+                    default: this.user.git.name,
                     validate: (input: string) => {
                         return input.length > 0;
                     }
@@ -80,42 +75,23 @@ export class GeneratorTeamsTab extends Generator {
                     default: (answers: any) => {
                         return `https://${answers.name}.azurewebsites.net`;
                     },
-                    validate: this.validateUrl
+                    validate: Yotilities.validateUrl
                 },
                 {
-                    type: 'input',
-                    name: 'privacy',
-                    message: 'Your privacy url:',
-                    default: (answers: any) => {
-                        return answers.host + '/privacy.html'
-                    },
-                    validate: this.validateUrl
-                },
-                {
-                    type: 'input',
-                    name: 'tou',
-                    message: 'Your terms of use url:',
-                    default: (answers: any) => {
-                        return answers.host + '/tou.html'
-                    },
-                    validate: this.validateUrl
-                },
-                {
-                    type: 'input',
-                    name: 'namespace',
-                    message: 'Enter the namespace of your Tab',
-                    default: (answers: any) => {
-                        var tmp: string = answers.host.substring(answers.host.indexOf('://') + 3)
-                        var arr: string[] = tmp.split('.');
-                        return lodash.reverse(arr).join('.')
-                    },
-                    validate: (input) => {
-                        if (/^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z0-9]{2,})+$/.test(input)) {
-                            return true;
-                        } else {
-                            return false;
+                    type: 'checkbox',
+                    message: 'What do you want to add to your project?',
+                    name: 'parts',
+                    choices: [
+                        {
+                            name: 'A tab',
+                            value: 'tab',
+                            checked: true
+                        },
+                        {
+                            name: 'A bot',
+                            value: 'bot'
                         }
-                    }
+                    ]
                 },
                 {
                     type: 'confirm',
@@ -129,18 +105,25 @@ export class GeneratorTeamsTab extends Generator {
                 }
             ]
         ).then((answers: any) => {
-            this.solutionName = this.solutionName || answers.solutionName;
-            this.shouldUseSubDir = answers.whichFolder === 'subdir';
-            this.shouldUseAzure = <boolean>(answers.azure);
-            this.shouldUseExpress = <boolean>(answers.express);
-            this.libraryName = lodash.camelCase(this.solutionName);
-            this.namespace = answers.namespace;
-            this.developer = answers.developer;
-            this.host = answers.host;
-            this.tou = answers.tou;
-            this.privacy = answers.privacy;
-            if (this.shouldUseSubDir) {
-                this.destinationRoot(this.destinationPath(this.solutionName));
+            this.options.title = answers.name;
+            this.options.description = this.description;
+            this.options.solutionName = this.options.solutionName || answers.solutionName;
+            this.options.shouldUseSubDir = answers.whichFolder === 'subdir';
+            this.options.shouldUseAzure = <boolean>(answers.azure);
+            this.options.shouldUseExpress = <boolean>(answers.express);
+            this.options.libraryName = lodash.camelCase(this.options.solutionName);
+            this.options.developer = answers.developer;
+            this.options.host = answers.host;
+            var tmp: string = this.options.host.substring(this.options.host.indexOf('://') + 3)
+            var arr: string[] = tmp.split('.');
+            this.options.namespace = lodash.reverse(arr).join('.');
+            this.options.tou = answers.host + '/tou.html';
+            this.options.privacy = answers.host + '/privacy.html';
+            this.options.bot = (<string[]>answers.parts).indexOf('bot') != -1;
+            this.options.tab = (<string[]>answers.parts).indexOf('tab') != -1;
+
+            if (this.options.shouldUseSubDir) {
+                this.destinationRoot(this.destinationPath(this.options.solutionName));
             }
         });
     }
@@ -154,12 +137,13 @@ export class GeneratorTeamsTab extends Generator {
     }
 
     public writing() {
+
         let staticFiles = [
             "_gitignore",
             "tsconfig.json",
-            "src/manifest/tab-44.png",
-            "src/manifest/tab-88.png",
-            "src/microsoft.teams.d.ts"
+            "src/app/web/assets/tab-44.png",
+            "src/app/web/assets/tab-88.png",
+            "src/app/scripts/theme.ts"
         ]
         let templateFiles = [
             "README.md",
@@ -168,54 +152,34 @@ export class GeneratorTeamsTab extends Generator {
             "src/manifest/manifest.json",
             "webpack.config.js",
             "src/app/scripts/client.ts",
-            "src/app/scripts/config.ts",
-            "src/app/scripts/tab.ts",
-            "src/app/scripts/theme.ts",
             "src/app/web/index.html",
-            "src/app/web/tab.html",
-            "src/app/web/remove.html",
             "src/app/web/tou.html",
-            "src/app/web/config.html",
             "src/app/web/privacy.html"
-
         ];
-        if (this.shouldUseAzure) {
+        if (this.options.shouldUseAzure) {
             staticFiles.push(
                 'deploy.cmd',
                 '_deployment'
             );
         }
-        if (this.shouldUseExpress) {
+        if (this.options.shouldUseExpress) {
             staticFiles.push(
                 'src/app/server.ts'
             )
         }
-
-        let substitutions = {
-            title: this.appname,
-            description: this.description,
-            namespace: this.namespace,
-            libraryName: this.libraryName,
-            developer: this.developer,
-            privacy: this.privacy,
-            tou: this.tou,
-            host: this.host,
-            shouldUseExpress: this.shouldUseExpress,
-            appname: this.appname
-        };
 
         this.sourceRoot()
 
         templateFiles.forEach(t => {
             this.fs.copyTpl(
                 this.templatePath(t),
-                this.fixFileNames(t),
-                substitutions);
+                Yotilities.fixFileNames(t, this.options),
+                this.options);
         });
         staticFiles.forEach(t => {
             this.fs.copy(
                 this.templatePath(t),
-                this.fixFileNames(t));
+                Yotilities.fixFileNames(t, this.options));
         });
     }
 
@@ -236,7 +200,7 @@ export class GeneratorTeamsTab extends Generator {
             'run-sequence'
         ];
 
-        if (this.shouldUseExpress) {
+        if (this.options.shouldUseExpress) {
             packages.push(
                 'express',
                 'express-session',
@@ -257,19 +221,5 @@ export class GeneratorTeamsTab extends Generator {
         this.log(chalk.yellow('Have fun and make great Tabs...'));
     }
 
-    private validateUrl(url: string) {
-        return /(https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(url);
-    }
 
-    public fixFileNames(filename: string) {
-        if (filename !== undefined) {
-            var basename = path.basename(filename);
-            if (basename[0] === '_') {
-                var filename = '.' + basename.substr(1);
-                var dirname = path.dirname(filename);
-                filename = path.join(dirname, filename);
-            }
-        }
-        return filename
-    }
 }

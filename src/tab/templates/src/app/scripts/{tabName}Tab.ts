@@ -1,6 +1,6 @@
 import { TeamsTheme } from './theme';
 
-export class Tab {
+export class <%=tabName%>Tab {
     constructor() {
         microsoftTeams.initialize();
         TeamsTheme.fix();

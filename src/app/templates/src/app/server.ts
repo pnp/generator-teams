@@ -17,19 +17,25 @@ express.use('/scripts', Express.static(path.join(__dirname, 'web/scripts')));
 express.use('/assets', Express.static(path.join(__dirname, 'web/assets')));
 
 // This is used to prevent your tabs from being embedded in other systems than Microsoft Teams
-express.use(function (req:any, res:any, next:any) {
-    res.setHeader("Content-Security-Policy","frame-ancestors teams.microsoft.com *.teams.microsoft.com *.skype.com");
-    res.setHeader("X-Frame-Options","ALLOW-FROM https://teams.microsoft.com/."); // IE11
+express.use(function (req: any, res: any, next: any) {
+    res.setHeader("Content-Security-Policy", "frame-ancestors teams.microsoft.com *.teams.microsoft.com *.skype.com");
+    res.setHeader("X-Frame-Options", "ALLOW-FROM https://teams.microsoft.com/."); // IE11
     return next();
 });
 
 // Tabs (protected by the above)
-express.use('/tab.html', Express.static(path.join(__dirname, 'web/tab.html')));
-express.use('/config.html', Express.static(path.join(__dirname, 'web/config.html')));
-express.use('/remove.html', Express.static(path.join(__dirname, 'web/remove.html')));
+express.use('/\*Tab.html', (req: any, res: any, next: any) => {
+    res.sendFile(path.join(__dirname, `web${req.path}`));
+});
+express.use('/\*Config.html', (req: any, res: any, next: any) => {
+    res.sendFile(path.join(__dirname, `web${req.path}`));
+});
+express.use('/\*Remove.html', (req: any, res: any, next: any) => {
+    res.sendFile(path.join(__dirname, `web${req.path}`));
+});
 
 // Fallback
-express.use(function (req:any, res:any, next:any) {
+express.use(function (req: any, res: any, next: any) {
     res.removeHeader("Content-Security-Policy")
     res.removeHeader("X-Frame-Options"); // IE11
     return next();

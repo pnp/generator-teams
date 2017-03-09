@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title><%= title %>: Configuration</title>
+  <title><%= tabTitle %>: Configuration</title>
   <link id="themeCSS" href="https://statics.teams.microsoft.com/hashedcss/stylesheets.min-e05e0092.css" rel="stylesheet" />
   <!-- inject:css -->
   <!-- endinject -->
@@ -27,7 +27,7 @@
   <!-- inject:js -->
   <!-- endinject -->
   <script type='text/javascript'>
-    var c = new <%=libraryName%>.Configure();
+    var c = new <%=libraryName%>.<%=tabName%>Configure();
     function onChange(val) {
       c.setValidityState(val.length !== 0);
     }

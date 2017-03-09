@@ -10,21 +10,7 @@
         "termsOfUseUrl": "<%=tou %>"
     },
     "tabs": [
-        {
-            "id": "<%= namespace %>.tab1",
-            "name": "<%= title %>",
-            "description": {
-                "short": "Add a short description here",
-                "full": "Add a long description here"
-            },
-            "icons": {
-                "44": "tab-44.png",
-                "88": "tab-88.png"
-            },
-            "accentColor": "#223344",
-            "configUrl": "<%=host%>/config.html",
-            "canUpdateConfig": true
-        }
+        
     ],
     "bots": [       
     ],
