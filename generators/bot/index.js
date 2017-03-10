@@ -64,7 +64,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 16);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -121,7 +121,7 @@ const Generator = __webpack_require__(1);
 const GeneratorTeamTabOptions_1 = __webpack_require__(3);
 let yosay = __webpack_require__(2);
 let path = __webpack_require__(0);
-let Guid = __webpack_require__(13);
+let Guid = __webpack_require__(14);
 class BotGenerator extends Generator {
     constructor(args, opts) {
         super(args, opts);
@@ -162,14 +162,15 @@ exports.BotGenerator = BotGenerator;
 /***/ }),
 /* 11 */,
 /* 12 */,
-/* 13 */
+/* 13 */,
+/* 14 */
 /***/ (function(module, exports) {
 
 module.exports = require("guid");
 
 /***/ }),
-/* 14 */,
-/* 15 */
+/* 15 */,
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(7);

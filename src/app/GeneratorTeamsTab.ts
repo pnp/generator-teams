@@ -6,6 +6,7 @@ import { Yotilities } from './Yotilities';
 
 let yosay = require('yosay');
 let path = require('path');
+let pkg = require('../../package.json');
 
 export class GeneratorTeamsTab extends Generator {
     options: GeneratorTeamTabOptions = new GeneratorTeamTabOptions();
@@ -21,7 +22,7 @@ export class GeneratorTeamsTab extends Generator {
     }
 
     public initializing() {
-        this.log(yosay('Welcome to the ' + chalk.yellow(`Microsoft Teams Tab generator (0.4.10)`)));
+        this.log(yosay('Welcome to the ' + chalk.yellow(`Microsoft Teams Tab generator (${pkg.version})`)));
         this.composeWith('teams-tab:tab', { 'options': this.options });
         this.composeWith('teams-tab:bot', { 'options': this.options });
     }

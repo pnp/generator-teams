@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*0.4.11*] - <*2017-03-10*>
+
+### Fixed
+
+* Missing npm module for `guid`
 
 ## [*0.4.10*] - <*2017-03-09*>
 

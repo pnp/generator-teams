@@ -64,7 +64,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 15);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -153,11 +153,12 @@ module.exports = GeneratorTeamsTab_1.GeneratorTeamsTab;
 
 const Generator = __webpack_require__(1);
 const lodash = __webpack_require__(5);
-const chalk = __webpack_require__(12);
+const chalk = __webpack_require__(13);
 const GeneratorTeamTabOptions_1 = __webpack_require__(3);
 const Yotilities_1 = __webpack_require__(4);
 let yosay = __webpack_require__(2);
 let path = __webpack_require__(0);
+let pkg = __webpack_require__(12);
 class GeneratorTeamsTab extends Generator {
     constructor(args, opts) {
         super(args, opts);
@@ -170,7 +171,7 @@ class GeneratorTeamsTab extends Generator {
         });
     }
     initializing() {
-        this.log(yosay('Welcome to the ' + chalk.yellow(`Microsoft Teams Tab generator (0.4.10)`)));
+        this.log(yosay('Welcome to the ' + chalk.yellow(`Microsoft Teams Tab generator (${pkg.version})`)));
         this.composeWith('teams-tab:tab', { 'options': this.options });
         this.composeWith('teams-tab:bot', { 'options': this.options });
     }
@@ -342,11 +343,70 @@ exports.GeneratorTeamsTab = GeneratorTeamsTab;
 /* 12 */
 /***/ (function(module, exports) {
 
+module.exports = {
+	"name": "generator-teams-tab",
+	"version": "0.4.11",
+	"description": "Yeoman generator for Microsoft Teams Tabs",
+	"main": "generators/app/index.js",
+	"scripts": {},
+	"files": [
+		"generators"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/wictorwilen/generator-teams-tab.git"
+	},
+	"bugs": {
+		"url": "https://github.com/wictorwilen/generator-teams-tab/issues"
+	},
+	"homepage": "https://github.com/wictorwilen/generator-teams-tab",
+	"keywords": [
+		"yeoman-generator",
+		"Microsoft Teams",
+		"microsoft-teams",
+		"Office 365",
+		"office-365",
+		"bot",
+		"bot-framework"
+	],
+	"author": "Wictor Wilén (wictor@wictorwilen.se)",
+	"maintainers": [
+		{
+			"name": "Wictor Wilén",
+			"email": "wictor@wictorwilen.se",
+			"url": "http://www.wictorwilen.se"
+		}
+	],
+	"license": "CC-BY-4.0",
+	"devDependencies": {
+		"@types/chalk": "^0.4.31",
+		"@types/lodash": "^4.14.52",
+		"@types/yeoman-generator": "^1.0.1",
+		"@types/yosay": "0.0.28",
+		"gulp": "^3.9.1",
+		"ts-loader": "^2.0.0",
+		"typescript": "^2.1.6",
+		"webpack": "^2.2.1"
+	},
+	"dependencies": {
+		"chalk": "^1.1.3",
+		"copy-webpack-plugin": "^4.0.1",
+		"guid": "0.0.12",
+		"lodash": "^4.17.4",
+		"yeoman-generator": "^1.0.0",
+		"yosay": "^2.0.0"
+	}
+};
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
 module.exports = require("chalk");
 
 /***/ }),
-/* 13 */,
-/* 14 */
+/* 14 */,
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(6);
