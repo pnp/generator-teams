@@ -75,29 +75,6 @@ module.exports = require("path");
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
-
-module.exports = require("yeoman-generator");
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-module.exports = require("yosay");
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-class GeneratorTeamTabOptions {
-}
-exports.GeneratorTeamTabOptions = GeneratorTeamTabOptions;
-
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -128,10 +105,33 @@ exports.Yotilities = Yotilities;
 
 
 /***/ }),
-/* 5 */
+/* 2 */
 /***/ (function(module, exports) {
 
 module.exports = require("lodash");
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+module.exports = require("yeoman-generator");
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+module.exports = require("yosay");
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+class GeneratorTeamTabOptions {
+}
+exports.GeneratorTeamTabOptions = GeneratorTeamTabOptions;
+
 
 /***/ }),
 /* 6 */
@@ -151,12 +151,12 @@ module.exports = GeneratorTeamsTab_1.GeneratorTeamsTab;
 
 "use strict";
 
-const Generator = __webpack_require__(1);
-const lodash = __webpack_require__(5);
+const Generator = __webpack_require__(3);
+const lodash = __webpack_require__(2);
 const chalk = __webpack_require__(13);
-const GeneratorTeamTabOptions_1 = __webpack_require__(3);
-const Yotilities_1 = __webpack_require__(4);
-let yosay = __webpack_require__(2);
+const GeneratorTeamTabOptions_1 = __webpack_require__(5);
+const Yotilities_1 = __webpack_require__(1);
+let yosay = __webpack_require__(4);
 let path = __webpack_require__(0);
 let pkg = __webpack_require__(12);
 class GeneratorTeamsTab extends Generator {
@@ -221,7 +221,7 @@ class GeneratorTeamsTab extends Generator {
                 name: 'host',
                 message: 'The Url where you will host this tab:',
                 default: (answers) => {
-                    return `https://${answers.name}.azurewebsites.net`;
+                    return `https://${lodash.camelCase(answers.solutionName)}.azurewebsites.net`;
                 },
                 validate: Yotilities_1.Yotilities.validateUrl
             },

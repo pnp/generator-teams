@@ -20,6 +20,6 @@ export class Yotilities {
             }
         }
 
-        return filename
+        return filename;
     }
 }

@@ -74,7 +74,7 @@ export class GeneratorTeamsTab extends Generator {
                     name: 'host',
                     message: 'The Url where you will host this tab:',
                     default: (answers: any) => {
-                        return `https://${answers.name}.azurewebsites.net`;
+                        return `https://${lodash.camelCase(answers.solutionName)}.azurewebsites.net`;
                     },
                     validate: Yotilities.validateUrl
                 },

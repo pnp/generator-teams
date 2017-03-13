@@ -62,6 +62,11 @@ var config = [
                 from: 'src/tab/templates',
                 to: 'tab/templates'
             }
+            ]),
+            new CopyWebpackPlugin([{
+                from: 'src/bot/templates',
+                to: 'bot/templates'
+            }
             ])
         ]
     }

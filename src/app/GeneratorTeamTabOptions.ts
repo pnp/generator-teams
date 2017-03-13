@@ -17,4 +17,7 @@ export class GeneratorTeamTabOptions {
     tabTitle: string;
     tabName: string;
     botid?: string;
+    pinnedTab: boolean;
+    pinnedTabName: string;
+    pinnedTabTitle: string;
 }

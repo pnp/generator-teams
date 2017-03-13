@@ -75,18 +75,55 @@ module.exports = require("path");
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = require("yeoman-generator");
+"use strict";
+
+let path = __webpack_require__(0);
+class Yotilities {
+    static validateUrl(url) {
+        return /(https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(url);
+    }
+    static fixFileNames(filename, options) {
+        if (filename !== undefined) {
+            var basename = path.basename(filename);
+            if (basename[0] === '_') {
+                var filename = '.' + basename.substr(1);
+                var dirname = path.dirname(filename);
+                filename = path.join(dirname, filename);
+            }
+            for (var prop in options) {
+                if (options.hasOwnProperty(prop) && typeof options[prop] === 'string') {
+                    filename = filename.replace(new RegExp("{" + prop + "}", 'g'), options[prop]);
+                }
+            }
+        }
+        return filename;
+    }
+}
+exports.Yotilities = Yotilities;
+
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("yosay");
+module.exports = require("lodash");
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports) {
+
+module.exports = require("yeoman-generator");
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+module.exports = require("yosay");
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -97,8 +134,6 @@ exports.GeneratorTeamTabOptions = GeneratorTeamTabOptions;
 
 
 /***/ }),
-/* 4 */,
-/* 5 */,
 /* 6 */,
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -117,9 +152,11 @@ module.exports = BotGenerator_1.BotGenerator;
 
 "use strict";
 
-const Generator = __webpack_require__(1);
-const GeneratorTeamTabOptions_1 = __webpack_require__(3);
-let yosay = __webpack_require__(2);
+const Generator = __webpack_require__(3);
+const lodash = __webpack_require__(2);
+const GeneratorTeamTabOptions_1 = __webpack_require__(5);
+const Yotilities_1 = __webpack_require__(1);
+let yosay = __webpack_require__(4);
 let path = __webpack_require__(0);
 let Guid = __webpack_require__(14);
 class BotGenerator extends Generator {
@@ -140,19 +177,57 @@ class BotGenerator extends Generator {
                         return Guid.isGuid(input);
                     }
                 },
+                {
+                    type: 'confirm',
+                    name: 'pinnedTab',
+                    message: 'Do you want to add a pinned tab to your bot?',
+                },
+                {
+                    type: 'input',
+                    name: 'pinnedTabName',
+                    message: 'What is the title of your pinned tab for the bot?',
+                    when: (answers) => {
+                        return answers.pinnedTab;
+                    }
+                }
             ]).then((answers) => {
                 this.options.botid = answers.botid;
+                this.options.pinnedTab = answers.pinnedTab;
+                this.options.pinnedTabTitle = answers.pinnedTabName;
+                this.options.pinnedTabName = lodash.camelCase(answers.pinnedTabName);
             });
         }
     }
     writing() {
         if (this.options.bot) {
+            let templateFiles = [
+                "src/app/scripts/{pinnedTabName}Tab.ts",
+                "src/app/web/{pinnedTabName}Tab.html",
+            ];
+            this.sourceRoot();
+            templateFiles.forEach(t => {
+                this.fs.copyTpl(this.templatePath(t), Yotilities_1.Yotilities.fixFileNames(t, this.options), this.options);
+            });
             let manifestPath = "src/manifest/manifest.json";
             var manifest = this.fs.readJSON(manifestPath);
-            manifest.bots.push({
-                mri: this.options.botid
-            });
+            var newbot = {
+                mri: this.options.botid,
+                pinnedTabs: []
+            };
+            if (this.options.pinnedTab) {
+                newbot.pinnedTabs.push({
+                    name: this.options.pinnedTabName
+                });
+            }
+            manifest.bots.push(newbot);
             this.fs.writeJSON(manifestPath, manifest);
+            // update client.ts
+            let clientTsPath = "src/app/scripts/client.ts";
+            let clientTs = this.fs.read(clientTsPath);
+            clientTs += `\n// Added by generator-teams-tab`;
+            clientTs += `\nexport * from './${this.options.pinnedTabName}Tab';`;
+            clientTs += `\n`;
+            this.fs.write(clientTsPath, clientTs);
         }
     }
 }
