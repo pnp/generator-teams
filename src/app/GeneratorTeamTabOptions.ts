@@ -1,4 +1,5 @@
 export class GeneratorTeamTabOptions {
+    id: string;
     title: string;
     description: string;
     solutionName: string;

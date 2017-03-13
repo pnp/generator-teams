@@ -7,6 +7,7 @@ import { Yotilities } from './Yotilities';
 let yosay = require('yosay');
 let path = require('path');
 let pkg = require('../../package.json');
+let Guid = require('guid');
 
 export class GeneratorTeamsTab extends Generator {
     options: GeneratorTeamTabOptions = new GeneratorTeamTabOptions();
@@ -122,6 +123,7 @@ export class GeneratorTeamsTab extends Generator {
             this.options.privacy = answers.host + '/privacy.html';
             this.options.bot = (<string[]>answers.parts).indexOf('bot') != -1;
             this.options.tab = (<string[]>answers.parts).indexOf('tab') != -1;
+            this.options.id = Guid.raw();
 
             if (this.options.shouldUseSubDir) {
                 this.destinationRoot(this.destinationPath(this.options.solutionName));

@@ -57,30 +57,34 @@ export class BotGenerator extends Generator {
 
     public writing() {
         if (this.options.bot) {
-
-            let templateFiles = [
-                "src/app/scripts/{pinnedTabName}Tab.ts",
-                "src/app/web/{pinnedTabName}Tab.html",
-            ];
-
-            this.sourceRoot()
-
-            templateFiles.forEach(t => {
-                this.fs.copyTpl(
-                    this.templatePath(t),
-                    Yotilities.fixFileNames(t, this.options),
-                    this.options);
-            });
-
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
             var newbot = {
                 mri: this.options.botid,
                 pinnedTabs: (<any>[])
             };
+
             if (this.options.pinnedTab) {
+                let templateFiles = [
+                    "src/app/scripts/{pinnedTabName}Tab.ts",
+                    "src/app/web/{pinnedTabName}Tab.html",
+                ];
+
+                this.sourceRoot()
+
+                templateFiles.forEach(t => {
+                    this.fs.copyTpl(
+                        this.templatePath(t),
+                        Yotilities.fixFileNames(t, this.options),
+                        this.options);
+                });
+
                 newbot.pinnedTabs.push({
-                    name: this.options.pinnedTabName
+                    id: Guid.raw(),
+                    definitionId: Guid.raw(),
+                    displayName: this.options.pinnedTabTitle,
+                    url: `${this.options.host}/${this.options.pinnedTabName}Tab.html`,
+                    website: `${this.options.host}/${this.options.pinnedTabName}Tab.html`,
                 });
             }
             (<any[]>manifest.bots).push(newbot);

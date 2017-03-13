@@ -108,46 +108,53 @@ exports.Yotilities = Yotilities;
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("lodash");
+module.exports = require("guid");
 
 /***/ }),
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = require("yeoman-generator");
+module.exports = require("lodash");
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports) {
 
+module.exports = require("yeoman-generator");
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
 module.exports = require("yosay");
 
 /***/ }),
-/* 5 */,
 /* 6 */,
 /* 7 */,
-/* 8 */
+/* 8 */,
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-const TabGenerator_1 = __webpack_require__(11);
+const TabGenerator_1 = __webpack_require__(12);
 module.exports = TabGenerator_1.TabGenerator;
 
 
 /***/ }),
-/* 9 */,
 /* 10 */,
-/* 11 */
+/* 11 */,
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-const Generator = __webpack_require__(3);
-const lodash = __webpack_require__(2);
+const Generator = __webpack_require__(4);
+const lodash = __webpack_require__(3);
 const Yotilities_1 = __webpack_require__(1);
-let yosay = __webpack_require__(4);
+let yosay = __webpack_require__(5);
 let path = __webpack_require__(0);
+let Guid = __webpack_require__(2);
 class TabGenerator extends Generator {
     constructor(args, opts) {
         super(args, opts);
@@ -193,7 +200,8 @@ class TabGenerator extends Generator {
             let manifestPath = "src/manifest/manifest.json";
             var manifest = this.fs.readJSON(manifestPath);
             manifest.tabs.push({
-                id: `${this.options.namespace}.${this.options.tabName}`,
+                //id: `${this.options.namespace}.${this.options.tabName}`,
+                id: Guid.raw(),
                 name: this.options.tabTitle,
                 description: {
                     short: `Add a short description for ${this.options.tabTitle} here`,
@@ -227,7 +235,6 @@ exports.TabGenerator = TabGenerator;
 
 
 /***/ }),
-/* 12 */,
 /* 13 */,
 /* 14 */,
 /* 15 */,
@@ -235,7 +242,7 @@ exports.TabGenerator = TabGenerator;
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(8);
+module.exports = __webpack_require__(9);
 
 
 /***/ })

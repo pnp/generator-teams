@@ -108,22 +108,28 @@ exports.Yotilities = Yotilities;
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("lodash");
+module.exports = require("guid");
 
 /***/ }),
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = require("yeoman-generator");
+module.exports = require("lodash");
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports) {
 
-module.exports = require("yosay");
+module.exports = require("yeoman-generator");
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports) {
+
+module.exports = require("yosay");
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -134,31 +140,31 @@ exports.GeneratorTeamTabOptions = GeneratorTeamTabOptions;
 
 
 /***/ }),
-/* 6 */,
-/* 7 */
+/* 7 */,
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-const BotGenerator_1 = __webpack_require__(10);
+const BotGenerator_1 = __webpack_require__(11);
 module.exports = BotGenerator_1.BotGenerator;
 
 
 /***/ }),
-/* 8 */,
 /* 9 */,
-/* 10 */
+/* 10 */,
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-const Generator = __webpack_require__(3);
-const lodash = __webpack_require__(2);
-const GeneratorTeamTabOptions_1 = __webpack_require__(5);
+const Generator = __webpack_require__(4);
+const lodash = __webpack_require__(3);
+const GeneratorTeamTabOptions_1 = __webpack_require__(6);
 const Yotilities_1 = __webpack_require__(1);
-let yosay = __webpack_require__(4);
+let yosay = __webpack_require__(5);
 let path = __webpack_require__(0);
-let Guid = __webpack_require__(14);
+let Guid = __webpack_require__(2);
 class BotGenerator extends Generator {
     constructor(args, opts) {
         super(args, opts);
@@ -200,14 +206,6 @@ class BotGenerator extends Generator {
     }
     writing() {
         if (this.options.bot) {
-            let templateFiles = [
-                "src/app/scripts/{pinnedTabName}Tab.ts",
-                "src/app/web/{pinnedTabName}Tab.html",
-            ];
-            this.sourceRoot();
-            templateFiles.forEach(t => {
-                this.fs.copyTpl(this.templatePath(t), Yotilities_1.Yotilities.fixFileNames(t, this.options), this.options);
-            });
             let manifestPath = "src/manifest/manifest.json";
             var manifest = this.fs.readJSON(manifestPath);
             var newbot = {
@@ -215,8 +213,20 @@ class BotGenerator extends Generator {
                 pinnedTabs: []
             };
             if (this.options.pinnedTab) {
+                let templateFiles = [
+                    "src/app/scripts/{pinnedTabName}Tab.ts",
+                    "src/app/web/{pinnedTabName}Tab.html",
+                ];
+                this.sourceRoot();
+                templateFiles.forEach(t => {
+                    this.fs.copyTpl(this.templatePath(t), Yotilities_1.Yotilities.fixFileNames(t, this.options), this.options);
+                });
                 newbot.pinnedTabs.push({
-                    name: this.options.pinnedTabName
+                    id: Guid.raw(),
+                    definitionId: Guid.raw(),
+                    displayName: this.options.pinnedTabTitle,
+                    url: `${this.options.host}/${this.options.pinnedTabName}Tab.html`,
+                    website: `${this.options.host}/${this.options.pinnedTabName}Tab.html`,
                 });
             }
             manifest.bots.push(newbot);
@@ -235,20 +245,14 @@ exports.BotGenerator = BotGenerator;
 
 
 /***/ }),
-/* 11 */,
 /* 12 */,
 /* 13 */,
-/* 14 */
-/***/ (function(module, exports) {
-
-module.exports = require("guid");
-
-/***/ }),
+/* 14 */,
 /* 15 */,
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(7);
+module.exports = __webpack_require__(8);
 
 
 /***/ })

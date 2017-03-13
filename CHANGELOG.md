@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Support for _Pinned tabs_ 
 
+### Changed
+
+* Updated manifest according to [the manifest schema (0.4)](https://github.com/OfficeDev/Microsoft-teams-docs/blob/master/teams/schema.md)
+
 ## [*0.4.11*] - <*2017-03-10*>
 
 ### Fixed

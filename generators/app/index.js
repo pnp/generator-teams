@@ -108,22 +108,28 @@ exports.Yotilities = Yotilities;
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("lodash");
+module.exports = require("guid");
 
 /***/ }),
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = require("yeoman-generator");
+module.exports = require("lodash");
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports) {
 
-module.exports = require("yosay");
+module.exports = require("yeoman-generator");
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports) {
+
+module.exports = require("yosay");
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -134,31 +140,32 @@ exports.GeneratorTeamTabOptions = GeneratorTeamTabOptions;
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-const GeneratorTeamsTab_1 = __webpack_require__(9);
+const GeneratorTeamsTab_1 = __webpack_require__(10);
 module.exports = GeneratorTeamsTab_1.GeneratorTeamsTab;
 
 
 /***/ }),
-/* 7 */,
 /* 8 */,
-/* 9 */
+/* 9 */,
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-const Generator = __webpack_require__(3);
-const lodash = __webpack_require__(2);
-const chalk = __webpack_require__(13);
-const GeneratorTeamTabOptions_1 = __webpack_require__(5);
+const Generator = __webpack_require__(4);
+const lodash = __webpack_require__(3);
+const chalk = __webpack_require__(14);
+const GeneratorTeamTabOptions_1 = __webpack_require__(6);
 const Yotilities_1 = __webpack_require__(1);
-let yosay = __webpack_require__(4);
+let yosay = __webpack_require__(5);
 let path = __webpack_require__(0);
-let pkg = __webpack_require__(12);
+let pkg = __webpack_require__(13);
+let Guid = __webpack_require__(2);
 class GeneratorTeamsTab extends Generator {
     constructor(args, opts) {
         super(args, opts);
@@ -268,6 +275,7 @@ class GeneratorTeamsTab extends Generator {
             this.options.privacy = answers.host + '/privacy.html';
             this.options.bot = answers.parts.indexOf('bot') != -1;
             this.options.tab = answers.parts.indexOf('tab') != -1;
+            this.options.id = Guid.raw();
             if (this.options.shouldUseSubDir) {
                 this.destinationRoot(this.destinationPath(this.options.solutionName));
             }
@@ -338,9 +346,9 @@ exports.GeneratorTeamsTab = GeneratorTeamsTab;
 
 
 /***/ }),
-/* 10 */,
 /* 11 */,
-/* 12 */
+/* 12 */,
+/* 13 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -399,17 +407,16 @@ module.exports = {
 };
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports) {
 
 module.exports = require("chalk");
 
 /***/ }),
-/* 14 */,
 /* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(6);
+module.exports = __webpack_require__(7);
 
 
 /***/ })

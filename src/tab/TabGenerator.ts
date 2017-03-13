@@ -7,6 +7,8 @@ import { Yotilities } from './../app/Yotilities';
 
 let yosay = require('yosay');
 let path = require('path');
+let Guid = require('guid');
+
 
 export class TabGenerator extends Generator {
     options: GeneratorTeamTabOptions;
@@ -65,7 +67,8 @@ export class TabGenerator extends Generator {
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
             (<any[]>manifest.tabs).push({
-                id: `${this.options.namespace}.${this.options.tabName}`,
+                //id: `${this.options.namespace}.${this.options.tabName}`,
+                id: Guid.raw(),
                 name: this.options.tabTitle,
                 description: {
                     short: `Add a short description for ${this.options.tabTitle} here`,
