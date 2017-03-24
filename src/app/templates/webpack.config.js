@@ -24,7 +24,7 @@ var config = [
             ],
         },
         output: {
-            path: './dist',
+            path: __dirname + '/dist',
             filename: '[name].js'
         },
         externals: nodeModules,
@@ -59,7 +59,7 @@ var config = [
             ]
         },
         output: {
-            path: './dist/web/scripts',
+            path: __dirname + '/dist/web/scripts',
             filename: '[name].js',
             libraryTarget: 'umd',
             library: '<%=libraryName%>'
