@@ -67,7 +67,7 @@ export class GeneratorTeamsTab extends Generator {
                     message: 'Your (company) name',
                     default: this.user.git.name,
                     validate: (input: string) => {
-                        return input.length > 0;
+                        return input.length > 0 && input.length <= 32;
                     }
                 },
                 {

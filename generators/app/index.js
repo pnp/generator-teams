@@ -2,41 +2,41 @@ module.exports =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-
+/******/
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
 /******/ 			l: false,
 /******/ 			exports: {}
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
-
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
+/******/
 /******/ 	// identity function for calling harmony imports with the correct context
 /******/ 	__webpack_require__.i = function(value) { return value; };
-
+/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -47,7 +47,7 @@ module.exports =
 /******/ 			});
 /******/ 		}
 /******/ 	};
-
+/******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
@@ -56,13 +56,13 @@ module.exports =
 /******/ 		__webpack_require__.d(getter, 'a', getter);
 /******/ 		return getter;
 /******/ 	};
-
+/******/
 /******/ 	// Object.prototype.hasOwnProperty.call
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-
+/******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 15);
 /******/ })
@@ -79,6 +79,7 @@ module.exports = require("path");
 
 "use strict";
 
+Object.defineProperty(exports, "__esModule", { value: true });
 let path = __webpack_require__(0);
 class Yotilities {
     static validateUrl(url) {
@@ -134,6 +135,7 @@ module.exports = require("yosay");
 
 "use strict";
 
+Object.defineProperty(exports, "__esModule", { value: true });
 class GeneratorTeamTabOptions {
 }
 exports.GeneratorTeamTabOptions = GeneratorTeamTabOptions;
@@ -145,6 +147,7 @@ exports.GeneratorTeamTabOptions = GeneratorTeamTabOptions;
 
 "use strict";
 
+Object.defineProperty(exports, "__esModule", { value: true });
 const GeneratorTeamsTab_1 = __webpack_require__(10);
 module.exports = GeneratorTeamsTab_1.GeneratorTeamsTab;
 
@@ -157,6 +160,7 @@ module.exports = GeneratorTeamsTab_1.GeneratorTeamsTab;
 
 "use strict";
 
+Object.defineProperty(exports, "__esModule", { value: true });
 const Generator = __webpack_require__(4);
 const lodash = __webpack_require__(3);
 const chalk = __webpack_require__(14);
@@ -220,7 +224,7 @@ class GeneratorTeamsTab extends Generator {
                 message: 'Your (company) name',
                 default: this.user.git.name,
                 validate: (input) => {
-                    return input.length > 0;
+                    return input.length > 0 && input.length <= 32;
                 }
             },
             {
@@ -353,7 +357,7 @@ exports.GeneratorTeamsTab = GeneratorTeamsTab;
 
 module.exports = {
 	"name": "generator-teams-tab",
-	"version": "0.4.12",
+	"version": "0.4.13",
 	"description": "Yeoman generator for Microsoft Teams Tabs",
 	"main": "generators/app/index.js",
 	"scripts": {},
@@ -391,7 +395,6 @@ module.exports = {
 		"@types/lodash": "^4.14.52",
 		"@types/yeoman-generator": "^1.0.1",
 		"@types/yosay": "0.0.28",
-		"gulp": "^3.9.1",
 		"ts-loader": "^2.0.0",
 		"typescript": "^2.1.6",
 		"webpack": "^2.2.1"

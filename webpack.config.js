@@ -27,7 +27,7 @@ var config = [
             ]
         },
         output: {
-            path: './generators',
+            path: __dirname + '/generators',
             filename: '[name]/index.js',
             libraryTarget: 'commonjs-module'
         },

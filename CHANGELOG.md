@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*0.4.13*] - <*2017-03-24*>
+
+### Changed
+
+* Updated generated webpack.config.js to sort issue with paths (PR #9 by @laneyvb) + change in the generator webpack.config.js
+* Updated generator to validate some properties to conform to the schema settings, such as max lenghts
+
+### Removed
+
+* Deleted gulpfile.js and gulp npm module - not needed, I have no why I ever committed this!
+
 ## [*0.4.11*] - <*2017-03-13*>
 
 ### Added
