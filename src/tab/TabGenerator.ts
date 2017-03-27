@@ -27,7 +27,7 @@ export class TabGenerator extends Generator {
                         type: 'input',
                         name: 'tabTitle',
                         message: 'Name of your Tab?',
-                        default: this.options.title
+                        default: this.options.title + ' Tab'
                     },
                 ]
             ).then((answers: any) => {

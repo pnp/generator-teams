@@ -15,11 +15,13 @@
         Welcome to the <em><%= title %></em></h1>
     <p>
         <%= description %>
-
-        <% if (botType == 'botframework') { %>
-            <a href='https://teams.microsoft.com/l/chat/0/0?users=28:{botid}'><img height="30" width="113" src='https://dev.botframework.com/Client/Images/Add-To-MSTeams-Buttons.png'></a>
-        <% } %>
     </p>
+    <% if (botType == 'botframework') { %>
+        <p>
+            Add the Bot to Microsoft Teams: 
+            <a href='https://teams.microsoft.com/l/chat/0/0?users=28:<% = botid %>'><img height="30" width="113" src='https://dev.botframework.com/Client/Images/Add-To-MSTeams-Buttons.png'></a>
+        </p>
+    <% } %>
 </body>
 
 </html>

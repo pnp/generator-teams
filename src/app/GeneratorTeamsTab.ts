@@ -102,11 +102,6 @@ export class GeneratorTeamsTab extends Generator {
                             value: 'custombot'
                         }
                     ]
-                },
-                {
-                    type: 'confirm',
-                    name: 'azure',
-                    message: 'Would you like to include settings for Azure deployment?'
                 }
             ]
         ).then((answers: any) => {

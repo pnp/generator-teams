@@ -218,7 +218,7 @@ class BotGenerator extends Generator {
                     type: 'input',
                     name: 'botname',
                     message: 'What is the name of your bot?',
-                    default: this.options.title + 'bot',
+                    default: this.options.title + ' Bot',
                     validate: (input) => {
                         return input.length > 0;
                     },
@@ -256,6 +256,9 @@ class BotGenerator extends Generator {
                     message: 'What is the title of your pinned tab for the bot?',
                     when: (answers) => {
                         return answers.pinnedTab;
+                    },
+                    default: (answers) => {
+                        return answers.botname + ' Tab';
                     }
                 }
             ]).then((answers) => {

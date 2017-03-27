@@ -27,7 +27,7 @@ export class CustomBotGenerator extends Generator {
                         type: 'input',
                         name: 'title',
                         message: 'Name of your custom bot?',
-                        default: this.options.title + 'custombot'
+                        default: this.options.title + ' Custom Bot'
                     },
                 ]
             ).then((answers: any) => {
