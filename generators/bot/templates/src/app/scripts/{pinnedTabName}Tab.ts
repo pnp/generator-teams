@@ -1,5 +1,8 @@
 import { TeamsTheme } from './theme';
 
+/**
+ * Implementation of Bot pinned tab: <%= pinnedTabTitle %>
+ */
 export class <%=pinnedTabName%>Tab {
     constructor() {
         microsoftTeams.initialize();
@@ -9,7 +12,7 @@ export class <%=pinnedTabName%>Tab {
         microsoftTeams.getContext((context: microsoftTeams.Context) => {
             var a = document.getElementById('app');
             if (a) {
-                a.innerHTML = `The value is: ${this.getParameterByName('data')}`;
+               // do something
             }
         });
     }

@@ -9,13 +9,16 @@ let path = require('path');
 let pkg = require('../../package.json');
 let Guid = require('guid');
 
+/**
+ * The main implementation for the `teams` generator
+ */
 export class GeneratorTeamsTab extends Generator {
     options: GeneratorTeamTabOptions = new GeneratorTeamTabOptions();
 
     public constructor(args: any, opts: any) {
         super(args, opts);
         opts.force = true;
-        this.desc('Generate a Microsoft Teams Tab solution.');
+        this.desc('Generate a Microsoft Teams extensibility solution.');
         this.argument('solutionName', {
             description: 'Solution name, as well as folder name',
             required: false
@@ -23,9 +26,10 @@ export class GeneratorTeamsTab extends Generator {
     }
 
     public initializing() {
-        this.log(yosay('Welcome to the ' + chalk.yellow(`Microsoft Teams Tab generator (${pkg.version})`)));
-        this.composeWith('teams-tab:tab', { 'options': this.options });
-        this.composeWith('teams-tab:bot', { 'options': this.options });
+        this.log(yosay('Welcome to the ' + chalk.yellow(`Microsoft Teams extensibility generator (${pkg.version})`)));
+        this.composeWith('teams:tab', { 'options': this.options });
+        this.composeWith('teams:bot', { 'options': this.options });
+        this.composeWith('teams:custombot', { 'options': this.options });
     }
 
     public prompting() {
@@ -90,15 +94,14 @@ export class GeneratorTeamsTab extends Generator {
                             checked: true
                         },
                         {
-                            name: 'A bot',
+                            name: 'A Bot framework bot',
                             value: 'bot'
+                        },
+                        {
+                            name: 'A Teams custom bot',
+                            value: 'custombot'
                         }
                     ]
-                },
-                {
-                    type: 'confirm',
-                    name: 'express',
-                    message: 'Would you like to use Express to host your Tabs?'
                 },
                 {
                     type: 'confirm',
@@ -111,8 +114,6 @@ export class GeneratorTeamsTab extends Generator {
             this.options.description = this.description;
             this.options.solutionName = this.options.solutionName || answers.solutionName;
             this.options.shouldUseSubDir = answers.whichFolder === 'subdir';
-            this.options.shouldUseAzure = <boolean>(answers.azure);
-            this.options.shouldUseExpress = <boolean>(answers.express);
             this.options.libraryName = lodash.camelCase(this.options.solutionName);
             this.options.developer = answers.developer;
             this.options.host = answers.host;
@@ -123,6 +124,7 @@ export class GeneratorTeamsTab extends Generator {
             this.options.privacy = answers.host + '/privacy.html';
             this.options.bot = (<string[]>answers.parts).indexOf('bot') != -1;
             this.options.tab = (<string[]>answers.parts).indexOf('tab') != -1;
+            this.options.customBot = (<string[]>answers.parts).indexOf('custombot') != -1;
             this.options.id = Guid.raw();
 
             if (this.options.shouldUseSubDir) {
@@ -146,12 +148,17 @@ export class GeneratorTeamsTab extends Generator {
             "tsconfig.json",
             "src/app/web/assets/tab-44.png",
             "src/app/web/assets/tab-88.png",
-            "src/app/scripts/theme.ts"
+            "src/app/scripts/theme.ts",
+            "src/microsoft.teams.d.ts",
+            'deploy.cmd',
+            '_deployment'
         ]
+
         let templateFiles = [
             "README.md",
             "gulpfile.js",
             "package.json",
+            'src/app/server.ts',
             "src/manifest/manifest.json",
             "webpack.config.js",
             "src/app/scripts/client.ts",
@@ -159,17 +166,6 @@ export class GeneratorTeamsTab extends Generator {
             "src/app/web/tou.html",
             "src/app/web/privacy.html"
         ];
-        if (this.options.shouldUseAzure) {
-            staticFiles.push(
-                'deploy.cmd',
-                '_deployment'
-            );
-        }
-        if (this.options.shouldUseExpress) {
-            staticFiles.push(
-                'src/app/server.ts'
-            )
-        }
 
         this.sourceRoot()
 
@@ -200,20 +196,24 @@ export class GeneratorTeamsTab extends Generator {
             'gulp-zip',
             'gulp-util',
             'gulp-inject',
-            'run-sequence'
+            'run-sequence',
+            'nodemon'
         ];
 
-        if (this.options.shouldUseExpress) {
-            packages.push(
-                'express',
-                'express-session',
-                'body-parser',
-                'morgan',
-                '@types/express',
-                '@types/express-session',
-                '@types/body-parser',
-                '@types/morgan'
-            );
+        // used for hosting in express
+        packages.push(
+            'express',
+            'express-session',
+            'body-parser',
+            'morgan',
+            '@types/express',
+            '@types/express-session',
+            '@types/body-parser',
+            '@types/morgan'
+        );
+
+        if (this.options.botType == 'botframework' || this.options.customBot) {
+            packages.push('botbuilder');
         }
         this.npmInstall(packages, { 'save': true });
     }

@@ -17,17 +17,57 @@ export class BotGenerator extends Generator {
         opts.force = true;
         this.options = opts.options === undefined ? new GeneratorTeamTabOptions() : opts.options;
 
-        this.desc('Adds a Bot to a Teams Tab project.');
+        this.desc('Adds a Bot to a Teams project.');
     }
 
     public prompting() {
         if (this.options.bot) {
             return this.prompt(
+
                 [
+                    {
+                        type: 'list',
+                        name: 'bottype',
+                        message: 'Would type of bot would you like to use?',
+                        default: 'existing',
+                        choices: [
+                            {
+                                name: 'An already existing and running bot',
+                                value: 'existing'
+                            },
+                            {
+                                name: 'A new Bot Framework bot',
+                                value: 'botframework'
+                            }
+                        ]
+                    },
+                    {
+                        type: 'input',
+                        name: 'botname',
+                        message: 'What is the name of your bot?',
+                        default: this.options.title + 'bot',
+                        validate: (input) => {
+                            return input.length > 0;
+                        },
+                        when: (answers) => answers.bottype != 'existing'
+                    },
                     {
                         type: 'input',
                         name: 'botid',
-                        message: 'I need an ID for the bot, which is found in the Bot Framework portal?',
+                        message: (answers) => {
+                            var message = 'I need an ID for the bot. ';
+                            if (answers.botTye == 'botframework') {
+                                message += 'If you don\'t specify a value now, you need to manually edit it later. ';
+                            }
+                            message += 'It\'s found in the Bot Framework portal';
+                            return message;
+                        },
+                        default: (answers: any) => {
+                            if (answers.bottype == 'botframework') {
+                                return Guid.EMPTY;
+                            }
+                            return ''
+                        },
                         validate: (input) => {
                             return Guid.isGuid(input);
                         }
@@ -51,6 +91,9 @@ export class BotGenerator extends Generator {
                 this.options.pinnedTab = answers.pinnedTab;
                 this.options.pinnedTabTitle = answers.pinnedTabName;
                 this.options.pinnedTabName = lodash.camelCase(answers.pinnedTabName);
+                this.options.botType = answers.bottype;
+                this.options.botTitle = answers.botname;
+                this.options.botName = lodash.camelCase(answers.botname);
             });
         }
     }
@@ -64,20 +107,13 @@ export class BotGenerator extends Generator {
                 pinnedTabs: (<any>[])
             };
 
+            this.sourceRoot()
+            let templateFiles = [];
             if (this.options.pinnedTab) {
-                let templateFiles = [
+                templateFiles.push(
                     "src/app/scripts/{pinnedTabName}Tab.ts",
                     "src/app/web/{pinnedTabName}Tab.html",
-                ];
-
-                this.sourceRoot()
-
-                templateFiles.forEach(t => {
-                    this.fs.copyTpl(
-                        this.templatePath(t),
-                        Yotilities.fixFileNames(t, this.options),
-                        this.options);
-                });
+                );
 
                 newbot.pinnedTabs.push({
                     id: Guid.raw(),
@@ -90,13 +126,26 @@ export class BotGenerator extends Generator {
             (<any[]>manifest.bots).push(newbot);
             this.fs.writeJSON(manifestPath, manifest);
 
+            if (this.options.botType != 'existing') {
+                templateFiles.push('src/app/{botName}.ts')
+                templateFiles.push('README-{botName}.md')
+            }
+            templateFiles.forEach(t => {
+                this.fs.copyTpl(
+                    this.templatePath(t),
+                    Yotilities.fixFileNames(t, this.options),
+                    this.options);
+            });
+
             // update client.ts
-            let clientTsPath = "src/app/scripts/client.ts";
-            let clientTs = this.fs.read(clientTsPath);
-            clientTs += `\n// Added by generator-teams-tab`;
-            clientTs += `\nexport * from './${this.options.pinnedTabName}Tab';`;
-            clientTs += `\n`;
-            this.fs.write(clientTsPath, clientTs);
+            if (this.options.pinnedTab) {
+                let clientTsPath = "src/app/scripts/client.ts";
+                let clientTs = this.fs.read(clientTsPath);
+                clientTs += `\n// Added by generator-teams`;
+                clientTs += `\nexport * from './${this.options.pinnedTabName}Tab';`;
+                clientTs += `\n`;
+                this.fs.write(clientTsPath, clientTs);
+            }
         }
     }
 }

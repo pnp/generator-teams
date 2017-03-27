@@ -17,7 +17,7 @@ export class TabGenerator extends Generator {
         super(args, opts);
         opts.force = true;
         this.options = opts.options;
-        this.desc('Adds a tab to a Teams Tab project.');
+        this.desc('Adds a tab to a Teams project.');
     }
     public prompting() {
         if (this.options.tab) {
@@ -38,9 +38,6 @@ export class TabGenerator extends Generator {
     }
     public writing() {
         if (this.options.tab) {
-            let staticFiles = [
-                "src/microsoft.teams.d.ts"
-            ]
             let templateFiles = [
                 "src/app/scripts/{tabName}Config.ts",
                 "src/app/scripts/{tabName}Tab.ts",
@@ -56,11 +53,6 @@ export class TabGenerator extends Generator {
                     this.templatePath(t),
                     Yotilities.fixFileNames(t, this.options),
                     this.options);
-            });
-            staticFiles.forEach(t => {
-                this.fs.copy(
-                    this.templatePath(t),
-                    Yotilities.fixFileNames(t, this.options));
             });
 
             // Update manifest
@@ -91,7 +83,7 @@ export class TabGenerator extends Generator {
             // update client.ts
             let clientTsPath = "src/app/scripts/client.ts";
             let clientTs = this.fs.read(clientTsPath);
-            clientTs += `\n// Added by generator-teams-tab`;
+            clientTs += `\n// Added by generator-teams`;
             clientTs += `\nexport * from './${this.options.tabName}Config';`;
             clientTs += `\nexport * from './${this.options.tabName}Tab';`;
             clientTs += `\n`;

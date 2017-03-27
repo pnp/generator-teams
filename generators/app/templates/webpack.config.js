@@ -4,7 +4,6 @@ var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
 
-<% if (shouldUseExpress) { %>
 var nodeModules = {};
 fs.readdirSync('node_modules')
     .filter(function (x) {
@@ -13,10 +12,8 @@ fs.readdirSync('node_modules')
     .forEach(function (mod) {
         nodeModules[mod] = 'commonjs ' + mod;
     });
-<% } %>
 
 var config = [
-    <% if (shouldUseExpress) { %>
     {
         entry: {
             server: [
@@ -51,7 +48,6 @@ var config = [
         plugins: [
         ]
     },
-    <% } %>
     {
         entry: {
             client: [

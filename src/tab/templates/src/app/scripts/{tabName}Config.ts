@@ -1,5 +1,8 @@
 import {TeamsTheme} from './theme';
 
+/**
+ * Implementation of <%= tabTitle %> configuration page
+ */
 export class <%=tabName%>Configure {
     constructor() {
         microsoftTeams.initialize();

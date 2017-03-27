@@ -64,7 +64,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 17);
+/******/ 	return __webpack_require__(__webpack_require__.s = 20);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -81,10 +81,22 @@ module.exports = require("path");
 
 Object.defineProperty(exports, "__esModule", { value: true });
 let path = __webpack_require__(0);
+/**
+ * Utility class for the Generator
+ */
 class Yotilities {
+    /**
+     * Validates a URL
+     * @param url Url to validate
+     */
     static validateUrl(url) {
         return /(https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(url);
     }
+    /**
+     * Renames a file based on passed options
+     * @param filename path and name to file
+     * @param options object with replacement properties
+     */
     static fixFileNames(filename, options) {
         if (filename !== undefined) {
             var basename = path.basename(filename);
@@ -133,20 +145,22 @@ module.exports = require("yosay");
 /* 6 */,
 /* 7 */,
 /* 8 */,
-/* 9 */
+/* 9 */,
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const TabGenerator_1 = __webpack_require__(12);
+const TabGenerator_1 = __webpack_require__(14);
 module.exports = TabGenerator_1.TabGenerator;
 
 
 /***/ }),
-/* 10 */,
 /* 11 */,
-/* 12 */
+/* 12 */,
+/* 13 */,
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -163,7 +177,7 @@ class TabGenerator extends Generator {
         super(args, opts);
         opts.force = true;
         this.options = opts.options;
-        this.desc('Adds a tab to a Teams Tab project.');
+        this.desc('Adds a tab to a Teams project.');
     }
     prompting() {
         if (this.options.tab) {
@@ -182,9 +196,6 @@ class TabGenerator extends Generator {
     }
     writing() {
         if (this.options.tab) {
-            let staticFiles = [
-                "src/microsoft.teams.d.ts"
-            ];
             let templateFiles = [
                 "src/app/scripts/{tabName}Config.ts",
                 "src/app/scripts/{tabName}Tab.ts",
@@ -195,9 +206,6 @@ class TabGenerator extends Generator {
             this.sourceRoot();
             templateFiles.forEach(t => {
                 this.fs.copyTpl(this.templatePath(t), Yotilities_1.Yotilities.fixFileNames(t, this.options), this.options);
-            });
-            staticFiles.forEach(t => {
-                this.fs.copy(this.templatePath(t), Yotilities_1.Yotilities.fixFileNames(t, this.options));
             });
             // Update manifest
             let manifestPath = "src/manifest/manifest.json";
@@ -226,7 +234,7 @@ class TabGenerator extends Generator {
             // update client.ts
             let clientTsPath = "src/app/scripts/client.ts";
             let clientTs = this.fs.read(clientTsPath);
-            clientTs += `\n// Added by generator-teams-tab`;
+            clientTs += `\n// Added by generator-teams`;
             clientTs += `\nexport * from './${this.options.tabName}Config';`;
             clientTs += `\nexport * from './${this.options.tabName}Tab';`;
             clientTs += `\n`;
@@ -238,14 +246,15 @@ exports.TabGenerator = TabGenerator;
 
 
 /***/ }),
-/* 13 */,
-/* 14 */,
 /* 15 */,
 /* 16 */,
-/* 17 */
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(9);
+module.exports = __webpack_require__(10);
 
 
 /***/ })

@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*1.0.0*] - <*2017-03-27*>
+
+## Added
+
+* IMPORTANT: Renamed generator from *teams-tab* to *teams*, old npm packages are being deprecated
+* Support for Bot Framework bots and [Teams custom bots](https://aka.ms/microsoftteamscustombots/), using `botbuilder`
+* Added the `serve` Gulp task for local testing
+* JSDOc comments
+
+## Removed
+
+* Option to opt-out of express hosting
+* Option to opt-out of Azure deployment files - we all want Azure anyways!
+
 ## [*0.4.13*] - <*2017-03-24*>
 
 ### Changed

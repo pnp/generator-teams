@@ -64,7 +64,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 17);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -81,10 +81,22 @@ module.exports = require("path");
 
 Object.defineProperty(exports, "__esModule", { value: true });
 let path = __webpack_require__(0);
+/**
+ * Utility class for the Generator
+ */
 class Yotilities {
+    /**
+     * Validates a URL
+     * @param url Url to validate
+     */
     static validateUrl(url) {
         return /(https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(url);
     }
+    /**
+     * Renames a file based on passed options
+     * @param filename path and name to file
+     * @param options object with replacement properties
+     */
     static fixFileNames(filename, options) {
         if (filename !== undefined) {
             var basename = path.basename(filename);
@@ -136,7 +148,13 @@ module.exports = require("yosay");
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Configuration options for the generator
+ */
 class GeneratorTeamTabOptions {
+    constructor() {
+        this.botType = "";
+    }
 }
 exports.GeneratorTeamTabOptions = GeneratorTeamTabOptions;
 
@@ -148,14 +166,15 @@ exports.GeneratorTeamTabOptions = GeneratorTeamTabOptions;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const GeneratorTeamsTab_1 = __webpack_require__(10);
+const GeneratorTeamsTab_1 = __webpack_require__(11);
 module.exports = GeneratorTeamsTab_1.GeneratorTeamsTab;
 
 
 /***/ }),
 /* 8 */,
 /* 9 */,
-/* 10 */
+/* 10 */,
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -163,28 +182,32 @@ module.exports = GeneratorTeamsTab_1.GeneratorTeamsTab;
 Object.defineProperty(exports, "__esModule", { value: true });
 const Generator = __webpack_require__(4);
 const lodash = __webpack_require__(3);
-const chalk = __webpack_require__(14);
+const chalk = __webpack_require__(16);
 const GeneratorTeamTabOptions_1 = __webpack_require__(6);
 const Yotilities_1 = __webpack_require__(1);
 let yosay = __webpack_require__(5);
 let path = __webpack_require__(0);
-let pkg = __webpack_require__(13);
+let pkg = __webpack_require__(15);
 let Guid = __webpack_require__(2);
+/**
+ * The main implementation for the `teams` generator
+ */
 class GeneratorTeamsTab extends Generator {
     constructor(args, opts) {
         super(args, opts);
         this.options = new GeneratorTeamTabOptions_1.GeneratorTeamTabOptions();
         opts.force = true;
-        this.desc('Generate a Microsoft Teams Tab solution.');
+        this.desc('Generate a Microsoft Teams extensibility solution.');
         this.argument('solutionName', {
             description: 'Solution name, as well as folder name',
             required: false
         });
     }
     initializing() {
-        this.log(yosay('Welcome to the ' + chalk.yellow(`Microsoft Teams Tab generator (${pkg.version})`)));
-        this.composeWith('teams-tab:tab', { 'options': this.options });
-        this.composeWith('teams-tab:bot', { 'options': this.options });
+        this.log(yosay('Welcome to the ' + chalk.yellow(`Microsoft Teams extensibility generator (${pkg.version})`)));
+        this.composeWith('teams:tab', { 'options': this.options });
+        this.composeWith('teams:bot', { 'options': this.options });
+        this.composeWith('teams:custombot', { 'options': this.options });
     }
     prompting() {
         return this.prompt([
@@ -247,15 +270,14 @@ class GeneratorTeamsTab extends Generator {
                         checked: true
                     },
                     {
-                        name: 'A bot',
+                        name: 'A Bot framework bot',
                         value: 'bot'
+                    },
+                    {
+                        name: 'A Teams custom bot',
+                        value: 'custombot'
                     }
                 ]
-            },
-            {
-                type: 'confirm',
-                name: 'express',
-                message: 'Would you like to use Express to host your Tabs?'
             },
             {
                 type: 'confirm',
@@ -267,8 +289,6 @@ class GeneratorTeamsTab extends Generator {
             this.options.description = this.description;
             this.options.solutionName = this.options.solutionName || answers.solutionName;
             this.options.shouldUseSubDir = answers.whichFolder === 'subdir';
-            this.options.shouldUseAzure = (answers.azure);
-            this.options.shouldUseExpress = (answers.express);
             this.options.libraryName = lodash.camelCase(this.options.solutionName);
             this.options.developer = answers.developer;
             this.options.host = answers.host;
@@ -279,6 +299,7 @@ class GeneratorTeamsTab extends Generator {
             this.options.privacy = answers.host + '/privacy.html';
             this.options.bot = answers.parts.indexOf('bot') != -1;
             this.options.tab = answers.parts.indexOf('tab') != -1;
+            this.options.customBot = answers.parts.indexOf('custombot') != -1;
             this.options.id = Guid.raw();
             if (this.options.shouldUseSubDir) {
                 this.destinationRoot(this.destinationPath(this.options.solutionName));
@@ -295,12 +316,16 @@ class GeneratorTeamsTab extends Generator {
             "tsconfig.json",
             "src/app/web/assets/tab-44.png",
             "src/app/web/assets/tab-88.png",
-            "src/app/scripts/theme.ts"
+            "src/app/scripts/theme.ts",
+            "src/microsoft.teams.d.ts",
+            'deploy.cmd',
+            '_deployment'
         ];
         let templateFiles = [
             "README.md",
             "gulpfile.js",
             "package.json",
+            'src/app/server.ts',
             "src/manifest/manifest.json",
             "webpack.config.js",
             "src/app/scripts/client.ts",
@@ -308,12 +333,6 @@ class GeneratorTeamsTab extends Generator {
             "src/app/web/tou.html",
             "src/app/web/privacy.html"
         ];
-        if (this.options.shouldUseAzure) {
-            staticFiles.push('deploy.cmd', '_deployment');
-        }
-        if (this.options.shouldUseExpress) {
-            staticFiles.push('src/app/server.ts');
-        }
         this.sourceRoot();
         templateFiles.forEach(t => {
             this.fs.copyTpl(this.templatePath(t), Yotilities_1.Yotilities.fixFileNames(t, this.options), this.options);
@@ -333,10 +352,13 @@ class GeneratorTeamsTab extends Generator {
             'gulp-zip',
             'gulp-util',
             'gulp-inject',
-            'run-sequence'
+            'run-sequence',
+            'nodemon'
         ];
-        if (this.options.shouldUseExpress) {
-            packages.push('express', 'express-session', 'body-parser', 'morgan', '@types/express', '@types/express-session', '@types/body-parser', '@types/morgan');
+        // used for hosting in express
+        packages.push('express', 'express-session', 'body-parser', 'morgan', '@types/express', '@types/express-session', '@types/body-parser', '@types/morgan');
+        if (this.options.botType == 'botframework' || this.options.customBot) {
+            packages.push('botbuilder');
         }
         this.npmInstall(packages, { 'save': true });
     }
@@ -350,15 +372,16 @@ exports.GeneratorTeamsTab = GeneratorTeamsTab;
 
 
 /***/ }),
-/* 11 */,
 /* 12 */,
-/* 13 */
+/* 13 */,
+/* 14 */,
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports = {
-	"name": "generator-teams-tab",
-	"version": "0.4.13",
-	"description": "Yeoman generator for Microsoft Teams Tabs",
+	"name": "generator-teams",
+	"version": "1.0.0",
+	"description": "Yeoman generator for Microsoft Teams extensibility",
 	"main": "generators/app/index.js",
 	"scripts": {},
 	"files": [
@@ -366,12 +389,12 @@ module.exports = {
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/wictorwilen/generator-teams-tab.git"
+		"url": "https://github.com/wictorwilen/generator-teams.git"
 	},
 	"bugs": {
-		"url": "https://github.com/wictorwilen/generator-teams-tab/issues"
+		"url": "https://github.com/wictorwilen/generator-teams/issues"
 	},
-	"homepage": "https://github.com/wictorwilen/generator-teams-tab",
+	"homepage": "https://github.com/wictorwilen/generator-teams",
 	"keywords": [
 		"yeoman-generator",
 		"Microsoft Teams",
@@ -379,7 +402,9 @@ module.exports = {
 		"Office 365",
 		"office-365",
 		"bot",
-		"bot-framework"
+		"bot-framework",
+		"botbuilder",
+		"chatbot"
 	],
 	"author": "Wictor Wilén (wictor@wictorwilen.se)",
 	"maintainers": [
@@ -410,13 +435,13 @@ module.exports = {
 };
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports) {
 
 module.exports = require("chalk");
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(7);

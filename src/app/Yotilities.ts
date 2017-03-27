@@ -1,10 +1,22 @@
 let path = require('path');
 
+/**
+ * Utility class for the Generator
+ */
 export class Yotilities {
+    /**
+     * Validates a URL
+     * @param url Url to validate
+     */
     public static validateUrl(url: string) {
         return /(https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(url);
     }
 
+    /**
+     * Renames a file based on passed options
+     * @param filename path and name to file
+     * @param options object with replacement properties
+     */
     public static fixFileNames(filename: string, options: any) {
         if (filename !== undefined) {
             var basename = path.basename(filename);

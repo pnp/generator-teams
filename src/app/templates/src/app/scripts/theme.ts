@@ -1,4 +1,7 @@
-// idea borrowed from the Dizz: https://github.com/richdizz/Microsoft-Teams-Tab-Themes/blob/master/app/config.html
+/**
+ * Class for managing Microsoft Teams themes
+ * idea borrowed from the Dizz: https://github.com/richdizz/Microsoft-Teams-Tab-Themes/blob/master/app/config.html
+ */
 export class TeamsTheme {
     static themedStyleSheets = [
         "https://statics.teams.microsoft.com/hashedcss/stylesheets.min-e05e0092.css",
@@ -6,6 +9,9 @@ export class TeamsTheme {
         "https://statics.teams.microsoft.com/hashedcss/stylesheets.theme-dark.min-fe14eeb8.css"
     ];
 
+    /**
+     * Setup themes on a page
+     */
     public static fix() {
         microsoftTeams.initialize();
         microsoftTeams.registerOnThemeChangeHandler(TeamsTheme.themeChanged);
@@ -13,6 +19,10 @@ export class TeamsTheme {
             TeamsTheme.themeChanged(context.theme);
         });
     }
+    /**
+     * Manages theme changes
+     * @param theme default|contrast|dark
+     */
     public static themeChanged(theme: string) {
         if (theme === "default") {
             var css = document.getElementById("themeCSS");

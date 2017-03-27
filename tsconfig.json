@@ -12,6 +12,7 @@
         "src/app/templates",
         "src/bot/templates",
         "src/tab/templates",
+        "src/custombot/templates",
         "generators"
     ]
 }

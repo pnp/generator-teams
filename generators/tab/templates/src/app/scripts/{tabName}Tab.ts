@@ -1,10 +1,20 @@
 import { TeamsTheme } from './theme';
 
+/**
+ * Implementation of the <%= tabTitle %> content page
+ */
 export class <%=tabName%>Tab {
+    /**
+     * Constructor for <%= tabName %> that initializes the Microsoft Teams script and themes management
+     */
     constructor() {
         microsoftTeams.initialize();
         TeamsTheme.fix();
     }
+    /**
+     * Method to invoke on page to start processing
+     * Add you custom implementation here
+     */
     public doStuff() {
         microsoftTeams.getContext((context: microsoftTeams.Context) => {
             var a = document.getElementById('app');
@@ -13,7 +23,9 @@ export class <%=tabName%>Tab {
             }
         });
     }
-
+    /**
+     * Method for retrieving query string parameters
+     */
     getParameterByName(name: string, url?: string): string {
         if (!url) {
             url = window.location.href;
