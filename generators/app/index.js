@@ -244,7 +244,7 @@ class GeneratorTeamsTab extends Generator {
             {
                 type: 'input',
                 name: 'developer',
-                message: 'Your (company) name',
+                message: 'Your (company) name? (max 32 characters)',
                 default: this.user.git.name,
                 validate: (input) => {
                     return input.length > 0 && input.length <= 32;
@@ -253,7 +253,7 @@ class GeneratorTeamsTab extends Generator {
             {
                 type: 'input',
                 name: 'host',
-                message: 'The Url where you will host this tab:',
+                message: 'The Url where you will host this tab?',
                 default: (answers) => {
                     return `https://${lodash.camelCase(answers.solutionName)}.azurewebsites.net`;
                 },
@@ -375,7 +375,7 @@ exports.GeneratorTeamsTab = GeneratorTeamsTab;
 
 module.exports = {
 	"name": "generator-teams",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Yeoman generator for Microsoft Teams extensibility",
 	"main": "generators/app/index.js",
 	"scripts": {},

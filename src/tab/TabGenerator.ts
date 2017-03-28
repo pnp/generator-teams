@@ -26,8 +26,11 @@ export class TabGenerator extends Generator {
                     {
                         type: 'input',
                         name: 'tabTitle',
-                        message: 'Name of your Tab?',
-                        default: this.options.title + ' Tab'
+                        message: 'Name of your Tab? (max 16 characters)',
+                        default: this.options.title + ' Tab',
+                        validate: (input) => {
+                            return input.length > 0 && input.length <= 16;
+                        }
                     },
                 ]
             ).then((answers: any) => {

@@ -68,7 +68,7 @@ export class GeneratorTeamsTab extends Generator {
                 {
                     type: 'input',
                     name: 'developer',
-                    message: 'Your (company) name',
+                    message: 'Your (company) name? (max 32 characters)',
                     default: this.user.git.name,
                     validate: (input: string) => {
                         return input.length > 0 && input.length <= 32;
@@ -77,7 +77,7 @@ export class GeneratorTeamsTab extends Generator {
                 {
                     type: 'input',
                     name: 'host',
-                    message: 'The Url where you will host this tab:',
+                    message: 'The Url where you will host this tab?',
                     default: (answers: any) => {
                         return `https://${lodash.camelCase(answers.solutionName)}.azurewebsites.net`;
                     },

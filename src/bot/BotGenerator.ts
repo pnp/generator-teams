@@ -80,7 +80,10 @@ export class BotGenerator extends Generator {
                     {
                         type: 'input',
                         name: 'pinnedTabName',
-                        message: 'What is the title of your pinned tab for the bot?',
+                        message: 'What is the title of your pinned tab for the bot? (max 16 characters)',
+                        validate: (input) => {
+                            return input.length > 0 && input.length <=16;
+                        },
                         when: (answers: any) => {
                             return answers.pinnedTab;
                         },
