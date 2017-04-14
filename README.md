@@ -2,7 +2,7 @@
 
 A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) extensibility created by [Wictor Wilén](http://twitter.com/wictor).
 
-Generates a Microsoft Teams extensibility project that can be used to add Tabs and Bots to a Microsoft Team based on Node.js and TypeScript. Optionally add support for hosting using [Express](http://expressjs.com/).
+Generates a Microsoft Teams App that can be used to add Tabs, Bots, and more to Microsoft Teams based on Node.js and TypeScript. Optionally add support for hosting using [Express](http://expressjs.com/).
 
 [![npmjs](https://nodei.co/npm/generator-teams.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/generator-teams)
 

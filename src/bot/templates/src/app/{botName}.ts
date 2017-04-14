@@ -33,8 +33,7 @@ export class <%= botName %> {
             session.beginDialog('/help');
             return
         }
-        session.send('I\'m terrible sorry, but my master hasn\'t trained me yet to do something...');
-    
+        session.send('I\'m terribly sorry, but my master hasn\'t yet trained me to do anything...');    
     }
     
     /**
@@ -42,7 +41,7 @@ export class <%= botName %> {
      * @param session 
      */
     helpDialog(session: builder.Session) {
-        session.send('I\'m just your friendly bot, and right now I don\'t hanve any valuable help for you!');
+        session.send('I\'m just a friendly but rather stupid bot, and right now I don\'t have any valuable help for you!');
     }
 
     /**

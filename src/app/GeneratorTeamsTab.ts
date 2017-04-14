@@ -18,7 +18,7 @@ export class GeneratorTeamsTab extends Generator {
     public constructor(args: any, opts: any) {
         super(args, opts);
         opts.force = true;
-        this.desc('Generate a Microsoft Teams extensibility solution.');
+        this.desc('Generate a Microsoft Teams application.');
         this.argument('solutionName', {
             description: 'Solution name, as well as folder name',
             required: false
@@ -62,7 +62,11 @@ export class GeneratorTeamsTab extends Generator {
                 {
                     type: 'input',
                     name: 'name',
+<<<<<<< 518c71130ed175654e3e20a3c8c05e33e65f4cf6
                     message: 'Name of your Microsoft Teams Tab project',
+=======
+                    message: 'Name of your Microsoft Teams App project?',
+>>>>>>> Typos and updates for "Apps" nomenclature, ngrok info
                     default: this.appname
                 },
                 {
@@ -77,7 +81,11 @@ export class GeneratorTeamsTab extends Generator {
                 {
                     type: 'input',
                     name: 'host',
+<<<<<<< 518c71130ed175654e3e20a3c8c05e33e65f4cf6
                     message: 'The Url where you will host this tab?',
+=======
+                    message: 'The URL where you will host this tab?',
+>>>>>>> Typos and updates for "Apps" nomenclature, ngrok info
                     default: (answers: any) => {
                         return `https://${lodash.camelCase(answers.solutionName)}.azurewebsites.net`;
                     },
@@ -94,7 +102,11 @@ export class GeneratorTeamsTab extends Generator {
                             checked: true
                         },
                         {
+<<<<<<< 518c71130ed175654e3e20a3c8c05e33e65f4cf6
                             name: 'A Bot framework bot',
+=======
+                            name: 'A Bot Framework bot',
+>>>>>>> Typos and updates for "Apps" nomenclature, ngrok info
                             value: 'bot'
                         },
                         {
@@ -214,9 +226,15 @@ export class GeneratorTeamsTab extends Generator {
     }
 
     public end() {
+<<<<<<< 518c71130ed175654e3e20a3c8c05e33e65f4cf6
         this.log(chalk.yellow('Thanks for using the generator'));
         this.log(chalk.yellow('Wictor Wilén, @wictor'));
         this.log(chalk.yellow('Have fun and make great Tabs...'));
+=======
+        this.log(chalk.yellow('Thanks for using the generator!'));
+        this.log(chalk.yellow('Wictor Wilén, @wictor'));
+        this.log(chalk.yellow('Have fun and make great Microsoft Teams Apps...'));
+>>>>>>> Typos and updates for "Apps" nomenclature, ngrok info
     }
 
 
