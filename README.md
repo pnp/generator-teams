@@ -53,7 +53,7 @@ The generator is built and packaged using Webpack.
 webpack
 ```
 
-The bundled generator and the template files will en up in the `./generators/` folder.
+The bundled generator and the template files will end up in the `./generators/` folder.
 
 ### Use it in dev mode
 

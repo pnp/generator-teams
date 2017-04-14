@@ -7,9 +7,9 @@ module.exports =
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -197,14 +197,14 @@ class GeneratorTeamsTab extends Generator {
         super(args, opts);
         this.options = new GeneratorTeamTabOptions_1.GeneratorTeamTabOptions();
         opts.force = true;
-        this.desc('Generate a Microsoft Teams extensibility solution.');
+        this.desc('Generate a Microsoft Teams application.');
         this.argument('solutionName', {
             description: 'Solution name, as well as folder name',
             required: false
         });
     }
     initializing() {
-        this.log(yosay('Welcome to the ' + chalk.yellow(`Microsoft Teams extensibility generator (${pkg.version})`)));
+        this.log(yosay('Welcome to the ' + chalk.yellow(`Microsoft Teams App generator (${pkg.version})`)));
         this.composeWith('teams:tab', { 'options': this.options });
         this.composeWith('teams:bot', { 'options': this.options });
         this.composeWith('teams:custombot', { 'options': this.options });
@@ -238,7 +238,7 @@ class GeneratorTeamsTab extends Generator {
             {
                 type: 'input',
                 name: 'name',
-                message: 'Name of your Microsoft Teams Tab project',
+                message: 'Name of your Microsoft Teams App project?',
                 default: this.appname
             },
             {
@@ -253,7 +253,7 @@ class GeneratorTeamsTab extends Generator {
             {
                 type: 'input',
                 name: 'host',
-                message: 'The Url where you will host this tab?',
+                message: 'The URL where you will host this tab?',
                 default: (answers) => {
                     return `https://${lodash.camelCase(answers.solutionName)}.azurewebsites.net`;
                 },
@@ -270,7 +270,7 @@ class GeneratorTeamsTab extends Generator {
                         checked: true
                     },
                     {
-                        name: 'A Bot framework bot',
+                        name: 'A Bot Framework bot',
                         value: 'bot'
                     },
                     {
@@ -358,9 +358,9 @@ class GeneratorTeamsTab extends Generator {
         this.npmInstall(packages, { 'save': true });
     }
     end() {
-        this.log(chalk.yellow('Thanks for using the generator'));
+        this.log(chalk.yellow('Thanks for using the generator!'));
         this.log(chalk.yellow('Wictor Wilén, @wictor'));
-        this.log(chalk.yellow('Have fun and make great Tabs...'));
+        this.log(chalk.yellow('Have fun and make great Microsoft Teams Apps...'));
     }
 }
 exports.GeneratorTeamsTab = GeneratorTeamsTab;
