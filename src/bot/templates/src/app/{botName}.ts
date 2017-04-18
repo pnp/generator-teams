@@ -18,22 +18,26 @@ export class <%= botName %> {
         // Add dialogs here
         this.universalBot.dialog('/', this.defaultDialog);
         this.universalBot.dialog('/help', this.helpDialog);
-    }
+ 
+        // Control messages
+        this.universalBot.on('conversationUpdate', this.convUpdateHandler);
+   }
 
     /**
      * This is the default dialog used by the bot
      * @param session 
      */
     defaultDialog(session: builder.Session) {
+		session.endTyping();
         let text = <%= botName %>.extractTextFromMessage(session.message);
         if (text.startsWith('hello')) {
-            session.send('Oh, hello to you as well!')
+            session.endDialog('Oh, hello to you as well!')
             return;
         } else if(text.startsWith('help')) {
             session.beginDialog('/help');
             return
         }
-        session.send('I\'m terribly sorry, but my master hasn\'t yet trained me to do anything...');    
+        session.endDialog('I\'m terribly sorry, but my master hasn\'t trained me to do anything yet...');    
     }
     
     /**
@@ -41,7 +45,16 @@ export class <%= botName %> {
      * @param session 
      */
     helpDialog(session: builder.Session) {
-        session.send('I\'m just a friendly but rather stupid bot, and right now I don\'t have any valuable help for you!');
+		session.endTyping();
+        session.endDialog('I\'m just a friendly but rather stupid bot, and right now I don\'t have any valuable help for you!');
+    }
+	
+    /**
+     * This is an example of a conversationUpdate event handler
+     * @param activity 
+     */
+    convUpdateHandler(activity: any) {
+        console.log("Conversation update")
     }
 
     /**
