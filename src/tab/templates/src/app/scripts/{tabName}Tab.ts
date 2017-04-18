@@ -13,7 +13,7 @@ export class <%=tabName%>Tab {
     }
     /**
      * Method to invoke on page to start processing
-     * Add you custom implementation here
+     * Add your custom implementation here
      */
     public doStuff() {
         microsoftTeams.getContext((context: microsoftTeams.Context) => {
