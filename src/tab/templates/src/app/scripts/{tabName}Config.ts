@@ -14,7 +14,7 @@ export class <%=tabName%>Configure {
                 contentUrl: "<%=host%>/<%=tabName%>Tab.html?data=" + val.value,
                 customSettings: val.value,
                 suggestedDisplayName: `<%=title%>`,
-                removeUrl: "<%=host%>/remove.html",
+                removeUrl: "<%=host%>/<%=tabName%>Remove.html",
             });
 
             saveEvent.notifySuccess();
