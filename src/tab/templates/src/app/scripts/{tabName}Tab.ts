@@ -19,14 +19,14 @@ export class <%=tabName%>Tab {
         microsoftTeams.getContext((context: microsoftTeams.Context) => {
             var a = document.getElementById('app');
             if (a) {
-                a.innerHTML = `The value is: ${this.getParameterByName('data')}`;
+                a.innerHTML = `The value is: ${context.entityId}`;
             }
         });
     }
     /**
      * Method for retrieving query string parameters
      */
-    getParameterByName(name: string, url?: string): string {
+    private getParameterByName(name: string, url?: string): string {
         if (!url) {
             url = window.location.href;
         }
