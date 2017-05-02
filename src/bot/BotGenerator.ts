@@ -32,7 +32,7 @@ export class BotGenerator extends Generator {
                         default: 'existing',
                         choices: [
                             {
-                                name: 'An already existing and running bot',
+                                name: 'An already existing and running bot (not hosted in this solution)',
                                 value: 'existing'
                             },
                             {

@@ -71,6 +71,7 @@ npm unlink
 
 ## Credits
 
+* [Bill Bliss](https://github.com/billbliss) - Teams support and awesome pull requests and commits
 * [Richard DiZerega](https://blogs.msdn.microsoft.com/richard_dizeregas_blog/2017/02/07/microsoft-teams-and-custom-tab-theme/) - Themes management idea
 * [Elaine van Bergen](https://github.com/laneyvb) - pull requests
 * [Daniel Laskewitz](https://github.com/Laskewitz) - pull requests

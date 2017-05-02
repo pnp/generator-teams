@@ -141,6 +141,7 @@ export class GeneratorTeamsTab extends Generator {
         let staticFiles = [
             "_gitignore",
             "tsconfig.json",
+            "tsconfig-client.json",
             "src/app/web/assets/tab-44.png",
             "src/app/web/assets/tab-88.png",
 			"src/app/web/assets/css/msteams-app.css",
