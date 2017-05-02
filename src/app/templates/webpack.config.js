@@ -17,7 +17,7 @@ var config = [
     {
         entry: {
             server: [
-                './src/app/server.ts'
+                __dirname + '/src/app/server.ts'
             ],
         },
         output: {
@@ -51,7 +51,7 @@ var config = [
     {
         entry: {
             client: [
-                './src/app/scripts/client.ts'
+                __dirname + '/src/app/scripts/client.ts'
             ]
         },
         output: {
@@ -74,7 +74,10 @@ var config = [
                 {
                     test: /\.tsx?$/,
                     exclude: [/lib/, /dist/],
-                    loader: "ts-loader"
+                    loader: "ts-loader",
+                    options: {
+                        configFileName: "tsconfig-client.json"                        
+                    }
                 }
             ]
         },

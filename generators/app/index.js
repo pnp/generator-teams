@@ -309,6 +309,7 @@ class GeneratorTeamsTab extends Generator {
         let staticFiles = [
             "_gitignore",
             "tsconfig.json",
+            "tsconfig-client.json",
             "src/app/web/assets/tab-44.png",
             "src/app/web/assets/tab-88.png",
             "src/app/web/assets/css/msteams-app.css",
@@ -376,7 +377,7 @@ exports.GeneratorTeamsTab = GeneratorTeamsTab;
 
 module.exports = {
 	"name": "generator-teams",
-	"version": "1.0.3",
+	"version": "1.1.0",
 	"description": "Yeoman generator for Microsoft Teams apps",
 	"main": "generators/app/index.js",
 	"scripts": {},
@@ -413,12 +414,12 @@ module.exports = {
 	"license": "CC-BY-4.0",
 	"devDependencies": {
 		"@types/chalk": "^0.4.31",
-		"@types/lodash": "^4.14.52",
+		"@types/lodash": "^4.14.58",
 		"@types/yeoman-generator": "^1.0.1",
 		"@types/yosay": "0.0.28",
 		"ts-loader": "^2.0.0",
-		"typescript": "^2.1.6",
-		"webpack": "^2.2.1"
+		"typescript": "^2.3.2",
+		"webpack": "^2.4.1"
 	},
 	"dependencies": {
 		"chalk": "^1.1.3",

@@ -4,22 +4,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [*1.0.0*] - <*2017-03-28*>
 
-## Added
+## [*1.1.0*] - <*2017-05-02*>
+
+### Added
+
+* Separate tsconfig (tsconfig-client.json) file for client side scripts to support older browsers
+### Changed
+
+* Text and documentation updates (App nomenclature)
+* Fixed and udpated theme/CSS management, CSS now hosted in solution
+* Fixed dialog nesting in default bot
+* New Teams .d.ts file (0.4 schema)
+* Updates to npm packages
+* Use of `entityId` instead of query string parameter for tab value
+* + lots of more smaller fixes
+
+## [*1.0.2*] - <*2017-03-28*>
+
+### Added
 
 * Validation of lenght of input to match the schema
 
 ## [*1.0.0*] - <*2017-03-27*>
 
-## Added
+### Added
 
 * IMPORTANT: Renamed generator from *teams-tab* to *teams*, old npm packages are being deprecated
 * Support for Bot Framework bots and [Teams custom bots](https://aka.ms/microsoftteamscustombots/), using `botbuilder`
 * Added the `serve` Gulp task for local testing
 * JSDOc comments
 
-## Removed
+### Removed
 
 * Option to opt-out of express hosting
 * Option to opt-out of Azure deployment files - we all want Azure anyways!
