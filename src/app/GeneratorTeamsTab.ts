@@ -143,8 +143,9 @@ export class GeneratorTeamsTab extends Generator {
             "tsconfig.json",
             "src/app/web/assets/tab-44.png",
             "src/app/web/assets/tab-88.png",
+			"src/app/web/assets/css/msteams-app.css",
             "src/app/scripts/theme.ts",
-            "src/microsoft.teams.d.ts",
+            "src/msteams-0.4.0.d.ts",
             'deploy.cmd',
             '_deployment'
         ]
