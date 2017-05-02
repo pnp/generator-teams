@@ -232,7 +232,8 @@ class TabGenerator extends Generator {
             var tmp = this.options.host.substring(this.options.host.indexOf('://') + 3);
             var arr = tmp.split('.');
             ;
-            manifest.validDomains.push(`https://*.${arr.slice(1).join('.')}`);
+            // (<string[]>manifest.validDomains).push(`https://*.${arr.slice(1).join('.')}`)
+            manifest.validDomains.push(this.options.host.split("https://")[1]);
             this.fs.writeJSON(manifestPath, manifest);
             // update client.ts
             let clientTsPath = "src/app/scripts/client.ts";
