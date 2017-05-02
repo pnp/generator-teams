@@ -15,6 +15,14 @@ export class <%= botName %> {
         this.Connector = connector;
         this.universalBot = new builder.UniversalBot(this.Connector);
 
+        // Install sendTyping as middleware
+        this.universalBot.use({
+            botbuilder: function(session, next) {
+                session.sendTyping();
+                next();
+            }
+        });
+		
         // Add dialogs here
         this.universalBot.dialog('/', this.defaultDialog);
         this.universalBot.dialog('/help', this.helpDialog);
@@ -28,12 +36,12 @@ export class <%= botName %> {
      * @param session 
      */
     defaultDialog(session: builder.Session) {
-		session.endTyping();
         let text = <%= botName %>.extractTextFromMessage(session.message);
         if (text.startsWith('hello')) {
-            session.endDialog('Oh, hello to you as well!')
+            session.send('Oh, hello to you as well!');
+            session.endDialog();
             return;
-        } else if(text.startsWith('help')) {
+        } else if (text.startsWith('help')) {
             session.beginDialog('/help');
             return
         }
@@ -45,8 +53,8 @@ export class <%= botName %> {
      * @param session 
      */
     helpDialog(session: builder.Session) {
-		session.endTyping();
-        session.endDialog('I\'m just a friendly but rather stupid bot, and right now I don\'t have any valuable help for you!');
+        session.send('I\'m just a friendly but rather stupid bot, and right now I don\'t have any valuable help for you!');
+        session.endDialog();
     }
 	
     /**
