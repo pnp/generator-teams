@@ -15,10 +15,21 @@ export class <%= botName %> {
         this.Connector = connector;
         this.universalBot = new builder.UniversalBot(this.Connector);
 
+        // Install sendTyping as middleware
+        this.universalBot.use({
+            botbuilder: function(session, next) {
+                session.sendTyping();
+                next();
+            }
+        });
+		
         // Add dialogs here
         this.universalBot.dialog('/', this.defaultDialog);
         this.universalBot.dialog('/help', this.helpDialog);
-    }
+ 
+        // Control messages
+        this.universalBot.on('conversationUpdate', this.convUpdateHandler);
+   }
 
     /**
      * This is the default dialog used by the bot
@@ -27,14 +38,14 @@ export class <%= botName %> {
     defaultDialog(session: builder.Session) {
         let text = <%= botName %>.extractTextFromMessage(session.message);
         if (text.startsWith('hello')) {
-            session.send('Oh, hello to you as well!')
+            session.send('Oh, hello to you as well!');
+            session.endDialog();
             return;
-        } else if(text.startsWith('help')) {
+        } else if (text.startsWith('help')) {
             session.beginDialog('/help');
             return
         }
-        session.send('I\'m terrible sorry, but my master hasn\'t trained me yet to do something...');
-    
+        session.endDialog('I\'m terribly sorry, but my master hasn\'t trained me to do anything yet...');    
     }
     
     /**
@@ -42,7 +53,16 @@ export class <%= botName %> {
      * @param session 
      */
     helpDialog(session: builder.Session) {
-        session.send('I\'m just your friendly bot, and right now I don\'t hanve any valuable help for you!');
+        session.send('I\'m just a friendly but rather stupid bot, and right now I don\'t have any valuable help for you!');
+        session.endDialog();
+    }
+	
+    /**
+     * This is an example of a conversationUpdate event handler
+     * @param activity 
+     */
+    convUpdateHandler(activity: any) {
+        console.log("Conversation update")
     }
 
     /**

@@ -4,24 +4,21 @@
 <head>
   <meta charset="UTF-8">
   <title><%= tabTitle %>: Configuration</title>
-  <link id="themeCSS" href="https://statics.teams.microsoft.com/hashedcss/stylesheets.min-e05e0092.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/msteams-app.css" />
   <!-- inject:css -->
   <!-- endinject -->
-  <style>
-    body {
-      opacity: 1.0;
-    }
-  </style>
 </head>
 
-<body  class="ts-dialog ts-middle">
-  <div>
-    <div class="ngdialog-message"> 
-      <h3>Enter setting:</h3>
-    </div>
-    <div class="ngdialog-message">
-      <input type="text" maxlength="50" required="" set-focus="true" onkeydown='onChange(this.value)' id='data' class="ngdialog-textbox" style="width:100px" >
-    </div>
+<body>
+  <div class="settings-container">
+    <div class="section-caption">Settings</div>
+      <div class="form-field-title">
+        <div for="data">Enter setting</div>
+      </div>
+      <div class="form-field-input">
+        <input type="text" class="form-control" maxlength="75" required="" onkeydown='onChange(this.value)' id='data' autofocus>
+      </div>
   </div>
   <script src="https://statics.teams.microsoft.com/sdk/v0.4/js/MicrosoftTeams.min.js"></script>
   <!-- inject:js -->

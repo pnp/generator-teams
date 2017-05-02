@@ -55,11 +55,11 @@ export class BotGenerator extends Generator {
                         type: 'input',
                         name: 'botid',
                         message: (answers) => {
-                            var message = 'I need an ID for the bot. ';
+                            var message = 'I need the Microsoft App ID for the bot. ';
                             if (answers.botTye == 'botframework') {
-                                message += 'If you don\'t specify a value now, you need to manually edit it later. ';
+                                message += 'If you don\'t specify a value now, you will need to manually edit it later. ';
                             }
-                            message += 'It\'s found in the Bot Framework portal';
+                            message += 'It\'s found in the Bot Framework portal (https://dev.botframework.com).';
                             return message;
                         },
                         default: (answers: any) => {

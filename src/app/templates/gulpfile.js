@@ -9,7 +9,7 @@ var nodemon = require('nodemon');
 
 var injectSources = ["./dist/web/scripts/**/*.js"]
 var typeScriptFiles = ["./src/**/*.ts"]
-var staticFiles = ["./src/app/**/*.html", "./src/app/**/*.png"]
+var staticFiles = ["./src/app/**/*.html", "./src/app/web/assets/**/*"]
 var htmlFiles = ["./src/app/**/*.html"]
 var watcherfiles = ["./src/**/*.*"]
 var manifestFiles = ["./src/manifest/**/*.*"]
