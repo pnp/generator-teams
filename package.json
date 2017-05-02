@@ -1,7 +1,7 @@
 {
   "name": "generator-teams",
-  "version": "1.0.2",
-  "description": "Yeoman generator for Microsoft Teams extensibility",
+  "version": "1.0.3",
+  "description": "Yeoman generator for Microsoft Teams apps",
   "main": "generators/app/index.js",
   "scripts": {},
   "files": [
