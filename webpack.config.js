@@ -17,17 +17,20 @@ var config = [
     {
         entry: {
             app: [
-                './src/app/index.ts'
+                __dirname + '/src/app/index.ts'
             ],
             bot: [
-                './src/bot/index.ts'
+                __dirname + '/src/bot/index.ts'
             ],
             tab: [
-                './src/tab/index.ts'
+                __dirname + '/src/tab/index.ts'
+            ],
+            custombot: [
+                __dirname +'/src/custombot/index.ts'
             ]
         },
         output: {
-            path: './generators',
+            path: __dirname + '/generators/',
             filename: '[name]/index.js',
             libraryTarget: 'commonjs-module'
         },
@@ -56,13 +59,19 @@ var config = [
             new CopyWebpackPlugin([{
                 from: 'src/app/templates',
                 to: 'app/templates'
-            }
-            ]),
+            }]),
             new CopyWebpackPlugin([{
                 from: 'src/tab/templates',
                 to: 'tab/templates'
-            }
-            ])
+            }]),
+            new CopyWebpackPlugin([{
+                from: 'src/bot/templates',
+                to: 'bot/templates'
+            }]),
+            new CopyWebpackPlugin([{
+                from: 'src/custombot/templates',
+                to: 'custombot/templates'
+            }])
         ]
     }
 ];

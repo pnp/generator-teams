@@ -1,8 +1,8 @@
 {
     "$schema": "https://statics.teams.microsoft.com/sdk/v0.4/manifest/MicrosoftTeams.schema.json",
     "manifestVersion": "0.4",
-    "id": "<%= namespace %>",
-    "version": "0.1",
+    "id": "<%= id %>",
+    "version": "0.0.1",
     "developer": {
         "name": "<%=developer %>",
         "websiteUrl": "<%=host %>",

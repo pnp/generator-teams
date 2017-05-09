@@ -7,6 +7,8 @@ import { Yotilities } from './../app/Yotilities';
 
 let yosay = require('yosay');
 let path = require('path');
+let Guid = require('guid');
+
 
 export class TabGenerator extends Generator {
     options: GeneratorTeamTabOptions;
@@ -15,7 +17,7 @@ export class TabGenerator extends Generator {
         super(args, opts);
         opts.force = true;
         this.options = opts.options;
-        this.desc('Adds a tab to a Teams Tab project.');
+        this.desc('Adds a tab to a Teams project.');
     }
     public prompting() {
         if (this.options.tab) {
@@ -24,8 +26,11 @@ export class TabGenerator extends Generator {
                     {
                         type: 'input',
                         name: 'tabTitle',
-                        message: 'Name of your Tab?',
-                        default: this.options.title
+                        message: 'Name of your Tab? (max 16 characters)',
+                        default: this.options.title + ' Tab',
+                        validate: (input) => {
+                            return input.length > 0 && input.length <= 16;
+                        }
                     },
                 ]
             ).then((answers: any) => {
@@ -36,9 +41,6 @@ export class TabGenerator extends Generator {
     }
     public writing() {
         if (this.options.tab) {
-            let staticFiles = [
-                "src/microsoft.teams.d.ts"
-            ]
             let templateFiles = [
                 "src/app/scripts/{tabName}Config.ts",
                 "src/app/scripts/{tabName}Tab.ts",
@@ -55,17 +57,13 @@ export class TabGenerator extends Generator {
                     Yotilities.fixFileNames(t, this.options),
                     this.options);
             });
-            staticFiles.forEach(t => {
-                this.fs.copy(
-                    this.templatePath(t),
-                    Yotilities.fixFileNames(t, this.options));
-            });
 
             // Update manifest
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
             (<any[]>manifest.tabs).push({
-                id: `${this.options.namespace}.${this.options.tabName}`,
+                //id: `${this.options.namespace}.${this.options.tabName}`,
+                id: Guid.raw(),
                 name: this.options.tabTitle,
                 description: {
                     short: `Add a short description for ${this.options.tabTitle} here`,
@@ -82,13 +80,13 @@ export class TabGenerator extends Generator {
             var tmp: string = this.options.host.substring(this.options.host.indexOf('://') + 3)
             var arr: string[] = tmp.split('.');
             ;
-            (<string[]>manifest.validDomains).push(`https://*.${arr.slice(1).join('.')}`)
+            (<string[]>manifest.validDomains).push(this.options.host.split("https://")[1]);
             this.fs.writeJSON(manifestPath, manifest);
 
             // update client.ts
             let clientTsPath = "src/app/scripts/client.ts";
             let clientTs = this.fs.read(clientTsPath);
-            clientTs += `\n// Added by generator-teams-tab`;
+            clientTs += `\n// Added by generator-teams`;
             clientTs += `\nexport * from './${this.options.tabName}Config';`;
             clientTs += `\nexport * from './${this.options.tabName}Tab';`;
             clientTs += `\n`;

@@ -2,41 +2,41 @@ module.exports =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
 /******/ 			l: false,
 /******/ 			exports: {}
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
-
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
+/******/
 /******/ 	// identity function for calling harmony imports with the correct context
 /******/ 	__webpack_require__.i = function(value) { return value; };
-
+/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -47,7 +47,7 @@ module.exports =
 /******/ 			});
 /******/ 		}
 /******/ 	};
-
+/******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
@@ -56,15 +56,15 @@ module.exports =
 /******/ 		__webpack_require__.d(getter, 'a', getter);
 /******/ 		return getter;
 /******/ 	};
-
+/******/
 /******/ 	// Object.prototype.hasOwnProperty.call
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 17);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -75,38 +75,28 @@ module.exports = require("path");
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
-
-module.exports = require("yeoman-generator");
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-module.exports = require("yosay");
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-class GeneratorTeamTabOptions {
-}
-exports.GeneratorTeamTabOptions = GeneratorTeamTabOptions;
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
+Object.defineProperty(exports, "__esModule", { value: true });
 let path = __webpack_require__(0);
+/**
+ * Utility class for the Generator
+ */
 class Yotilities {
+    /**
+     * Validates a URL
+     * @param url Url to validate
+     */
     static validateUrl(url) {
         return /(https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(url);
     }
+    /**
+     * Renames a file based on passed options
+     * @param filename path and name to file
+     * @param options object with replacement properties
+     */
     static fixFileNames(filename, options) {
         if (filename !== undefined) {
             var basename = path.basename(filename);
@@ -128,10 +118,28 @@ exports.Yotilities = Yotilities;
 
 
 /***/ }),
-/* 5 */
+/* 2 */
+/***/ (function(module, exports) {
+
+module.exports = require("guid");
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports) {
 
 module.exports = require("lodash");
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+module.exports = require("yeoman-generator");
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+module.exports = require("yosay");
 
 /***/ }),
 /* 6 */
@@ -139,41 +147,67 @@ module.exports = require("lodash");
 
 "use strict";
 
-const GeneratorTeamsTab_1 = __webpack_require__(9);
-module.exports = GeneratorTeamsTab_1.GeneratorTeamsTab;
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Configuration options for the generator
+ */
+class GeneratorTeamTabOptions {
+    constructor() {
+        this.botType = "";
+    }
+}
+exports.GeneratorTeamTabOptions = GeneratorTeamTabOptions;
 
 
 /***/ }),
-/* 7 */,
-/* 8 */,
-/* 9 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-const Generator = __webpack_require__(1);
-const lodash = __webpack_require__(5);
-const chalk = __webpack_require__(13);
-const GeneratorTeamTabOptions_1 = __webpack_require__(3);
-const Yotilities_1 = __webpack_require__(4);
-let yosay = __webpack_require__(2);
+Object.defineProperty(exports, "__esModule", { value: true });
+const GeneratorTeamsTab_1 = __webpack_require__(11);
+module.exports = GeneratorTeamsTab_1.GeneratorTeamsTab;
+
+
+/***/ }),
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const Generator = __webpack_require__(4);
+const lodash = __webpack_require__(3);
+const chalk = __webpack_require__(16);
+const GeneratorTeamTabOptions_1 = __webpack_require__(6);
+const Yotilities_1 = __webpack_require__(1);
+let yosay = __webpack_require__(5);
 let path = __webpack_require__(0);
-let pkg = __webpack_require__(12);
+let pkg = __webpack_require__(15);
+let Guid = __webpack_require__(2);
+/**
+ * The main implementation for the `teams` generator
+ */
 class GeneratorTeamsTab extends Generator {
     constructor(args, opts) {
         super(args, opts);
         this.options = new GeneratorTeamTabOptions_1.GeneratorTeamTabOptions();
         opts.force = true;
-        this.desc('Generate a Microsoft Teams Tab solution.');
+        this.desc('Generate a Microsoft Teams application.');
         this.argument('solutionName', {
             description: 'Solution name, as well as folder name',
             required: false
         });
     }
     initializing() {
-        this.log(yosay('Welcome to the ' + chalk.yellow(`Microsoft Teams Tab generator (${pkg.version})`)));
-        this.composeWith('teams-tab:tab', { 'options': this.options });
-        this.composeWith('teams-tab:bot', { 'options': this.options });
+        this.log(yosay('Welcome to the ' + chalk.yellow(`Microsoft Teams App generator (${pkg.version})`)));
+        this.composeWith('teams:tab', { 'options': this.options });
+        this.composeWith('teams:bot', { 'options': this.options });
+        this.composeWith('teams:custombot', { 'options': this.options });
     }
     prompting() {
         return this.prompt([
@@ -204,24 +238,24 @@ class GeneratorTeamsTab extends Generator {
             {
                 type: 'input',
                 name: 'name',
-                message: 'Name of your Microsoft Teams Tab project',
+                message: 'Name of your Microsoft Teams App project?',
                 default: this.appname
             },
             {
                 type: 'input',
                 name: 'developer',
-                message: 'Your (company) name',
+                message: 'Your (company) name? (max 32 characters)',
                 default: this.user.git.name,
                 validate: (input) => {
-                    return input.length > 0;
+                    return input.length > 0 && input.length <= 32;
                 }
             },
             {
                 type: 'input',
                 name: 'host',
-                message: 'The Url where you will host this tab:',
+                message: 'The URL where you will host this tab?',
                 default: (answers) => {
-                    return `https://${answers.name}.azurewebsites.net`;
+                    return `https://${lodash.camelCase(answers.solutionName)}.azurewebsites.net`;
                 },
                 validate: Yotilities_1.Yotilities.validateUrl
             },
@@ -236,28 +270,20 @@ class GeneratorTeamsTab extends Generator {
                         checked: true
                     },
                     {
-                        name: 'A bot',
+                        name: 'A Bot Framework bot',
                         value: 'bot'
+                    },
+                    {
+                        name: 'A Teams custom bot',
+                        value: 'custombot'
                     }
                 ]
-            },
-            {
-                type: 'confirm',
-                name: 'express',
-                message: 'Would you like to use Express to host your Tabs?'
-            },
-            {
-                type: 'confirm',
-                name: 'azure',
-                message: 'Would you like to include settings for Azure deployment?'
             }
         ]).then((answers) => {
             this.options.title = answers.name;
             this.options.description = this.description;
             this.options.solutionName = this.options.solutionName || answers.solutionName;
             this.options.shouldUseSubDir = answers.whichFolder === 'subdir';
-            this.options.shouldUseAzure = (answers.azure);
-            this.options.shouldUseExpress = (answers.express);
             this.options.libraryName = lodash.camelCase(this.options.solutionName);
             this.options.developer = answers.developer;
             this.options.host = answers.host;
@@ -268,6 +294,8 @@ class GeneratorTeamsTab extends Generator {
             this.options.privacy = answers.host + '/privacy.html';
             this.options.bot = answers.parts.indexOf('bot') != -1;
             this.options.tab = answers.parts.indexOf('tab') != -1;
+            this.options.customBot = answers.parts.indexOf('custombot') != -1;
+            this.options.id = Guid.raw();
             if (this.options.shouldUseSubDir) {
                 this.destinationRoot(this.destinationPath(this.options.solutionName));
             }
@@ -281,14 +309,20 @@ class GeneratorTeamsTab extends Generator {
         let staticFiles = [
             "_gitignore",
             "tsconfig.json",
+            "tsconfig-client.json",
             "src/app/web/assets/tab-44.png",
             "src/app/web/assets/tab-88.png",
-            "src/app/scripts/theme.ts"
+            "src/app/web/assets/css/msteams-app.css",
+            "src/app/scripts/theme.ts",
+            "src/msteams-0.4.0.d.ts",
+            'deploy.cmd',
+            '_deployment'
         ];
         let templateFiles = [
             "README.md",
             "gulpfile.js",
             "package.json",
+            'src/app/server.ts',
             "src/manifest/manifest.json",
             "webpack.config.js",
             "src/app/scripts/client.ts",
@@ -296,12 +330,6 @@ class GeneratorTeamsTab extends Generator {
             "src/app/web/tou.html",
             "src/app/web/privacy.html"
         ];
-        if (this.options.shouldUseAzure) {
-            staticFiles.push('deploy.cmd', '_deployment');
-        }
-        if (this.options.shouldUseExpress) {
-            staticFiles.push('src/app/server.ts');
-        }
         this.sourceRoot();
         templateFiles.forEach(t => {
             this.fs.copyTpl(this.templatePath(t), Yotilities_1.Yotilities.fixFileNames(t, this.options), this.options);
@@ -321,32 +349,36 @@ class GeneratorTeamsTab extends Generator {
             'gulp-zip',
             'gulp-util',
             'gulp-inject',
-            'run-sequence'
+            'run-sequence',
+            'nodemon'
         ];
-        if (this.options.shouldUseExpress) {
-            packages.push('express', 'express-session', 'body-parser', 'morgan', '@types/express', '@types/express-session', '@types/body-parser', '@types/morgan');
+        // used for hosting in express
+        packages.push('express', 'express-session', 'body-parser', 'morgan', '@types/express', '@types/express-session', '@types/body-parser', '@types/morgan');
+        if (this.options.botType == 'botframework' || this.options.customBot) {
+            packages.push('botbuilder');
         }
         this.npmInstall(packages, { 'save': true });
     }
     end() {
-        this.log(chalk.yellow('Thanks for using the generator'));
+        this.log(chalk.yellow('Thanks for using the generator!'));
         this.log(chalk.yellow('Wictor Wilén, @wictor'));
-        this.log(chalk.yellow('Have fun and make great Tabs...'));
+        this.log(chalk.yellow('Have fun and make great Microsoft Teams Apps...'));
     }
 }
 exports.GeneratorTeamsTab = GeneratorTeamsTab;
 
 
 /***/ }),
-/* 10 */,
-/* 11 */,
-/* 12 */
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports = {
-	"name": "generator-teams-tab",
-	"version": "0.4.11",
-	"description": "Yeoman generator for Microsoft Teams Tabs",
+	"name": "generator-teams",
+	"version": "1.1.0",
+	"description": "Yeoman generator for Microsoft Teams apps",
 	"main": "generators/app/index.js",
 	"scripts": {},
 	"files": [
@@ -354,12 +386,12 @@ module.exports = {
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/wictorwilen/generator-teams-tab.git"
+		"url": "https://github.com/wictorwilen/generator-teams.git"
 	},
 	"bugs": {
-		"url": "https://github.com/wictorwilen/generator-teams-tab/issues"
+		"url": "https://github.com/wictorwilen/generator-teams/issues"
 	},
-	"homepage": "https://github.com/wictorwilen/generator-teams-tab",
+	"homepage": "https://github.com/wictorwilen/generator-teams",
 	"keywords": [
 		"yeoman-generator",
 		"Microsoft Teams",
@@ -367,7 +399,9 @@ module.exports = {
 		"Office 365",
 		"office-365",
 		"bot",
-		"bot-framework"
+		"bot-framework",
+		"botbuilder",
+		"chatbot"
 	],
 	"author": "Wictor Wilén (wictor@wictorwilen.se)",
 	"maintainers": [
@@ -380,13 +414,12 @@ module.exports = {
 	"license": "CC-BY-4.0",
 	"devDependencies": {
 		"@types/chalk": "^0.4.31",
-		"@types/lodash": "^4.14.52",
+		"@types/lodash": "^4.14.58",
 		"@types/yeoman-generator": "^1.0.1",
 		"@types/yosay": "0.0.28",
-		"gulp": "^3.9.1",
 		"ts-loader": "^2.0.0",
-		"typescript": "^2.1.6",
-		"webpack": "^2.2.1"
+		"typescript": "^2.3.2",
+		"webpack": "^2.4.1"
 	},
 	"dependencies": {
 		"chalk": "^1.1.3",
@@ -399,17 +432,16 @@ module.exports = {
 };
 
 /***/ }),
-/* 13 */
+/* 16 */
 /***/ (function(module, exports) {
 
 module.exports = require("chalk");
 
 /***/ }),
-/* 14 */,
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(6);
+module.exports = __webpack_require__(7);
 
 
 /***/ })

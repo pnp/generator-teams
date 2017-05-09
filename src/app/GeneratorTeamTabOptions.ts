@@ -1,12 +1,14 @@
+/**
+ * Configuration options for the generator
+ */
 export class GeneratorTeamTabOptions {
+    id: string;
     title: string;
     description: string;
     solutionName: string;
     name: string;
     shouldUseSubDir: boolean;
     libraryName: string;
-    shouldUseAzure: boolean;
-    shouldUseExpress: boolean;
     namespace: string;
     developer: string;
     privacy: string;
@@ -17,4 +19,14 @@ export class GeneratorTeamTabOptions {
     tabTitle: string;
     tabName: string;
     botid?: string;
+    pinnedTab: boolean;
+    pinnedTabName: string;
+    pinnedTabTitle: string;
+    botType: string = "";
+    botTitle: string;
+    botName: string;
+    /* Custom Bot */
+    customBot: boolean;
+    customBotTitle: string;
+    customBotName: string;
 }

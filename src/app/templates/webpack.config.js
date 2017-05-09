@@ -4,7 +4,6 @@ var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
 
-<% if (shouldUseExpress) { %>
 var nodeModules = {};
 fs.readdirSync('node_modules')
     .filter(function (x) {
@@ -13,14 +12,12 @@ fs.readdirSync('node_modules')
     .forEach(function (mod) {
         nodeModules[mod] = 'commonjs ' + mod;
     });
-<% } %>
 
 var config = [
-    <% if (shouldUseExpress) { %>
     {
         entry: {
             server: [
-                './src/app/server.ts'
+                __dirname + '/src/app/server.ts'
             ],
         },
         output: {
@@ -51,11 +48,10 @@ var config = [
         plugins: [
         ]
     },
-    <% } %>
     {
         entry: {
             client: [
-                './src/app/scripts/client.ts'
+                __dirname + '/src/app/scripts/client.ts'
             ]
         },
         output: {
@@ -78,7 +74,10 @@ var config = [
                 {
                     test: /\.tsx?$/,
                     exclude: [/lib/, /dist/],
-                    loader: "ts-loader"
+                    loader: "ts-loader",
+                    options: {
+                        configFileName: "tsconfig-client.json"                        
+                    }
                 }
             ]
         },

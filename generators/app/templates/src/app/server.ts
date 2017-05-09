@@ -5,6 +5,15 @@ import * as https from 'https';
 import * as http from 'http';
 import * as path from 'path';
 import * as morgan from 'morgan';
+<% if(botType == 'botframework' || customBot) { %>
+import * as builder from 'botbuilder';
+<% } %>
+<% if(botType == 'botframework' ) { %>
+import { <%= botName %> } from './<%= botName %>';
+<% } %>
+<% if(customBot ) { %>
+import { <%= customBotName %> } from './<%= customBotName %>';
+<% } %>
 
 let express = Express();
 let port = process.env.port || process.env.PORT || 3007;
@@ -15,6 +24,24 @@ express.use(morgan('tiny'));
 
 express.use('/scripts', Express.static(path.join(__dirname, 'web/scripts')));
 express.use('/assets', Express.static(path.join(__dirname, 'web/assets')));
+
+<% if(botType == 'botframework') { %>
+// Bot hosting 
+let botSettings: builder.IChatConnectorSettings = {
+    appId: process.env.MICROSOFT_APP_ID,
+    appPassword: process.env.MICROSOFT_APP_PASSWORD
+};
+
+let bot = new <%= botName %>(new builder.ChatConnector(botSettings));
+express.post('/api/messages', bot.Connector.listen());
+<% } %>
+
+<% if(customBot) { %>
+// Custom bot
+let customBot = new <%= customBotName %>();
+express.post('/api/customBot', customBot.requestHandler);
+<% } %>
+
 
 // This is used to prevent your tabs from being embedded in other systems than Microsoft Teams
 express.use(function (req: any, res: any, next: any) {

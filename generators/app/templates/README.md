@@ -4,7 +4,7 @@
 
 TODO: Add your documentation here
 
-## Getting started with Tab development
+## Getting started with Microsoft Teams Apps development
 
 Head on over to [official documentation](https://msdn.microsoft.com/en-us/microsoft-teams/tabs) to learn how to build Microsoft Teams Tabs.
 
@@ -24,7 +24,7 @@ gulp manifest
 ## Output
 
 * dist/* - the files required to host the solution
-* package/* - the Teams Tab package (zip file) to be uploaded to Microsoft Teams ([how-to](https://msdn.microsoft.com/en-us/microsoft-teams/createpackage#uploading-your-tab-package-to-microsoft-teams))
+* package/* - the Teams extensibility package (zip file) to be uploaded to Microsoft Teams ([how-to](https://msdn.microsoft.com/en-us/microsoft-teams/createpackage#uploading-your-tab-package-to-microsoft-teams))
 
 ## Express hosting
 
