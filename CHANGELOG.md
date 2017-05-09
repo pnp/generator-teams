@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*1.1.1*] - <*2017-05-08*>
+
+### Changed
+
+* Adapt to changes to BotBuilder's IMessage interface in BotBuilder 3.8
+
+### Fixes
+
+* Bug fixes in msteams-app.css
 
 ## [*1.1.0*] - <*2017-05-02*>
 
@@ -18,7 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * New Teams .d.ts file (0.4 schema)
 * Updates to npm packages
 * Use of `entityId` instead of query string parameter for tab value
-* + lots of more smaller fixes
+* \+ lots of more smaller fixes
 
 ## [*1.0.2*] - <*2017-03-28*>
 
