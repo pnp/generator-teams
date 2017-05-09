@@ -70,10 +70,12 @@ export class <%= botName %> {
      * @param message builder.IMessage
      */
     private static extractTextFromMessage(message: builder.IMessage): string {
-        var s = message.text;
-        message.entities.forEach((ent: any) => {
-            s = s.replace(ent.text, '');
-        });
+        var s = (message.text) ? message.text : '';
+        if (message.entities) {
+            message.entities.forEach((ent: any) => {
+                s = s.replace(ent.text, '');
+            })            
+        }
         return s.trim();
     }
 }
