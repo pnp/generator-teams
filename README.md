@@ -2,7 +2,9 @@
 
 A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) Apps created by [Wictor Wilén](http://twitter.com/wictor).
 
-Generates a Microsoft Teams App that can be used to add Tabs, Bots, and more to Microsoft Teams based on Node.js and TypeScript. Optionally add support for hosting using [Express](http://expressjs.com/).
+Generates a Microsoft Teams App that can be used to add Tabs, Bots, and more to Microsoft Teams based on Node.js and TypeScript. Optionally it adds support for hosting using [Express](http://expressjs.com/).
+
+For more information on how Tabs and Bots can be used with Teams see the [Teams Developer Documentation](https://msdn.microsoft.com/en-us/microsoft-teams/ )
 
 [![npmjs](https://nodei.co/npm/generator-teams.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/generator-teams)
 
@@ -32,10 +34,11 @@ To create a new project using the generator, execute the following command in th
 ``` Shell
 yo teams
 ```
+> *Note:* Files are created in the directory that you run the command from hence make sure you are happy with the location before you hit enter.
 
 ### Build the generator
 
-On order to build the generator you need to install the Webpack as a global node module:
+In order to build the generator you need to install the Webpack as a global node module:
 
 ``` Shell
 npm install webpack --global
