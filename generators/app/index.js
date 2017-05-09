@@ -377,8 +377,8 @@ exports.GeneratorTeamsTab = GeneratorTeamsTab;
 
 module.exports = {
 	"name": "generator-teams",
-	"version": "1.1.0",
-	"description": "Yeoman generator for Microsoft Teams apps",
+	"version": "1.1.1",
+	"description": "Yeoman generator for Microsoft Teams Apps",
 	"main": "generators/app/index.js",
 	"scripts": {},
 	"files": [
