@@ -3,21 +3,25 @@
 
 <head>
   <meta charset="UTF-8">
-  <title><%= tabTitle %></title>
+  <title><%= staticTabTitle %></title>
   <!-- inject:css -->
   <!-- endinject -->
+  <style>
+    body {
+      opacity: 1.0;
+    }
   </style>
 </head>
 
 <body class="ts-middle">
   <div id='app'>
-    Loading...
+    <p>Welcome to the <%= botTitle%> bot page</p>
   </div>
-  <script src="https://statics.teams.microsoft.com/sdk/v1.0/js/MicrosoftTeams.min.js"></script>
+  <script src="https://statics.teams.microsoft.com/sdk/v0.4/js/MicrosoftTeams.min.js"></script>
   <!-- inject:js -->
   <!-- endinject -->
   <script type='text/javascript'>
-    var tab = new <%=libraryName%>.<%=tabName%>Tab();
+    var tab = new <%=libraryName%>.<%=staticTabName%>Tab();
     tab.doStuff();
   </script>
 </body>

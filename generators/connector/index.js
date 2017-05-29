@@ -64,7 +64,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 22);
+/******/ 	return __webpack_require__(__webpack_require__.s = 21);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -145,23 +145,22 @@ module.exports = require("yosay");
 /* 6 */,
 /* 7 */,
 /* 8 */,
-/* 9 */,
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const CustomBotGenerator_1 = __webpack_require__(15);
-module.exports = CustomBotGenerator_1.CustomBotGenerator;
+const ConnectorGenerator_1 = __webpack_require__(14);
+module.exports = ConnectorGenerator_1.ConnectorGenerator;
 
 
 /***/ }),
+/* 10 */,
 /* 11 */,
 /* 12 */,
 /* 13 */,
-/* 14 */,
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -173,55 +172,97 @@ const Yotilities_1 = __webpack_require__(1);
 let yosay = __webpack_require__(5);
 let path = __webpack_require__(0);
 let Guid = __webpack_require__(2);
-class CustomBotGenerator extends Generator {
+class ConnectorGenerator extends Generator {
     constructor(args, opts) {
         super(args, opts);
         opts.force = true;
         this.options = opts.options;
-        this.desc('Adds a custom bot to a Teams project.');
+        this.desc('Adds a Connector to a Microsoft Teams Apps project');
     }
     prompting() {
-        if (this.options.customBot) {
+        if (this.options.connector) {
             return this.prompt([
                 {
+                    type: 'list',
+                    name: 'connectorType',
+                    message: 'What type of Connector would you like to include?',
+                    default: 'new',
+                    choices: [
+                        {
+                            name: 'An already existing and running Connector (not hosted in this solution)',
+                            value: 'existing'
+                        },
+                        {
+                            name: 'A new Connector hosted in this solution',
+                            value: 'new'
+                        }
+                    ]
+                },
+                {
                     type: 'input',
-                    name: 'title',
-                    message: 'Name of your custom bot?',
-                    default: this.options.title + ' Custom Bot'
+                    name: 'connectorId',
+                    message: 'What is the Id of your Connector (found in the Connector portal)?',
+                    default: (answers) => {
+                        return this.options.botid ? this.options.botid : Guid.EMPTY;
+                    },
+                    validate: (input) => {
+                        return Guid.isGuid(input);
+                    }
+                },
+                {
+                    type: 'input',
+                    name: 'connectorName',
+                    message: 'What is the name of your Connector?',
+                    default: this.options.title,
+                    validate: (input) => {
+                        return input.length > 0;
+                    },
+                    when: (answers) => answers.connectorType != 'existing'
                 },
             ]).then((answers) => {
-                this.options.customBotTitle = answers.title;
-                this.options.customBotName = lodash.camelCase(answers.title);
+                this.options.connectorId = answers.connectorId;
+                this.options.connectorType = answers.connectorType;
+                this.options.connectorTitle = answers.connectorName;
+                this.options.connectorName = lodash.camelCase(answers.connectorName);
             });
         }
     }
     writing() {
-        if (this.options.customBot) {
-            let templateFiles = [
-                "README-{customBotName}.md",
-                "src/app/{customBotName}.ts"
-            ];
-            this.sourceRoot();
-            templateFiles.forEach(t => {
-                this.fs.copyTpl(this.templatePath(t), Yotilities_1.Yotilities.fixFileNames(t, this.options), this.options);
+        if (this.options.connector) {
+            if (this.options.connectorType != 'existing') {
+                let templateFiles = [
+                    "README-{connectorName}.md",
+                    "src/app/{connectorName}Connector.ts",
+                    "src/app/web/{connectorName}Connector.html"
+                ];
+                this.sourceRoot();
+                templateFiles.forEach(t => {
+                    this.fs.copyTpl(this.templatePath(t), Yotilities_1.Yotilities.fixFileNames(t, this.options), this.options);
+                });
+            }
+            let manifestPath = "src/manifest/manifest.json";
+            var manifest = this.fs.readJSON(manifestPath);
+            manifest.connectors.push({
+                connectorId: this.options.connectorId,
+                scopes: ["team"],
             });
         }
     }
 }
-exports.CustomBotGenerator = CustomBotGenerator;
+exports.ConnectorGenerator = ConnectorGenerator;
 
 
 /***/ }),
+/* 15 */,
 /* 16 */,
 /* 17 */,
 /* 18 */,
 /* 19 */,
 /* 20 */,
-/* 21 */,
-/* 22 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(10);
+module.exports = __webpack_require__(9);
 
 
 /***/ })

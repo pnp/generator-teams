@@ -1,7 +1,7 @@
 import * as Generator from 'yeoman-generator';
 import * as lodash from 'lodash';
 import * as chalk from 'chalk';
-import { GeneratorTeamTabOptions } from './../app/GeneratorTeamTabOptions';
+import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
 
 
@@ -10,12 +10,12 @@ let path = require('path');
 let Guid = require('guid');
 
 export class BotGenerator extends Generator {
-    options: GeneratorTeamTabOptions;
+    options: GeneratorTeamsAppOptions;
 
     public constructor(args: any, opts: any) {
         super(args, opts);
         opts.force = true;
-        this.options = opts.options === undefined ? new GeneratorTeamTabOptions() : opts.options;
+        this.options = opts.options === undefined ? new GeneratorTeamsAppOptions() : opts.options;
 
         this.desc('Adds a Bot to a Teams project.');
     }
@@ -74,29 +74,29 @@ export class BotGenerator extends Generator {
                     },
                     {
                         type: 'confirm',
-                        name: 'pinnedTab',
-                        message: 'Do you want to add a pinned tab to your bot?',
+                        name: 'staticTab',
+                        message: 'Do you want to add a static tab to your bot?',
                     },
                     {
                         type: 'input',
-                        name: 'pinnedTabName',
-                        message: 'What is the title of your pinned tab for the bot? (max 16 characters)',
+                        name: 'staticTabName',
+                        message: 'What is the title of your static tab for the bot? (max 16 characters)',
                         validate: (input) => {
-                            return input.length > 0 && input.length <=16;
+                            return input.length > 0 && input.length <= 16;
                         },
                         when: (answers: any) => {
-                            return answers.pinnedTab;
+                            return answers.staticTab;
                         },
                         default: (answers: any) => {
-                            return answers.botname + ' Tab';
+                            return 'About ' + answers.botname;
                         }
                     }
                 ]
             ).then((answers: any) => {
                 this.options.botid = answers.botid;
-                this.options.pinnedTab = answers.pinnedTab;
-                this.options.pinnedTabTitle = answers.pinnedTabName;
-                this.options.pinnedTabName = lodash.camelCase(answers.pinnedTabName);
+                this.options.staticTab = answers.staticTab;
+                this.options.staticTabTitle = answers.staticTabName;
+                this.options.staticTabName = lodash.camelCase(answers.staticTabName);
                 this.options.botType = answers.bottype;
                 this.options.botTitle = answers.botname;
                 this.options.botName = lodash.camelCase(answers.botname);
@@ -109,24 +109,39 @@ export class BotGenerator extends Generator {
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
             var newbot = {
-                mri: this.options.botid,
-                pinnedTabs: (<any>[])
+                botId: this.options.botid,
+                needsChannelSelector: true,
+                isNotificationOnly: false,
+                scopes: ["team", "personal"],
+                commandList: [
+                    {
+                        "scopes": [
+                            "team",
+                            "personal"
+                        ],
+                        "commands": [
+                            {
+                                "title": "Help",
+                                "description": "Shows help information"
+                            }
+                        ]
+                    }
+                ]
             };
 
             this.sourceRoot()
             let templateFiles = [];
-            if (this.options.pinnedTab) {
+            if (this.options.staticTab) {
                 templateFiles.push(
-                    "src/app/scripts/{pinnedTabName}Tab.ts",
-                    "src/app/web/{pinnedTabName}Tab.html",
+                    "src/app/scripts/{staticTabName}Tab.ts",
+                    "src/app/web/{staticTabName}Tab.html",
                 );
 
-                newbot.pinnedTabs.push({
-                    id: Guid.raw(),
-                    definitionId: Guid.raw(),
-                    displayName: this.options.pinnedTabTitle,
-                    url: `${this.options.host}/${this.options.pinnedTabName}Tab.html`,
-                    website: `${this.options.host}/${this.options.pinnedTabName}Tab.html`,
+                manifest.staticTabs.push({
+                    entityId: Guid.raw(),
+                    name: this.options.staticTabTitle,
+                    contentUrl: `${this.options.host}/${this.options.staticTabName}Tab.html`,
+                    scopes:  ["personal"]
                 });
             }
             (<any[]>manifest.bots).push(newbot);
@@ -144,11 +159,11 @@ export class BotGenerator extends Generator {
             });
 
             // update client.ts
-            if (this.options.pinnedTab) {
+            if (this.options.staticTab) {
                 let clientTsPath = "src/app/scripts/client.ts";
                 let clientTs = this.fs.read(clientTsPath);
                 clientTs += `\n// Added by generator-teams`;
-                clientTs += `\nexport * from './${this.options.pinnedTabName}Tab';`;
+                clientTs += `\nexport * from './${this.options.staticTabName}Tab';`;
                 clientTs += `\n`;
                 this.fs.write(clientTsPath, clientTs);
             }

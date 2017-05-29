@@ -1,20 +1,32 @@
 {
-    "$schema": "https://statics.teams.microsoft.com/sdk/v0.4/manifest/MicrosoftTeams.schema.json",
-    "manifestVersion": "0.4",
+    "$schema": "https://statics.teams.microsoft.com/sdk/v1.0/manifest/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.0",
     "id": "<%= id %>",
     "version": "0.0.1",
+    "packageName": "<%= namespace %>",
     "developer": {
         "name": "<%=developer %>",
         "websiteUrl": "<%=host %>",
         "privacyUrl": "<%=privacy %>",
         "termsOfUseUrl": "<%=tou %>"
     },
-    "tabs": [
-        
-    ],
-    "bots": [       
-    ],
-    "needsIdentity": false,
-    "validDomains": [
-    ]
+    "name": {
+        "short": "<%=title%>"
+    },
+    "description": {
+        "short": "<%=description%>"
+    },
+    "icons": {
+        "outline": "icon-20x20.png",
+        "color": "icon-96x96.png"
+    },
+    "accentColor": "#FFFFFF",
+    "configurableTabs": [],
+    "staticTabs": [],
+    "bots": [],
+    "connectors": [],
+    "composeExtensions": [],
+    "needsIdentity": true,
+    "permissions": ["identity", "messageTeamMembers"],
+    "validDomains": []
 }

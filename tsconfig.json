@@ -13,6 +13,7 @@
         "src/bot/templates",
         "src/tab/templates",
         "src/custombot/templates",
+        "src/connector/templates",
         "generators"
     ]
 }

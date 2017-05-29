@@ -27,6 +27,9 @@ var config = [
             ],
             custombot: [
                 __dirname +'/src/custombot/index.ts'
+            ],
+            connector: [
+                __dirname +'/src/connector/index.ts'
             ]
         },
         output: {
@@ -71,6 +74,10 @@ var config = [
             new CopyWebpackPlugin([{
                 from: 'src/custombot/templates',
                 to: 'custombot/templates'
+            }]),
+            new CopyWebpackPlugin([{
+                from: 'src/connector/templates',
+                to: 'connector/templates'
             }])
         ]
     }

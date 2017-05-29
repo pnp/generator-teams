@@ -1,7 +1,7 @@
 /**
  * Configuration options for the generator
  */
-export class GeneratorTeamTabOptions {
+export class GeneratorTeamsAppOptions {
     id: string;
     title: string;
     description: string;
@@ -18,10 +18,11 @@ export class GeneratorTeamTabOptions {
     tab: boolean;
     tabTitle: string;
     tabName: string;
+    /* Bots */
     botid?: string;
-    pinnedTab: boolean;
-    pinnedTabName: string;
-    pinnedTabTitle: string;
+    staticTab: boolean;
+    staticTabName: string;
+    staticTabTitle: string;
     botType: string = "";
     botTitle: string;
     botName: string;
@@ -29,4 +30,12 @@ export class GeneratorTeamTabOptions {
     customBot: boolean;
     customBotTitle: string;
     customBotName: string;
+    /* Connector */
+    connector: boolean;
+    connectorId: string;
+    connectorType: string;
+    connectorTitle: string;
+    connectorName: string;
+    /* Compose extensions */
+    composeExtension: boolean;
 }

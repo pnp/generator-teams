@@ -64,7 +64,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 17);
+/******/ 	return __webpack_require__(__webpack_require__.s = 19);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -151,12 +151,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Configuration options for the generator
  */
-class GeneratorTeamTabOptions {
+class GeneratorTeamsAppOptions {
     constructor() {
         this.botType = "";
     }
 }
-exports.GeneratorTeamTabOptions = GeneratorTeamTabOptions;
+exports.GeneratorTeamsAppOptions = GeneratorTeamsAppOptions;
 
 
 /***/ }),
@@ -166,15 +166,16 @@ exports.GeneratorTeamTabOptions = GeneratorTeamTabOptions;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const GeneratorTeamsTab_1 = __webpack_require__(11);
-module.exports = GeneratorTeamsTab_1.GeneratorTeamsTab;
+const GeneratorTeamsApp_1 = __webpack_require__(12);
+module.exports = GeneratorTeamsApp_1.GeneratorTeamsApp;
 
 
 /***/ }),
 /* 8 */,
 /* 9 */,
 /* 10 */,
-/* 11 */
+/* 11 */,
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -182,20 +183,20 @@ module.exports = GeneratorTeamsTab_1.GeneratorTeamsTab;
 Object.defineProperty(exports, "__esModule", { value: true });
 const Generator = __webpack_require__(4);
 const lodash = __webpack_require__(3);
-const chalk = __webpack_require__(16);
-const GeneratorTeamTabOptions_1 = __webpack_require__(6);
+const chalk = __webpack_require__(18);
+const GeneratorTeamsAppOptions_1 = __webpack_require__(6);
 const Yotilities_1 = __webpack_require__(1);
 let yosay = __webpack_require__(5);
 let path = __webpack_require__(0);
-let pkg = __webpack_require__(15);
+let pkg = __webpack_require__(17);
 let Guid = __webpack_require__(2);
 /**
  * The main implementation for the `teams` generator
  */
-class GeneratorTeamsTab extends Generator {
+class GeneratorTeamsApp extends Generator {
     constructor(args, opts) {
         super(args, opts);
-        this.options = new GeneratorTeamTabOptions_1.GeneratorTeamTabOptions();
+        this.options = new GeneratorTeamsAppOptions_1.GeneratorTeamsAppOptions();
         opts.force = true;
         this.desc('Generate a Microsoft Teams application.');
         this.argument('solutionName', {
@@ -208,6 +209,7 @@ class GeneratorTeamsTab extends Generator {
         this.composeWith('teams:tab', { 'options': this.options });
         this.composeWith('teams:bot', { 'options': this.options });
         this.composeWith('teams:custombot', { 'options': this.options });
+        this.composeWith('teams:connector', { 'options': this.options });
     }
     prompting() {
         return this.prompt([
@@ -276,6 +278,14 @@ class GeneratorTeamsTab extends Generator {
                     {
                         name: 'A Teams custom bot',
                         value: 'custombot'
+                    },
+                    {
+                        name: 'A Connector',
+                        value: 'connector'
+                    },
+                    {
+                        name: 'A Compose extension',
+                        value: 'composeextension'
                     }
                 ]
             }
@@ -294,7 +304,9 @@ class GeneratorTeamsTab extends Generator {
             this.options.privacy = answers.host + '/privacy.html';
             this.options.bot = answers.parts.indexOf('bot') != -1;
             this.options.tab = answers.parts.indexOf('tab') != -1;
+            this.options.connector = answers.parts.indexOf('connector') != -1;
             this.options.customBot = answers.parts.indexOf('custombot') != -1;
+            this.options.composeExtension = answers.parts.indexOf('composeextension') != -1;
             this.options.id = Guid.raw();
             if (this.options.shouldUseSubDir) {
                 this.destinationRoot(this.destinationPath(this.options.solutionName));
@@ -310,11 +322,11 @@ class GeneratorTeamsTab extends Generator {
             "_gitignore",
             "tsconfig.json",
             "tsconfig-client.json",
-            "src/app/web/assets/tab-44.png",
-            "src/app/web/assets/tab-88.png",
+            "src/manifest/icon-20x20.png",
+            "src/manifest/icon-96x96.png",
             "src/app/web/assets/css/msteams-app.css",
             "src/app/scripts/theme.ts",
-            "src/msteams-0.4.0.d.ts",
+            "src/MicrosoftTeams.d.ts",
             'deploy.cmd',
             '_deployment'
         ];
@@ -356,6 +368,11 @@ class GeneratorTeamsTab extends Generator {
         packages.push('express', 'express-session', 'body-parser', 'morgan', '@types/express', '@types/express-session', '@types/body-parser', '@types/morgan');
         if (this.options.botType == 'botframework' || this.options.customBot) {
             packages.push('botbuilder');
+            packages.push('botbuilder-teams');
+        }
+        if (this.options.connectorType == 'new') {
+            packages.push('request');
+            packages.push('@types/request');
         }
         this.npmInstall(packages, { 'save': true });
     }
@@ -365,19 +382,20 @@ class GeneratorTeamsTab extends Generator {
         this.log(chalk.yellow('Have fun and make great Microsoft Teams Apps...'));
     }
 }
-exports.GeneratorTeamsTab = GeneratorTeamsTab;
+exports.GeneratorTeamsApp = GeneratorTeamsApp;
 
 
 /***/ }),
-/* 12 */,
 /* 13 */,
 /* 14 */,
-/* 15 */
+/* 15 */,
+/* 16 */,
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = {
 	"name": "generator-teams",
-	"version": "1.1.1",
+	"version": "2.0.0-preview",
 	"description": "Yeoman generator for Microsoft Teams Apps",
 	"main": "generators/app/index.js",
 	"scripts": {},
@@ -432,13 +450,13 @@ module.exports = {
 };
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports) {
 
 module.exports = require("chalk");
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(7);

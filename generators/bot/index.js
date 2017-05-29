@@ -64,7 +64,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 18);
+/******/ 	return __webpack_require__(__webpack_require__.s = 20);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -151,12 +151,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Configuration options for the generator
  */
-class GeneratorTeamTabOptions {
+class GeneratorTeamsAppOptions {
     constructor() {
         this.botType = "";
     }
 }
-exports.GeneratorTeamTabOptions = GeneratorTeamTabOptions;
+exports.GeneratorTeamsAppOptions = GeneratorTeamsAppOptions;
 
 
 /***/ }),
@@ -167,7 +167,7 @@ exports.GeneratorTeamTabOptions = GeneratorTeamTabOptions;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const BotGenerator_1 = __webpack_require__(12);
+const BotGenerator_1 = __webpack_require__(13);
 module.exports = BotGenerator_1.BotGenerator;
 
 
@@ -175,7 +175,8 @@ module.exports = BotGenerator_1.BotGenerator;
 /* 9 */,
 /* 10 */,
 /* 11 */,
-/* 12 */
+/* 12 */,
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -183,7 +184,7 @@ module.exports = BotGenerator_1.BotGenerator;
 Object.defineProperty(exports, "__esModule", { value: true });
 const Generator = __webpack_require__(4);
 const lodash = __webpack_require__(3);
-const GeneratorTeamTabOptions_1 = __webpack_require__(6);
+const GeneratorTeamsAppOptions_1 = __webpack_require__(6);
 const Yotilities_1 = __webpack_require__(1);
 let yosay = __webpack_require__(5);
 let path = __webpack_require__(0);
@@ -192,7 +193,7 @@ class BotGenerator extends Generator {
     constructor(args, opts) {
         super(args, opts);
         opts.force = true;
-        this.options = opts.options === undefined ? new GeneratorTeamTabOptions_1.GeneratorTeamTabOptions() : opts.options;
+        this.options = opts.options === undefined ? new GeneratorTeamsAppOptions_1.GeneratorTeamsAppOptions() : opts.options;
         this.desc('Adds a Bot to a Teams project.');
     }
     prompting() {
@@ -247,28 +248,28 @@ class BotGenerator extends Generator {
                 },
                 {
                     type: 'confirm',
-                    name: 'pinnedTab',
-                    message: 'Do you want to add a pinned tab to your bot?',
+                    name: 'staticTab',
+                    message: 'Do you want to add a static tab to your bot?',
                 },
                 {
                     type: 'input',
-                    name: 'pinnedTabName',
-                    message: 'What is the title of your pinned tab for the bot? (max 16 characters)',
+                    name: 'staticTabName',
+                    message: 'What is the title of your static tab for the bot? (max 16 characters)',
                     validate: (input) => {
                         return input.length > 0 && input.length <= 16;
                     },
                     when: (answers) => {
-                        return answers.pinnedTab;
+                        return answers.staticTab;
                     },
                     default: (answers) => {
-                        return answers.botname + ' Tab';
+                        return 'About ' + answers.botname;
                     }
                 }
             ]).then((answers) => {
                 this.options.botid = answers.botid;
-                this.options.pinnedTab = answers.pinnedTab;
-                this.options.pinnedTabTitle = answers.pinnedTabName;
-                this.options.pinnedTabName = lodash.camelCase(answers.pinnedTabName);
+                this.options.staticTab = answers.staticTab;
+                this.options.staticTabTitle = answers.staticTabName;
+                this.options.staticTabName = lodash.camelCase(answers.staticTabName);
                 this.options.botType = answers.bottype;
                 this.options.botTitle = answers.botname;
                 this.options.botName = lodash.camelCase(answers.botname);
@@ -280,19 +281,34 @@ class BotGenerator extends Generator {
             let manifestPath = "src/manifest/manifest.json";
             var manifest = this.fs.readJSON(manifestPath);
             var newbot = {
-                mri: this.options.botid,
-                pinnedTabs: []
+                botId: this.options.botid,
+                needsChannelSelector: true,
+                isNotificationOnly: false,
+                scopes: ["team", "personal"],
+                commandList: [
+                    {
+                        "scopes": [
+                            "team",
+                            "personal"
+                        ],
+                        "commands": [
+                            {
+                                "title": "Help",
+                                "description": "Shows help information"
+                            }
+                        ]
+                    }
+                ]
             };
             this.sourceRoot();
             let templateFiles = [];
-            if (this.options.pinnedTab) {
-                templateFiles.push("src/app/scripts/{pinnedTabName}Tab.ts", "src/app/web/{pinnedTabName}Tab.html");
-                newbot.pinnedTabs.push({
-                    id: Guid.raw(),
-                    definitionId: Guid.raw(),
-                    displayName: this.options.pinnedTabTitle,
-                    url: `${this.options.host}/${this.options.pinnedTabName}Tab.html`,
-                    website: `${this.options.host}/${this.options.pinnedTabName}Tab.html`,
+            if (this.options.staticTab) {
+                templateFiles.push("src/app/scripts/{staticTabName}Tab.ts", "src/app/web/{staticTabName}Tab.html");
+                manifest.staticTabs.push({
+                    entityId: Guid.raw(),
+                    name: this.options.staticTabTitle,
+                    contentUrl: `${this.options.host}/${this.options.staticTabName}Tab.html`,
+                    scopes: ["personal"]
                 });
             }
             manifest.bots.push(newbot);
@@ -305,11 +321,11 @@ class BotGenerator extends Generator {
                 this.fs.copyTpl(this.templatePath(t), Yotilities_1.Yotilities.fixFileNames(t, this.options), this.options);
             });
             // update client.ts
-            if (this.options.pinnedTab) {
+            if (this.options.staticTab) {
                 let clientTsPath = "src/app/scripts/client.ts";
                 let clientTs = this.fs.read(clientTsPath);
                 clientTs += `\n// Added by generator-teams`;
-                clientTs += `\nexport * from './${this.options.pinnedTabName}Tab';`;
+                clientTs += `\nexport * from './${this.options.staticTabName}Tab';`;
                 clientTs += `\n`;
                 this.fs.write(clientTsPath, clientTs);
             }
@@ -320,12 +336,13 @@ exports.BotGenerator = BotGenerator;
 
 
 /***/ }),
-/* 13 */,
 /* 14 */,
 /* 15 */,
 /* 16 */,
 /* 17 */,
-/* 18 */
+/* 18 */,
+/* 19 */,
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(8);

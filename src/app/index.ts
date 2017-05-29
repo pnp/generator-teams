@@ -1,3 +1,3 @@
-import {GeneratorTeamsTab} from './GeneratorTeamsTab';
+import {GeneratorTeamsApp} from './GeneratorTeamsApp';
 
-module.exports = GeneratorTeamsTab
+module.exports = GeneratorTeamsApp

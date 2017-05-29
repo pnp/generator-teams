@@ -1,7 +1,7 @@
 import * as Generator from 'yeoman-generator';
 import * as lodash from 'lodash';
 import * as chalk from 'chalk';
-import { GeneratorTeamTabOptions } from './../app/GeneratorTeamTabOptions';
+import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
 
 
@@ -11,7 +11,7 @@ let Guid = require('guid');
 
 
 export class TabGenerator extends Generator {
-    options: GeneratorTeamTabOptions;
+    options: GeneratorTeamsAppOptions;
 
     public constructor(args: any, opts: any) {
         super(args, opts);
@@ -26,7 +26,7 @@ export class TabGenerator extends Generator {
                     {
                         type: 'input',
                         name: 'tabTitle',
-                        message: 'Name of your Tab? (max 16 characters)',
+                        message: 'Default Tab name? (max 16 characters)',
                         default: this.options.title + ' Tab',
                         validate: (input) => {
                             return input.length > 0 && input.length <= 16;
@@ -61,21 +61,10 @@ export class TabGenerator extends Generator {
             // Update manifest
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
-            (<any[]>manifest.tabs).push({
-                //id: `${this.options.namespace}.${this.options.tabName}`,
-                id: Guid.raw(),
-                name: this.options.tabTitle,
-                description: {
-                    short: `Add a short description for ${this.options.tabTitle} here`,
-                    full: `Add a longer description for ${this.options.tabTitle} here`
-                },
-                icons: {
-                    "44": `${this.options.host}/assets/tab-44.png`,
-                    "88": `${this.options.host}/assets/tab-88.png`
-                },
-                accentColor: `#223344`,
-                configUrl: `${this.options.host}/${this.options.tabName}Config.html`,
-                canUpdateConfig: true
+            (<any[]>manifest.configurableTabs).push({
+                configurationUrl: `${this.options.host}/${this.options.tabName}Config.html`,
+                canUpdateConfig: true,
+                scopes: ["team"]
             });
             var tmp: string = this.options.host.substring(this.options.host.indexOf('://') + 3)
             var arr: string[] = tmp.split('.');

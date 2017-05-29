@@ -7,12 +7,16 @@ import * as path from 'path';
 import * as morgan from 'morgan';
 <% if(botType == 'botframework' || customBot) { %>
 import * as builder from 'botbuilder';
+import * as teamBuilder from 'botbuilder-teams';
 <% } %>
 <% if(botType == 'botframework' ) { %>
 import { <%= botName %> } from './<%= botName %>';
 <% } %>
 <% if(customBot ) { %>
 import { <%= customBotName %> } from './<%= customBotName %>';
+<% } %>
+<% if(connectorType == 'new' ) { %>
+import { <%= connectorName %>Connector } from './<%= connectorName %>Connector';
 <% } %>
 
 let express = Express();
@@ -32,7 +36,7 @@ let botSettings: builder.IChatConnectorSettings = {
     appPassword: process.env.MICROSOFT_APP_PASSWORD
 };
 
-let bot = new <%= botName %>(new builder.ChatConnector(botSettings));
+let bot = new <%= botName %>(new teamBuilder.TeamsChatConnector(botSettings));
 express.post('/api/messages', bot.Connector.listen());
 <% } %>
 
@@ -41,6 +45,23 @@ express.post('/api/messages', bot.Connector.listen());
 let customBot = new <%= customBotName %>();
 express.post('/api/customBot', customBot.requestHandler);
 <% } %>
+<% if(connectorType == 'new' ) { %>
+// Connector
+let connector = new <%=connectorName%>Connector();
+express.get('/api/connector/connect', (req, res) => {
+    connector.Connect(req.query);
+    res.redirect('/');
+});
+express.get('/api/connector/ping', (req, res) => {
+    Promise.all(connector.Ping()).then(p => {
+        console.log(`Connector ping succeeded`);
+        res.redirect('/');
+    }).catch(reason => {
+        console.log(reason);
+    });
+});
+<% } %>
+
 
 
 // This is used to prevent your tabs from being embedded in other systems than Microsoft Teams
@@ -58,6 +79,9 @@ express.use('/\*Config.html', (req: any, res: any, next: any) => {
     res.sendFile(path.join(__dirname, `web${req.path}`));
 });
 express.use('/\*Remove.html', (req: any, res: any, next: any) => {
+    res.sendFile(path.join(__dirname, `web${req.path}`));
+});
+express.use('/\*Connector.html', (req: any, res: any, next: any) => {
     res.sendFile(path.join(__dirname, `web${req.path}`));
 });
 

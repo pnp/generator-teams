@@ -64,7 +64,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 20);
+/******/ 	return __webpack_require__(__webpack_require__.s = 23);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -146,21 +146,23 @@ module.exports = require("yosay");
 /* 7 */,
 /* 8 */,
 /* 9 */,
-/* 10 */
+/* 10 */,
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const TabGenerator_1 = __webpack_require__(14);
+const TabGenerator_1 = __webpack_require__(16);
 module.exports = TabGenerator_1.TabGenerator;
 
 
 /***/ }),
-/* 11 */,
 /* 12 */,
 /* 13 */,
-/* 14 */
+/* 14 */,
+/* 15 */,
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -185,7 +187,7 @@ class TabGenerator extends Generator {
                 {
                     type: 'input',
                     name: 'tabTitle',
-                    message: 'Name of your Tab? (max 16 characters)',
+                    message: 'Default Tab name? (max 16 characters)',
                     default: this.options.title + ' Tab',
                     validate: (input) => {
                         return input.length > 0 && input.length <= 16;
@@ -213,21 +215,10 @@ class TabGenerator extends Generator {
             // Update manifest
             let manifestPath = "src/manifest/manifest.json";
             var manifest = this.fs.readJSON(manifestPath);
-            manifest.tabs.push({
-                //id: `${this.options.namespace}.${this.options.tabName}`,
-                id: Guid.raw(),
-                name: this.options.tabTitle,
-                description: {
-                    short: `Add a short description for ${this.options.tabTitle} here`,
-                    full: `Add a longer description for ${this.options.tabTitle} here`
-                },
-                icons: {
-                    "44": `${this.options.host}/assets/tab-44.png`,
-                    "88": `${this.options.host}/assets/tab-88.png`
-                },
-                accentColor: `#223344`,
-                configUrl: `${this.options.host}/${this.options.tabName}Config.html`,
-                canUpdateConfig: true
+            manifest.configurableTabs.push({
+                configurationUrl: `${this.options.host}/${this.options.tabName}Config.html`,
+                canUpdateConfig: true,
+                scopes: ["team"]
             });
             var tmp = this.options.host.substring(this.options.host.indexOf('://') + 3);
             var arr = tmp.split('.');
@@ -249,15 +240,16 @@ exports.TabGenerator = TabGenerator;
 
 
 /***/ }),
-/* 15 */,
-/* 16 */,
 /* 17 */,
 /* 18 */,
 /* 19 */,
-/* 20 */
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(10);
+module.exports = __webpack_require__(11);
 
 
 /***/ })

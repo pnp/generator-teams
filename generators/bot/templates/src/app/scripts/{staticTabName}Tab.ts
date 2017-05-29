@@ -1,9 +1,9 @@
 import { TeamsTheme } from './theme';
 
 /**
- * Implementation of Bot pinned tab: <%= pinnedTabTitle %>
+ * Implementation of Bot static tab: <%= staticTabTitle %>
  */
-export class <%=pinnedTabName%>Tab {
+export class <%=staticTabName%>Tab {
     constructor() {
         microsoftTeams.initialize();
         TeamsTheme.fix();

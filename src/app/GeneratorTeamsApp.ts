@@ -1,7 +1,7 @@
 import * as Generator from 'yeoman-generator';
 import * as lodash from 'lodash';
 import * as chalk from 'chalk';
-import { GeneratorTeamTabOptions } from './GeneratorTeamTabOptions';
+import { GeneratorTeamsAppOptions } from './GeneratorTeamsAppOptions';
 import { Yotilities } from './Yotilities';
 
 let yosay = require('yosay');
@@ -12,8 +12,8 @@ let Guid = require('guid');
 /**
  * The main implementation for the `teams` generator
  */
-export class GeneratorTeamsTab extends Generator {
-    options: GeneratorTeamTabOptions = new GeneratorTeamTabOptions();
+export class GeneratorTeamsApp extends Generator {
+    options: GeneratorTeamsAppOptions = new GeneratorTeamsAppOptions();
 
     public constructor(args: any, opts: any) {
         super(args, opts);
@@ -30,6 +30,7 @@ export class GeneratorTeamsTab extends Generator {
         this.composeWith('teams:tab', { 'options': this.options });
         this.composeWith('teams:bot', { 'options': this.options });
         this.composeWith('teams:custombot', { 'options': this.options });
+        this.composeWith('teams:connector', { 'options': this.options });
     }
 
     public prompting() {
@@ -89,17 +90,25 @@ export class GeneratorTeamsTab extends Generator {
                     name: 'parts',
                     choices: [
                         {
-                            name: 'A tab',
+                            name: 'A Tab',
                             value: 'tab',
                             checked: true
                         },
                         {
-                            name: 'A Bot Framework bot',
+                            name: 'A Bot',
                             value: 'bot'
                         },
                         {
-                            name: 'A Teams custom bot',
+                            name: 'A Microsoft Teams custom bot',
                             value: 'custombot'
+                        },
+                        {
+                            name: 'A Connector',
+                            value: 'connector'
+                        },
+                        {
+                            name: 'A Compose extension',
+                            value: 'composeextension'
                         }
                     ]
                 }
@@ -119,7 +128,9 @@ export class GeneratorTeamsTab extends Generator {
             this.options.privacy = answers.host + '/privacy.html';
             this.options.bot = (<string[]>answers.parts).indexOf('bot') != -1;
             this.options.tab = (<string[]>answers.parts).indexOf('tab') != -1;
+            this.options.connector = (<string[]>answers.parts).indexOf('connector') != -1;
             this.options.customBot = (<string[]>answers.parts).indexOf('custombot') != -1;
+            this.options.composeExtension = (<string[]>answers.parts).indexOf('composeextension') != -1;
             this.options.id = Guid.raw();
 
             if (this.options.shouldUseSubDir) {
@@ -142,11 +153,11 @@ export class GeneratorTeamsTab extends Generator {
             "_gitignore",
             "tsconfig.json",
             "tsconfig-client.json",
-            "src/app/web/assets/tab-44.png",
-            "src/app/web/assets/tab-88.png",
+            "src/manifest/icon-20x20.png",
+            "src/manifest/icon-96x96.png",
 			"src/app/web/assets/css/msteams-app.css",
             "src/app/scripts/theme.ts",
-            "src/msteams-0.4.0.d.ts",
+            "src/MicrosoftTeams.d.ts",
             'deploy.cmd',
             '_deployment'
         ]
@@ -211,6 +222,11 @@ export class GeneratorTeamsTab extends Generator {
 
         if (this.options.botType == 'botframework' || this.options.customBot) {
             packages.push('botbuilder');
+            packages.push('botbuilder-teams');
+        }
+        if(this.options.connectorType == 'new') {
+            packages.push('request');
+            packages.push('@types/request');
         }
         this.npmInstall(packages, { 'save': true });
     }
