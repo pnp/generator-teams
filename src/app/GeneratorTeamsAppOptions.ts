@@ -33,9 +33,14 @@ export class GeneratorTeamsAppOptions {
     /* Connector */
     connector: boolean;
     connectorId: string;
-    connectorType: string;
+    connectorType: string = '';
     connectorTitle: string;
     connectorName: string;
     /* Compose extensions */
     composeExtension: boolean;
+    composeExtensionType: string = '';
+    composeExtensionTitle: string;
+    composeExtensionDescription: string;
+    composeExtensionName: string;
+    composeExtensionId: string;
 }

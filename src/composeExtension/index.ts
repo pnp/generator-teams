@@ -1,3 +1,3 @@
-import { ComposeExtenstionGenerator } from './ComposeExtenstionGenerator';
+import { ComposeExtensionGenerator } from './ComposeExtensionGenerator';
 
-module.exports = ComposeExtenstionGenerator
+module.exports = ComposeExtensionGenerator

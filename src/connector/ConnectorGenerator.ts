@@ -54,7 +54,7 @@ export class ConnectorGenerator extends Generator {
                         type: 'input',
                         name: 'connectorName',
                         message: 'What is the name of your Connector?',
-                         default: this.options.title,
+                        default: this.options.title,
                         validate: (input) => {
                             return input.length > 0;
                         },
@@ -93,6 +93,7 @@ export class ConnectorGenerator extends Generator {
                 connectorId: this.options.connectorId,
                 scopes: ["team"],
             });
+            this.fs.writeJSON(manifestPath, manifest);
         }
     }
 }

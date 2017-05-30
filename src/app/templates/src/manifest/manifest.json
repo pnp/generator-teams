@@ -11,10 +11,12 @@
         "termsOfUseUrl": "<%=tou %>"
     },
     "name": {
-        "short": "<%=title%>"
+        "short": "<%=title%>",
+        "full": "<%=title%>"
     },
     "description": {
-        "short": "<%=description%>"
+        "short": "TODO: add short description here",
+        "full": "TODO: add full description here"
     },
     "icons": {
         "outline": "icon-20x20.png",

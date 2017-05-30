@@ -30,6 +30,9 @@ var config = [
             ],
             connector: [
                 __dirname +'/src/connector/index.ts'
+            ],
+            composeExtension: [
+                __dirname +'/src/composeExtension/index.ts'
             ]
         },
         output: {

@@ -28,7 +28,7 @@ export class BotGenerator extends Generator {
                     {
                         type: 'list',
                         name: 'bottype',
-                        message: 'Would type of bot would you like to use?',
+                        message: 'What type of Bot would you like to use?',
                         default: 'existing',
                         choices: [
                             {
@@ -55,7 +55,7 @@ export class BotGenerator extends Generator {
                         type: 'input',
                         name: 'botid',
                         message: (answers) => {
-                            var message = 'I need the Microsoft App ID for the bot. ';
+                            var message = 'I need the Microsoft App ID for the Bot. ';
                             if (answers.botTye == 'botframework') {
                                 message += 'If you don\'t specify a value now, you will need to manually edit it later. ';
                             }

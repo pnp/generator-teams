@@ -1,17 +1,18 @@
 import * as builder from 'botbuilder';
+import * as teamBuilder from 'botbuilder-teams';
 
 /**
  * Implementation for <%= botTitle %>
  */
 export class <%= botName %> {
-    public readonly Connector: builder.ChatConnector;
+    public readonly Connector: teamBuilder.TeamsChatConnector;
     private readonly universalBot: builder.UniversalBot;
 
     /**
      * The constructor
      * @param connector 
      */
-    constructor(connector: builder.ChatConnector) {
+    constructor(connector: teamBuilder.TeamsChatConnector) {
         this.Connector = connector;
         this.universalBot = new builder.UniversalBot(this.Connector);
 
@@ -29,6 +30,37 @@ export class <%= botName %> {
  
         // Control messages
         this.universalBot.on('conversationUpdate', this.convUpdateHandler);
+
+<% if(composeExtensionType == 'new' || composeExtensionType == 'existing') { %>
+        // Compose extension
+         this.Connector.onQuery('<%=composeExtensionName%>',
+             (event: builder.IEvent, query: teamBuilder.ComposeExtensionQuery, callback: (err: Error | null, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
+                if (query.parameters && query.parameters[0] && query.parameters[0].name === 'initialRun') {
+                    // implement an MRU, kind of thing
+                    let firstResponse = teamBuilder.ComposeExtensionResponse.result('list').attachments([
+                        new builder.ThumbnailCard()
+                            .title('Test')
+                            .text('Test')
+                            .images([new builder.CardImage().url('https://app3.azurewebsites.net/assets/icon.png')])
+                            .toAttachment()
+                    ]).toResponse();
+                    callback(null, firstResponse, 200);
+                }
+                else {
+                    // Return result response
+
+                    let response = teamBuilder.ComposeExtensionResponse.result('list').attachments([
+                        new builder.ThumbnailCard()
+                            .title(`Test`)
+                            .text('test')
+                            .images([new builder.CardImage().url('https://app3.azurewebsites.net/assets/icon.png')])
+                            .toAttachment()
+                    ]).toResponse();
+                    callback(null, response, 200);
+                }
+            });
+<% } %>
+
    }
 
     /**

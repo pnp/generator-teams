@@ -64,7 +64,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 20);
+/******/ 	return __webpack_require__(__webpack_require__.s = 22);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -75,6 +75,30 @@ module.exports = require("path");
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports) {
+
+module.exports = require("guid");
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+module.exports = require("lodash");
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+module.exports = require("yeoman-generator");
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+module.exports = require("yosay");
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -118,30 +142,6 @@ exports.Yotilities = Yotilities;
 
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-module.exports = require("guid");
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-module.exports = require("lodash");
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = require("yeoman-generator");
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-module.exports = require("yosay");
-
-/***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -154,6 +154,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class GeneratorTeamsAppOptions {
     constructor() {
         this.botType = "";
+        this.connectorType = '';
+        this.composeExtensionType = '';
     }
 }
 exports.GeneratorTeamsAppOptions = GeneratorTeamsAppOptions;
@@ -167,7 +169,7 @@ exports.GeneratorTeamsAppOptions = GeneratorTeamsAppOptions;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const BotGenerator_1 = __webpack_require__(13);
+const BotGenerator_1 = __webpack_require__(14);
 module.exports = BotGenerator_1.BotGenerator;
 
 
@@ -176,19 +178,20 @@ module.exports = BotGenerator_1.BotGenerator;
 /* 10 */,
 /* 11 */,
 /* 12 */,
-/* 13 */
+/* 13 */,
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Generator = __webpack_require__(4);
-const lodash = __webpack_require__(3);
+const Generator = __webpack_require__(3);
+const lodash = __webpack_require__(2);
 const GeneratorTeamsAppOptions_1 = __webpack_require__(6);
-const Yotilities_1 = __webpack_require__(1);
-let yosay = __webpack_require__(5);
+const Yotilities_1 = __webpack_require__(5);
+let yosay = __webpack_require__(4);
 let path = __webpack_require__(0);
-let Guid = __webpack_require__(2);
+let Guid = __webpack_require__(1);
 class BotGenerator extends Generator {
     constructor(args, opts) {
         super(args, opts);
@@ -202,7 +205,7 @@ class BotGenerator extends Generator {
                 {
                     type: 'list',
                     name: 'bottype',
-                    message: 'Would type of bot would you like to use?',
+                    message: 'What type of Bot would you like to use?',
                     default: 'existing',
                     choices: [
                         {
@@ -229,7 +232,7 @@ class BotGenerator extends Generator {
                     type: 'input',
                     name: 'botid',
                     message: (answers) => {
-                        var message = 'I need the Microsoft App ID for the bot. ';
+                        var message = 'I need the Microsoft App ID for the Bot. ';
                         if (answers.botTye == 'botframework') {
                             message += 'If you don\'t specify a value now, you will need to manually edit it later. ';
                         }
@@ -336,13 +339,14 @@ exports.BotGenerator = BotGenerator;
 
 
 /***/ }),
-/* 14 */,
 /* 15 */,
 /* 16 */,
 /* 17 */,
 /* 18 */,
 /* 19 */,
-/* 20 */
+/* 20 */,
+/* 21 */,
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(8);

@@ -31,6 +31,7 @@ export class GeneratorTeamsApp extends Generator {
         this.composeWith('teams:bot', { 'options': this.options });
         this.composeWith('teams:custombot', { 'options': this.options });
         this.composeWith('teams:connector', { 'options': this.options });
+        this.composeWith('teams:composeExtension', { 'options': this.options });
     }
 
     public prompting() {
@@ -108,7 +109,7 @@ export class GeneratorTeamsApp extends Generator {
                         },
                         {
                             name: 'A Compose extension',
-                            value: 'composeextension'
+                            value: 'composeextension',
                         }
                     ]
                 }

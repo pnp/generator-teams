@@ -64,7 +64,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 24);
+/******/ 	return __webpack_require__(__webpack_require__.s = 23);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -98,71 +98,27 @@ module.exports = require("yeoman-generator");
 module.exports = require("yosay");
 
 /***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-let path = __webpack_require__(0);
-/**
- * Utility class for the Generator
- */
-class Yotilities {
-    /**
-     * Validates a URL
-     * @param url Url to validate
-     */
-    static validateUrl(url) {
-        return /(https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(url);
-    }
-    /**
-     * Renames a file based on passed options
-     * @param filename path and name to file
-     * @param options object with replacement properties
-     */
-    static fixFileNames(filename, options) {
-        if (filename !== undefined) {
-            var basename = path.basename(filename);
-            if (basename[0] === '_') {
-                var filename = '.' + basename.substr(1);
-                var dirname = path.dirname(filename);
-                filename = path.join(dirname, filename);
-            }
-            for (var prop in options) {
-                if (options.hasOwnProperty(prop) && typeof options[prop] === 'string') {
-                    filename = filename.replace(new RegExp("{" + prop + "}", 'g'), options[prop]);
-                }
-            }
-        }
-        return filename;
-    }
-}
-exports.Yotilities = Yotilities;
-
-
-/***/ }),
+/* 5 */,
 /* 6 */,
 /* 7 */,
 /* 8 */,
-/* 9 */,
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const ConnectorGenerator_1 = __webpack_require__(16);
-module.exports = ConnectorGenerator_1.ConnectorGenerator;
+const ComposeExtensionGenerator_1 = __webpack_require__(15);
+module.exports = ComposeExtensionGenerator_1.ComposeExtensionGenerator;
 
 
 /***/ }),
+/* 10 */,
 /* 11 */,
 /* 12 */,
 /* 13 */,
 /* 14 */,
-/* 15 */,
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -170,42 +126,64 @@ module.exports = ConnectorGenerator_1.ConnectorGenerator;
 Object.defineProperty(exports, "__esModule", { value: true });
 const Generator = __webpack_require__(3);
 const lodash = __webpack_require__(2);
-const Yotilities_1 = __webpack_require__(5);
 let yosay = __webpack_require__(4);
 let path = __webpack_require__(0);
 let Guid = __webpack_require__(1);
-class ConnectorGenerator extends Generator {
+class ComposeExtensionGenerator extends Generator {
     constructor(args, opts) {
         super(args, opts);
         opts.force = true;
         this.options = opts.options;
-        this.desc('Adds a Connector to a Microsoft Teams Apps project');
+        this.desc('Adds a Compose Extension to a Microsoft Teams Apps project');
     }
     prompting() {
-        if (this.options.connector) {
+        if (this.options.composeExtension) {
             return this.prompt([
                 {
                     type: 'list',
-                    name: 'connectorType',
-                    message: 'What type of Connector would you like to include?',
-                    default: 'new',
-                    choices: [
-                        {
-                            name: 'An already existing and running Connector (not hosted in this solution)',
-                            value: 'existing'
-                        },
-                        {
-                            name: 'A new Connector hosted in this solution',
-                            value: 'new'
+                    name: 'composeExtensionType',
+                    message: 'What type of Compose Extension would you like to create ',
+                    default: (answers) => {
+                        if (this.options.botType == 'botframework') {
+                            return 'existing';
                         }
-                    ]
+                        else {
+                            return 'new';
+                        }
+                    },
+                    choices: answers => {
+                        var choices = [];
+                        choices.push({
+                            name: 'For a Bot hosted somewhere else',
+                            value: 'external'
+                        });
+                        if (this.options.botType == 'botframework') {
+                            choices.push({
+                                name: 'For the Bot created in this project',
+                                value: 'existing'
+                            });
+                        }
+                        else {
+                            choices.push({
+                                name: 'For a new Bot',
+                                value: 'new'
+                            });
+                        }
+                        return choices;
+                    }
                 },
                 {
                     type: 'input',
-                    name: 'connectorId',
-                    message: 'What is the Id of your Connector (found in the Connector portal)?',
+                    name: 'composeExtensionId',
+                    message: (answers) => {
+                        var message = 'I need the Microsoft App ID for the Bot used by the Compose Extension. ';
+                        return message;
+                    },
                     default: (answers) => {
-                        return this.options.botid ? this.options.botid : Guid.EMPTY;
+                        if (answers.composeExtensionType == 'existing') {
+                            return this.options.botid;
+                        }
+                        return Guid.EMPTY;
                     },
                     validate: (input) => {
                         return Guid.isGuid(input);
@@ -213,60 +191,79 @@ class ConnectorGenerator extends Generator {
                 },
                 {
                     type: 'input',
-                    name: 'connectorName',
-                    message: 'What is the name of your Connector?',
-                    default: this.options.title,
+                    name: 'composeExtensionName',
+                    message: 'What is the name of your Compose Extension command?',
                     validate: (input) => {
                         return input.length > 0;
                     },
-                    when: (answers) => answers.connectorType != 'existing'
                 },
+                {
+                    type: 'input',
+                    name: 'composeExtensionDescription',
+                    message: 'Describe your Compose Extension command?',
+                    validate: (input) => {
+                        return input.length > 0;
+                    }
+                }
             ]).then((answers) => {
-                this.options.connectorId = answers.connectorId;
-                this.options.connectorType = answers.connectorType;
-                this.options.connectorTitle = answers.connectorName;
-                this.options.connectorName = lodash.camelCase(answers.connectorName);
+                this.options.composeExtensionId = answers.composeExtensionId;
+                this.options.composeExtensionType = answers.composeExtensionType;
+                this.options.composeExtensionTitle = answers.composeExtensionName;
+                this.options.composeExtensionDescription = answers.composeExtensionDescription;
+                this.options.composeExtensionName = lodash.camelCase(answers.composeExtensionName);
+                if (answers.composeExtensionType == 'new') {
+                    // we need to add the Bot, even though the users did not choose to create one
+                    this.options.bot = true;
+                    this.options.botid = answers.composeExtensionId;
+                    this.options.botType = 'botframework';
+                    this.options.botTitle = answers.composeExtensionName + ' Bot';
+                    this.options.botName = lodash.camelCase(this.options.botTitle);
+                }
             });
         }
     }
     writing() {
-        if (this.options.connector) {
-            if (this.options.connectorType != 'existing') {
-                let templateFiles = [
-                    "README-{connectorName}.md",
-                    "src/app/{connectorName}Connector.ts",
-                    "src/app/web/{connectorName}Connector.html"
-                ];
-                this.sourceRoot();
-                templateFiles.forEach(t => {
-                    this.fs.copyTpl(this.templatePath(t), Yotilities_1.Yotilities.fixFileNames(t, this.options), this.options);
-                });
-            }
+        if (this.options.composeExtension) {
             let manifestPath = "src/manifest/manifest.json";
             var manifest = this.fs.readJSON(manifestPath);
-            manifest.connectors.push({
-                connectorId: this.options.connectorId,
-                scopes: ["team"],
+            manifest.composeExtensions.push({
+                botId: this.options.composeExtensionId,
+                scopes: ["team", "personal"],
+                commands: [
+                    {
+                        id: this.options.composeExtensionName,
+                        title: this.options.composeExtensionTitle,
+                        description: 'Add a clever description here',
+                        initialRun: true,
+                        parameters: [
+                            {
+                                name: 'parameter',
+                                description: 'description of the parameter',
+                                title: 'Parameter'
+                            }
+                        ]
+                    }
+                ]
             });
             this.fs.writeJSON(manifestPath, manifest);
         }
     }
 }
-exports.ConnectorGenerator = ConnectorGenerator;
+exports.ComposeExtensionGenerator = ComposeExtensionGenerator;
 
 
 /***/ }),
+/* 16 */,
 /* 17 */,
 /* 18 */,
 /* 19 */,
 /* 20 */,
 /* 21 */,
 /* 22 */,
-/* 23 */,
-/* 24 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(10);
+module.exports = __webpack_require__(9);
 
 
 /***/ })

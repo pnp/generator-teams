@@ -64,7 +64,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 22);
+/******/ 	return __webpack_require__(__webpack_require__.s = 25);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -75,6 +75,30 @@ module.exports = require("path");
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports) {
+
+module.exports = require("guid");
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+module.exports = require("lodash");
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+module.exports = require("yeoman-generator");
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+module.exports = require("yosay");
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -118,61 +142,39 @@ exports.Yotilities = Yotilities;
 
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-module.exports = require("guid");
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-module.exports = require("lodash");
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = require("yeoman-generator");
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-module.exports = require("yosay");
-
-/***/ }),
 /* 6 */,
 /* 7 */,
 /* 8 */,
 /* 9 */,
-/* 10 */
+/* 10 */,
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const CustomBotGenerator_1 = __webpack_require__(15);
+const CustomBotGenerator_1 = __webpack_require__(17);
 module.exports = CustomBotGenerator_1.CustomBotGenerator;
 
 
 /***/ }),
-/* 11 */,
 /* 12 */,
 /* 13 */,
 /* 14 */,
-/* 15 */
+/* 15 */,
+/* 16 */,
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Generator = __webpack_require__(4);
-const lodash = __webpack_require__(3);
-const Yotilities_1 = __webpack_require__(1);
-let yosay = __webpack_require__(5);
+const Generator = __webpack_require__(3);
+const lodash = __webpack_require__(2);
+const Yotilities_1 = __webpack_require__(5);
+let yosay = __webpack_require__(4);
 let path = __webpack_require__(0);
-let Guid = __webpack_require__(2);
+let Guid = __webpack_require__(1);
 class CustomBotGenerator extends Generator {
     constructor(args, opts) {
         super(args, opts);
@@ -212,16 +214,17 @@ exports.CustomBotGenerator = CustomBotGenerator;
 
 
 /***/ }),
-/* 16 */,
-/* 17 */,
 /* 18 */,
 /* 19 */,
 /* 20 */,
 /* 21 */,
-/* 22 */
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(10);
+module.exports = __webpack_require__(11);
 
 
 /***/ })

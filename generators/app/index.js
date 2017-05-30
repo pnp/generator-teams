@@ -64,7 +64,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 19);
+/******/ 	return __webpack_require__(__webpack_require__.s = 21);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -75,6 +75,30 @@ module.exports = require("path");
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports) {
+
+module.exports = require("guid");
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+module.exports = require("lodash");
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+module.exports = require("yeoman-generator");
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+module.exports = require("yosay");
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -118,30 +142,6 @@ exports.Yotilities = Yotilities;
 
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-module.exports = require("guid");
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-module.exports = require("lodash");
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = require("yeoman-generator");
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-module.exports = require("yosay");
-
-/***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -154,6 +154,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class GeneratorTeamsAppOptions {
     constructor() {
         this.botType = "";
+        this.connectorType = '';
+        this.composeExtensionType = '';
     }
 }
 exports.GeneratorTeamsAppOptions = GeneratorTeamsAppOptions;
@@ -166,7 +168,7 @@ exports.GeneratorTeamsAppOptions = GeneratorTeamsAppOptions;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const GeneratorTeamsApp_1 = __webpack_require__(12);
+const GeneratorTeamsApp_1 = __webpack_require__(13);
 module.exports = GeneratorTeamsApp_1.GeneratorTeamsApp;
 
 
@@ -175,21 +177,22 @@ module.exports = GeneratorTeamsApp_1.GeneratorTeamsApp;
 /* 9 */,
 /* 10 */,
 /* 11 */,
-/* 12 */
+/* 12 */,
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Generator = __webpack_require__(4);
-const lodash = __webpack_require__(3);
-const chalk = __webpack_require__(18);
+const Generator = __webpack_require__(3);
+const lodash = __webpack_require__(2);
+const chalk = __webpack_require__(20);
 const GeneratorTeamsAppOptions_1 = __webpack_require__(6);
-const Yotilities_1 = __webpack_require__(1);
-let yosay = __webpack_require__(5);
+const Yotilities_1 = __webpack_require__(5);
+let yosay = __webpack_require__(4);
 let path = __webpack_require__(0);
-let pkg = __webpack_require__(17);
-let Guid = __webpack_require__(2);
+let pkg = __webpack_require__(19);
+let Guid = __webpack_require__(1);
 /**
  * The main implementation for the `teams` generator
  */
@@ -210,6 +213,7 @@ class GeneratorTeamsApp extends Generator {
         this.composeWith('teams:bot', { 'options': this.options });
         this.composeWith('teams:custombot', { 'options': this.options });
         this.composeWith('teams:connector', { 'options': this.options });
+        this.composeWith('teams:composeExtension', { 'options': this.options });
     }
     prompting() {
         return this.prompt([
@@ -267,16 +271,16 @@ class GeneratorTeamsApp extends Generator {
                 name: 'parts',
                 choices: [
                     {
-                        name: 'A tab',
+                        name: 'A Tab',
                         value: 'tab',
                         checked: true
                     },
                     {
-                        name: 'A Bot Framework bot',
+                        name: 'A Bot',
                         value: 'bot'
                     },
                     {
-                        name: 'A Teams custom bot',
+                        name: 'A Microsoft Teams custom bot',
                         value: 'custombot'
                     },
                     {
@@ -285,7 +289,7 @@ class GeneratorTeamsApp extends Generator {
                     },
                     {
                         name: 'A Compose extension',
-                        value: 'composeextension'
+                        value: 'composeextension',
                     }
                 ]
             }
@@ -386,11 +390,12 @@ exports.GeneratorTeamsApp = GeneratorTeamsApp;
 
 
 /***/ }),
-/* 13 */,
 /* 14 */,
 /* 15 */,
 /* 16 */,
-/* 17 */
+/* 17 */,
+/* 18 */,
+/* 19 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -450,13 +455,13 @@ module.exports = {
 };
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports) {
 
 module.exports = require("chalk");
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(7);
