@@ -1,7 +1,3 @@
-// Copyright (c) Wictor Wilén. All rights reserved. 
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT license.
-
 module.exports =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -183,6 +179,9 @@ module.exports = GeneratorTeamsTab_1.GeneratorTeamsTab;
 
 "use strict";
 
+// Copyright (c) Wictor Wilén. All rights reserved. 
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
 Object.defineProperty(exports, "__esModule", { value: true });
 const Generator = __webpack_require__(4);
 const lodash = __webpack_require__(3);
