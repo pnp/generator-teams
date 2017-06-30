@@ -1,3 +1,7 @@
+// Copyright (c) Wictor Wilén. All rights reserved. 
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
+
 'use strict'
 var gulp = require('gulp');
 var webpack = require('webpack');

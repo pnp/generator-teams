@@ -1,3 +1,7 @@
+// Copyright (c) Wictor Wilén. All rights reserved. 
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
+
 import * as Generator from 'yeoman-generator';
 import * as lodash from 'lodash';
 import * as chalk from 'chalk';
