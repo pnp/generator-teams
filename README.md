@@ -24,7 +24,7 @@ npm install generator-teams --global
 If you don't have Yeoman installed it has to be installed as well:
 
 ``` Shell
-npm install yeoman --global
+npm install yo --global
 ```
 
 ### Use the generator
