@@ -7,6 +7,6 @@ src
 *.csproj
 .git*
 .yo-rc.json
-webpack.config.json
+webpack.config.js
 gulpfile.js
 tsconfig.json 
