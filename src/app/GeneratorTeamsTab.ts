@@ -7,6 +7,7 @@ import * as lodash from 'lodash';
 import * as chalk from 'chalk';
 import { GeneratorTeamTabOptions } from './GeneratorTeamTabOptions';
 import { Yotilities } from './Yotilities';
+import * as AppInsights from 'applicationinsights';
 
 let yosay = require('yosay');
 let path = require('path');
@@ -27,6 +28,11 @@ export class GeneratorTeamsTab extends Generator {
             description: 'Solution name, as well as folder name',
             required: false
         });
+        AppInsights.setup('6d773b93-ff70-45c5-907c-8edae9bf90eb');
+        AppInsights.client.commonProperties = {
+            version: pkg.version
+        };
+        AppInsights.client.trackEvent('start-generator');
     }
 
     public initializing() {
@@ -148,7 +154,7 @@ export class GeneratorTeamsTab extends Generator {
             "tsconfig-client.json",
             "src/app/web/assets/tab-44.png",
             "src/app/web/assets/tab-88.png",
-			"src/app/web/assets/css/msteams-app.css",
+            "src/app/web/assets/css/msteams-app.css",
             "src/app/scripts/theme.ts",
             "src/msteams-0.4.0.d.ts",
             'deploy.cmd',
@@ -223,6 +229,23 @@ export class GeneratorTeamsTab extends Generator {
         this.log(chalk.yellow('Thanks for using the generator!'));
         this.log(chalk.yellow('Wictor Wilén, @wictor'));
         this.log(chalk.yellow('Have fun and make great Microsoft Teams Apps...'));
+
+        // track usage
+        AppInsights.client.trackEvent('end-generator');
+        if (this.options.bot) {
+            AppInsights.client.trackEvent('bot');
+            if (this.options.botType == 'existing') {
+                AppInsights.client.trackEvent('bot-existing');
+            } else {
+                AppInsights.client.trackEvent('bot-new');
+            }
+        }
+        if (this.options.customBot) {
+            AppInsights.client.trackEvent('customBot');
+        }
+        if (this.options.tab) {
+            AppInsights.client.trackEvent('tab');
+        }
     }
 
 

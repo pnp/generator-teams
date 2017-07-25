@@ -64,7 +64,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 17);
+/******/ 	return __webpack_require__(__webpack_require__.s = 18);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -185,9 +185,10 @@ module.exports = GeneratorTeamsTab_1.GeneratorTeamsTab;
 Object.defineProperty(exports, "__esModule", { value: true });
 const Generator = __webpack_require__(4);
 const lodash = __webpack_require__(3);
-const chalk = __webpack_require__(16);
+const chalk = __webpack_require__(17);
 const GeneratorTeamTabOptions_1 = __webpack_require__(6);
 const Yotilities_1 = __webpack_require__(1);
+const AppInsights = __webpack_require__(16);
 let yosay = __webpack_require__(5);
 let path = __webpack_require__(0);
 let pkg = __webpack_require__(15);
@@ -205,6 +206,11 @@ class GeneratorTeamsTab extends Generator {
             description: 'Solution name, as well as folder name',
             required: false
         });
+        AppInsights.setup('6d773b93-ff70-45c5-907c-8edae9bf90eb');
+        AppInsights.client.commonProperties = {
+            version: pkg.version
+        };
+        AppInsights.client.trackEvent('start-generator');
     }
     initializing() {
         this.log(yosay('Welcome to the ' + chalk.yellow(`Microsoft Teams App generator (${pkg.version})`)));
@@ -366,6 +372,23 @@ class GeneratorTeamsTab extends Generator {
         this.log(chalk.yellow('Thanks for using the generator!'));
         this.log(chalk.yellow('Wictor Wilén, @wictor'));
         this.log(chalk.yellow('Have fun and make great Microsoft Teams Apps...'));
+        // track usage
+        AppInsights.client.trackEvent('end-generator');
+        if (this.options.bot) {
+            AppInsights.client.trackEvent('bot');
+            if (this.options.botType == 'existing') {
+                AppInsights.client.trackEvent('bot-existing');
+            }
+            else {
+                AppInsights.client.trackEvent('bot-new');
+            }
+        }
+        if (this.options.customBot) {
+            AppInsights.client.trackEvent('customBot');
+        }
+        if (this.options.tab) {
+            AppInsights.client.trackEvent('tab');
+        }
     }
 }
 exports.GeneratorTeamsTab = GeneratorTeamsTab;
@@ -384,10 +407,16 @@ module.exports = {"name":"generator-teams","version":"1.2.0","description":"Yeom
 /* 16 */
 /***/ (function(module, exports) {
 
-module.exports = require("chalk");
+module.exports = require("applicationinsights");
 
 /***/ }),
 /* 17 */
+/***/ (function(module, exports) {
+
+module.exports = require("chalk");
+
+/***/ }),
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(7);
