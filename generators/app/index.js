@@ -64,7 +64,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 21);
+/******/ 	return __webpack_require__(__webpack_require__.s = 22);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -186,9 +186,10 @@ module.exports = GeneratorTeamsApp_1.GeneratorTeamsApp;
 Object.defineProperty(exports, "__esModule", { value: true });
 const Generator = __webpack_require__(3);
 const lodash = __webpack_require__(2);
-const chalk = __webpack_require__(20);
+const chalk = __webpack_require__(21);
 const GeneratorTeamsAppOptions_1 = __webpack_require__(6);
 const Yotilities_1 = __webpack_require__(5);
+const AppInsights = __webpack_require__(20);
 let yosay = __webpack_require__(4);
 let path = __webpack_require__(0);
 let pkg = __webpack_require__(19);
@@ -206,6 +207,11 @@ class GeneratorTeamsApp extends Generator {
             description: 'Solution name, as well as folder name',
             required: false
         });
+        AppInsights.setup('6d773b93-ff70-45c5-907c-8edae9bf90eb');
+        AppInsights.client.commonProperties = {
+            version: pkg.version
+        };
+        AppInsights.client.trackEvent('start-generator');
     }
     initializing() {
         this.log(yosay('Welcome to the ' + chalk.yellow(`Microsoft Teams App generator (${pkg.version})`)));
@@ -384,6 +390,32 @@ class GeneratorTeamsApp extends Generator {
         this.log(chalk.yellow('Thanks for using the generator!'));
         this.log(chalk.yellow('Wictor Wilén, @wictor'));
         this.log(chalk.yellow('Have fun and make great Microsoft Teams Apps...'));
+        // track usage
+        AppInsights.client.trackEvent('end-generator');
+        if (this.options.bot) {
+            AppInsights.client.trackEvent('bot');
+            if (this.options.botType == 'existing') {
+                AppInsights.client.trackEvent('bot-existing');
+            }
+            else {
+                AppInsights.client.trackEvent('bot-new');
+            }
+        }
+        if (this.options.composeExtension) {
+            AppInsights.client.trackEvent('composeExtension');
+        }
+        if (this.options.connector) {
+            AppInsights.client.trackEvent('connector');
+        }
+        if (this.options.customBot) {
+            AppInsights.client.trackEvent('customBot');
+        }
+        if (this.options.staticTab) {
+            AppInsights.client.trackEvent('staticTab');
+        }
+        if (this.options.tab) {
+            AppInsights.client.trackEvent('tab');
+        }
     }
 }
 exports.GeneratorTeamsApp = GeneratorTeamsApp;
@@ -398,70 +430,22 @@ exports.GeneratorTeamsApp = GeneratorTeamsApp;
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = {
-	"name": "generator-teams",
-	"version": "2.0.0-preview",
-	"description": "Yeoman generator for Microsoft Teams Apps",
-	"main": "generators/app/index.js",
-	"scripts": {},
-	"files": [
-		"generators"
-	],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/wictorwilen/generator-teams.git"
-	},
-	"bugs": {
-		"url": "https://github.com/wictorwilen/generator-teams/issues"
-	},
-	"homepage": "https://github.com/wictorwilen/generator-teams",
-	"keywords": [
-		"yeoman-generator",
-		"Microsoft Teams",
-		"microsoft-teams",
-		"Office 365",
-		"office-365",
-		"bot",
-		"bot-framework",
-		"botbuilder",
-		"chatbot"
-	],
-	"author": "Wictor Wilén (wictor@wictorwilen.se)",
-	"maintainers": [
-		{
-			"name": "Wictor Wilén",
-			"email": "wictor@wictorwilen.se",
-			"url": "http://www.wictorwilen.se"
-		}
-	],
-	"license": "CC-BY-4.0",
-	"devDependencies": {
-		"@types/chalk": "^0.4.31",
-		"@types/lodash": "^4.14.58",
-		"@types/yeoman-generator": "^1.0.1",
-		"@types/yosay": "0.0.28",
-		"ts-loader": "^2.0.0",
-		"typescript": "^2.3.2",
-		"webpack": "^2.4.1"
-	},
-	"dependencies": {
-		"chalk": "^1.1.3",
-		"copy-webpack-plugin": "^4.0.1",
-		"guid": "0.0.12",
-		"lodash": "^4.17.4",
-		"yeoman-generator": "^1.0.0",
-		"yosay": "^2.0.0"
-	}
-};
+module.exports = {"name":"generator-teams","version":"2.1.0-preview","description":"Yeoman generator for Microsoft Teams Apps","main":"generators/app/index.js","scripts":{},"files":["generators"],"repository":{"type":"git","url":"https://github.com/wictorwilen/generator-teams.git"},"bugs":{"url":"https://github.com/wictorwilen/generator-teams/issues"},"homepage":"https://github.com/wictorwilen/generator-teams","keywords":["yeoman-generator","Microsoft Teams","microsoft-teams","Office 365","office-365","bot","bot-framework","botbuilder","chatbot"],"author":"Wictor Wilén (wictor@wictorwilen.se)","maintainers":[{"name":"Wictor Wilén","email":"wictor@wictorwilen.se","url":"http://www.wictorwilen.se"}],"license":"CC-BY-4.0","devDependencies":{"@types/applicationinsights":"^0.15.33","@types/chalk":"^0.4.31","@types/lodash":"^4.14.58","@types/yeoman-generator":"^1.0.1","@types/yosay":"0.0.28","ts-loader":"^2.0.0","typescript":"^2.3.2","webpack":"^2.4.1"},"dependencies":{"applicationinsights":"^0.21.0","chalk":"^1.1.3","copy-webpack-plugin":"^4.0.1","guid":"0.0.12","lodash":"^4.17.4","yeoman-generator":"^1.0.0","yosay":"^2.0.0"}}
 
 /***/ }),
 /* 20 */
 /***/ (function(module, exports) {
 
-module.exports = require("chalk");
+module.exports = require("applicationinsights");
 
 /***/ }),
 /* 21 */
+/***/ (function(module, exports) {
+
+module.exports = require("chalk");
+
+/***/ }),
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(7);

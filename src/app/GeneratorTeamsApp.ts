@@ -3,6 +3,7 @@ import * as lodash from 'lodash';
 import * as chalk from 'chalk';
 import { GeneratorTeamsAppOptions } from './GeneratorTeamsAppOptions';
 import { Yotilities } from './Yotilities';
+import * as AppInsights from 'applicationinsights';
 
 let yosay = require('yosay');
 let path = require('path');
@@ -23,6 +24,11 @@ export class GeneratorTeamsApp extends Generator {
             description: 'Solution name, as well as folder name',
             required: false
         });
+        AppInsights.setup('6d773b93-ff70-45c5-907c-8edae9bf90eb');
+        AppInsights.client.commonProperties = {
+            version: pkg.version
+        };
+        AppInsights.client.trackEvent('start-generator');
     }
 
     public initializing() {
@@ -156,7 +162,7 @@ export class GeneratorTeamsApp extends Generator {
             "tsconfig-client.json",
             "src/manifest/icon-20x20.png",
             "src/manifest/icon-96x96.png",
-			"src/app/web/assets/css/msteams-app.css",
+            "src/app/web/assets/css/msteams-app.css",
             "src/app/scripts/theme.ts",
             "src/MicrosoftTeams.d.ts",
             'deploy.cmd',
@@ -225,7 +231,7 @@ export class GeneratorTeamsApp extends Generator {
             packages.push('botbuilder');
             packages.push('botbuilder-teams');
         }
-        if(this.options.connectorType == 'new') {
+        if (this.options.connectorType == 'new') {
             packages.push('request');
             packages.push('@types/request');
         }
@@ -236,7 +242,31 @@ export class GeneratorTeamsApp extends Generator {
         this.log(chalk.yellow('Thanks for using the generator!'));
         this.log(chalk.yellow('Wictor Wilén, @wictor'));
         this.log(chalk.yellow('Have fun and make great Microsoft Teams Apps...'));
+
+        // track usage
+        AppInsights.client.trackEvent('end-generator');
+        if (this.options.bot) {
+            AppInsights.client.trackEvent('bot');
+            if (this.options.botType == 'existing') {
+                AppInsights.client.trackEvent('bot-existing');
+            } else {
+                AppInsights.client.trackEvent('bot-new');
+            }
+        }
+        if (this.options.composeExtension) {
+            AppInsights.client.trackEvent('composeExtension');
+        }
+        if (this.options.connector) {
+            AppInsights.client.trackEvent('connector');
+        }
+        if (this.options.customBot) {
+            AppInsights.client.trackEvent('customBot');
+        }
+        if (this.options.staticTab) {
+            AppInsights.client.trackEvent('staticTab');
+        }
+        if (this.options.tab) {
+            AppInsights.client.trackEvent('tab');
+        }
     }
-
-
 }
