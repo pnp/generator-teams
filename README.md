@@ -27,6 +27,14 @@ If you don't have Yeoman installed it has to be installed as well:
 npm install yo --global
 ```
 
+#### Install the preview generator
+
+To install the preview version of the Teams generator, use the `preview` tag:
+
+``` Shell
+npm install generator-teams@preview --global
+```
+
 ### Use the generator
 
 To create a new project using the generator, execute the following command in the command prompt and answer the questions asked.
