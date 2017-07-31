@@ -10,3 +10,4 @@ src
 webpack.config.json
 gulpfile.js
 tsconfig.json 
+.travis.yml
