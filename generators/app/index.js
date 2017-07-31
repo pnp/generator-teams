@@ -105,6 +105,7 @@ module.exports = require("yosay");
 
 Object.defineProperty(exports, "__esModule", { value: true });
 let path = __webpack_require__(0);
+const packagePath = "package.json";
 /**
  * Utility class for the Generator
  */
@@ -136,6 +137,13 @@ class Yotilities {
             }
         }
         return filename;
+    }
+    static addAdditionalDeps(dependencies, fs) {
+        var pkg = fs.readJSON(packagePath);
+        dependencies.forEach(dep => {
+            pkg.dependencies[dep[0]] = dep[1];
+        });
+        fs.writeJSON(packagePath, pkg);
     }
 }
 exports.Yotilities = Yotilities;
@@ -206,6 +214,11 @@ class GeneratorTeamsApp extends Generator {
         this.argument('solutionName', {
             description: 'Solution name, as well as folder name',
             required: false
+        });
+        this.option('skip-install', {
+            type: Boolean,
+            default: false,
+            description: 'Skips running npm install'
         });
         AppInsights.setup('6d773b93-ff70-45c5-907c-8edae9bf90eb');
         AppInsights.client.commonProperties = {
@@ -363,28 +376,12 @@ class GeneratorTeamsApp extends Generator {
     conflicts() {
     }
     install() {
-        let packages = [
-            'gulp',
-            'webpack',
-            'typescript',
-            'ts-loader',
-            'gulp-zip',
-            'gulp-util',
-            'gulp-inject',
-            'run-sequence',
-            'nodemon'
-        ];
-        // used for hosting in express
-        packages.push('express', 'express-session', 'body-parser', 'morgan', '@types/express', '@types/express-session', '@types/body-parser', '@types/morgan');
-        if (this.options.botType == 'botframework' || this.options.customBot) {
-            packages.push('botbuilder');
-            packages.push('botbuilder-teams');
+        if (this.options['skip-install']) {
+            this.log(chalk.yellow('Skipping installation of dependencies. You should run "npm install"'));
         }
-        if (this.options.connectorType == 'new') {
-            packages.push('request');
-            packages.push('@types/request');
+        else {
+            this.npmInstall();
         }
-        this.npmInstall(packages, { 'save': true });
     }
     end() {
         this.log(chalk.yellow('Thanks for using the generator!'));
@@ -430,7 +427,7 @@ exports.GeneratorTeamsApp = GeneratorTeamsApp;
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"generator-teams","version":"2.1.0-preview","description":"Yeoman generator for Microsoft Teams Apps","main":"generators/app/index.js","scripts":{},"files":["generators"],"repository":{"type":"git","url":"https://github.com/wictorwilen/generator-teams.git"},"bugs":{"url":"https://github.com/wictorwilen/generator-teams/issues"},"homepage":"https://github.com/wictorwilen/generator-teams","keywords":["yeoman-generator","Microsoft Teams","microsoft-teams","Office 365","office-365","bot","bot-framework","botbuilder","chatbot"],"author":"Wictor Wilén (wictor@wictorwilen.se)","maintainers":[{"name":"Wictor Wilén","email":"wictor@wictorwilen.se","url":"http://www.wictorwilen.se"}],"license":"CC-BY-4.0","devDependencies":{"@types/applicationinsights":"^0.15.33","@types/chalk":"^0.4.31","@types/lodash":"^4.14.58","@types/yeoman-generator":"^1.0.1","@types/yosay":"0.0.28","ts-loader":"^2.0.0","typescript":"^2.3.2","webpack":"^2.4.1"},"dependencies":{"applicationinsights":"^0.21.0","chalk":"^1.1.3","copy-webpack-plugin":"^4.0.1","guid":"0.0.12","lodash":"^4.17.4","yeoman-generator":"^1.0.0","yosay":"^2.0.0"}}
+module.exports = {"name":"generator-teams","version":"2.2.0-preview","description":"Yeoman generator for Microsoft Teams Apps","main":"generators/app/index.js","scripts":{},"files":["generators"],"repository":{"type":"git","url":"https://github.com/wictorwilen/generator-teams.git"},"bugs":{"url":"https://github.com/wictorwilen/generator-teams/issues"},"homepage":"https://github.com/wictorwilen/generator-teams","keywords":["yeoman-generator","Microsoft Teams","microsoft-teams","Office 365","office-365","bot","bot-framework","botbuilder","chatbot"],"author":"Wictor Wilén (wictor@wictorwilen.se)","maintainers":[{"name":"Wictor Wilén","email":"wictor@wictorwilen.se","url":"http://www.wictorwilen.se"}],"license":"CC-BY-4.0","devDependencies":{"@types/applicationinsights":"^0.15.33","@types/chalk":"^0.4.31","@types/lodash":"^4.14.58","@types/yeoman-generator":"^1.0.1","@types/yosay":"0.0.28","ts-loader":"^2.0.0","typescript":"^2.3.2","webpack":"^2.4.1"},"dependencies":{"applicationinsights":"^0.21.0","chalk":"^1.1.3","copy-webpack-plugin":"^4.0.1","guid":"0.0.12","lodash":"^4.17.4","yeoman-generator":"^1.0.0","yosay":"^2.0.0"}}
 
 /***/ }),
 /* 20 */

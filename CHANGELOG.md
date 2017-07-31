@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [*2.1.0-preview*] - <*2017-05-30*>
+## [*2.2.0-preview*] - <*2017-07-31*>
+
+### Added
+
+* Added `--skip-install` as a parameter to skip npm installation, and thus requires the user to run `npm install` manually.
+
+## [*2.1.0-preview*] - <*2017-07-25*>
 
 ### Added
 

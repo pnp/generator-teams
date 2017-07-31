@@ -1,4 +1,8 @@
+import * as Generator from 'yeoman-generator';
+
 let path = require('path');
+
+const packagePath = "package.json";
 
 /**
  * Utility class for the Generator
@@ -33,5 +37,13 @@ export class Yotilities {
         }
 
         return filename;
+    }
+
+    public static addAdditionalDeps(dependencies: [string, string][], fs: Generator.MemFsEditor) {
+        var pkg: any = fs.readJSON(packagePath);
+        dependencies.forEach(dep => {
+            (<any>pkg.dependencies)[dep[0]] = dep[1];
+        });
+        fs.writeJSON(packagePath, pkg);
     }
 }

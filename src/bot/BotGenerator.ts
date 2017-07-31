@@ -141,7 +141,7 @@ export class BotGenerator extends Generator {
                     entityId: Guid.raw(),
                     name: this.options.staticTabTitle,
                     contentUrl: `${this.options.host}/${this.options.staticTabName}Tab.html`,
-                    scopes:  ["personal"]
+                    scopes: ["personal"]
                 });
             }
             (<any[]>manifest.bots).push(newbot);
@@ -167,6 +167,11 @@ export class BotGenerator extends Generator {
                 clientTs += `\n`;
                 this.fs.write(clientTsPath, clientTs);
             }
+
+            Yotilities.addAdditionalDeps([
+                ['botbuilder', '3.9.0'],
+                ['botbuilder-teams', '0.1.2']
+            ], this.fs);
         }
     }
 }

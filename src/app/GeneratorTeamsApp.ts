@@ -24,6 +24,11 @@ export class GeneratorTeamsApp extends Generator {
             description: 'Solution name, as well as folder name',
             required: false
         });
+        this.option('skip-install', {
+            type: Boolean,
+            default: false,
+            description: 'Skips running npm install'
+        });
         AppInsights.setup('6d773b93-ff70-45c5-907c-8edae9bf90eb');
         AppInsights.client.commonProperties = {
             version: pkg.version
@@ -202,40 +207,11 @@ export class GeneratorTeamsApp extends Generator {
     }
 
     public install() {
-
-        let packages = [
-            'gulp',
-            'webpack',
-            'typescript',
-            'ts-loader',
-            'gulp-zip',
-            'gulp-util',
-            'gulp-inject',
-            'run-sequence',
-            'nodemon'
-        ];
-
-        // used for hosting in express
-        packages.push(
-            'express',
-            'express-session',
-            'body-parser',
-            'morgan',
-            '@types/express',
-            '@types/express-session',
-            '@types/body-parser',
-            '@types/morgan'
-        );
-
-        if (this.options.botType == 'botframework' || this.options.customBot) {
-            packages.push('botbuilder');
-            packages.push('botbuilder-teams');
+        if (this.options['skip-install']) {
+            this.log(chalk.yellow('Skipping installation of dependencies. You should run "npm install"'));
+        } else {
+            this.npmInstall();
         }
-        if (this.options.connectorType == 'new') {
-            packages.push('request');
-            packages.push('@types/request');
-        }
-        this.npmInstall(packages, { 'save': true });
     }
 
     public end() {

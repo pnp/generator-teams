@@ -105,6 +105,7 @@ module.exports = require("yosay");
 
 Object.defineProperty(exports, "__esModule", { value: true });
 let path = __webpack_require__(0);
+const packagePath = "package.json";
 /**
  * Utility class for the Generator
  */
@@ -136,6 +137,13 @@ class Yotilities {
             }
         }
         return filename;
+    }
+    static addAdditionalDeps(dependencies, fs) {
+        var pkg = fs.readJSON(packagePath);
+        dependencies.forEach(dep => {
+            pkg.dependencies[dep[0]] = dep[1];
+        });
+        fs.writeJSON(packagePath, pkg);
     }
 }
 exports.Yotilities = Yotilities;
@@ -249,6 +257,10 @@ class ConnectorGenerator extends Generator {
                 scopes: ["team"],
             });
             this.fs.writeJSON(manifestPath, manifest);
+            Yotilities_1.Yotilities.addAdditionalDeps([
+                ['request', '2.81.0'],
+                ['@types/request', '2.0.0']
+            ], this.fs);
         }
     }
 }
