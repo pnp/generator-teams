@@ -1,0 +1,13 @@
+branches:
+  only:
+    - master
+    - preview
+sudo: false
+language: node_js
+cache:
+  directories:
+  - node_modules
+node_js:
+  - 'stable'
+  - '6.9.1'
+script: "npm run build"

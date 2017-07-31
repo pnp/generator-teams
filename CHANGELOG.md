@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 * Added `--skip-install` as a parameter to skip npm installation, and thus requires the user to run `npm install` manually.
+* Added Travis CI
 
 ## [*2.1.0-preview*] - <*2017-07-25*>
 
