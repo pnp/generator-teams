@@ -273,7 +273,7 @@ class BotGenerator extends Generator {
                         return answers.staticTab;
                     },
                     default: (answers) => {
-                        return 'About ' + answers.botname;
+                        return 'About ' + (answers.bottype != 'existing' ? answers.botname : this.options.title);
                     }
                 }
             ]).then((answers) => {
