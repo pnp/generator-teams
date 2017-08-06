@@ -385,7 +385,6 @@ class GeneratorTeamsApp extends Generator {
     }
     end() {
         this.log(chalk.yellow('Thanks for using the generator!'));
-        this.log(chalk.yellow('Wictor Wilén, @wictor'));
         this.log(chalk.yellow('Have fun and make great Microsoft Teams Apps...'));
         // track usage
         AppInsights.client.trackEvent('end-generator');
@@ -427,7 +426,7 @@ exports.GeneratorTeamsApp = GeneratorTeamsApp;
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"generator-teams","version":"2.2.0-preview","description":"Yeoman generator for Microsoft Teams Apps","main":"generators/app/index.js","scripts":{"build":"node_modules/.bin/webpack"},"files":["generators"],"repository":{"type":"git","url":"https://github.com/wictorwilen/generator-teams.git"},"bugs":{"url":"https://github.com/wictorwilen/generator-teams/issues"},"homepage":"https://github.com/wictorwilen/generator-teams","keywords":["yeoman-generator","Microsoft Teams","microsoft-teams","Office 365","office-365","bot","bot-framework","botbuilder","chatbot"],"author":"Wictor Wilén (wictor@wictorwilen.se)","maintainers":[{"name":"Wictor Wilén","email":"wictor@wictorwilen.se","url":"http://www.wictorwilen.se"}],"license":"CC-BY-4.0","devDependencies":{"@types/applicationinsights":"^0.15.33","@types/chalk":"^0.4.31","@types/lodash":"^4.14.58","@types/yeoman-generator":"^1.0.1","@types/yosay":"0.0.28","ts-loader":"^2.0.0","typescript":"^2.3.2","webpack":"^2.4.1"},"dependencies":{"applicationinsights":"^0.21.0","chalk":"^1.1.3","copy-webpack-plugin":"^4.0.1","guid":"0.0.12","lodash":"^4.17.4","yeoman-generator":"^1.0.0","yosay":"^2.0.0"}}
+module.exports = {"name":"generator-teams","version":"2.2.1-preview","description":"Yeoman generator for Microsoft Teams Apps","main":"generators/app/index.js","scripts":{"build":"node_modules/.bin/webpack"},"files":["generators"],"repository":{"type":"git","url":"https://github.com/wictorwilen/generator-teams.git"},"bugs":{"url":"https://github.com/wictorwilen/generator-teams/issues"},"homepage":"https://github.com/wictorwilen/generator-teams","keywords":["yeoman-generator","Microsoft Teams","microsoft-teams","Office 365","office-365","bot","bot-framework","botbuilder","chatbot"],"author":"Wictor Wilén (wictor@wictorwilen.se)","maintainers":[{"name":"Wictor Wilén","email":"wictor@wictorwilen.se","url":"http://www.wictorwilen.se"}],"license":"CC-BY-4.0","devDependencies":{"@types/applicationinsights":"^0.15.33","@types/chalk":"^0.4.31","@types/lodash":"^4.14.58","@types/yeoman-generator":"^1.0.1","@types/yosay":"0.0.28","ts-loader":"^2.0.0","typescript":"^2.3.2","webpack":"^2.4.1"},"dependencies":{"applicationinsights":"^0.21.0","chalk":"^1.1.3","copy-webpack-plugin":"^4.0.1","guid":"0.0.12","lodash":"^4.17.4","yeoman-generator":"^1.0.0","yosay":"^2.0.0"}}
 
 /***/ }),
 /* 20 */

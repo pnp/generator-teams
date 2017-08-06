@@ -28,7 +28,6 @@
     "bots": [],
     "connectors": [],
     "composeExtensions": [],
-    "needsIdentity": true,
     "permissions": ["identity", "messageTeamMembers"],
     "validDomains": []
 }

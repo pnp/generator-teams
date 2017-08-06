@@ -227,7 +227,7 @@ class TabGenerator extends Generator {
             var manifest = this.fs.readJSON(manifestPath);
             manifest.configurableTabs.push({
                 configurationUrl: `${this.options.host}/${this.options.tabName}Config.html`,
-                canUpdateConfig: true,
+                canUpdateConfiguration: true,
                 scopes: ["team"]
             });
             var tmp = this.options.host.substring(this.options.host.indexOf('://') + 3);

@@ -34,17 +34,17 @@ export class <%= botName %> {
 <% if(composeExtensionType == 'new' || composeExtensionType == 'existing') { %>
         // Compose extension
          this.Connector.onQuery('<%=composeExtensionName%>',
-             (event: builder.IEvent, query: teamBuilder.ComposeExtensionQuery, callback: (err: Error | null, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
+             (event: builder.IEvent, query: teamBuilder.ComposeExtensionQuery, callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
                 if (query.parameters && query.parameters[0] && query.parameters[0].name === 'initialRun') {
                     // implement an MRU, kind of thing
                     let firstResponse = teamBuilder.ComposeExtensionResponse.result('list').attachments([
                         new builder.ThumbnailCard()
                             .title('Test')
                             .text('Test')
-                            .images([new builder.CardImage().url('https://app3.azurewebsites.net/assets/icon.png')])
+                            .images([new builder.CardImage().url('<%=host%>/assets/icon.png')])
                             .toAttachment()
                     ]).toResponse();
-                    callback(null, firstResponse, 200);
+                    callback(<any>null, firstResponse, 200);
                 }
                 else {
                     // Return result response
@@ -53,10 +53,10 @@ export class <%= botName %> {
                         new builder.ThumbnailCard()
                             .title(`Test`)
                             .text('test')
-                            .images([new builder.CardImage().url('https://app3.azurewebsites.net/assets/icon.png')])
+                            .images([new builder.CardImage().url('<%=host%>/assets/icon.png')])
                             .toAttachment()
                     ]).toResponse();
-                    callback(null, response, 200);
+                    callback(<any>null, response, 200);
                 }
             });
 <% } %>

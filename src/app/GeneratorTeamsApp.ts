@@ -216,7 +216,6 @@ export class GeneratorTeamsApp extends Generator {
 
     public end() {
         this.log(chalk.yellow('Thanks for using the generator!'));
-        this.log(chalk.yellow('Wictor Wilén, @wictor'));
         this.log(chalk.yellow('Have fun and make great Microsoft Teams Apps...'));
 
         // track usage

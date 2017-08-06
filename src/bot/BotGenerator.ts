@@ -113,7 +113,7 @@ export class BotGenerator extends Generator {
                 needsChannelSelector: true,
                 isNotificationOnly: false,
                 scopes: ["team", "personal"],
-                commandList: [
+                commandLists: [
                     {
                         "scopes": [
                             "team",

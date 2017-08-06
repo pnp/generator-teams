@@ -7,7 +7,7 @@ var runSequence = require('run-sequence');
 const zip = require('gulp-zip');
 var nodemon = require('nodemon');
 
-var injectSources = ["./dist/web/scripts/**/*.js"]
+var injectSources = ["./dist/web/scripts/**/*.js", './dist/web/assets/**/*.css']
 var typeScriptFiles = ["./src/**/*.ts"]
 var staticFiles = ["./src/app/**/*.html", "./src/app/web/assets/**/*"]
 var htmlFiles = ["./src/app/**/*.html"]

@@ -211,7 +211,7 @@ class ConnectorGenerator extends Generator {
                 {
                     type: 'input',
                     name: 'connectorId',
-                    message: 'What is the Id of your Connector (found in the Connector portal)?',
+                    message: 'What is the Id of your Connector (found in the Connector Developer Portal)?',
                     default: (answers) => {
                         return this.options.botid ? this.options.botid : Guid.EMPTY;
                     },
