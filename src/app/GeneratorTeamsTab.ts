@@ -156,7 +156,7 @@ export class GeneratorTeamsTab extends Generator {
             "src/app/web/assets/tab-88.png",
             "src/app/web/assets/css/msteams-app.css",
             "src/app/scripts/theme.ts",
-            "src/msteams-0.4.0.d.ts",
+            "src/msteams-1.0.0.d.ts",
             'deploy.cmd',
             '_deployment'
         ]
