@@ -1,6 +1,6 @@
 {
-    "$schema": "https://statics.teams.microsoft.com/sdk/v0.4/manifest/MicrosoftTeams.schema.json",
-    "manifestVersion": "0.4",
+    "$schema": "https://statics.teams.microsoft.com/sdk/v1.0/manifest/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.0",
     "id": "<%= id %>",
     "version": "0.0.1",
     "developer": {
