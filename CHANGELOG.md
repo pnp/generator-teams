@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
+## [*1.2.1] - <*2017-10-19*>
+
+### Added
+
+* New Teams .d.ts file (1.0.0 schema)
+
+### Removed
+
+* Teams .d.ts file (0.4 schema)
+
+### Fixes
+
+* Updated the Html files to use version 1.0 of teams
+
 
 ## [*1.2.0] - <*2017-07-25*>
 
