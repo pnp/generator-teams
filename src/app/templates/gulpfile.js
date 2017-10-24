@@ -13,7 +13,7 @@ var staticFiles = ["./src/app/**/*.html", "./src/app/web/assets/**/*"]
 var htmlFiles = ["./src/app/**/*.html"]
 var watcherfiles = ["./src/**/*.*"]
 var manifestFiles = ["./src/manifest/**/*.*"]
-
+var settings = require("./settings.js");
 
 /**
  * Watches source files and invokes the build task
@@ -99,6 +99,8 @@ gulp.task('build', function () {
  */
 gulp.task('serve', ['build', 'watch'], function (cb) {
     var started = false;
+    process.env.MICROSOFT_APP_PASSWORD=process.env.MICROSOFT_APP_PASSWORD|| settings.apppassword;
+    process.env.MICROSOFT_APP_ID = process.env.MICROSOFT_APP_ID ||  settings.appid ;
     return nodemon({
         script: 'dist/server.js',
         watch: ['dist/server.js']
