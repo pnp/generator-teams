@@ -351,7 +351,8 @@ class GeneratorTeamsApp extends Generator {
             "src/app/scripts/theme.ts",
             "src/MicrosoftTeams.d.ts",
             'deploy.cmd',
-            '_deployment'
+            '_deployment',
+            'settings.js'
         ];
         let templateFiles = [
             "README.md",
