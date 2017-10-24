@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*2.2.2-preview*] - <*2017-24-10*>
+
+### Added
+
+* Added `settings.js` which includes appid and apppassword for debugging locally 
+
+### Changed
+
+* Updated gulpfile.js
+* Updated README-{botName}.md
+
 ## [*2.2.1-preview*] - <*2017-08-06*>
 
 ### Changed
