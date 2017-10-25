@@ -48,12 +48,13 @@
     "webpack": "^2.4.1"
   },
   "dependencies": {
+    "@types/applicationinsights": "^0.15.34",
     "applicationinsights": "^0.21.0",
     "chalk": "^1.1.3",
     "copy-webpack-plugin": "^4.0.1",
     "guid": "0.0.12",
     "lodash": "^4.17.4",
     "yeoman-generator": "^1.0.0",
-    "yosay": "^2.0.0"
+    "yosay": "^2.0.1"
   }
 }

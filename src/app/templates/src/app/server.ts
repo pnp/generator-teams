@@ -19,6 +19,11 @@ import { <%= customBotName %> } from './<%= customBotName %>';
 import { <%= connectorName %>Connector } from './<%= connectorName %>Connector';
 <% } %>
 
+// Initialize dotenv, to use .env file settings if existing
+require('dotenv').config();
+
+
+// Start the Express webserver
 let express = Express();
 let port = process.env.port || process.env.PORT || 3007;
 
@@ -26,6 +31,7 @@ express.use(bodyParser.json());
 
 express.use(morgan('tiny'));
 
+// Add /scripts and /assets as static folders
 express.use('/scripts', Express.static(path.join(__dirname, 'web/scripts')));
 express.use('/assets', Express.static(path.join(__dirname, 'web/assets')));
 
@@ -92,11 +98,15 @@ express.use(function (req: any, res: any, next: any) {
     return next();
 });
 
+// Set default web page
 express.use('/', Express.static(path.join(__dirname, 'web/'), {
     index: 'index.html'
 }));
 
+// Set the port
 express.set('port', port);
+
+// Start the webserver
 http.createServer(express).listen(port, (err: any) => {
     if (err) {
         return console.error(err);

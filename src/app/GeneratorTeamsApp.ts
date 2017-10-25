@@ -88,15 +88,6 @@ export class GeneratorTeamsApp extends Generator {
                     }
                 },
                 {
-                    type: 'input',
-                    name: 'host',
-                    message: 'The URL where you will host this tab?',
-                    default: (answers: any) => {
-                        return `https://${lodash.camelCase(answers.solutionName)}.azurewebsites.net`;
-                    },
-                    validate: Yotilities.validateUrl
-                },
-                {
                     type: 'checkbox',
                     message: 'What do you want to add to your project?',
                     name: 'parts',
@@ -123,7 +114,16 @@ export class GeneratorTeamsApp extends Generator {
                             value: 'composeextension',
                         }
                     ]
-                }
+                },
+                {
+                    type: 'input',
+                    name: 'host',
+                    message: 'The URL where you will host this solution?',
+                    default: (answers: any) => {
+                        return `https://${lodash.camelCase(answers.solutionName)}.azurewebsites.net`;
+                    },
+                    validate: Yotilities.validateUrl
+                },
             ]
         ).then((answers: any) => {
             this.options.title = answers.name;
@@ -178,13 +178,14 @@ export class GeneratorTeamsApp extends Generator {
             "README.md",
             "gulpfile.js",
             "package.json",
+            ".env",
             'src/app/server.ts',
             "src/manifest/manifest.json",
             "webpack.config.js",
             "src/app/scripts/client.ts",
             "src/app/web/index.html",
             "src/app/web/tou.html",
-            "src/app/web/privacy.html"
+            "src/app/web/privacy.html",
         ];
 
         this.sourceRoot()
