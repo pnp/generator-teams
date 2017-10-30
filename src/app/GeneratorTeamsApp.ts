@@ -126,6 +126,7 @@ export class GeneratorTeamsApp extends Generator {
                 },
             ]
         ).then((answers: any) => {
+            answers.host= answers.host.endsWith('/') ? answers.host.substr(0, answers.host.length - 1) : answers.host;
             this.options.title = answers.name;
             this.options.description = this.description;
             this.options.solutionName = this.options.solutionName || answers.solutionName;
