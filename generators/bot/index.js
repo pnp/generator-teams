@@ -161,6 +161,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 class GeneratorTeamsAppOptions {
     constructor() {
+        /* Bots */
+        this.botid = '';
         this.botType = "";
         this.connectorType = '';
         this.composeExtensionType = '';
@@ -341,8 +343,8 @@ class BotGenerator extends Generator {
                 this.fs.write(clientTsPath, clientTs);
             }
             Yotilities_1.Yotilities.addAdditionalDeps([
-                ['botbuilder', '3.9.0'],
-                ['botbuilder-teams', '0.1.2']
+                ['botbuilder', '3.11.0'],
+                ['botbuilder-teams', '0.1.6']
             ], this.fs);
         }
     }

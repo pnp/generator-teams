@@ -29,7 +29,7 @@ export class <%=connectorName%>Connector {
         }
     }
 
-    public Ping(): Promise<void>[] {
+    public Ping(): Promise < void>[] {
         return this.connectors.map(connector => {
             return new Promise<void>((resolve, reject) => {
                 console.log('ping ' + JSON.stringify(connector))
@@ -74,6 +74,10 @@ export class <%=connectorName%>Connector {
                     if (error) {
                         reject(error)
                     } else {
+                        if (response.statusCode == 410) {
+                            // status code 410 means that the connector is removed
+                            // TODO: implement logic to remove the connector registration
+                        }
                         resolve();
                     }
                 })

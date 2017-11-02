@@ -3,6 +3,9 @@ var webpack = require('webpack');
 
 var path = require('path');
 var fs = require('fs');
+var argv = require('yargs').argv;
+
+var debug = argv.debug !== undefined;
 
 var nodeModules = {};
 fs.readdirSync('node_modules')
@@ -22,7 +25,8 @@ var config = [
         },
         output: {
             path: __dirname + '/dist',
-            filename: '[name].js'
+            filename: '[name].js',
+            devtoolModuleFilenameTemplate: debug ? '[absolute-resource-path]' : []
         },
         externals: nodeModules,
         devtool: 'source-map',

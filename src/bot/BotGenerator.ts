@@ -169,8 +169,8 @@ export class BotGenerator extends Generator {
             }
 
             Yotilities.addAdditionalDeps([
-                ['botbuilder', '3.9.0'],
-                ['botbuilder-teams', '0.1.2']
+                ['botbuilder', '3.11.0'],
+                ['botbuilder-teams', '0.1.6']
             ], this.fs);
         }
     }

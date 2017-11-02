@@ -6,6 +6,7 @@ var inject = require('gulp-inject');
 var runSequence = require('run-sequence');
 const zip = require('gulp-zip');
 var nodemon = require('nodemon');
+var argv = require('yargs').argv;
 
 var injectSources = ["./dist/web/scripts/**/*.js", './dist/web/assets/**/*.css']
 var typeScriptFiles = ["./src/**/*.ts"]
@@ -27,6 +28,7 @@ gulp.task('watch', function () {
  * Creates the tab manifest
  */
 gulp.task('manifest', () => {
+    // TODO: add version injection here
     gulp.src(manifestFiles)
         .pipe(zip('<%=solutionName%>.zip'))
         .pipe(gulp.dest('package'))
@@ -99,9 +101,12 @@ gulp.task('build', function () {
  */
 gulp.task('serve', ['build', 'watch'], function (cb) {
     var started = false;
+    var debug = argv.debug !== undefined;
+
     return nodemon({
         script: 'dist/server.js',
-        watch: ['dist/server.js']
+        watch: ['dist/server.js'],
+        nodeArgs: debug ? ['--debug'] : []
     }).on('start', function () {
         if (!started) {
             cb();

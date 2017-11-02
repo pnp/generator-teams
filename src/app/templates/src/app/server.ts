@@ -29,6 +29,7 @@ let port = process.env.port || process.env.PORT || 3007;
 
 express.use(bodyParser.json());
 
+// Add simple logging
 express.use(morgan('tiny'));
 
 // Add /scripts and /assets as static folders

@@ -20,7 +20,7 @@ export class GeneratorTeamsAppOptions {
     tabTitle: string;
     tabName: string;
     /* Bots */
-    botid?: string;
+    botid: string = '';
     staticTab: boolean;
     staticTabName: string;
     staticTabTitle: string;

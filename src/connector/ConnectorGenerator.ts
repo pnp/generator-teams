@@ -96,8 +96,8 @@ export class ConnectorGenerator extends Generator {
             this.fs.writeJSON(manifestPath, manifest);
 
             Yotilities.addAdditionalDeps([
-                ['request', '2.81.0'],
-                ['@types/request', '2.0.0']
+                ['request', '2.83.0'],
+                ['@types/request', '2.0.7']
             ], this.fs);
         }
     }

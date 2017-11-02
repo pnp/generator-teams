@@ -8,27 +8,53 @@ TODO: Add your documentation here
 
 Head on over to [official documentation](https://msdn.microsoft.com/en-us/microsoft-teams/tabs) to learn how to build Microsoft Teams Tabs.
 
-## Building the tab
+## Building the app
 
-```
+``` bash
 npm i -g gulp
 gulp build
 ```
 
 ## Building the manifest
 
-```
+``` bash
 gulp manifest
+```
+
+## Debug and test locally
+
+To debug and test the solution locally you use the `serve` Gulp task. This will first build the app and then start a local web server on port 3007, where you can test your Tabs, Bots or other extensions. Also this command will rebuild the App if you change any file in the `/src` directory.
+
+``` bash
+gulp serve
+```
+
+To debug the code you can append the argument `debug` to the `serve` command as follows. This allows you to step through your code using your preferred code editor.
+
+``` bash
+gulp serve --debug
+```
+
+To step through code in Visual Studio Code you need to add the following snippet in the `./.vscode/launch.json` file. Once done, you can easily attach to the node process after running the `gulp server --debug` command.
+
+``` json
+{
+    "type": "node",
+    "request": "attach",
+    "name": "Attach",
+    "port": 5858,
+    "sourceMaps": true,
+    "outFiles": [
+        "${workspaceRoot}/dist/**/*.js"
+    ],
+    "remoteRoot": "${workspaceRoot}/src/"
+},
 ```
 
 ## Output
 
 * dist/* - the files required to host the solution
 * package/* - the Teams extensibility package (zip file) to be uploaded to Microsoft Teams ([how-to](https://msdn.microsoft.com/en-us/microsoft-teams/createpackage#uploading-your-tab-package-to-microsoft-teams))
-
-## Express hosting
-
-If you choose to use [Express](http://expressjs.com/) hosting when you create your Tab project, a file called `./src/server.ts` will be created. Node is automatically configured to start this Express server when deployed to Azure.
 
 ## Deploying to Azure using Git
 
@@ -50,5 +76,3 @@ This will automatically deploy your files to Azure, download the npm pacakges, b
 12. Wait until the deployment is completed and navigate to <%= host %>/privacy.html to test that the web application is running
 13. Done
 14. Repeat step 11 for every commit you do and want to deploy
-
-
