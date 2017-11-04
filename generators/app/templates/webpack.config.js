@@ -26,7 +26,7 @@ var config = [
         output: {
             path: __dirname + '/dist',
             filename: '[name].js',
-            devtoolModuleFilenameTemplate: debug ? '[absolute-resource-path]' : []
+            devtoolModuleFilenameTemplate: debug ? '[absolute-resource-path]' : '[]'
         },
         externals: nodeModules,
         devtool: 'source-map',
@@ -80,7 +80,7 @@ var config = [
                     exclude: [/lib/, /dist/],
                     loader: "ts-loader",
                     options: {
-                        configFileName: "tsconfig-client.json"                        
+                        configFile: "tsconfig-client.json"                        
                     }
                 }
             ]

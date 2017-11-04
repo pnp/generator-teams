@@ -62,14 +62,14 @@ export class ComposeExtensionGenerator extends Generator {
                             return message;
                         },
                         default: (answers: any) => {
-                            if (answers.composeExtensionType == 'existing') {
-                                return this.options.botid;
-                            }
                             return Guid.EMPTY;
                         },
                         validate: (input) => {
                             return Guid.isGuid(input);
-                        }
+                        },
+                        when: (answers: any) => {
+                            return answers.composeExtensionType !== 'existing';
+                        },
                     },
                     {
                         type: 'input',

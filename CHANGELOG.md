@@ -5,17 +5,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## [*2.3.0-preview*] - <*2017-11-02*>
+## [*2.3.0-preview*] - <*2017-11-04*>
 
 ## Added
 
 * Added `--debug` flag to the `serve` gulp command
 * Added support for `.env` file for local storage of environment properties
-* Upddated documentation files
+* Updated documentation files
 
 ### Changed
 
 * Updated node packages
+* Fixed issue #19
 
 ## [*2.2.1-preview*] - <*2017-08-06*>
 
