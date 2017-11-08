@@ -19,6 +19,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixes
 
 * Fixed issues where space was used in solution name
+* Added missing png for compose extension
+
+### Removed
+
+* Removed not used icon files
 
 ## [*2.3.0-preview*] - <*2017-11-04*>
 
