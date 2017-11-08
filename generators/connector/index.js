@@ -243,7 +243,8 @@ class ConnectorGenerator extends Generator {
                 let templateFiles = [
                     "README-{connectorName}.md",
                     "src/app/{connectorName}Connector.ts",
-                    "src/app/web/{connectorName}Connector.html"
+                    "src/app/web/{connectorName}Connector.html",
+                    "src/app/web/{connectorName}ConnectorConnect.ejs"
                 ];
                 this.sourceRoot();
                 templateFiles.forEach(t => {
@@ -259,7 +260,12 @@ class ConnectorGenerator extends Generator {
             this.fs.writeJSON(manifestPath, manifest);
             Yotilities_1.Yotilities.addAdditionalDeps([
                 ['request', '2.83.0'],
-                ['@types/request', '2.0.7']
+                ['@types/request', '2.0.7'],
+                ['@types/ejs', '2.3.33'],
+                ['@types/node-json-db', '0.0.1'],
+                ['ejs', '2.5.7'],
+                ['node-json-db', '0.7.3'],
+                ['botbuilder-teams', '0.1.6']
             ], this.fs);
         }
     }

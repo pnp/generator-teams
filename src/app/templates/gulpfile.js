@@ -10,8 +10,8 @@ var argv = require('yargs').argv;
 
 var injectSources = ["./dist/web/scripts/**/*.js", './dist/web/assets/**/*.css']
 var typeScriptFiles = ["./src/**/*.ts"]
-var staticFiles = ["./src/app/**/*.html", "./src/app/web/assets/**/*"]
-var htmlFiles = ["./src/app/**/*.html"]
+var staticFiles = ["./src/app/**/*.html", "./src/app/**/*.ejs", "./src/app/web/assets/**/*"]
+var htmlFiles = ["./src/app/**/*.html", "./src/app/**/*.ejs"]
 var watcherfiles = ["./src/**/*.*"]
 var manifestFiles = ["./src/manifest/**/*.*"]
 

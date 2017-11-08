@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*2.3.1-preview*] - <*2017-11-05*>
+
+## Added
+
+* Added a sample Connector Configuration page.
+* Improved Connector documentation
+* Improved the Connector default sample (using O365 Connector card SDK and persistent connector storage)
 
 ## [*2.3.0-preview*] - <*2017-11-04*>
 
