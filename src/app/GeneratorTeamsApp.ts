@@ -131,6 +131,7 @@ export class GeneratorTeamsApp extends Generator {
             this.options.solutionName = this.options.solutionName || answers.solutionName;
             this.options.shouldUseSubDir = answers.whichFolder === 'subdir';
             this.options.libraryName = lodash.camelCase(this.options.solutionName);
+            this.options.packageName = this.options.libraryName.toLocaleLowerCase();            
             this.options.developer = answers.developer;
             this.options.host = answers.host;
             var tmp: string = this.options.host.substring(this.options.host.indexOf('://') + 3)

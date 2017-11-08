@@ -6,6 +6,7 @@ export class GeneratorTeamsAppOptions {
     title: string;
     description: string;
     solutionName: string;
+    packageName: string;
     name: string;
     shouldUseSubDir: boolean;
     libraryName: string;

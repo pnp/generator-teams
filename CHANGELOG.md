@@ -6,11 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [*2.3.1-preview*] - <*2017-11-05*>
 
-## Added
+### Added
 
 * Added a sample Connector Configuration page.
 * Improved Connector documentation
 * Improved the Connector default sample (using O365 Connector card SDK and persistent connector storage)
+
+### Changed
+
+* Package file is now using name without spaces
+
+### Fixes
+
+* Fixed issues where space was used in solution name
 
 ## [*2.3.0-preview*] - <*2017-11-04*>
 
