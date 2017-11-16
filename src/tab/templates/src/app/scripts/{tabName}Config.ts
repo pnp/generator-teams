@@ -3,7 +3,7 @@ import {TeamsTheme} from './theme';
 /**
  * Implementation of <%= tabTitle %> configuration page
  */
-export class <%=tabName%>Configure {
+export class <%=tabName%>Config {
     constructor() {
         microsoftTeams.initialize();
 
@@ -15,7 +15,7 @@ export class <%=tabName%>Configure {
             }
             this.setValidityState(true);
         });
-		
+
         microsoftTeams.settings.registerOnSaveHandler((saveEvent: microsoftTeams.settings.SaveEvent) => {
 
             let val = <HTMLInputElement>document.getElementById("data");
