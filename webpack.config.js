@@ -31,8 +31,8 @@ var config = [
             connector: [
                 __dirname +'/src/connector/index.ts'
             ],
-            composeExtension: [
-                __dirname +'/src/composeExtension/index.ts'
+            messageExtension: [
+                __dirname +'/src/messageExtension/index.ts'
             ]
         },
         output: {

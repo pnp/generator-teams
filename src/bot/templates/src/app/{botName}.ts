@@ -31,9 +31,9 @@ export class <%= botName %> {
         // Control messages
         this.universalBot.on('conversationUpdate', this.convUpdateHandler);
 
-<% if(composeExtensionType == 'new' || composeExtensionType == 'existing') { %>
-        // Compose extension
-         this.Connector.onQuery('<%=composeExtensionName%>',
+<% if(messageExtensionType == 'new' || messageExtensionType == 'existing') { %>
+        // Message Extension
+         this.Connector.onQuery('<%=messageExtensionName%>',
              (event: builder.IEvent, query: teamBuilder.ComposeExtensionQuery, callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
                 if (query.parameters && query.parameters[0] && query.parameters[0].name === 'initialRun') {
                     // implement an MRU, kind of thing

@@ -64,61 +64,38 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 24);
+/******/ 	return __webpack_require__(__webpack_require__.s = 26);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 0:
 /***/ (function(module, exports) {
 
 module.exports = require("path");
 
 /***/ }),
-/* 1 */
+
+/***/ 1:
 /***/ (function(module, exports) {
 
 module.exports = require("guid");
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports) {
 
-module.exports = require("lodash");
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-module.exports = require("yeoman-generator");
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = require("yosay");
-
-/***/ }),
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */
+/***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const ComposeExtensionGenerator_1 = __webpack_require__(15);
-module.exports = ComposeExtensionGenerator_1.ComposeExtensionGenerator;
+const MessageExtensionGenerator_1 = __webpack_require__(17);
+module.exports = MessageExtensionGenerator_1.MessageExtensionGenerator;
 
 
 /***/ }),
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */
+
+/***/ 17:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -129,20 +106,20 @@ const lodash = __webpack_require__(2);
 let yosay = __webpack_require__(4);
 let path = __webpack_require__(0);
 let Guid = __webpack_require__(1);
-class ComposeExtensionGenerator extends Generator {
+class MessageExtensionGenerator extends Generator {
     constructor(args, opts) {
         super(args, opts);
         opts.force = true;
         this.options = opts.options;
-        this.desc('Adds a Compose Extension to a Microsoft Teams Apps project');
+        this.desc('Adds a Message Extension to a Microsoft Teams Apps project');
     }
     prompting() {
-        if (this.options.composeExtension) {
+        if (this.options.messageExtension) {
             return this.prompt([
                 {
                     type: 'list',
-                    name: 'composeExtensionType',
-                    message: 'What type of Compose Extension would you like to create ',
+                    name: 'messageExtensionType',
+                    message: 'What type of Message Extension would you like to create ',
                     default: (answers) => {
                         if (this.options.botType == 'botframework') {
                             return 'existing';
@@ -174,9 +151,9 @@ class ComposeExtensionGenerator extends Generator {
                 },
                 {
                     type: 'input',
-                    name: 'composeExtensionId',
+                    name: 'messageExtensionId',
                     message: (answers) => {
-                        var message = 'I need the Microsoft App ID for the Bot used by the Compose Extension. ';
+                        var message = 'I need the Microsoft App ID for the Bot used by the Message Extension. ';
                         return message;
                     },
                     default: (answers) => {
@@ -186,53 +163,53 @@ class ComposeExtensionGenerator extends Generator {
                         return Guid.isGuid(input);
                     },
                     when: (answers) => {
-                        return answers.composeExtensionType !== 'existing';
+                        return answers.messageExtensionType !== 'existing';
                     },
                 },
                 {
                     type: 'input',
-                    name: 'composeExtensionName',
-                    message: 'What is the name of your Compose Extension command?',
+                    name: 'messageExtensionName',
+                    message: 'What is the name of your Message Extension command?',
                     validate: (input) => {
                         return input.length > 0;
                     },
                 },
                 {
                     type: 'input',
-                    name: 'composeExtensionDescription',
-                    message: 'Describe your Compose Extension command?',
+                    name: 'messageExtensionDescription',
+                    message: 'Describe your Message Extension command?',
                     validate: (input) => {
                         return input.length > 0;
                     }
                 }
             ]).then((answers) => {
-                this.options.composeExtensionId = answers.composeExtensionId;
-                this.options.composeExtensionType = answers.composeExtensionType;
-                this.options.composeExtensionTitle = answers.composeExtensionName;
-                this.options.composeExtensionDescription = answers.composeExtensionDescription;
-                this.options.composeExtensionName = lodash.camelCase(answers.composeExtensionName);
-                if (answers.composeExtensionType == 'new') {
+                this.options.messageExtensionId = answers.messageExtensionId;
+                this.options.messageExtensionType = answers.messageExtensionType;
+                this.options.messageExtensionTitle = answers.messageExtensionName;
+                this.options.messageExtensionDescription = answers.messageExtensionDescription;
+                this.options.messageExtensionName = lodash.camelCase(answers.messageExtensionName);
+                if (answers.messageExtensionType == 'new') {
                     // we need to add the Bot, even though the users did not choose to create one
                     this.options.bot = true;
-                    this.options.botid = answers.composeExtensionId;
+                    this.options.botid = answers.messageExtensionId;
                     this.options.botType = 'botframework';
-                    this.options.botTitle = answers.composeExtensionName + ' Bot';
+                    this.options.botTitle = answers.messageExtensionName + ' Bot';
                     this.options.botName = lodash.camelCase(this.options.botTitle);
                 }
             });
         }
     }
     writing() {
-        if (this.options.composeExtension) {
+        if (this.options.messageExtension) {
             let manifestPath = "src/manifest/manifest.json";
             var manifest = this.fs.readJSON(manifestPath);
-            manifest.composeExtensions.push({
-                botId: this.options.composeExtensionId,
+            manifest.messageExtensions.push({
+                botId: this.options.messageExtensionId,
                 scopes: ["team", "personal"],
                 commands: [
                     {
-                        id: this.options.composeExtensionName,
-                        title: this.options.composeExtensionTitle,
+                        id: this.options.messageExtensionName,
+                        title: this.options.messageExtensionTitle,
                         description: 'Add a clever description here',
                         initialRun: true,
                         parameters: [
@@ -249,23 +226,38 @@ class ComposeExtensionGenerator extends Generator {
         }
     }
 }
-exports.ComposeExtensionGenerator = ComposeExtensionGenerator;
+exports.MessageExtensionGenerator = MessageExtensionGenerator;
 
 
 /***/ }),
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */,
-/* 22 */,
-/* 23 */,
-/* 24 */
+
+/***/ 2:
+/***/ (function(module, exports) {
+
+module.exports = require("lodash");
+
+/***/ }),
+
+/***/ 26:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(9);
+module.exports = __webpack_require__(11);
 
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, exports) {
+
+module.exports = require("yeoman-generator");
+
+/***/ }),
+
+/***/ 4:
+/***/ (function(module, exports) {
+
+module.exports = require("yosay");
 
 /***/ })
-/******/ ]);
+
+/******/ });

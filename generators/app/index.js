@@ -165,7 +165,7 @@ class GeneratorTeamsAppOptions {
         this.botid = '';
         this.botType = "";
         this.connectorType = '';
-        this.composeExtensionType = '';
+        this.messageExtensionType = '';
     }
 }
 exports.GeneratorTeamsAppOptions = GeneratorTeamsAppOptions;
@@ -234,7 +234,7 @@ class GeneratorTeamsApp extends Generator {
         this.composeWith('teams:bot', { 'options': this.options });
         this.composeWith('teams:custombot', { 'options': this.options });
         this.composeWith('teams:connector', { 'options': this.options });
-        this.composeWith('teams:composeExtension', { 'options': this.options });
+        this.composeWith('teams:messageExtension', { 'options': this.options });
     }
     prompting() {
         return this.prompt([
@@ -300,8 +300,8 @@ class GeneratorTeamsApp extends Generator {
                         value: 'connector'
                     },
                     {
-                        name: 'A Compose extension',
-                        value: 'composeextension',
+                        name: 'A Message Extension',
+                        value: 'messageextension',
                     }
                 ]
             },
@@ -333,7 +333,7 @@ class GeneratorTeamsApp extends Generator {
             this.options.tab = answers.parts.indexOf('tab') != -1;
             this.options.connector = answers.parts.indexOf('connector') != -1;
             this.options.customBot = answers.parts.indexOf('custombot') != -1;
-            this.options.composeExtension = answers.parts.indexOf('composeextension') != -1;
+            this.options.messageExtension = answers.parts.indexOf('messageextension') != -1;
             this.options.id = Guid.raw();
             if (this.options.shouldUseSubDir) {
                 this.destinationRoot(this.destinationPath(this.options.solutionName));
@@ -403,8 +403,8 @@ class GeneratorTeamsApp extends Generator {
                 AppInsights.client.trackEvent('bot-new');
             }
         }
-        if (this.options.composeExtension) {
-            AppInsights.client.trackEvent('composeExtension');
+        if (this.options.messageExtension) {
+            AppInsights.client.trackEvent('messageExtension');
         }
         if (this.options.connector) {
             AppInsights.client.trackEvent('connector');

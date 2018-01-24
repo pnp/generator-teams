@@ -38,11 +38,11 @@ export class GeneratorTeamsAppOptions {
     connectorType: string = '';
     connectorTitle: string;
     connectorName: string;
-    /* Compose extensions */
-    composeExtension: boolean;
-    composeExtensionType: string = '';
-    composeExtensionTitle: string;
-    composeExtensionDescription: string;
-    composeExtensionName: string;
-    composeExtensionId: string;
+    /* Message extensions */
+    messageExtension: boolean;
+    messageExtensionType: string = '';
+    messageExtensionTitle: string;
+    messageExtensionDescription: string;
+    messageExtensionName: string;
+    messageExtensionId: string;
 }

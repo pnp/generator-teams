@@ -10,23 +10,23 @@ let path = require('path');
 let Guid = require('guid');
 
 
-export class ComposeExtensionGenerator extends Generator {
+export class MessageExtensionGenerator extends Generator {
     options: GeneratorTeamsAppOptions;
 
     public constructor(args: any, opts: any) {
         super(args, opts);
         opts.force = true;
         this.options = opts.options;
-        this.desc('Adds a Compose Extension to a Microsoft Teams Apps project');
+        this.desc('Adds a Message Extension to a Microsoft Teams Apps project');
     }
     public prompting() {
-        if (this.options.composeExtension) {
+        if (this.options.messageExtension) {
             return this.prompt(
                 [
                     {
                         type: 'list',
-                        name: 'composeExtensionType',
-                        message: 'What type of Compose Extension would you like to create ',
+                        name: 'messageExtensionType',
+                        message: 'What type of Message Extension would you like to create ',
                         default: (answers: any) => {
                             if (this.options.botType == 'botframework') {
                                 return 'existing';
@@ -56,9 +56,9 @@ export class ComposeExtensionGenerator extends Generator {
                     },
                     {
                         type: 'input',
-                        name: 'composeExtensionId',
+                        name: 'messageExtensionId',
                         message: (answers) => {
-                            var message = 'I need the Microsoft App ID for the Bot used by the Compose Extension. ';
+                            var message = 'I need the Microsoft App ID for the Bot used by the Message Extension. ';
                             return message;
                         },
                         default: (answers: any) => {
@@ -68,54 +68,54 @@ export class ComposeExtensionGenerator extends Generator {
                             return Guid.isGuid(input);
                         },
                         when: (answers: any) => {
-                            return answers.composeExtensionType !== 'existing';
+                            return answers.messageExtensionType !== 'existing';
                         },
                     },
                     {
                         type: 'input',
-                        name: 'composeExtensionName',
-                        message: 'What is the name of your Compose Extension command?',
+                        name: 'messageExtensionName',
+                        message: 'What is the name of your Message Extension command?',
                         validate: (input) => {
                             return input.length > 0;
                         },
                     },
                     {
                         type: 'input',
-                        name: 'composeExtensionDescription',
-                        message: 'Describe your Compose Extension command?',
+                        name: 'messageExtensionDescription',
+                        message: 'Describe your Message Extension command?',
                         validate: (input) => {
                             return input.length > 0;
                         }
                     }
                 ]
             ).then((answers: any) => {
-                this.options.composeExtensionId = answers.composeExtensionId;
-                this.options.composeExtensionType = answers.composeExtensionType;
-                this.options.composeExtensionTitle = answers.composeExtensionName;
-                this.options.composeExtensionDescription = answers.composeExtensionDescription;
-                this.options.composeExtensionName = lodash.camelCase(answers.composeExtensionName);
-                if (answers.composeExtensionType == 'new') {
+                this.options.messageExtensionId = answers.messageExtensionId;
+                this.options.messageExtensionType = answers.messageExtensionType;
+                this.options.messageExtensionTitle = answers.messageExtensionName;
+                this.options.messageExtensionDescription = answers.messageExtensionDescription;
+                this.options.messageExtensionName = lodash.camelCase(answers.messageExtensionName);
+                if (answers.messageExtensionType == 'new') {
                     // we need to add the Bot, even though the users did not choose to create one
                     this.options.bot = true;
-                    this.options.botid = answers.composeExtensionId;
+                    this.options.botid = answers.messageExtensionId;
                     this.options.botType = 'botframework';
-                    this.options.botTitle = answers.composeExtensionName + ' Bot';
+                    this.options.botTitle = answers.messageExtensionName + ' Bot';
                     this.options.botName = lodash.camelCase(this.options.botTitle);
                 }
             });
         }
     }
     public writing() {
-        if (this.options.composeExtension) {
+        if (this.options.messageExtension) {
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
-            manifest.composeExtensions.push({
-                botId: this.options.composeExtensionId,
+            manifest.messageExtensions.push({
+                botId: this.options.messageExtensionId,
                 scopes: ["team", "personal"],
                 commands: [
                     {
-                        id: this.options.composeExtensionName,
-                        title: this.options.composeExtensionTitle,
+                        id: this.options.messageExtensionName,
+                        title: this.options.messageExtensionTitle,
                         description: 'Add a clever description here',
                         initialRun: true,
                         parameters: [

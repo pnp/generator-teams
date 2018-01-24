@@ -165,7 +165,7 @@ class GeneratorTeamsAppOptions {
         this.botid = '';
         this.botType = "";
         this.connectorType = '';
-        this.composeExtensionType = '';
+        this.messageExtensionType = '';
     }
 }
 exports.GeneratorTeamsAppOptions = GeneratorTeamsAppOptions;

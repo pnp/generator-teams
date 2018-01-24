@@ -42,7 +42,7 @@ export class GeneratorTeamsApp extends Generator {
         this.composeWith('teams:bot', { 'options': this.options });
         this.composeWith('teams:custombot', { 'options': this.options });
         this.composeWith('teams:connector', { 'options': this.options });
-        this.composeWith('teams:composeExtension', { 'options': this.options });
+        this.composeWith('teams:messageExtension', { 'options': this.options });
     }
 
     public prompting() {
@@ -110,8 +110,8 @@ export class GeneratorTeamsApp extends Generator {
                             value: 'connector'
                         },
                         {
-                            name: 'A Compose extension',
-                            value: 'composeextension',
+                            name: 'A Message Extension',
+                            value: 'messageextension',
                         }
                     ]
                 },
@@ -144,7 +144,7 @@ export class GeneratorTeamsApp extends Generator {
             this.options.tab = (<string[]>answers.parts).indexOf('tab') != -1;
             this.options.connector = (<string[]>answers.parts).indexOf('connector') != -1;
             this.options.customBot = (<string[]>answers.parts).indexOf('custombot') != -1;
-            this.options.composeExtension = (<string[]>answers.parts).indexOf('composeextension') != -1;
+            this.options.messageExtension = (<string[]>answers.parts).indexOf('messageextension') != -1;
             this.options.id = Guid.raw();
 
             if (this.options.shouldUseSubDir) {
@@ -232,8 +232,8 @@ export class GeneratorTeamsApp extends Generator {
                 AppInsights.client.trackEvent('bot-new');
             }
         }
-        if (this.options.composeExtension) {
-            AppInsights.client.trackEvent('composeExtension');
+        if (this.options.messageExtension) {
+            AppInsights.client.trackEvent('messageExtension');
         }
         if (this.options.connector) {
             AppInsights.client.trackEvent('connector');
