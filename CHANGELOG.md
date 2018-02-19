@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*2.4.0-preview*] - <*2018-01-25*>
+
+### Changed
+
+* Renamed Compose Extensions to Message Extensions
+* Moved to `msteams-ui-components` React library for UI
+* Changed default bot til new bot
+
+### Fixes
+
+* Fixed a bug in Message Extensions
+* Added default values for the Message extension name and description
 
 ## [*2.3.2-preview*] - <*2017-11-16*>
 

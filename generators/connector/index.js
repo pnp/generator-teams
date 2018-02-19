@@ -243,7 +243,8 @@ class ConnectorGenerator extends Generator {
                     "README-{connectorName}.md",
                     "src/app/{connectorName}Connector.ts",
                     "src/app/web/{connectorName}Connector.html",
-                    "src/app/web/{connectorName}ConnectorConnect.ejs"
+                    "src/app/web/{connectorName}ConnectorConnect.ejs",
+                    "src/app/scripts/{connectorName}ConnectorConnect.tsx"
                 ];
                 this.sourceRoot();
                 templateFiles.forEach(t => {
@@ -264,8 +265,21 @@ class ConnectorGenerator extends Generator {
                 ['@types/node-json-db', '0.0.1'],
                 ['ejs', '2.5.7'],
                 ['node-json-db', '0.7.3'],
-                ['botbuilder-teams', '0.1.6']
+                ['botbuilder-teams', '0.1.7'],
+                ["msteams-ui-components-react", "^0.4.7"],
+                ["react", "^16.1.0"],
+                ["@types/react", "16.0.38"],
+                ["react-dom", "^16.2.0"],
+                ["file-loader", "1.1.6"],
+                ["typestyle", "1.5.1"]
             ], this.fs);
+            // update client.ts
+            let clientTsPath = "src/app/scripts/client.ts";
+            let clientTs = this.fs.read(clientTsPath);
+            clientTs += `\n// Added by generator-teams`;
+            clientTs += `\nexport * from './${this.options.connectorName}ConnectorConnect';`;
+            clientTs += `\n`;
+            this.fs.write(clientTsPath, clientTs);
         }
     }
 }

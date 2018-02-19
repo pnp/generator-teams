@@ -29,7 +29,7 @@ export class BotGenerator extends Generator {
                         type: 'list',
                         name: 'bottype',
                         message: 'What type of Bot would you like to use?',
-                        default: 'existing',
+                        default: 'botframework',
                         choices: [
                             {
                                 name: 'An already existing and running bot (not hosted in this solution)',
@@ -169,8 +169,8 @@ export class BotGenerator extends Generator {
             }
 
             Yotilities.addAdditionalDeps([
-                ['botbuilder', '3.11.0'],
-                ['botbuilder-teams', '0.1.6']
+                ['botbuilder', '3.14.0'],
+                ['botbuilder-teams', '0.1.7']
             ], this.fs);
         }
     }

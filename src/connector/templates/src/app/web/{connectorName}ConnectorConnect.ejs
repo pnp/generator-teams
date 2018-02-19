@@ -3,49 +3,30 @@
 
 <head>
   <meta charset="UTF-8">
-  <title><%= connectorTitle %></title>
+  <title>
+    <%= connectorTitle %>
+  </title>
   <!-- inject:css -->
   <!-- endinject -->
-  <link rel="stylesheet" href="/assets/css/msteams-app.css" />
-
-  <style>
-    body {
-      opacity: 1.0;
-    }
-  </style>
 </head>
 
-<body class="ts-middle">
+<body>
   <div id='app'>
-    <h4 class="app-font-family-base ts-modal-dialog-title">Configure the <em><%=connectorTitle%></em></h4>
-    <p>
-      <form action="/api/connector/connect" method="POST">
-        <input type='hidden' name='webhookUrl' value='<%%=webhookUrl%>' />
-        <input type='hidden' name='user' value='<%%=user%>' />
-        <input type='hidden' name='appType' value='<%%=appType%>' />
-        <input type='hidden' name='groupName' value='<%%=groupName%>' />
-        <input type='hidden' name='state' value='<%%=state%>' />
-        <div class="settings-container" style='width:400px'>
-          <div class="section-caption">Your connector settings</div>
-          <div class="form-field-title">
-            <div for="data">Card color:</div>
-          </div>
-          <div class="form-field-input">
-            <select name='color' class='form-control'>
-                      <option value='#dce6ee'>Blue</option>
-                      <option value='#FFC300'>Orange</option>
-                    </select>
-          </div>
-          <div class="form-field-input">
-            <input type="submit" class='ts-btn ts-btn-primary inset-border' value='Connect' />
-          </div>
-        </div>
-
-      </form>
-    </p>
+    Loading...
   </div>
+  </form>
   <!-- inject:js -->
   <!-- endinject -->
+  <script type='text/javascript'>
+    <%=libraryName%>.
+    <%=connectorTitle%> > ConnectorConfig.render(document.getElementById('app'), {
+      webhookUrl: '<%%=webhookUrl%>',
+      user: '<%%=user%>',
+      appType: '<%%=appType%>',
+      groupName: '<%%=groupName%>',
+      state: '<%%=state%>'
+    });
+  </script>
 </body>
 
 </html>

@@ -18,6 +18,7 @@ All Connectors has to be registered in the [Connectors Developer Dashboard](http
 * `./src/<%=connectorName%>Connector.ts` - implementation of the Connector that manages registering new subscriptions (`Connect()`) as well as a sample method to send a message to all subscribers (`Ping()`).
 * `./src/web/<%=connectorName%>Connector.html` - this is the landing page that the users will end up on when adding a connector.
 * `./src/web/<%=connectorName%>ConnectorConnect.ejs` - this is the page used by end-users to configure your Connector.
+* `./src/scripts/<%=connectorName%>ConnectorConnect.tsx` - React component of the connect page.
 
 ### Connector end-points
 

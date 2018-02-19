@@ -216,7 +216,7 @@ class BotGenerator extends Generator {
                     type: 'list',
                     name: 'bottype',
                     message: 'What type of Bot would you like to use?',
-                    default: 'existing',
+                    default: 'botframework',
                     choices: [
                         {
                             name: 'An already existing and running bot (not hosted in this solution)',
@@ -343,8 +343,8 @@ class BotGenerator extends Generator {
                 this.fs.write(clientTsPath, clientTs);
             }
             Yotilities_1.Yotilities.addAdditionalDeps([
-                ['botbuilder', '3.11.0'],
-                ['botbuilder-teams', '0.1.6']
+                ['botbuilder', '3.14.0'],
+                ['botbuilder-teams', '0.1.7']
             ], this.fs);
         }
     }

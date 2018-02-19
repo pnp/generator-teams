@@ -75,6 +75,7 @@ export class MessageExtensionGenerator extends Generator {
                         type: 'input',
                         name: 'messageExtensionName',
                         message: 'What is the name of your Message Extension command?',
+                        default: this.options.title + ' Message Extension',
                         validate: (input) => {
                             return input.length > 0;
                         },
@@ -83,6 +84,7 @@ export class MessageExtensionGenerator extends Generator {
                         type: 'input',
                         name: 'messageExtensionDescription',
                         message: 'Describe your Message Extension command?',
+                        default: `Description of ${this.options.title} message extension`,
                         validate: (input) => {
                             return input.length > 0;
                         }
@@ -109,6 +111,9 @@ export class MessageExtensionGenerator extends Generator {
         if (this.options.messageExtension) {
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
+            if(!manifest.messageExtensions) {
+                manifest.messageExtensions = [];
+            }
             manifest.messageExtensions.push({
                 botId: this.options.messageExtensionId,
                 scopes: ["team", "personal"],

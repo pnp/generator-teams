@@ -212,8 +212,8 @@ class TabGenerator extends Generator {
     writing() {
         if (this.options.tab) {
             let templateFiles = [
-                "src/app/scripts/{tabName}Config.ts",
-                "src/app/scripts/{tabName}Tab.ts",
+                "src/app/scripts/{tabName}Config.tsx",
+                "src/app/scripts/{tabName}Tab.tsx",
                 "src/app/web/{tabName}Tab.html",
                 "src/app/web/{tabName}Remove.html",
                 "src/app/web/{tabName}Config.html",
@@ -235,6 +235,14 @@ class TabGenerator extends Generator {
             ;
             manifest.validDomains.push(this.options.host.split("https://")[1]);
             this.fs.writeJSON(manifestPath, manifest);
+            Yotilities_1.Yotilities.addAdditionalDeps([
+                ["msteams-ui-components-react", "^0.4.7"],
+                ["react", "^16.1.0"],
+                ["@types/react", "16.0.38"],
+                ["react-dom", "^16.2.0"],
+                ["file-loader", "1.1.6"],
+                ["typestyle", "1.5.1"]
+            ], this.fs);
             // update client.ts
             let clientTsPath = "src/app/scripts/client.ts";
             let clientTs = this.fs.read(clientTsPath);

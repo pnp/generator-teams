@@ -9,16 +9,14 @@
   </style>
 </head>
 
-<body class="ts-middle">
+<body>
   <div id='app'>
     Loading...
   </div>
-  <script src="https://statics.teams.microsoft.com/sdk/v1.0/js/MicrosoftTeams.min.js"></script>
   <!-- inject:js -->
   <!-- endinject -->
   <script type='text/javascript'>
-    var tab = new <%=libraryName%>.<%=tabName%>Tab();
-    tab.doStuff();
+    <%=libraryName%>.<%=tabName%>Tab.render(document.getElementById('app'), {});
   </script>
 </body>
 

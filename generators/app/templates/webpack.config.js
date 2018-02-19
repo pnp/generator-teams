@@ -1,4 +1,3 @@
-
 var webpack = require('webpack');
 
 var path = require('path');
@@ -16,8 +15,7 @@ fs.readdirSync('node_modules')
         nodeModules[mod] = 'commonjs ' + mod;
     });
 
-var config = [
-    {
+var config = [{
         entry: {
             server: [
                 __dirname + '/src/app/server.ts'
@@ -32,8 +30,7 @@ var config = [
         devtool: 'source-map',
         resolve: {
             extensions: [".ts", ".tsx", ".js"],
-            alias: {
-            }
+            alias: {}
         },
         target: 'node',
         node: {
@@ -41,16 +38,13 @@ var config = [
             __filename: false,
         },
         module: {
-            loaders: [
-                {
-                    test: /\.tsx?$/,
-                    exclude: [/lib/, /dist/],
-                    loader: "ts-loader"
-                }
-            ]
+            loaders: [{
+                test: /\.tsx?$/,
+                exclude: [/lib/, /dist/],
+                loader: "ts-loader"
+            }]
         },
-        plugins: [
-        ]
+        plugins: []
     },
     {
         entry: {
@@ -62,31 +56,32 @@ var config = [
             path: __dirname + '/dist/web/scripts',
             filename: '[name].js',
             libraryTarget: 'umd',
-            library: '<%=libraryName%>'
+            library: '<%=libraryName%>',
+            publicPath: '/scripts/'
         },
-        externals: {
-        },
+        externals: {},
         devtool: 'source-map',
         resolve: {
             extensions: [".ts", ".tsx", ".js"],
-            alias: {
-            }
+            alias: {}
         },
         target: 'web',
         module: {
-            loaders: [
-                {
+            loaders: [{
                     test: /\.tsx?$/,
                     exclude: [/lib/, /dist/],
                     loader: "ts-loader",
                     options: {
-                        configFile: "tsconfig-client.json"                        
+                        configFile: "tsconfig-client.json"
                     }
+                },
+                {
+                    test: /\.(eot|svg|ttf|woff|woff2)$/,
+                    loader: 'file-loader?name=public/fonts/[name].[ext]'
                 }
             ]
         },
-        plugins: [
-        ]
+        plugins: []
     }
 ];
 
