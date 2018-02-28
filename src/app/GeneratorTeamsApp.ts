@@ -75,7 +75,7 @@ export class GeneratorTeamsApp extends Generator {
                 {
                     type: 'input',
                     name: 'name',
-                    message: 'Name of your Microsoft Teams App project?',
+                    message: 'Title of your Microsoft Teams App project?',
                     default: this.appname
                 },
                 {

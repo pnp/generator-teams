@@ -212,7 +212,7 @@ class ConnectorGenerator extends Generator {
                     name: 'connectorId',
                     message: 'What is the Id of your Connector (found in the Connector Developer Portal)?',
                     default: (answers) => {
-                        return this.options.botid ? this.options.botid : Guid.EMPTY;
+                        return Guid.EMPTY;
                     },
                     validate: (input) => {
                         return Guid.isGuid(input);

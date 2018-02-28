@@ -265,7 +265,7 @@ class GeneratorTeamsApp extends Generator {
             {
                 type: 'input',
                 name: 'name',
-                message: 'Name of your Microsoft Teams App project?',
+                message: 'Title of your Microsoft Teams App project?',
                 default: this.appname
             },
             {
@@ -292,7 +292,7 @@ class GeneratorTeamsApp extends Generator {
                         value: 'bot'
                     },
                     {
-                        name: 'An outgoing webhook',
+                        name: 'An Outgoing Webhook',
                         value: 'custombot'
                     },
                     {
