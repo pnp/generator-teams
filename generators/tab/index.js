@@ -250,6 +250,7 @@ class TabGenerator extends Generator {
             clientTs += `\n// Added by generator-teams`;
             clientTs += `\nexport * from './${this.options.tabName}Config';`;
             clientTs += `\nexport * from './${this.options.tabName}Tab';`;
+            clientTs += `\nexport * from './${this.options.tabName}Remove';`;
             clientTs += `\n`;
             this.fs.write(clientTsPath, clientTs);
         }

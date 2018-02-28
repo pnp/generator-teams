@@ -89,10 +89,10 @@ export class <%=tabName%>Remove  extends React.Component<I<%=tabName%>RemoveProp
     }
 
     /**
-     * Static render method to be used by the configuration page
+     * Static render method to be used by the remove page
      */
-    public static render(element: HTMLElement, props: I<%=tabName%>ConfigProps) {
-        render(React.createElement<I<%=tabName%>ConfigProps>(<%=tabName%>Config, props), element);
+    public static render(element: HTMLElement, props: I<%=tabName%>RemoveProps) {
+        render(React.createElement<I<%=tabName%>RemoveProps>(<%=tabName%>Remove, props), element);
     }
 
     public setValidityState(val: boolean) {
