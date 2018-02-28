@@ -48,9 +48,9 @@ express.post('/api/messages', bot.Connector.listen());
 <% } %>
 
 <% if(customBot) { %>
-// Custom bot
-let customBot = new <%= customBotName %>();
-express.post('/api/customBot', customBot.requestHandler);
+// Outgoing webhook
+let outgoingWebhook = new <%= customBotName %>();
+express.post('/api/webhook', outgoingWebhook.requestHandler);
 <% } %>
 <% if(connectorType == 'new' ) { %>
 // Connector

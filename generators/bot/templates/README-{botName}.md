@@ -2,7 +2,7 @@
 
 ## How to register the bot in the Bot Framework portal
 
-In order to use a custom bot you need to register it in the [Bot Framework portal](https://dev.botframework.com/). 
+In order to create a bot you need to first register it in the [Bot Framework portal](https://dev.botframework.com/).
 
 1. Choose to *Register a new bot*
 2. Give the bot a name (`<%= botTitle %>`), a handle (`<%= botName %>`) and a description

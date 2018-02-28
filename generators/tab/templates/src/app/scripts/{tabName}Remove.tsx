@@ -70,7 +70,7 @@ export class <%=tabName%>Remove  extends React.Component<I<%=tabName%>RemoveProp
                     return (
                         <Panel>
                             <PanelHeader>
-                                <div style={styles.header}>Configure your tab</div>
+                                <div style={styles.header}>You're about to remove your tab...</div>
                             </PanelHeader>
                             <PanelBody>
                                 <div style={styles.section}>

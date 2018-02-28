@@ -292,7 +292,7 @@ class GeneratorTeamsApp extends Generator {
                         value: 'bot'
                     },
                     {
-                        name: 'A Microsoft Teams custom bot',
+                        name: 'An outgoing webhook',
                         value: 'custombot'
                     },
                     {

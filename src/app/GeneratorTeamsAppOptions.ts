@@ -28,7 +28,7 @@ export class GeneratorTeamsAppOptions {
     botType: string = "";
     botTitle: string;
     botName: string;
-    /* Custom Bot */
+    /* Outgoing webhook */
     customBot: boolean;
     customBotTitle: string;
     customBotName: string;

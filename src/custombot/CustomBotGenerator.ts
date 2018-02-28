@@ -17,7 +17,7 @@ export class CustomBotGenerator extends Generator {
         super(args, opts);
         opts.force = true;
         this.options = opts.options;
-        this.desc('Adds a custom bot to a Teams project.');
+        this.desc('Adds an outgoing webhook to a Teams project.');
     }
     public prompting() {
         if (this.options.customBot) {
@@ -26,8 +26,8 @@ export class CustomBotGenerator extends Generator {
                     {
                         type: 'input',
                         name: 'title',
-                        message: 'Name of your custom bot?',
-                        default: this.options.title + ' Custom Bot'
+                        message: 'Name of your outgoing webhook?',
+                        default: this.options.title + ' Outgoing Webhook'
                     },
                 ]
             ).then((answers: any) => {

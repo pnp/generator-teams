@@ -102,7 +102,7 @@ export class GeneratorTeamsApp extends Generator {
                             value: 'bot'
                         },
                         {
-                            name: 'A Microsoft Teams custom bot',
+                            name: 'An Outgoing Webhook',
                             value: 'custombot'
                         },
                         {
