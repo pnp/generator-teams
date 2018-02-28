@@ -2,14 +2,18 @@
 
 ## How to register the bot in the Bot Framework portal
 
-In order to create a bot you need to first register it in the [Bot Framework portal](https://dev.botframework.com/).
+In order to create a bot you need to first register it in the [Azure portal](https://portal.azure.com/).
 
-1. Choose to *Register a new bot*
-2. Give the bot a name (`<%= botTitle %>`), a handle (`<%= botName %>`) and a description
-3. For the messaging endpoint, use this: `<%= host %>/api/messages`
-4. Click on the *Create Microsoft App ID and Password*, login to the App Dev portal and then click on the button to generate the App password. Save the generated password and the App ID to a secure location. Once done, click on the button to go back to the Bot Framework portal.
-5. Click *Register*
-6. On the next page, choose to add the Microsoft Teams channel
+1. Choose to *Create a resource*, or alternatively go to an existing *resource group* and click *Add*
+2. Search for *Bot channels registration* and then click *Create*
+3. Give the bot a handle (ex:`<%= botName %>`), choose your subscription and resource group
+4. For the messaging endpoint, use this: `<%= host %>/api/messages`
+5. Choose to *Auto create Microsoft App ID and Password*
+6. Click *Create*
+7. Wait for Azure to finish its magic and when done choose to go to resource
+8. On the bot page choose *Channels* and choose to add Microsoft Teams as a channel
+9. Next, choose the *Settings* and click on *Manage* next to Microsoft App Id
+10. In the Bot app portal, generate a new app password and store it securely - you will need this later
 
 In order to have one on one chats with the bot you also need to publish it, or you need to search for the bot or start a chat with it using its App ID.
 

@@ -126,7 +126,7 @@ export class <%=connectorName%>ConnectorConnect extends React.Component<I<%=conn
                                         <PrimaryButton
                                             style={styles.input}
                                             onClick={() => { this.setState({ submit: true }); }}
-                                            disabled={this.state.color !== undefined}>
+                                            disabled={this.state.color === undefined}>
                                             Connect
                                         </PrimaryButton>
                                     </div>

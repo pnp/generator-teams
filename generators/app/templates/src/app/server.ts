@@ -59,23 +59,6 @@ let connector = new <%=connectorName%>Connector();
 express.set('view engine', 'ejs');  
 express.set('views', path.join(__dirname, '/'));
 
-express.get('/api/connector/connect', (req, res) => {
-    if(!req.query.state) {
-        res.redirect('/');
-        return;
-    }
-    res.render('web/<%=connectorName%>ConnectorConnect.ejs', {
-        webhookUrl: req.query.webhook_url,
-        user: req.query.user_objectId,
-        appType: req.query.app_type,
-        groupName: req.query.group_name, 
-        state: req.query.state
-    });
-});
-express.post('/api/connector/connect', (req, res) => {
-    connector.Connect(req.body);
-    res.redirect('/<%=connectorName%>Connector.html');
-})
 express.get('/api/connector/ping', (req, res) => {
     Promise.all(connector.Ping()).then(p => {
         console.log(`Connector ping succeeded`);
@@ -108,6 +91,28 @@ express.use('/\*Remove.html', (req: any, res: any, next: any) => {
 express.use('/\*Connector.html', (req: any, res: any, next: any) => {
     res.sendFile(path.join(__dirname, `web${req.path}`));
 });
+
+<% if(connectorType == 'new' ) { %>
+// Connector
+express.get('/api/connector/connect', (req, res) => {
+    if(!req.query.state) {
+        res.redirect('/');
+        return;
+    }
+    res.render('web/<%=connectorName%>ConnectorConnect.ejs', {
+        webhookUrl: req.query.webhook_url,
+        user: req.query.user_objectId,
+        appType: req.query.app_type,
+        groupName: req.query.group_name, 
+        state: req.query.state
+    });
+});
+express.post('/api/connector/connect', (req, res) => {
+    connector.Connect(req.body);
+    res.redirect('/<%=connectorName%>Connector.html');
+})
+<% } %>
+    
 
 // Fallback
 express.use(function (req: any, res: any, next: any) {
