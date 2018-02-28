@@ -106,7 +106,7 @@ export class ConnectorGenerator extends Generator {
                 ['ejs', '2.5.7'],
                 ['node-json-db', '0.7.3'],
                 ['botbuilder-teams', '0.1.7'],
-                ["msteams-ui-components-react", "^0.4.7"],
+                ["msteams-ui-components-react", "^0.5.0"],
                 ["react", "^16.1.0"],
                 ["@types/react", "16.0.38"],
                 ["react-dom", "^16.2.0"],

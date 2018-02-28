@@ -3,27 +3,27 @@ import {
     PrimaryButton,
     TeamsComponentContext,
     ThemeStyle,
-    TeamsComponentProps,
-    TeamsComponentState,
+    ITeamsComponentProps,
+    ITeamsComponentState,
     ConnectedComponent,
     Panel,
     PanelBody,
     PanelHeader,
     PanelFooter,
     Dropdown,
-    DropdownItemProps
+    IDropdownItemProps
 } from 'msteams-ui-components-react';
 import { render } from 'react-dom';
 
 
-export interface I<%=connectorName%>ConnectorConnectState extends TeamsComponentState {
+export interface I<%=connectorName%>ConnectorConnectState extends ITeamsComponentState {
     fontSize: number;
     theme: ThemeStyle;
     color: IColor | undefined;
     submit: boolean;
 
 }
-export interface I<%=connectorName%>ConnectorConnectProps extends TeamsComponentProps {
+export interface I<%=connectorName%>ConnectorConnectProps extends ITeamsComponentProps {
     webhookUrl: string;
     user: string;
     appType: string;
@@ -86,7 +86,7 @@ export class <%=connectorName%>ConnectorConnect extends React.Component<I<%=conn
                         section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
                         input: {},
                     }
-                    const colors: DropdownItemProps[] = availableColors.map(color => {
+                    const colors: IDropdownItemProps[] = availableColors.map(color => {
                         return {
                             text: color.title,
                             onClick: () => { this.setState({ color: color }) }

@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [*2.4.0-preview*] - <*2018-01-25*>
 
+### Added
+
+* Improved the Tab remove page with a "real" implementation and not just a dummy.
+
 ### Changed
 
 * Renamed Compose Extensions to Message Extensions

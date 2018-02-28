@@ -3,8 +3,8 @@ import {
     PrimaryButton,
     TeamsComponentContext,
     ThemeStyle,
-    TeamsComponentProps,
-    TeamsComponentState,
+    ITeamsComponentProps,
+    ITeamsComponentState,
     ConnectedComponent,
     Panel,
     PanelBody,
@@ -16,7 +16,7 @@ import { render } from 'react-dom';
 /**
  * State for the <%=tabName%>Tab React component
  */
-export interface I<%=tabName%>TabState extends TeamsComponentState {
+export interface I<%=tabName%>TabState extends ITeamsComponentState {
     fontSize: number;
     theme: ThemeStyle;
     entityId?: string;
@@ -26,7 +26,7 @@ export interface I<%=tabName%>TabState extends TeamsComponentState {
 /**
  * Properties for the <%=tabName%>Tab React component
  */
-export interface I<%=tabName%>TabProps extends TeamsComponentProps {
+export interface I<%=tabName%>TabProps extends ITeamsComponentProps {
 
 }
 

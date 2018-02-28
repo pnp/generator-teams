@@ -9,35 +9,29 @@ import {
     Panel,
     PanelBody,
     PanelHeader,
-    PanelFooter
+    PanelFooter,
+    Input
 } from 'msteams-ui-components-react';
 import { render } from 'react-dom';
 
-/**
- * State for the <%=tabName%>Tab React component
- */
-export interface I<%=tabName%>TabState extends ITeamsComponentState {
+
+export interface I<%=tabName%>RemoveState extends ITeamsComponentState {
     fontSize: number;
     theme: ThemeStyle;
-    entityId?: string;
+    value: string;
+
+}
+export interface I<%=tabName%>RemoveProps extends ITeamsComponentProps {
 
 }
 
-/**
- * Properties for the <%=tabName%>Tab React component
- */
-export interface I<%=tabName%>TabProps extends ITeamsComponentProps {
-
-}
 
 /**
- * Implementation of the <%= tabTitle %> content page
+ * Implementation of <%= tabTitle %> remove page
  */
-export class <%=tabName%>Tab extends React.Component<I<%=tabName%>TabProps, I<%=tabName%>TabState> {
-    /**
-     * Constructor for <%= tabName %>
-     */
-    constructor(props: I<%=tabName%>TabProps, state: I<%=tabName%>TabState) {
+export class <%=tabName%>Remove  extends React.Component<I<%=tabName%>RemoveProps, I<%=tabName%>RemoveState> {
+
+    constructor(props: I<%=tabName%>RemoveProps, state: I<%=tabName%>RemoveState) {
         super(props, state);
     }
 
@@ -49,22 +43,13 @@ export class <%=tabName%>Tab extends React.Component<I<%=tabName%>TabProps, I<%=
 
         if (this.inTeams()) {
             microsoftTeams.initialize();
-            microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
-            microsoftTeams.getContext(context => {
-                this.setState({
-                    entityId: context.entityId
-                });
-            });
+      
+
         } else {
-            this.setState({
-                entityId: "This is not hosted in Microsoft Teams"
-            });
+            
         }
     }
 
-    /** 
-     * The render() method to create the UI of the tab
-     */
     public render() {
         return (
             <TeamsComponentContext
@@ -79,26 +64,21 @@ export class <%=tabName%>Tab extends React.Component<I<%=tabName%>TabProps, I<%=
                     const styles = {
                         header: { ...sizes.title, ...weights.semibold },
                         section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
-                        footer: { ...sizes.xsmall }
+                        input: {},
                     }
 
                     return (
                         <Panel>
                             <PanelHeader>
-                                <div style={styles.header}>This is your tab</div>
+                                <div style={styles.header}>Configure your tab</div>
                             </PanelHeader>
                             <PanelBody>
                                 <div style={styles.section}>
-                                    {this.state.entityId}
+                                You can just add stuff here if you want to clean up when removing the tab. For instance, if you have stored data in an external repository, you can delete or archive it here. If you don't need this remove page you can remove it.
                                 </div>
-                                <div style={styles.section}>
-                                    <PrimaryButton onClick={() => alert("It worked!")}>A sample button</PrimaryButton>
-                                </div>
+
                             </PanelBody>
                             <PanelFooter>
-                                <div style={styles.footer}>
-                                    (C) Copyright <%=developer%>
-                                </div>
                             </PanelFooter>
                         </Panel>
                     );
@@ -109,12 +89,17 @@ export class <%=tabName%>Tab extends React.Component<I<%=tabName%>TabProps, I<%=
     }
 
     /**
-     * Static render method to be used by the tab page
+     * Static render method to be used by the configuration page
      */
-    public static render(element: HTMLElement, props: I<%=tabName%>TabProps) {
-        render(React.createElement<I<%=tabName%>TabProps>(<%=tabName%>Tab, props), element);
+    public static render(element: HTMLElement, props: I<%=tabName%>ConfigProps) {
+        render(React.createElement<I<%=tabName%>ConfigProps>(<%=tabName%>Config, props), element);
     }
-   
+
+    public setValidityState(val: boolean) {
+        microsoftTeams.settings.setValidityState(val);
+    }
+
+
     private pageFontSize = () => {
         let sizeStr = window.getComputedStyle(document.getElementsByTagName('html')[0]).getPropertyValue('font-size');
         sizeStr = sizeStr.replace('px', '');

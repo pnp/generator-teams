@@ -6,16 +6,18 @@
   <title><%= tabTitle %>: Remove</title>
   <!-- inject:css -->
   <!-- endinject -->
+  </style>
 </head>
 
 <body>
-   <div>
-       You can just add stuff here if you want to clean up when removing the tab. For instance, if you have stored data in an external repository, you can delete or archive it here.
-   </div>
-   <script src="https://statics.teams.microsoft.com/sdk/v1.0/js/MicrosoftTeams.min.js"></script>
+  <div id='app'>
+    Loading...
+  </div>
   <!-- inject:js -->
   <!-- endinject -->
-
+  <script type='text/javascript'>
+    <%=libraryName%>.<%=tabName%>Remove.render(document.getElementById('app'), {});
+  </script>
 </body>
 
 </html>
