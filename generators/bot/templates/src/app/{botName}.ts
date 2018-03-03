@@ -26,7 +26,7 @@ export class <%= botName %> {
 		
         // Add dialogs here
         this.universalBot.dialog('/', this.defaultDialog);
-        this.universalBot.dialog('/help', this.helpDialog);
+        this.universalBot.dialog('/Help', this.helpDialog);
  
         // Control messages
         this.universalBot.on('conversationUpdate', this.convUpdateHandler);
@@ -86,8 +86,8 @@ export class <%= botName %> {
             session.send('Oh, hello to you as well!');
             session.endDialog();
             return;
-        } else if (text.startsWith('help')) {
-            session.beginDialog('/help');
+        } else if (text.startsWith('Help')) {
+            session.beginDialog('/Help');
             return
         }
         session.endDialog('I\'m terribly sorry, but my master hasn\'t trained me to do anything yet...');    
