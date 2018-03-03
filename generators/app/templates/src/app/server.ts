@@ -91,6 +91,9 @@ express.use('/\*Remove.html', (req: any, res: any, next: any) => {
 express.use('/\*Connector.html', (req: any, res: any, next: any) => {
     res.sendFile(path.join(__dirname, `web${req.path}`));
 });
+express.use('/\*ConnectorConnected.html', (req: any, res: any, next: any) => {
+    res.sendFile(path.join(__dirname, `web${req.path}`));
+});
 
 <% if(connectorType == 'new' ) { %>
 // Connector

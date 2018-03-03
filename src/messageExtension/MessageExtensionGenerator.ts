@@ -103,6 +103,9 @@ export class MessageExtensionGenerator extends Generator {
                     this.options.botType = 'botframework';
                     this.options.botTitle = answers.messageExtensionName + ' Bot';
                     this.options.botName = lodash.camelCase(this.options.botTitle);
+                } else if(answers.messageExtensionType == 'existing') {
+                    // reuse the bot id
+                    this.options.messageExtensionId = this.options.botid;
                 }
             });
         }

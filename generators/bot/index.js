@@ -316,7 +316,7 @@ class BotGenerator extends Generator {
             this.sourceRoot();
             let templateFiles = [];
             if (this.options.staticTab) {
-                templateFiles.push("src/app/scripts/{staticTabName}Tab.ts", "src/app/web/{staticTabName}Tab.html");
+                templateFiles.push("src/app/scripts/{staticTabName}Tab.tsx", "src/app/web/{staticTabName}Tab.html");
                 manifest.staticTabs.push({
                     entityId: Guid.raw(),
                     name: this.options.staticTabTitle,

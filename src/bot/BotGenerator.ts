@@ -133,7 +133,7 @@ export class BotGenerator extends Generator {
             let templateFiles = [];
             if (this.options.staticTab) {
                 templateFiles.push(
-                    "src/app/scripts/{staticTabName}Tab.ts",
+                    "src/app/scripts/{staticTabName}Tab.tsx",
                     "src/app/web/{staticTabName}Tab.html",
                 );
 

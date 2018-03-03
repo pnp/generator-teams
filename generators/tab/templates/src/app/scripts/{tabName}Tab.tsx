@@ -2,9 +2,6 @@ import * as React from 'react';
 import {
     PrimaryButton,
     TeamsComponentContext,
-    ThemeStyle,
-    ITeamsComponentProps,
-    ITeamsComponentState,
     ConnectedComponent,
     Panel,
     PanelBody,
@@ -12,35 +9,27 @@ import {
     PanelFooter
 } from 'msteams-ui-components-react';
 import { render } from 'react-dom';
+import { TeamsBaseComponent, ITeamsBaseComponentProps, ITeamsBaseComponentState } from './TeamsBaseComponent'
 
 /**
  * State for the <%=tabName%>Tab React component
  */
-export interface I<%=tabName%>TabState extends ITeamsComponentState {
-    fontSize: number;
-    theme: ThemeStyle;
+export interface I<%=tabName%>TabState extends ITeamsBaseComponentState {
     entityId?: string;
-
 }
 
 /**
  * Properties for the <%=tabName%>Tab React component
  */
-export interface I<%=tabName%>TabProps extends ITeamsComponentProps {
+export interface I<%=tabName%>TabProps extends ITeamsBaseComponentProps {
 
 }
 
 /**
  * Implementation of the <%= tabTitle %> content page
  */
-export class <%=tabName%>Tab extends React.Component<I<%=tabName%>TabProps, I<%=tabName%>TabState> {
-    /**
-     * Constructor for <%= tabName %>
-     */
-    constructor(props: I<%=tabName%>TabProps, state: I<%=tabName%>TabState) {
-        super(props, state);
-    }
-
+export class <%=tabName%>Tab extends TeamsBaseComponent<I<%=tabName%>TabProps, I<%=tabName%>TabState> {
+ 
     public componentWillMount() {
         this.updateTheme(this.getQueryVariable('theme'));
         this.setState({
@@ -106,57 +95,5 @@ export class <%=tabName%>Tab extends React.Component<I<%=tabName%>TabProps, I<%=
                 </ConnectedComponent>
             </TeamsComponentContext >
         );
-    }
-
-    /**
-     * Static render method to be used by the tab page
-     */
-    public static render(element: HTMLElement, props: I<%=tabName%>TabProps) {
-        render(React.createElement<I<%=tabName%>TabProps>(<%=tabName%>Tab, props), element);
-    }
-   
-    private pageFontSize = () => {
-        let sizeStr = window.getComputedStyle(document.getElementsByTagName('html')[0]).getPropertyValue('font-size');
-        sizeStr = sizeStr.replace('px', '');
-        let fontSize = parseInt(sizeStr, 10);
-        if (!fontSize) {
-            fontSize = 16;
-        }
-        return fontSize;
-    }
-    private inTeams = () => {
-        try {
-            return window.self !== window.top;
-        } catch (e) {
-            return true;
-        }
-    }
-
-    private updateTheme = (themeStr) => {
-        let theme;
-        switch (themeStr) {
-            case 'dark':
-                theme = ThemeStyle.Dark;
-                break;
-            case 'contrast':
-                theme = ThemeStyle.HighContrast;
-                break;
-            case 'default':
-            default:
-                theme = ThemeStyle.Light;
-        }
-        this.setState({ theme });
-    }
-
-    private getQueryVariable = (variable) => {
-        const query = window.location.search.substring(1);
-        const vars = query.split('&');
-        for (const varPairs of vars) {
-            const pair = varPairs.split('=');
-            if (decodeURIComponent(pair[0]) === variable) {
-                return decodeURIComponent(pair[1]);
-            }
-        }
-        return null;
     }
 }

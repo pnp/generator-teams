@@ -68,7 +68,7 @@ export class <%= botName %> {
      * @param session 
      */
     defaultDialog(session: builder.Session) {
-        let text = <%= botName %>.extractTextFromMessage(session.message);
+        let text = <%= botName %>.extractTextFromMessage(session.message).toLowerCase();
         if (text.startsWith('hello')) {
             session.send('Oh, hello to you as well!');
             session.endDialog();

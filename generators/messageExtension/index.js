@@ -198,6 +198,10 @@ class MessageExtensionGenerator extends Generator {
                     this.options.botTitle = answers.messageExtensionName + ' Bot';
                     this.options.botName = lodash.camelCase(this.options.botTitle);
                 }
+                else if (answers.messageExtensionType == 'existing') {
+                    // reuse the bot id
+                    this.options.messageExtensionId = this.options.botid;
+                }
             });
         }
     }
@@ -205,12 +209,12 @@ class MessageExtensionGenerator extends Generator {
         if (this.options.messageExtension) {
             let manifestPath = "src/manifest/manifest.json";
             var manifest = this.fs.readJSON(manifestPath);
-            if (!manifest.messageExtensions) {
-                manifest.messageExtensions = [];
+            if (!manifest.composeExtensions) {
+                manifest.composeExtensions = [];
             }
-            manifest.messageExtensions.push({
+            manifest.composeExtensions.push({
                 botId: this.options.messageExtensionId,
-                scopes: ["team", "personal"],
+                canUpdateConfiguration: true,
                 commands: [
                     {
                         id: this.options.messageExtensionName,
@@ -220,7 +224,7 @@ class MessageExtensionGenerator extends Generator {
                         parameters: [
                             {
                                 name: 'parameter',
-                                description: 'description of the parameter',
+                                description: 'Description of the parameter',
                                 title: 'Parameter'
                             }
                         ]

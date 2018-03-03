@@ -77,7 +77,8 @@ export class ConnectorGenerator extends Generator {
                     "src/app/{connectorName}Connector.ts",
                     "src/app/web/{connectorName}Connector.html",
                     "src/app/web/{connectorName}ConnectorConnect.ejs",
-                    "src/app/scripts/{connectorName}ConnectorConnect.tsx"
+                    "src/app/scripts/{connectorName}ConnectorConnect.tsx",
+                    "src/app/scripts/{connectorName}ConnectorConnected.html"
 
                 ];
 
