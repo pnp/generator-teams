@@ -102,6 +102,7 @@ export class <%=connectorName%>ConnectorConnect extends TeamsBaseComponent<I<%=c
                                         <input type='hidden' name='appType' value={this.props.appType} />
                                         <input type='hidden' name='groupName' value={this.props.groupName} />
                                         <input type='hidden' name='state' value={this.props.state} />
+                                        <input type='hidden' name='color' value={this.state.color && this.state.color.code} />
                                         <Dropdown
                                             label='Card color'
                                             items={colors}
