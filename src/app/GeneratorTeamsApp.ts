@@ -170,7 +170,7 @@ export class GeneratorTeamsApp extends Generator {
             "src/manifest/icon-20x20.png",
             "src/manifest/icon-96x96.png",
             "src/app/web/assets/icon.png",
-            "src/app/scripts/theme.ts",
+            "src/app/scripts/TeamsBaseComponent.tsx",
             "src/MicrosoftTeams.d.ts",
             'deploy.cmd',
             '_deployment'

@@ -1,32 +1,89 @@
-import { TeamsTheme } from './theme';
+import * as React from 'react';
+import {
+    PrimaryButton,
+    TeamsComponentContext,
+    ConnectedComponent,
+    Panel,
+    PanelBody,
+    PanelHeader,
+    PanelFooter
+} from 'msteams-ui-components-react';
+import { render } from 'react-dom';
+import { TeamsBaseComponent, ITeamsBaseComponentProps, ITeamsBaseComponentState } from './TeamsBaseComponent'
 
 /**
- * Implementation of Bot static tab: <%= staticTabTitle %>
+ * State for the <%=staticTabName%>Tab React component
  */
-export class <%=staticTabName%>Tab {
-    constructor() {
-        microsoftTeams.initialize();
-        TeamsTheme.fix();
-    }
-    public doStuff() {
-        microsoftTeams.getContext((context: microsoftTeams.Context) => {
-            var a = document.getElementById('app');
-            if (a) {
-               // do something
-            }
+export interface I<%=staticTabName%>TabState extends ITeamsBaseComponentState {
+    
+}
+
+/**
+ * Properties for the <%=staticTabName%>Tab React component
+ */
+export interface I<%=staticTabName%>TabProps extends ITeamsBaseComponentProps {
+
+}
+
+/**
+ * Implementation of the <%= tabTitle %> content page
+ */
+export class <%=staticTabName%>Tab extends TeamsBaseComponent<I<%=staticTabName%>TabProps, I<%=staticTabName%>TabState> {
+ 
+    public componentWillMount() {
+        this.updateTheme(this.getQueryVariable('theme'));
+        this.setState({
+            fontSize: this.pageFontSize()
         });
-    }
 
-    getParameterByName(name: string, url?: string): string {
-        if (!url) {
-            url = window.location.href;
+        if (this.inTeams()) {
+            microsoftTeams.initialize();
+            microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
+        } else {
+            
         }
-        name = name.replace(/[\[\]]/g, "\\$&");
-        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-            results = regex.exec(url);
-        if (!results) return '';
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 
+    /** 
+     * The render() method to create the UI of the tab
+     */
+    public render() {
+        return (
+            <TeamsComponentContext
+                fontSize={this.state.fontSize}
+                theme={this.state.theme}
+            >
+
+                <ConnectedComponent render={(props) => {
+                    const { context } = props;
+                    const { rem, font } = context;
+                    const { sizes, weights } = font;
+                    const styles = {
+                        header: { ...sizes.title, ...weights.semibold },
+                        section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
+                        footer: { ...sizes.xsmall }
+                    }
+
+                    return (
+                        <Panel>
+                            <PanelHeader>
+                                <div style={styles.header}>Welcome to the <%= botTitle%> bot page</div>
+                            </PanelHeader>
+                            <PanelBody>
+                                <div style={styles.section}>
+                                    TODO: 
+                                </div>
+                            </PanelBody>
+                            <PanelFooter>
+                                <div style={styles.footer}>
+                                    (C) Copyright <%=developer%>
+                                </div>
+                            </PanelFooter>
+                        </Panel>
+                    );
+                }}>
+                </ConnectedComponent>
+            </TeamsComponentContext >
+        );
+    }
 }

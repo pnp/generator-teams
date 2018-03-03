@@ -56,9 +56,7 @@ gulp.task('webpack', function (callback) {
                     jsonStats.warnings.map(function (e) {
                         gutil.log('[Webpack warning] ' + e)
                     });
-
             }
-            gutil.log("[Webpack]\n", stats.toString('minimal'));
             callback();
         });
 });

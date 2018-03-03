@@ -2,9 +2,6 @@ import * as React from 'react';
 import {
     PrimaryButton,
     TeamsComponentContext,
-    ThemeStyle,
-    ITeamsComponentProps,
-    ITeamsComponentState,
     ConnectedComponent,
     Panel,
     PanelBody,
@@ -14,16 +11,13 @@ import {
     IDropdownItemProps
 } from 'msteams-ui-components-react';
 import { render } from 'react-dom';
+import { TeamsBaseComponent, ITeamsBaseComponentProps, ITeamsBaseComponentState } from './TeamsBaseComponent'
 
-
-export interface I<%=connectorName%>ConnectorConnectState extends ITeamsComponentState {
-    fontSize: number;
-    theme: ThemeStyle;
+export interface I<%=connectorName%>ConnectorConnectState extends ITeamsBaseComponentState {
     color: IColor | undefined;
     submit: boolean;
-
 }
-export interface I<%=connectorName%>ConnectorConnectProps extends ITeamsComponentProps {
+export interface I<%=connectorName%>ConnectorConnectProps extends ITeamsBaseComponentProps {
     webhookUrl: string;
     user: string;
     appType: string;
@@ -47,13 +41,9 @@ const availableColors: IColor[] = [
 ];
 
 /**
- * Implementation of the yttest Tab content page
+ * Implementation of the <%=connectorName%> Connector connect page
  */
-export class <%=connectorName%>ConnectorConnect extends React.Component<I<%=connectorName%>ConnectorConnectProps, I<%=connectorName%>ConnectorConnectState> {
-
-    constructor(props: I<%=connectorName%>ConnectorConnectProps, state: I<%=connectorName%>ConnectorConnectState) {
-        super(props, state);
-    }
+export class <%=connectorName%>ConnectorConnect extends TeamsBaseComponent<I<%=connectorName%>ConnectorConnectProps, I<%=connectorName%>ConnectorConnectState> {
 
     public componentWillMount() {
         this.updateTheme(this.getQueryVariable('theme'));
@@ -92,7 +82,6 @@ export class <%=connectorName%>ConnectorConnect extends React.Component<I<%=conn
                             onClick: () => { this.setState({ color: color }) }
                         }
                     });
-
 
                     return (
                         <Panel>
@@ -143,58 +132,4 @@ export class <%=connectorName%>ConnectorConnect extends React.Component<I<%=conn
             </TeamsComponentContext >
         );
     }
-    public static render(element: HTMLElement, props: I<%=connectorName%>ConnectorConnectProps) {
-        render(React.createElement<I<%=connectorName%>ConnectorConnectProps>(<%=connectorName%>ConnectorConnect, props), element);
-    }
-
-    public setValidityState(val: boolean) {
-        microsoftTeams.settings.setValidityState(val);
-    }
-
-
-    private pageFontSize = () => {
-        let sizeStr = window.getComputedStyle(document.getElementsByTagName('html')[0]).getPropertyValue('font-size');
-        sizeStr = sizeStr.replace('px', '');
-        let fontSize = parseInt(sizeStr, 10);
-        if (!fontSize) {
-            fontSize = 16;
-        }
-        return fontSize;
-    }
-    private inTeams = () => {
-        try {
-            return window.self !== window.top;
-        } catch (e) {
-            return true;
-        }
-    }
-
-    private updateTheme = (themeStr) => {
-        let theme;
-        switch (themeStr) {
-            case 'dark':
-                theme = ThemeStyle.Dark;
-                break;
-            case 'contrast':
-                theme = ThemeStyle.HighContrast;
-                break;
-            case 'default':
-            default:
-                theme = ThemeStyle.Light;
-        }
-        this.setState({ theme });
-    }
-
-    private getQueryVariable = (variable) => {
-        const query = window.location.search.substring(1);
-        const vars = query.split('&');
-        for (const varPairs of vars) {
-            const pair = varPairs.split('=');
-            if (decodeURIComponent(pair[0]) === variable) {
-                return decodeURIComponent(pair[1]);
-            }
-        }
-        return null;
-    }
-
 }
