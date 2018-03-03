@@ -8,7 +8,8 @@ import {
     PanelHeader,
     PanelFooter,
     Dropdown,
-    IDropdownItemProps
+    IDropdownItemProps,
+    Surface
 } from 'msteams-ui-components-react';
 import { render } from 'react-dom';
 import { TeamsBaseComponent, ITeamsBaseComponentProps, ITeamsBaseComponentState } from './TeamsBaseComponent'
@@ -84,48 +85,51 @@ export class <%=connectorName%>ConnectorConnect extends TeamsBaseComponent<I<%=c
                     });
 
                     return (
-                        <Panel>
-                            <PanelHeader>
-                                <div style={styles.header}>Configure your Connector</div>
-                            </PanelHeader>
-                            <PanelBody>
+                        <Surface>
+                            <Panel>
+                                <PanelHeader>
+                                    <div style={styles.header}>Configure your Connector</div>
+                                </PanelHeader>
+                                <PanelBody>
 
-                                <form action="/api/connector/connect" method="POST" onSubmit={(e) => {
-                                    if (!this.state.submit) {
-                                        e.preventDefault();
-                                    }
-                                }}>
+                                    <form action="/api/connector/connect" method="POST" onSubmit={(e) => {
+                                        if (!this.state.submit) {
+                                            e.preventDefault();
+                                        }
+                                    }}>
 
-                                    <div style={styles.section}>
-                                        <input type='hidden' name='webhookUrl' value={this.props.webhookUrl} />
-                                        <input type='hidden' name='user' value={this.props.user} />
-                                        <input type='hidden' name='appType' value={this.props.appType} />
-                                        <input type='hidden' name='groupName' value={this.props.groupName} />
-                                        <input type='hidden' name='state' value={this.props.state} />
-                                        <Dropdown
-                                            label='Card color'
-                                            items={colors}
-                                            mainButtonText={this.state.color ? this.state.color.title : 'Choose a color'}
-                                            style={styles.input}
-                                        >
-                                        </Dropdown>
-                                    </div>
-                                    <div style={styles.section}>
+                                        <div style={styles.section}>
+                                            <input type='hidden' name='webhookUrl' value={this.props.webhookUrl} />
+                                            <input type='hidden' name='user' value={this.props.user} />
+                                            <input type='hidden' name='appType' value={this.props.appType} />
+                                            <input type='hidden' name='groupName' value={this.props.groupName} />
+                                            <input type='hidden' name='state' value={this.props.state} />
+                                            <input type='hidden' name='color' value={this.state.color && this.state.color.code} />
+                                            <Dropdown
+                                                label='Card color'
+                                                items={colors}
+                                                mainButtonText={this.state.color ? this.state.color.title : 'Choose a color'}
+                                                style={styles.input}
+                                            >
+                                            </Dropdown>
+                                        </div>
+                                        <div style={styles.section}>
 
-                                        <PrimaryButton
-                                            style={styles.input}
-                                            onClick={() => { this.setState({ submit: true }); }}
-                                            disabled={this.state.color === undefined}>
-                                            Connect
-                                        </PrimaryButton>
-                                    </div>
+                                            <PrimaryButton
+                                                style={styles.input}
+                                                onClick={() => { this.setState({ submit: true }); }}
+                                                disabled={this.state.color === undefined}>
+                                                Connect
+                                            </PrimaryButton>
+                                        </div>
 
-                                </form>
+                                    </form>
 
-                            </PanelBody>
-                            <PanelFooter>
-                            </PanelFooter>
-                        </Panel>
+                                </PanelBody>
+                                <PanelFooter>
+                                </PanelFooter>
+                            </Panel>
+                        </Surface>
                     );
                 }}>
                 </ConnectedComponent>

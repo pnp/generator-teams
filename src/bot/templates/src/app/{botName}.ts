@@ -59,6 +59,19 @@ export class <%= botName %> {
                     callback(<any>null, response, 200);
                 }
             });
+        // this is used when canUpdateConfiguration is set to true 
+        this.Connector.onQuerySettingsUrl(
+            (event: builder.IEvent, query: teamBuilder.ComposeExtensionQuery, callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
+                callback(<any>null, { composeExtension: { text: '<%= host %>/<%= messageExtensionName %>Config.html' } }, 200);
+            }
+        )
+        this.Connector.onSettingsUpdate(
+            (event: builder.IEvent, query: teamBuilder.ComposeExtensionQuery, callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
+                console.log(JSON.stringify(query));
+                callback(<any>null, { composeExtension: {} }, 200);
+
+            }
+        )
 <% } %>
 
    }

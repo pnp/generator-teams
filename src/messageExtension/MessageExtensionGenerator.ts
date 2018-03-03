@@ -103,7 +103,7 @@ export class MessageExtensionGenerator extends Generator {
                     this.options.botType = 'botframework';
                     this.options.botTitle = answers.messageExtensionName + ' Bot';
                     this.options.botName = lodash.camelCase(this.options.botTitle);
-                } else if(answers.messageExtensionType == 'existing') {
+                } else if (answers.messageExtensionType == 'existing') {
                     // reuse the bot id
                     this.options.messageExtensionId = this.options.botid;
                 }
@@ -114,7 +114,7 @@ export class MessageExtensionGenerator extends Generator {
         if (this.options.messageExtension) {
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
-            if(!manifest.composeExtensions) {
+            if (!manifest.composeExtensions) {
                 manifest.composeExtensions = [];
             }
             manifest.composeExtensions.push({
@@ -137,6 +137,25 @@ export class MessageExtensionGenerator extends Generator {
                 ]
             });
             this.fs.writeJSON(manifestPath, manifest);
+
+            let templateFiles = [];
+            templateFiles.push(
+                "src/app/scripts/{messageExtensionName}Config.tsx",
+                "src/app/web/{messageExtensionName}Config.html",
+            );
+            templateFiles.forEach(t => {
+                this.fs.copyTpl(
+                    this.templatePath(t),
+                    Yotilities.fixFileNames(t, this.options),
+                    this.options);
+            });
+            let clientTsPath = "src/app/scripts/client.ts";
+            let clientTs = this.fs.read(clientTsPath);
+            clientTs += `\n// Added by generator-teams`;
+            clientTs += `\nexport * from './${this.options.messageExtensionName}Config';`;
+            clientTs += `\n`;
+            this.fs.write(clientTsPath, clientTs);
+
         }
     }
 }

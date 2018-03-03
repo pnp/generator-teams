@@ -1,5 +1,4 @@
 import * as Express from 'express';
-import * as bodyParser from 'body-parser';
 import * as session from 'express-session';
 import * as https from 'https';
 import * as http from 'http';
@@ -27,7 +26,8 @@ require('dotenv').config();
 let express = Express();
 let port = process.env.port || process.env.PORT || 3007;
 
-express.use(bodyParser.json());
+express.use(Express.json());
+express.use(Express.urlencoded({ extended: true }));
 
 // Add simple logging
 express.use(morgan('tiny'));
@@ -112,7 +112,7 @@ express.get('/api/connector/connect', (req, res) => {
 });
 express.post('/api/connector/connect', (req, res) => {
     connector.Connect(req.body);
-    res.redirect('/<%=connectorName%>Connector.html');
+    res.redirect('/<%=connectorName%>ConnectorConnected.html');
 })
 <% } %>
     

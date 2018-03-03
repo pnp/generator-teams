@@ -7,7 +7,8 @@ import {
     PanelBody,
     PanelHeader,
     PanelFooter,
-    Input
+    Input,
+    Surface
 } from 'msteams-ui-components-react';
 import { render } from 'react-dom';
 import { TeamsBaseComponent, ITeamsBaseComponentProps, ITeamsBaseComponentState } from './TeamsBaseComponent'
@@ -76,31 +77,33 @@ export class <%=tabName%>Config  extends TeamsBaseComponent<I<%=tabName%>ConfigP
                     }
 
                     return (
-                        <Panel>
-                            <PanelHeader>
-                                <div style={styles.header}>Configure your tab</div>
-                            </PanelHeader>
-                            <PanelBody>
-                                <div style={styles.section}>
-                                    <Input
-                                        autoFocus
-                                        style={styles.input}
-                                        placeholder="Enter a value here"
-                                        label="Enter a vlue"
-                                        errorLabel={!this.state.value ? "This value is required" : undefined}
-                                        value={this.state.value}
-                                        onChange={(e) =>{
-                                            this.setState({
-                                                value: e.target.value
-                                            })
-                                        }}
-                                        required />
-                                </div>
+                        <Surface>
+                            <Panel>
+                                <PanelHeader>
+                                    <div style={styles.header}>Configure your tab</div>
+                                </PanelHeader>
+                                <PanelBody>
+                                    <div style={styles.section}>
+                                        <Input
+                                            autoFocus
+                                            style={styles.input}
+                                            placeholder="Enter a value here"
+                                            label="Enter a vlue"
+                                            errorLabel={!this.state.value ? "This value is required" : undefined}
+                                            value={this.state.value}
+                                            onChange={(e) =>{
+                                                this.setState({
+                                                    value: e.target.value
+                                                })
+                                            }}
+                                            required />
+                                    </div>
 
-                            </PanelBody>
-                            <PanelFooter>
-                            </PanelFooter>
-                        </Panel>
+                                </PanelBody>
+                                <PanelFooter>
+                                </PanelFooter>
+                            </Panel>
+                        </Surface>
                     );
                 }}>
                 </ConnectedComponent>

@@ -6,7 +6,8 @@ import {
     Panel,
     PanelBody,
     PanelHeader,
-    PanelFooter
+    PanelFooter,
+    Surface
 } from 'msteams-ui-components-react';
 import { render } from 'react-dom';
 import { TeamsBaseComponent, ITeamsBaseComponentProps, ITeamsBaseComponentState } from './TeamsBaseComponent'
@@ -14,21 +15,21 @@ import { TeamsBaseComponent, ITeamsBaseComponentProps, ITeamsBaseComponentState 
 /**
  * State for the <%=staticTabName%>Tab React component
  */
-export interface I<%=staticTabName%>TabState extends ITeamsBaseComponentState {
+export interface I<%=messageExtensionName%>ConfigState extends ITeamsBaseComponentState {
     
 }
 
 /**
  * Properties for the <%=staticTabName%>Tab React component
  */
-export interface I<%=staticTabName%>TabProps extends ITeamsBaseComponentProps {
+export interface I<%=messageExtensionName%>ConfigProps extends ITeamsBaseComponentProps {
 
 }
 
 /**
  * Implementation of the <%= tabTitle %> content page
  */
-export class <%=staticTabName%>Tab extends TeamsBaseComponent<I<%=staticTabName%>TabProps, I<%=staticTabName%>TabState> {
+export class <%=messageExtensionName%>Config extends TeamsBaseComponent<I<%=messageExtensionName%>ConfigProps, I<%=messageExtensionName%>ConfigState> {
  
     public componentWillMount() {
         this.updateTheme(this.getQueryVariable('theme'));
@@ -65,21 +66,23 @@ export class <%=staticTabName%>Tab extends TeamsBaseComponent<I<%=staticTabName%
                     }
 
                     return (
-                        <Panel>
-                            <PanelHeader>
-                                <div style={styles.header}>Welcome to the <%= botTitle%> bot page</div>
-                            </PanelHeader>
-                            <PanelBody>
-                                <div style={styles.section}>
-                                    TODO: 
-                                </div>
-                            </PanelBody>
-                            <PanelFooter>
-                                <div style={styles.footer}>
-                                    (C) Copyright <%=developer%>
-                                </div>
-                            </PanelFooter>
-                        </Panel>
+                        <Surface>
+                            <Panel>
+                                <PanelHeader>
+                                    <div style={styles.header}><%= messageExtensionTitle%> configuration</div>
+                                </PanelHeader>
+                                <PanelBody>
+                                    <div style={styles.section}>
+                                        Add your configuration here...
+                                    </div>
+                                </PanelBody>
+                                <PanelFooter>
+                                    <div style={styles.footer}>
+                                        (C) Copyright <%=developer%>
+                                    </div>
+                                </PanelFooter>
+                            </Panel>
+                        </Surface>
                     );
                 }}>
                 </ConnectedComponent>

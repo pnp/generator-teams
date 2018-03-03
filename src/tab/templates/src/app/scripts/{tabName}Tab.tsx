@@ -6,7 +6,8 @@ import {
     Panel,
     PanelBody,
     PanelHeader,
-    PanelFooter
+    PanelFooter,
+    Surface
 } from 'msteams-ui-components-react';
 import { render } from 'react-dom';
 import { TeamsBaseComponent, ITeamsBaseComponentProps, ITeamsBaseComponentState } from './TeamsBaseComponent'
@@ -72,24 +73,26 @@ export class <%=tabName%>Tab extends TeamsBaseComponent<I<%=tabName%>TabProps, I
                     }
 
                     return (
-                        <Panel>
-                            <PanelHeader>
-                                <div style={styles.header}>This is your tab</div>
-                            </PanelHeader>
-                            <PanelBody>
-                                <div style={styles.section}>
-                                    {this.state.entityId}
-                                </div>
-                                <div style={styles.section}>
-                                    <PrimaryButton onClick={() => alert("It worked!")}>A sample button</PrimaryButton>
-                                </div>
-                            </PanelBody>
-                            <PanelFooter>
-                                <div style={styles.footer}>
-                                    (C) Copyright <%=developer%>
-                                </div>
-                            </PanelFooter>
-                        </Panel>
+                        <Surface>
+                            <Panel>
+                                <PanelHeader>
+                                    <div style={styles.header}>This is your tab</div>
+                                </PanelHeader>
+                                <PanelBody>
+                                    <div style={styles.section}>
+                                        {this.state.entityId}
+                                    </div>
+                                    <div style={styles.section}>
+                                        <PrimaryButton onClick={() => alert("It worked!")}>A sample button</PrimaryButton>
+                                    </div>
+                                </PanelBody>
+                                <PanelFooter>
+                                    <div style={styles.footer}>
+                                        (C) Copyright <%=developer%>
+                                    </div>
+                                </PanelFooter>
+                            </Panel>
+                        </Surface>
                     );
                 }}>
                 </ConnectedComponent>

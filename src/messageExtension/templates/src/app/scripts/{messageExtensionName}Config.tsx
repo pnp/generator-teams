@@ -7,24 +7,30 @@ import {
     PanelBody,
     PanelHeader,
     PanelFooter,
-    Input,
     Surface
 } from 'msteams-ui-components-react';
 import { render } from 'react-dom';
 import { TeamsBaseComponent, ITeamsBaseComponentProps, ITeamsBaseComponentState } from './TeamsBaseComponent'
 
-export interface I<%=tabName%>RemoveState extends ITeamsBaseComponentState {
-    value: string;
+/**
+ * State for the <%=staticTabName%>Tab React component
+ */
+export interface I<%=messageExtensionName%>ConfigState extends ITeamsBaseComponentState {
+    
 }
-export interface I<%=tabName%>RemoveProps extends ITeamsBaseComponentProps {
+
+/**
+ * Properties for the <%=staticTabName%>Tab React component
+ */
+export interface I<%=messageExtensionName%>ConfigProps extends ITeamsBaseComponentProps {
 
 }
 
 /**
- * Implementation of <%= tabTitle %> remove page
+ * Implementation of the <%= tabTitle %> content page
  */
-export class <%=tabName%>Remove  extends TeamsBaseComponent<I<%=tabName%>RemoveProps, I<%=tabName%>RemoveState> {
-
+export class <%=messageExtensionName%>Config extends TeamsBaseComponent<I<%=messageExtensionName%>ConfigProps, I<%=messageExtensionName%>ConfigState> {
+ 
     public componentWillMount() {
         this.updateTheme(this.getQueryVariable('theme'));
         this.setState({
@@ -33,11 +39,15 @@ export class <%=tabName%>Remove  extends TeamsBaseComponent<I<%=tabName%>RemoveP
 
         if (this.inTeams()) {
             microsoftTeams.initialize();
+            microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
         } else {
             
         }
     }
 
+    /** 
+     * The render() method to create the UI of the tab
+     */
     public render() {
         return (
             <TeamsComponentContext
@@ -52,22 +62,24 @@ export class <%=tabName%>Remove  extends TeamsBaseComponent<I<%=tabName%>RemoveP
                     const styles = {
                         header: { ...sizes.title, ...weights.semibold },
                         section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
-                        input: {},
+                        footer: { ...sizes.xsmall }
                     }
 
                     return (
                         <Surface>
                             <Panel>
                                 <PanelHeader>
-                                    <div style={styles.header}>You're about to remove your tab...</div>
+                                    <div style={styles.header}><%= messageExtensionTitle%> configuration</div>
                                 </PanelHeader>
                                 <PanelBody>
                                     <div style={styles.section}>
-                                    You can just add stuff here if you want to clean up when removing the tab. For instance, if you have stored data in an external repository, you can delete or archive it here. If you don't need this remove page you can remove it.
+                                        Add your configuration here...
                                     </div>
-
                                 </PanelBody>
                                 <PanelFooter>
+                                    <div style={styles.footer}>
+                                        (C) Copyright <%=developer%>
+                                    </div>
                                 </PanelFooter>
                             </Panel>
                         </Surface>

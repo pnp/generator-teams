@@ -6,7 +6,8 @@ import {
     Panel,
     PanelBody,
     PanelHeader,
-    PanelFooter
+    PanelFooter,
+    Surface
 } from 'msteams-ui-components-react';
 import { render } from 'react-dom';
 import { TeamsBaseComponent, ITeamsBaseComponentProps, ITeamsBaseComponentState } from './TeamsBaseComponent'
@@ -65,21 +66,23 @@ export class <%=staticTabName%>Tab extends TeamsBaseComponent<I<%=staticTabName%
                     }
 
                     return (
-                        <Panel>
-                            <PanelHeader>
-                                <div style={styles.header}>Welcome to the <%= botTitle%> bot page</div>
-                            </PanelHeader>
-                            <PanelBody>
-                                <div style={styles.section}>
-                                    TODO: 
-                                </div>
-                            </PanelBody>
-                            <PanelFooter>
-                                <div style={styles.footer}>
-                                    (C) Copyright <%=developer%>
-                                </div>
-                            </PanelFooter>
-                        </Panel>
+                        <Surface>
+                            <Panel>
+                                <PanelHeader>
+                                    <div style={styles.header}>Welcome to the <%= botTitle%> bot page</div>
+                                </PanelHeader>
+                                <PanelBody>
+                                    <div style={styles.section}>
+                                        TODO: 
+                                    </div>
+                                </PanelBody>
+                                <PanelFooter>
+                                    <div style={styles.footer}>
+                                        (C) Copyright <%=developer%>
+                                    </div>
+                                </PanelFooter>
+                            </Panel>
+                        </Surface>
                     );
                 }}>
                 </ConnectedComponent>
