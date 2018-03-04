@@ -4,26 +4,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [*2.4.0-preview*] - <*2018-01-25*>
+## [*2.4.1-preview*] - <*2018-03-03*>
+
+### Changed
+
+* Correct handling of messaging extensions settings
+
+### Fixed
+
+* Fixed an issue with missing dependencies when creating only a Messaging extension or Bot
+
+## [*2.4.0-preview*] - <*2018-03-03*>
 
 ### Added
 
 * Improved the Tab remove page with a "real" implementation and not just a dummy.
+* Added support for messaging extension configuration
 
 ### Changed
 
 * Renamed Compose Extensions to Message Extensions
 * Moved to `msteams-ui-components` React library for UI
 * Changed default bot til new bot
+* Improved Connector flow with instructions to the user to close the tab
+* Updated to schema v 1.2
+* Updated npm packages
+* Updated README files for GA'd Bot Service in Azure
+* Renamed Custom Bot to Outgoing Webhooks
 
-### Fixes
+### Fixed
 
 * Fixed a bug in Message Extensions
 * Added default values for the Message extension name and description
+* Fixed issue with Express 4.16.* and body parsing
 
 ## [*2.3.2-preview*] - <*2017-11-16*>
 
-### Fixes
+### Fixed
 
 * PR #30, #31, #32
 
@@ -39,7 +56,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Package file is now using name without spaces
 
-### Fixes
+### Fixed
 
 * Fixed issues where space was used in solution name
 * Added missing png for compose extension
@@ -67,7 +84,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Updated README.md
 
-### Fixes
+### Fixed
 
 * Fixed schema issues
 * Fixed issue [16]
@@ -97,7 +114,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Adapt to changes to BotBuilder's IMessage interface in BotBuilder 3.8
 
-### Fixes
+### Fixed
 
 * Bug fixes in msteams-app.css
 

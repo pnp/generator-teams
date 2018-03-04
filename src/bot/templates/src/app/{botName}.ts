@@ -62,14 +62,27 @@ export class <%= botName %> {
         // this is used when canUpdateConfiguration is set to true 
         this.Connector.onQuerySettingsUrl(
             (event: builder.IEvent, query: teamBuilder.ComposeExtensionQuery, callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
-                callback(<any>null, { composeExtension: { text: '<%= host %>/<%= messageExtensionName %>Config.html' } }, 200);
+                callback(<any>null, {
+                    composeExtension: {
+                        type: "config",
+                        suggestedActions: {
+                          actions: [
+                            {
+                              type: "openApp",
+                              title: "<%=messageExtensionTitle%> Configuration",
+                              value: '<%= host %>/<%= messageExtensionName %>Config.html'
+                            }
+                          ]
+                        }
+                      }
+                }, 200);
             }
         )
         this.Connector.onSettingsUpdate(
             (event: builder.IEvent, query: teamBuilder.ComposeExtensionQuery, callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
-                console.log(JSON.stringify(query));
-                callback(<any>null, { composeExtension: {} }, 200);
-
+                // take care of the setting returned from the dialog, with the value stored in state
+                let setting = query.state;
+                callback(<any>null, <any>null, 200);
             }
         )
 <% } %>

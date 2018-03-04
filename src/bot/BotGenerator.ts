@@ -143,6 +143,15 @@ export class BotGenerator extends Generator {
                     contentUrl: `${this.options.host}/${this.options.staticTabName}Tab.html`,
                     scopes: ["personal"]
                 });
+
+                Yotilities.addAdditionalDeps([
+                    ["msteams-ui-components-react", "^0.5.0"],
+                    ["react", "^16.1.0"],
+                    ["@types/react", "16.0.38"],
+                    ["react-dom", "^16.2.0"],
+                    ["file-loader", "1.1.6"],
+                    ["typestyle","1.5.1"]
+                ], this.fs);
             }
             (<any[]>manifest.bots).push(newbot);
             this.fs.writeJSON(manifestPath, manifest);

@@ -7,27 +7,28 @@ import {
     PanelBody,
     PanelHeader,
     PanelFooter,
-    Surface
+    Surface,
+    Checkbox
 } from 'msteams-ui-components-react';
 import { render } from 'react-dom';
 import { TeamsBaseComponent, ITeamsBaseComponentProps, ITeamsBaseComponentState } from './TeamsBaseComponent'
 
 /**
- * State for the <%=staticTabName%>Tab React component
+ * State for the <%=messageExtensionName%>Config React component
  */
 export interface I<%=messageExtensionName%>ConfigState extends ITeamsBaseComponentState {
-    
+    onOrOff: boolean;
 }
 
 /**
- * Properties for the <%=staticTabName%>Tab React component
+ * Properties for the <%=messageExtensionName%>Config React component
  */
 export interface I<%=messageExtensionName%>ConfigProps extends ITeamsBaseComponentProps {
 
 }
 
 /**
- * Implementation of the <%= tabTitle %> content page
+ * Implementation of the <%= messageExtensionTitle %> configuration page
  */
 export class <%=messageExtensionName%>Config extends TeamsBaseComponent<I<%=messageExtensionName%>ConfigProps, I<%=messageExtensionName%>ConfigState> {
  
@@ -37,12 +38,8 @@ export class <%=messageExtensionName%>Config extends TeamsBaseComponent<I<%=mess
             fontSize: this.pageFontSize()
         });
 
-        if (this.inTeams()) {
-            microsoftTeams.initialize();
-            microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
-        } else {
-            
-        }
+        microsoftTeams.initialize();
+        microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
     }
 
     /** 
@@ -73,7 +70,22 @@ export class <%=messageExtensionName%>Config extends TeamsBaseComponent<I<%=mess
                                 </PanelHeader>
                                 <PanelBody>
                                     <div style={styles.section}>
-                                        Add your configuration here...
+                                        <Checkbox
+                                            label="On or off?"
+                                            checked={this.state.onOrOff}
+                                            onChecked={(checked: boolean, value: any) => {
+                                                this.setState({
+                                                    onOrOff: checked
+                                                });
+                                            }}>
+                                        </Checkbox>
+                                    </div>
+                                    <div style={styles.section}>
+                                        <PrimaryButton onClick={() => {
+                                            microsoftTeams.authentication.notifySuccess(JSON.stringify({
+                                                setting: this.state.onOrOff
+                                            }));
+                                        }}>OK</PrimaryButton>
                                     </div>
                                 </PanelBody>
                                 <PanelFooter>
@@ -86,7 +98,7 @@ export class <%=messageExtensionName%>Config extends TeamsBaseComponent<I<%=mess
                     );
                 }}>
                 </ConnectedComponent>
-            </TeamsComponentContext >
+            </TeamsComponentContext>
         );
     }
 }

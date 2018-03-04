@@ -149,6 +149,16 @@ export class MessageExtensionGenerator extends Generator {
                     Yotilities.fixFileNames(t, this.options),
                     this.options);
             });
+
+            Yotilities.addAdditionalDeps([
+                ["msteams-ui-components-react", "^0.5.0"],
+                ["react", "^16.1.0"],
+                ["@types/react", "16.0.38"],
+                ["react-dom", "^16.2.0"],
+                ["file-loader", "1.1.6"],
+                ["typestyle","1.5.1"]
+            ], this.fs);
+
             let clientTsPath = "src/app/scripts/client.ts";
             let clientTs = this.fs.read(clientTsPath);
             clientTs += `\n// Added by generator-teams`;
