@@ -27,7 +27,7 @@ export interface I<%=staticTabName%>TabProps extends ITeamsBaseComponentProps {
 }
 
 /**
- * Implementation of the <%= tabTitle %> content page
+ * Implementation of the <%= staticTabName %> content page
  */
 export class <%=staticTabName%>Tab extends TeamsBaseComponent<I<%=staticTabName%>TabProps, I<%=staticTabName%>TabState> {
  
