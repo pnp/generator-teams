@@ -10,7 +10,7 @@ This generator Generates a Microsoft Teams App that can be used to add Tabs, Bot
 > Old package will be marked as deprecated.
 
 ## yo teams Demo
-![](docs/assets/demo.gif)
+![Demo](docs/assets/demo.gif)
 
 ## Install
 
@@ -42,7 +42,7 @@ yo teams [arguments]
 
  The following arguments can be used:
 
- * `--skip-install` - when used no packages will be installed at the end of the generator and you have to run `npm install` or similar manually.
+* `--skip-install` - when used no packages will be installed at the end of the generator and you have to run `npm install` or similar manually.
 
 ## The generated project
 
