@@ -1,12 +1,12 @@
-'use strict'
 var gulp = require('gulp');
 var webpack = require('webpack');
-var gutil = require('gulp-util');
 var inject = require('gulp-inject');
 var runSequence = require('run-sequence');
 const zip = require('gulp-zip');
 var nodemon = require('nodemon');
 var argv = require('yargs').argv;
+var PluginError = require('plugin-error');
+var log = require('fancy-log');
 
 var injectSources = ["./dist/web/scripts/**/*.js", './dist/web/assets/**/*.css']
 var typeScriptFiles = ["./src/**/*.ts?"]
@@ -30,7 +30,7 @@ gulp.task('watch', function () {
 gulp.task('manifest', () => {
     // TODO: add version injection here
     gulp.src(manifestFiles)
-        .pipe(zip('<%=libraryName%>.zip'))
+        .pipe(zip('p1.zip'))
         .pipe(gulp.dest('package'))
 });
 
@@ -39,33 +39,32 @@ gulp.task('manifest', () => {
  */
 gulp.task('webpack', function (callback) {
     var webpackConfig = require(process.cwd() + '/webpack.config')
-    webpack(webpackConfig
-        , function (err, stats) {
-            if (err) throw new gutil.PluginError("webpack", err);
+    webpack(webpackConfig, function (err, stats) {
+        if (err) throw new PluginError("webpack", err);
 
-            var jsonStats = stats.toJson();
-            if (jsonStats.errors.length > 0) {
-                var errs =
-                    jsonStats.errors.map(function (e) {
-                        gutil.log('[Webpack error] ' + e)
-                    });
-                throw new gutil.PluginError("webpack", "Webpack errors, see log");
-            }
-            if (jsonStats.warnings.length > 0) {
-                var errs =
-                    jsonStats.warnings.map(function (e) {
-                        gutil.log('[Webpack warning] ' + e)
-                    });
-            }
-            callback();
-        });
+        var jsonStats = stats.toJson();
+        if (jsonStats.errors.length > 0) {
+            jsonStats.errors.map(function (e) {
+                log('[Webpack error] ' + e);
+            });
+            throw new PluginError("webpack", "Webpack errors, see log");
+        }
+        if (jsonStats.warnings.length > 0) {
+            jsonStats.warnings.map(function (e) {
+                log('[Webpack warning] ' + e);
+            });
+        }
+        callback();
+    });
 });
 
 /**
  * Copies static files
  */
 gulp.task('static:copy', function () {
-    return gulp.src(staticFiles, { base: "./src/app" })
+    return gulp.src(staticFiles, {
+            base: "./src/app"
+        })
         .pipe(gulp.dest('./dist/'));
 })
 
