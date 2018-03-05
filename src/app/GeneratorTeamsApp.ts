@@ -30,6 +30,8 @@ export class GeneratorTeamsApp extends Generator {
             description: 'Skips running npm install'
         });
         AppInsights.setup('6d773b93-ff70-45c5-907c-8edae9bf90eb');
+        AppInsights.Configuration.setAutoCollectExceptions(true);
+        AppInsights.Configuration.setAutoCollectPerformance(true);
         AppInsights.defaultClient.commonProperties = {
             version: pkg.version
         };

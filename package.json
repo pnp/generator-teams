@@ -11,12 +11,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/wictorwilen/generator-teams.git"
+    "url": "https://github.com/OfficeDev/generator-teams.git"
   },
   "bugs": {
-    "url": "https://github.com/wictorwilen/generator-teams/issues"
+    "url": "https://github.com/OfficeDev/generator-teams/issues"
   },
-  "homepage": "https://github.com/wictorwilen/generator-teams",
+  "homepage": "https://github.com/OfficeDev/generator-teams",
   "keywords": [
     "yeoman-generator",
     "Microsoft Teams",

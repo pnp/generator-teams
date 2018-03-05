@@ -22,6 +22,14 @@ Install `yo` (Yeoman) and `generator-teams` globally using NPM.
 npm install yo generator-teams --global
 ```
 
+### Preview versions
+
+Preview versions of the generator will be published with the **preview** tag and can be installed using the following command:
+
+``` Shell
+npm install generator-teams@preview --global
+```
+
 ## Usage
 
 ``` Shell
@@ -42,22 +50,11 @@ When the generator is done you can start working with your project. Make sure to
 
 ## Build the generator
 
-If you are interested in contributing or modifying the generator itself, you clone this repository and then in order to build the generator. You also need to install the Webpack as a global node module:
-
-``` Shell
-npm install webpack --global
-```
-
-After cloning the repository, in the source folder install the node modules:
+If you are interested in contributing or modifying the generator itself, you clone this repository and then install all modules before building the solution.
 
 ``` Shell
 npm install
-```
-
-The generator is built and packaged using Webpack.
-
-``` Shell
-webpack
+npm run build
 ```
 
 The bundled generator and the template files will end up in the `./generators/` folder.
