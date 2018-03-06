@@ -71,7 +71,7 @@ This will automatically deploy your files to Azure, download the npm pacakges, b
 7. In your tab folder initialize a Git repository using `git init`
 8. Build the solution using `gulp build` to make sure you don't have any errors
 9. Commit all your files using `git add -A && git commit -m "Initial commit"`
-10. Run the following command to set up the remote repository: `git remote add azure https://<username>@<%=libraryName%>.scm.azurewebsites.net:443/<%=libraryName%>.git`. You need to replace <username> with the name of the user you set up in _Deployment Credentials_. You can also copy the URL from *Options* in the Azure Web App.
+10. Run the following command to set up the remote repository: `git remote add azure https://<username>@<%=websitePrefix%>.scm.azurewebsites.net:443/<%=websitePrefix%>.git`. You need to replace <username> with the name of the user you set up in _Deployment Credentials_. You can also copy the URL from *Options* in the Azure Web App.
 11. To push your code use to Azure use the following command: `git push azure master`, you will be asked for your credentials the first time
 12. Wait until the deployment is completed and navigate to <%= host %>/privacy.html to test that the web application is running
 13. Done

@@ -34,6 +34,7 @@ export class GeneratorTeamsApp extends Generator {
             description: 'Skips running npm install'
         });
         AppInsights.setup('6d773b93-ff70-45c5-907c-8edae9bf90eb');
+        delete AppInsights.defaultClient.context.tags['ai.cloud.roleInstance'];
         AppInsights.Configuration.setAutoCollectExceptions(true);
         AppInsights.Configuration.setAutoCollectPerformance(true);
         AppInsights.defaultClient.commonProperties = {
@@ -132,11 +133,7 @@ export class GeneratorTeamsApp extends Generator {
                 },
             ]
         ).then((answers: any) => {
-<<<<<<< HEAD:src/app/GeneratorTeamsTab.ts
-            answers.host= answers.host.endsWith('/') ? answers.host.substr(0, answers.host.length - 1) : answers.host;
-=======
             answers.host = answers.host.endsWith('/') ? answers.host.substr(0, answers.host.length - 1) : answers.host;
->>>>>>> preview:src/app/GeneratorTeamsApp.ts
             this.options.title = answers.name;
             this.options.description = this.description;
             this.options.solutionName = this.options.solutionName || answers.solutionName;
@@ -156,6 +153,12 @@ export class GeneratorTeamsApp extends Generator {
             this.options.customBot = (<string[]>answers.parts).indexOf('custombot') != -1;
             this.options.messageExtension = (<string[]>answers.parts).indexOf('messageextension') != -1;
             this.options.id = Guid.raw();
+            this.options.reactComponents = false; // set to false initially
+            if (this.options.host.indexOf('azurewebsites.net') >= 0) {
+                this.options.websitePrefix = this.options.host.substring(this.options.host.indexOf('://') + 3, this.options.host.indexOf('.'));
+            } else {
+                this.options.websitePrefix = '[your Azure web app name]';
+            }
 
             if (this.options.shouldUseSubDir) {
                 this.destinationRoot(this.destinationPath(this.options.solutionName));
@@ -177,22 +180,18 @@ export class GeneratorTeamsApp extends Generator {
             "_gitignore",
             "tsconfig.json",
             "tsconfig-client.json",
-<<<<<<< HEAD:src/app/GeneratorTeamsTab.ts
-            "src/app/web/assets/tab-44.png",
-            "src/app/web/assets/tab-88.png",
-            "src/app/web/assets/css/msteams-app.css",
-            "src/app/scripts/theme.ts",
-            "src/msteams-0.4.0.d.ts",
-=======
             "src/manifest/icon-outline.png",
             "src/manifest/icon-color.png",
             "src/app/web/assets/icon.png",
-            "src/app/scripts/TeamsBaseComponent.tsx",
             "src/MicrosoftTeams.d.ts",
->>>>>>> preview:src/app/GeneratorTeamsApp.ts
             'deploy.cmd',
             '_deployment'
         ]
+
+        // if we have added any react based components
+        if (this.options.reactComponents) {
+            staticFiles.push("src/app/scripts/TeamsBaseComponent.tsx")
+        }
 
         let templateFiles = [
             "README.md",
@@ -228,18 +227,6 @@ export class GeneratorTeamsApp extends Generator {
     }
 
     public install() {
-        if (this.options['skip-install']) {
-            this.log(chalk.default.yellow('Skipping installation of dependencies. You should run "npm install"'));
-        } else {
-            this.npmInstall();
-        }
-    }
-
-    public end() {
-
-        this.log(chalk.default.yellow('Thanks for using the generator!'));
-        this.log(chalk.default.yellow('Have fun and make great Microsoft Teams Apps...'));
-
         // track usage
         AppInsights.defaultClient.trackEvent({ name: 'end-generator' });
         if (this.options.bot) {
@@ -266,5 +253,16 @@ export class GeneratorTeamsApp extends Generator {
             AppInsights.defaultClient.trackEvent({ name: 'tab' });
         }
         AppInsights.defaultClient.flush();
+
+        if (this.options['skip-install']) {
+            this.log(chalk.default.yellow('Skipping installation of dependencies. You should run "npm install"'));
+        } else {
+            this.npmInstall();
+        }
+    }
+
+    public end() {
+        this.log(chalk.default.yellow('Thanks for using the generator!'));
+        this.log(chalk.default.yellow('Have fun and make great Microsoft Teams Apps...'));
     }
 }

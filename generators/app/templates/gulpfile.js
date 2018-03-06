@@ -1,11 +1,7 @@
-<<<<<<< HEAD
 // Copyright (c) Wictor Wilén. All rights reserved. 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
-'use strict'
-=======
->>>>>>> preview
 var gulp = require('gulp');
 var webpack = require('webpack');
 var inject = require('gulp-inject');
@@ -38,7 +34,7 @@ gulp.task('watch', function () {
 gulp.task('manifest', () => {
     // TODO: add version injection here
     gulp.src(manifestFiles)
-        .pipe(zip('p1.zip'))
+        .pipe(zip('<%=solutionName%>.zip'))
         .pipe(gulp.dest('package'))
 });
 

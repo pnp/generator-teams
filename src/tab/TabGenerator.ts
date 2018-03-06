@@ -40,6 +40,7 @@ export class TabGenerator extends Generator {
             ).then((answers: any) => {
                 this.options.tabTitle = answers.tabTitle;
                 this.options.tabName = lodash.camelCase(this.options.tabTitle);
+                this.options.reactComponents = true;
             });
         }
     }
@@ -62,6 +63,8 @@ export class TabGenerator extends Generator {
                     Yotilities.fixFileNames(t, this.options),
                     this.options);
             });
+
+            
 
             // Update manifest
             let manifestPath = "src/manifest/manifest.json";

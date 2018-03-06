@@ -24,6 +24,8 @@ export class GeneratorTeamsAppOptions {
     tab: boolean;
     tabTitle: string;
     tabName: string;
+    reactComponents: boolean;
+    websitePrefix: string;
     /* Bots */
     botid: string = '';
     staticTab: boolean;

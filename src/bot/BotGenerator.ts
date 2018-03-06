@@ -104,6 +104,9 @@ export class BotGenerator extends Generator {
                 this.options.botType = answers.bottype;
                 this.options.botTitle = answers.botname;
                 this.options.botName = lodash.camelCase(answers.botname);
+                if(this.options.staticTab) {
+                    this.options.reactComponents = true;
+                }
             });
         }
     }
@@ -140,7 +143,7 @@ export class BotGenerator extends Generator {
                     "src/app/scripts/{staticTabName}Tab.tsx",
                     "src/app/web/{staticTabName}Tab.html",
                 );
-
+                
                 manifest.staticTabs.push({
                     entityId: Guid.raw(),
                     name: this.options.staticTabTitle,

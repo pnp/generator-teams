@@ -34,7 +34,7 @@ gulp.task('watch', function () {
 gulp.task('manifest', () => {
     // TODO: add version injection here
     gulp.src(manifestFiles)
-        .pipe(zip('p1.zip'))
+        .pipe(zip('<%=solutionName%>.zip'))
         .pipe(gulp.dest('package'))
 });
 

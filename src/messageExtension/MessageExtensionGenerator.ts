@@ -111,6 +111,7 @@ export class MessageExtensionGenerator extends Generator {
                     // reuse the bot id
                     this.options.messageExtensionId = this.options.botid;
                 }
+                this.options.reactComponents = true;
             });
         }
     }
@@ -160,7 +161,7 @@ export class MessageExtensionGenerator extends Generator {
                 ["@types/react", "16.0.38"],
                 ["react-dom", "^16.2.0"],
                 ["file-loader", "1.1.6"],
-                ["typestyle","1.5.1"]
+                ["typestyle", "1.5.1"]
             ], this.fs);
 
             let clientTsPath = "src/app/scripts/client.ts";

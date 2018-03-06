@@ -70,6 +70,7 @@ export class ConnectorGenerator extends Generator {
                 this.options.connectorType = answers.connectorType;
                 this.options.connectorTitle = answers.connectorName;
                 this.options.connectorName = lodash.camelCase(answers.connectorName);
+                this.options.reactComponents = true;
             });
         }
     }
@@ -95,6 +96,7 @@ export class ConnectorGenerator extends Generator {
                         this.options);
                 });
             }
+
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
             manifest.connectors.push({
