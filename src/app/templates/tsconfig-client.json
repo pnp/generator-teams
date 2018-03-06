@@ -2,8 +2,8 @@
     "compilerOptions": {
         "module": "commonjs",
         "target": "es5",
-        "moduleResolution": "classic",
-        "noImplicitAny": true,
+        "moduleResolution": "node",
+        "noImplicitAny": false,
         "strictNullChecks": true,
         "jsx": "react",
         "sourceMap": true

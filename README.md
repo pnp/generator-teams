@@ -1,27 +1,30 @@
 # generator-teams
 
-A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) Apps created by [Wictor Wilén](http://twitter.com/wictor).
+A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) Apps.
 
-Generates a Microsoft Teams App that can be used to add Tabs, Bots, and more to Microsoft Teams based on Node.js and TypeScript. Optionally it adds support for hosting using [Express](http://expressjs.com/).
-
-For more information on how Tabs and Bots can be used with Teams see the [Teams Developer Documentation](https://msdn.microsoft.com/en-us/microsoft-teams/ )
+This generator Generates a Microsoft Teams App that can be used to add Tabs, Bots, Connectors, Compose Extensions and more to Microsoft Teams based on Node.js and TypeScript.
 
 [![npmjs](https://nodei.co/npm/generator-teams.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/generator-teams)
 
-> *Note:* The generator has been renamed from `generator-teams-tab` to `generator-teams`.
+> **Note:** The generator has been renamed from `generator-teams-tab` to `generator-teams`.
 > Old package will be marked as deprecated.
 
-## How to
+## yo teams Demo
+![Demo](docs/assets/demo.gif)
 
-### Install generator
+## Install
 
-All Yeoman generators should be installed as global modules. The generator is published to the npm registry and can be installed and downloaded using this command.
+> **Important:** If this is the first time you're using Yeoman or installing a Yeoman generator, first install [Git](https://git-scm.com/download) and [Node.js](https://nodejs.org). For developers on Mac, we recommend using [Node Version Manager](https://github.com/creationix/nvm) to install Node.js with the right permissions. When the installation completes, restart your console (or if you are using Windows, restart your machine) to ensure you use the updated system environment variables.
+
+Install `yo` (Yeoman) and `generator-teams` globally using NPM.
 
 ``` Shell
-npm install generator-teams --global
+npm install yo generator-teams --global
 ```
 
-If you don't have Yeoman installed it has to be installed as well:
+### Preview versions
+
+Preview versions of the generator will be published with the **preview** tag and can be installed using the following command:
 
 ``` Shell
 npm install yo --global
@@ -35,33 +38,31 @@ To install the preview version of the Teams generator, use the `preview` tag:
 npm install generator-teams@preview --global
 ```
 
-### Use the generator
-
-To create a new project using the generator, execute the following command in the command prompt and answer the questions asked.
+## Usage
 
 ``` Shell
-yo teams
+yo teams [arguments]
 ```
+
 > *Note:* Files are created in the directory that you run the command from hence make sure you are happy with the location before you hit enter.
 
-### Build the generator
+### Arguments
 
-In order to build the generator you need to install the Webpack as a global node module:
+ The following arguments can be used:
 
-``` Shell
-npm install webpack --global
-```
+* `--skip-install` - when used no packages will be installed at the end of the generator and you have to run `npm install` or similar manually.
 
-You need to clone the repository or download a local copy and in the source folder install the node modules:
+## The generated project
+
+When the generator is done you can start working with your project. Make sure to read the generated README.md file for more instructions. Depending on how you generate your project additional readme files might be created with further instructions.
+
+## Build the generator
+
+If you are interested in contributing or modifying the generator itself, you clone this repository and then install all modules before building the solution.
 
 ``` Shell
 npm install
-```
-
-The generator is built and packaged using Webpack.
-
-``` Shell
-webpack
+npm run build
 ```
 
 The bundled generator and the template files will end up in the `./generators/` folder.
@@ -80,12 +81,18 @@ To revert the link operation:
 npm unlink
 ```
 
-## Credits
+## More information
 
-* [Bill Bliss](https://github.com/billbliss) - Teams support and awesome pull requests and commits
-* [Richard DiZerega](https://blogs.msdn.microsoft.com/richard_dizeregas_blog/2017/02/07/microsoft-teams-and-custom-tab-theme/) - Themes management idea
-* [Elaine van Bergen](https://github.com/laneyvb) - pull requests
-* [Daniel Laskewitz](https://github.com/Laskewitz) - pull requests
+For more information on how Tabs and Bots can be used with Teams see the [Teams Developer Documentation](https://msdn.microsoft.com/en-us/microsoft-teams/ )
+
+## Contributors
+
+* [Wictor Wilén](https://github.com/wictorwilen) - Original author and coordinator
+* [Bill Bliss](https://github.com/billbliss)
+* [Richard DiZerega](https://github.com/richdizz)
+* [Elaine van Bergen](https://github.com/laneyvb)
+* [Daniel Laskewitz](https://github.com/Laskewitz)
+* [Paul Schaeflein](https://github.com/pschaeflein)
 
 ## Contributing
 

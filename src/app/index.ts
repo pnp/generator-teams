@@ -1,3 +1,7 @@
-import {GeneratorTeamsTab} from './GeneratorTeamsTab';
+// Copyright (c) Wictor Wilén. All rights reserved. 
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
 
-module.exports = GeneratorTeamsTab
+import {GeneratorTeamsApp} from './GeneratorTeamsApp';
+
+module.exports = GeneratorTeamsApp

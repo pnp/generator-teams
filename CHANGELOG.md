@@ -5,6 +5,114 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*2.4.2-preview*] - <*2018-03-04*>
+
+* Fixed parameter not defined in static tab for bot
+
+## [*2.4.1-preview*] - <*2018-03-03*>
+
+### Changed
+
+* Correct handling of messaging extensions settings
+
+### Fixed
+
+* Fixed an issue with missing dependencies when creating only a Messaging extension or Bot
+
+## [*2.4.0-preview*] - <*2018-03-03*>
+
+### Added
+
+* Improved the Tab remove page with a "real" implementation and not just a dummy.
+* Added support for messaging extension configuration
+
+### Changed
+
+* Renamed Compose Extensions to Message Extensions
+* Moved to `msteams-ui-components` React library for UI
+* Changed default bot til new bot
+* Improved Connector flow with instructions to the user to close the tab
+* Updated to schema v 1.2
+* Updated npm packages
+* Updated README files for GA'd Bot Service in Azure
+* Renamed Custom Bot to Outgoing Webhooks
+
+### Fixed
+
+* Fixed a bug in Message Extensions
+* Added default values for the Message extension name and description
+* Fixed issue with Express 4.16.* and body parsing
+
+## [*2.3.2-preview*] - <*2017-11-16*>
+
+### Fixed
+
+* PR #30, #31, #32
+
+## [*2.3.1-preview*] - <*2017-11-05*>
+
+### Added
+
+* Added a sample Connector Configuration page.
+* Improved Connector documentation
+* Improved the Connector default sample (using O365 Connector card SDK and persistent connector storage)
+
+### Changed
+
+* Package file is now using name without spaces
+
+### Fixed
+
+* Fixed issues where space was used in solution name
+* Added missing png for compose extension
+
+### Removed
+
+* Removed not used icon files
+
+## [*2.3.0-preview*] - <*2017-11-04*>
+
+## Added
+
+* Added `--debug` flag to the `serve` gulp command
+* Added support for `.env` file for local storage of environment properties
+* Updated documentation files
+
+### Changed
+
+* Updated node packages
+* Fixed issue #19
+
+## [*2.2.1-preview*] - <*2017-08-06*>
+
+### Changed
+
+* Updated README.md
+
+### Fixed
+
+* Fixed schema issues
+* Fixed issue [16]
+
+## [*2.2.0-preview*] - <*2017-07-31*>
+
+### Added
+
+* Added `--skip-install` as a parameter to skip npm installation, and thus requires the user to run `npm install` manually.
+* Added Travis CI
+
+## [*2.1.0-preview*] - <*2017-07-25*>
+
+### Added
+
+* Added AppInsights logging to track usage of features. All data is anonymously collected.
+
+## [*2.0.0-preview*] - <*2017-05-30*>
+
+### Changed 
+
+* Adaptation to the new developer preview
+
 ## [*1.2.0] - <*2017-07-25*>
 
 ### Added
@@ -21,7 +129,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Adapt to changes to BotBuilder's IMessage interface in BotBuilder 3.8
 
-### Fixes
+### Fixed
 
 * Bug fixes in msteams-app.css
 

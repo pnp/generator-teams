@@ -15,7 +15,7 @@ export class <%= customBotName %> {
     }
 
     /**
-     * Implement your bot logic here
+     * Implement your outgoing webhook logic here
      * @param req the Request
      * @param res the Response
      * @param next 

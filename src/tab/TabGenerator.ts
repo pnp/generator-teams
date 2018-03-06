@@ -1,7 +1,11 @@
+// Copyright (c) Wictor Wilén. All rights reserved. 
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
+
 import * as Generator from 'yeoman-generator';
 import * as lodash from 'lodash';
 import * as chalk from 'chalk';
-import { GeneratorTeamTabOptions } from './../app/GeneratorTeamTabOptions';
+import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
 
 
@@ -11,7 +15,7 @@ let Guid = require('guid');
 
 
 export class TabGenerator extends Generator {
-    options: GeneratorTeamTabOptions;
+    options: GeneratorTeamsAppOptions;
 
     public constructor(args: any, opts: any) {
         super(args, opts);
@@ -26,7 +30,7 @@ export class TabGenerator extends Generator {
                     {
                         type: 'input',
                         name: 'tabTitle',
-                        message: 'Name of your Tab? (max 16 characters)',
+                        message: 'Default Tab name? (max 16 characters)',
                         default: this.options.title + ' Tab',
                         validate: (input) => {
                             return input.length > 0 && input.length <= 16;
@@ -42,8 +46,9 @@ export class TabGenerator extends Generator {
     public writing() {
         if (this.options.tab) {
             let templateFiles = [
-                "src/app/scripts/{tabName}Config.ts",
-                "src/app/scripts/{tabName}Tab.ts",
+                "src/app/scripts/{tabName}Config.tsx",
+                "src/app/scripts/{tabName}Tab.tsx",
+                "src/app/scripts/{tabName}Remove.tsx",
                 "src/app/web/{tabName}Tab.html",
                 "src/app/web/{tabName}Remove.html",
                 "src/app/web/{tabName}Config.html",
@@ -61,21 +66,10 @@ export class TabGenerator extends Generator {
             // Update manifest
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
-            (<any[]>manifest.tabs).push({
-                //id: `${this.options.namespace}.${this.options.tabName}`,
-                id: Guid.raw(),
-                name: this.options.tabTitle,
-                description: {
-                    short: `Add a short description for ${this.options.tabTitle} here`,
-                    full: `Add a longer description for ${this.options.tabTitle} here`
-                },
-                icons: {
-                    "44": `${this.options.host}/assets/tab-44.png`,
-                    "88": `${this.options.host}/assets/tab-88.png`
-                },
-                accentColor: `#223344`,
-                configUrl: `${this.options.host}/${this.options.tabName}Config.html`,
-                canUpdateConfig: true
+            (<any[]>manifest.configurableTabs).push({
+                configurationUrl: `${this.options.host}/${this.options.tabName}Config.html`,
+                canUpdateConfiguration: true,
+                scopes: ["team"]
             });
             var tmp: string = this.options.host.substring(this.options.host.indexOf('://') + 3)
             var arr: string[] = tmp.split('.');
@@ -83,12 +77,22 @@ export class TabGenerator extends Generator {
             (<string[]>manifest.validDomains).push(this.options.host.split("https://")[1]);
             this.fs.writeJSON(manifestPath, manifest);
 
+            Yotilities.addAdditionalDeps([
+                ["msteams-ui-components-react", "^0.5.0"],
+                ["react", "^16.1.0"],
+                ["@types/react", "16.0.38"],
+                ["react-dom", "^16.2.0"],
+                ["file-loader", "1.1.6"],
+                ["typestyle","1.5.1"]
+            ], this.fs);
+
             // update client.ts
             let clientTsPath = "src/app/scripts/client.ts";
             let clientTs = this.fs.read(clientTsPath);
             clientTs += `\n// Added by generator-teams`;
             clientTs += `\nexport * from './${this.options.tabName}Config';`;
             clientTs += `\nexport * from './${this.options.tabName}Tab';`;
+            clientTs += `\nexport * from './${this.options.tabName}Remove';`;
             clientTs += `\n`;
             this.fs.write(clientTsPath, clientTs);
             
