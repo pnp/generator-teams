@@ -11,6 +11,10 @@ var nodemon = require('nodemon');
 var argv = require('yargs').argv;
 var PluginError = require('plugin-error');
 var log = require('fancy-log');
+var fs = require('fs');
+var ZSchema = require('z-schema');
+var request = require('request');
+var path = require('path');
 
 var injectSources = ["./dist/web/scripts/**/*.js", './dist/web/assets/**/*.css']
 var typeScriptFiles = ["./src/**/*.ts?"]
@@ -31,11 +35,11 @@ gulp.task('watch', function () {
 /**
  * Creates the tab manifest
  */
-gulp.task('manifest', () => {
+gulp.task('manifest', ['validate-manifest'], () => {
     // TODO: add version injection here
     gulp.src(manifestFiles)
         .pipe(zip('<%=solutionName%>.zip'))
-        .pipe(gulp.dest('package'))
+        .pipe(gulp.dest('package'));
 });
 
 /**
@@ -95,6 +99,44 @@ gulp.task('static:inject', ['static:copy'], function () {
  */
 gulp.task('build', function () {
     runSequence('webpack', 'static:inject')
+});
+
+/**
+ * Schema validation
+ */
+gulp.task('validate-manifest', (callback) => {
+
+    var filePath = path.join(__dirname, 'src/manifest/manifest.json');
+    fs.readFile(filePath, {
+        encoding: 'utf-8'
+    }, function (err, data) {
+        if (!err) {
+            var requiredUrl = "https://statics.teams.microsoft.com/sdk/v1.2/manifest/MicrosoftTeams.schema.json";
+            var validator = new ZSchema();
+            var json = JSON.parse(data);
+            var schema = {
+                "$ref": requiredUrl
+            };
+            request(requiredUrl, {
+                gzip: true
+            }, (err, res, body) => {
+                validator.setRemoteReference(requiredUrl, JSON.parse(body));
+
+                var valid = validator.validate(json, schema);
+                var errors = validator.getLastErrors();
+                if (!valid) {
+                    callback(new PluginError("validate-manifest", errors.map((e) => {
+                        return e.message;
+                    }).join('\n')));
+                } else {
+                    callback();
+                }
+            })
+
+        } else {
+            callback(PluginError("validate-manifest", err));
+        }
+    });
 });
 
 /**

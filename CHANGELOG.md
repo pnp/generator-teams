@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*2.4.5*] - <*2018-03-06*>
+
+### Added
+
+* Added schema validation in build pipline (`validate-manifest` gulp task)
+
+## [*2.4.4*] - <*2018-03-06*>
+
+### Changed
+
+* Moved out of preview
+
 ## [*2.4.2-preview*] - <*2018-03-04*>
 
 * Fixed parameter not defined in static tab for bot

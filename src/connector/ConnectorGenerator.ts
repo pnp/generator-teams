@@ -106,8 +106,6 @@ export class ConnectorGenerator extends Generator {
             this.fs.writeJSON(manifestPath, manifest);
 
             Yotilities.addAdditionalDeps([
-                ['request', '2.83.0'],
-                ['@types/request', '2.0.7'],
                 ['@types/ejs', '2.3.33'],
                 ['@types/node-json-db', '0.0.1'],
                 ['ejs', '2.5.7'],
