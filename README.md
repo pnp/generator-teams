@@ -1,10 +1,14 @@
 # generator-teams
 
+[![npm version](https://badge.fury.io/js/generator-teams.svg)](https://badge.fury.io/js/generator-teams)
+
 A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) Apps.
 
-This generator Generates a Microsoft Teams App that can be used to add Tabs, Bots, Connectors, Compose Extensions and more to Microsoft Teams based on Node.js and TypeScript.
+ | @master | @preview |
+ :--------:|:---------:
+ [![Build Status](https://travis-ci.org/OfficeDev/generator-teams.svg?branch=master)](https://travis-ci.org/OfficeDev/generator-teams)|[![Build Status](https://travis-ci.org/OfficeDev/generator-teams.svg?branch=preview)](https://travis-ci.org/OfficeDev/generator-teams)
 
-[![npmjs](https://nodei.co/npm/generator-teams.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/generator-teams)
+This generator Generates a Microsoft Teams App that can be used to add Tabs, Bots, Connectors, Compose Extensions and more to Microsoft Teams based on Node.js and TypeScript.
 
 > **Note:** The generator has been renamed from `generator-teams-tab` to `generator-teams`.
 > Old package will be marked as deprecated.
