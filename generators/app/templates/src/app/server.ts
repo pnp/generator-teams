@@ -6,10 +6,10 @@ import * as path from 'path';
 import * as morgan from 'morgan';
 <% if(botType == 'botframework' || customBot) { %>
 import * as builder from 'botbuilder';
-import * as teamBuilder from 'botbuilder-teams';
 <% } %>
 <% if(botType == 'botframework' ) { %>
 import { <%= botName %> } from './<%= botName %>';
+import * as teamBuilder from 'botbuilder-teams';
 <% } %>
 <% if(customBot ) { %>
 import { <%= customBotName %> } from './<%= customBotName %>';
@@ -26,7 +26,11 @@ require('dotenv').config();
 let express = Express();
 let port = process.env.port || process.env.PORT || 3007;
 
-express.use(Express.json());
+express.use(Express.json({
+    verify: (req, res, buf: Buffer, encoding: string):void => {
+        (<any>req).rawBody = buf.toString();
+    }
+}));
 express.use(Express.urlencoded({ extended: true }));
 
 // Add simple logging

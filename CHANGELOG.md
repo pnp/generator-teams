@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*2.4.6*] - <*2018-03-07*>
+
+### Added
+
+* Added HMAC validation for the outgoing webhooks
+
+### Fixes
+
+* Fixed missing npm packages when building an outgoing webhook only project
+
 ## [*2.4.5*] - <*2018-03-06*>
 
 ### Added

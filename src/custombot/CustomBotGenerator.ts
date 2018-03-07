@@ -55,6 +55,10 @@ export class CustomBotGenerator extends Generator {
                     Yotilities.fixFileNames(t, this.options),
                     this.options);
             });
+
+            Yotilities.addAdditionalDeps([
+                ['botbuilder', '3.14.0']
+            ], this.fs);
         }
     }
 }
