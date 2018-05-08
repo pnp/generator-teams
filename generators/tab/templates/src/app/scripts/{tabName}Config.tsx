@@ -55,7 +55,7 @@ export class <%=tabName%>Config  extends TeamsBaseComponent<I<%=tabName%>ConfigP
             });
 
         } else {
-            
+
         }
     }
 
@@ -88,7 +88,7 @@ export class <%=tabName%>Config  extends TeamsBaseComponent<I<%=tabName%>ConfigP
                                             autoFocus
                                             style={styles.input}
                                             placeholder="Enter a value here"
-                                            label="Enter a vlue"
+                                            label="Enter a value"
                                             errorLabel={!this.state.value ? "This value is required" : undefined}
                                             value={this.state.value}
                                             onChange={(e) =>{
