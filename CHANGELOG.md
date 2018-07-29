@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*2.5.0-preview*] - <*2018-03-21*>
+
+### Added
+
+* Added TypeScript decorators and interfaces for Connectors, Bots and Outgoing webhooks so that they dynamically can be loaded - defined in the [express-ms-teams-host](https://www.npmjs.com/package/express-msteams-host) package.
+* All server side TypeScript components are now exported via the `TeamsAppsComponents.ts` file
+* Added the `@microsoft/teams-js` package
+
+### Changed
+
+* Changed to AST for TypeScript generation
+* References for Bot Framework and Bot Framework Microsoft Teams extensions are always referenced
+* Ensured consistent file name ending (`Bot`, `Connector`, `Tab`, `OutgoingWebhook`)
+* You MUST install `npm i -g gulp-cli`
+* Updated to Webpack 4 - updated all Webconfig configurations
+* Updated to Gulp 4 - refactored all Gulp tasks
+* Updated multiple packages (botbuilder, botbuilder-teams). Issue #39
+* Moved the React SPA control to separate package ([msteams-react-base-component](https://www.npmjs.com/package/msteams-react-base-component)) so that the control can be updated independently of the generator
+* Fixed the headers bug (#40)
+* Fixed the schema issue (#38)
+
+### Removed
+
+* Removed the `MicrosoftTeams.d.ts` file
+* Removed the `msteams-app.css` file
+
 ## [*2.4.6*] - <*2018-03-07*>
 
 ### Added
@@ -14,6 +40,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixes
 
 * Fixed missing npm packages when building an outgoing webhook only project
+
+### Deleted
+
+* Removed obsolete `theme.ts` and `msteams-app.css` files
 
 ## [*2.4.5*] - <*2018-03-06*>
 

@@ -11,7 +11,7 @@ Head on over to [official documentation](https://msdn.microsoft.com/en-us/micros
 ## Building the app
 
 ``` bash
-npm i -g gulp
+npm i -g gulp gulp-cli
 gulp build
 ```
 

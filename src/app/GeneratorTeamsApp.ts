@@ -21,7 +21,7 @@ export class GeneratorTeamsApp extends Generator {
     options: GeneratorTeamsAppOptions = new GeneratorTeamsAppOptions();
 
     public constructor(args: any, opts: any) {
-        super(args, opts);
+        super(args, (!(opts.force = true)) || opts);
         opts.force = true;
         this.desc('Generate a Microsoft Teams application.');
         this.argument('solutionName', {
@@ -41,6 +41,7 @@ export class GeneratorTeamsApp extends Generator {
             version: pkg.version
         };
         AppInsights.defaultClient.trackEvent({ name: 'start-generator' });
+        this.options.existingManifest = this.fs.readJSON(`./src/manifest/manifest.json`);
     }
 
     public initializing() {
@@ -50,23 +51,38 @@ export class GeneratorTeamsApp extends Generator {
         this.composeWith('teams:custombot', { 'options': this.options });
         this.composeWith('teams:connector', { 'options': this.options });
         this.composeWith('teams:messageExtension', { 'options': this.options });
+
+        // check schema version:
+        if (this.options.existingManifest) {
+            if (this.options.existingManifest["$schema"] != 'https://statics.teams.microsoft.com/sdk/v1.2/manifest/MicrosoftTeams.schema.json') {
+                this.log(chalk.default.red('You are running the generator on an already existing project, but on a non supported-schema.'));
+                process.exit(1);
+            }
+        }
     }
 
     public prompting() {
         return this.prompt(
             [
                 {
+                    type: 'confirm',
+                    name: 'confirmedAdd',
+                    default: false,
+                    message: `You are running the generator on an already existing project, "${this.options.existingManifest && this.options.existingManifest.name.short}", are you sure you want to continue?`,
+                    when: () => this.options.existingManifest,
+                },
+                {
                     type: 'input',
                     name: 'solutionName',
                     default: lodash.kebabCase(this.appname),
-                    when: () => !this.options.solutionName,
+                    when: () => !(this.options.solutionName || this.options.existingManifest),
                     message: 'What is your solution name?'
                 },
                 {
                     type: 'list',
                     name: 'whichFolder',
                     default: 'current',
-                    when: () => !this.options.solutionName,
+                    when: () => !(this.options.solutionName || this.options.existingManifest),
                     message: 'Where do you want to place the files?',
                     choices: [
                         {
@@ -83,6 +99,7 @@ export class GeneratorTeamsApp extends Generator {
                     type: 'input',
                     name: 'name',
                     message: 'Title of your Microsoft Teams App project?',
+                    when: () => !this.options.existingManifest,
                     default: this.appname
                 },
                 {
@@ -92,7 +109,9 @@ export class GeneratorTeamsApp extends Generator {
                     default: this.user.git.name,
                     validate: (input: string) => {
                         return input.length > 0 && input.length <= 32;
-                    }
+                    },
+                    when: () => !this.options.existingManifest,
+                    store: true
                 },
                 {
                     type: 'checkbox',
@@ -120,7 +139,8 @@ export class GeneratorTeamsApp extends Generator {
                             name: 'A Message Extension',
                             value: 'messageextension',
                         }
-                    ]
+                    ],
+                    when: (answers) => answers.confirmedAdd != false
                 },
                 {
                     type: 'input',
@@ -129,40 +149,55 @@ export class GeneratorTeamsApp extends Generator {
                     default: (answers: any) => {
                         return `https://${lodash.camelCase(answers.solutionName)}.azurewebsites.net`;
                     },
-                    validate: Yotilities.validateUrl
+                    validate: Yotilities.validateUrl,
+                    when: () => !this.options.existingManifest,
                 },
             ]
         ).then((answers: any) => {
-            answers.host = answers.host.endsWith('/') ? answers.host.substr(0, answers.host.length - 1) : answers.host;
-            this.options.title = answers.name;
-            this.options.description = this.description;
-            this.options.solutionName = this.options.solutionName || answers.solutionName;
-            this.options.shouldUseSubDir = answers.whichFolder === 'subdir';
-            this.options.libraryName = lodash.camelCase(this.options.solutionName);
-            this.options.packageName = this.options.libraryName.toLocaleLowerCase();
-            this.options.developer = answers.developer;
-            this.options.host = answers.host;
-            var tmp: string = this.options.host.substring(this.options.host.indexOf('://') + 3)
-            var arr: string[] = tmp.split('.');
-            this.options.namespace = lodash.reverse(arr).join('.');
-            this.options.tou = answers.host + '/tou.html';
-            this.options.privacy = answers.host + '/privacy.html';
+            if (answers.confirmedAdd == false) {
+                process.exit(0)
+            }
+            if (!this.options.existingManifest) {
+                answers.host = answers.host.endsWith('/') ? answers.host.substr(0, answers.host.length - 1) : answers.host;
+                this.options.title = answers.name;
+                this.options.description = this.description;
+                this.options.solutionName = this.options.solutionName || answers.solutionName;
+                this.options.shouldUseSubDir = answers.whichFolder === 'subdir';
+                this.options.libraryName = lodash.camelCase(this.options.solutionName);
+                this.options.packageName = this.options.libraryName.toLocaleLowerCase();
+                this.options.developer = answers.developer;
+                this.options.host = answers.host;
+                var tmp: string = this.options.host.substring(this.options.host.indexOf('://') + 3)
+                var arr: string[] = tmp.split('.');
+                this.options.namespace = lodash.reverse(arr).join('.');
+                this.options.tou = answers.host + '/tou.html';
+                this.options.privacy = answers.host + '/privacy.html';
+                this.options.id = Guid.raw();
+                if (this.options.host.indexOf('azurewebsites.net') >= 0) {
+                    this.options.websitePrefix = this.options.host.substring(this.options.host.indexOf('://') + 3, this.options.host.indexOf('.'));
+                } else {
+                    this.options.websitePrefix = '[your Azure web app name]';
+                }
+
+                if (this.options.shouldUseSubDir) {
+                    this.destinationRoot(this.destinationPath(this.options.solutionName));
+                }
+            } else {
+                this.options.developer = this.options.existingManifest.developer.name;
+                this.options.title = this.options.existingManifest.name.short;
+                let pkg = this.fs.readJSON(`./package.json`);
+                this.options.libraryName = pkg.name;
+                this.options.host = this.options.existingManifest.developer.websiteUrl;
+            }
+
             this.options.bot = (<string[]>answers.parts).indexOf('bot') != -1;
             this.options.tab = (<string[]>answers.parts).indexOf('tab') != -1;
             this.options.connector = (<string[]>answers.parts).indexOf('connector') != -1;
             this.options.customBot = (<string[]>answers.parts).indexOf('custombot') != -1;
             this.options.messageExtension = (<string[]>answers.parts).indexOf('messageextension') != -1;
-            this.options.id = Guid.raw();
-            this.options.reactComponents = false; // set to false initially
-            if (this.options.host.indexOf('azurewebsites.net') >= 0) {
-                this.options.websitePrefix = this.options.host.substring(this.options.host.indexOf('://') + 3, this.options.host.indexOf('.'));
-            } else {
-                this.options.websitePrefix = '[your Azure web app name]';
-            }
 
-            if (this.options.shouldUseSubDir) {
-                this.destinationRoot(this.destinationPath(this.options.solutionName));
-            }
+            this.options.reactComponents = false; // set to false initially
+
         });
     }
 
@@ -175,51 +210,55 @@ export class GeneratorTeamsApp extends Generator {
     }
 
     public writing() {
+        if (!this.options.existingManifest) {
+            let staticFiles = [
+                "_gitignore",
+                "tsconfig.json",
+                "tsconfig-client.json",
+                "src/manifest/icon-outline.png",
+                "src/manifest/icon-color.png",
+                "src/app/web/assets/icon.png",
+                'deploy.cmd',
+                '_deployment',
+                "src/app/TeamsAppsComponents.ts"
+            ]
+            
 
-        let staticFiles = [
-            "_gitignore",
-            "tsconfig.json",
-            "tsconfig-client.json",
-            "src/manifest/icon-outline.png",
-            "src/manifest/icon-color.png",
-            "src/app/web/assets/icon.png",
-            "src/MicrosoftTeams.d.ts",
-            'deploy.cmd',
-            '_deployment'
-        ]
+            let templateFiles = [
+                "README.md",
+                "gulpfile.js",
+                "package.json",
+                ".env",
+                'src/app/server.ts',
+                "src/manifest/manifest.json",
+                "webpack.config.js",
+                "src/app/scripts/client.ts",
+                "src/app/web/index.html",
+                "src/app/web/tou.html",
+                "src/app/web/privacy.html",
+            ];
 
-        // if we have added any react based components
-        if (this.options.reactComponents) {
-            staticFiles.push("src/app/scripts/TeamsBaseComponent.tsx")
+            this.sourceRoot()
+
+            templateFiles.forEach(t => {
+                this.fs.copyTpl(
+                    this.templatePath(t),
+                    Yotilities.fixFileNames(t, this.options),
+                    this.options);
+            });
+            staticFiles.forEach(t => {
+                this.fs.copy(
+                    this.templatePath(t),
+                    Yotilities.fixFileNames(t, this.options));
+            });
+
+            // if we have added any react based components
+            if (this.options.reactComponents) {
+                Yotilities.addAdditionalDeps([
+                    ["msteams-react-base-component", "^0.0.3"]
+                ], this.fs);
+            }
         }
-
-        let templateFiles = [
-            "README.md",
-            "gulpfile.js",
-            "package.json",
-            ".env",
-            'src/app/server.ts',
-            "src/manifest/manifest.json",
-            "webpack.config.js",
-            "src/app/scripts/client.ts",
-            "src/app/web/index.html",
-            "src/app/web/tou.html",
-            "src/app/web/privacy.html",
-        ];
-
-        this.sourceRoot()
-
-        templateFiles.forEach(t => {
-            this.fs.copyTpl(
-                this.templatePath(t),
-                Yotilities.fixFileNames(t, this.options),
-                this.options);
-        });
-        staticFiles.forEach(t => {
-            this.fs.copy(
-                this.templatePath(t),
-                Yotilities.fixFileNames(t, this.options));
-        });
     }
 
     public conflicts() {
@@ -228,6 +267,9 @@ export class GeneratorTeamsApp extends Generator {
 
     public install() {
         // track usage
+        if (this.options.existingManifest) {
+            AppInsights.defaultClient.trackEvent({ name: 'rerun-generator' });
+        }
         AppInsights.defaultClient.trackEvent({ name: 'end-generator' });
         if (this.options.bot) {
             AppInsights.defaultClient.trackEvent({ name: 'bot' });

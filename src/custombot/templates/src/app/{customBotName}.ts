@@ -1,17 +1,19 @@
 import * as builder from 'botbuilder';
 import * as express from 'express';
 import * as crypto from 'crypto';
+import { OutgoingWebhookDeclaration, IOutgoingWebhook } from 'express-msteams-host';
 
 
 /**
  * Implementation for <%= customBotTitle %>
  */
-export class <%= customBotName %> {
+@OutgoingWebhookDeclaration('/api/webhook')
+export class <%= customBotName %> implements IOutgoingWebhook {
 
     /**
      * The constructor
      */
-    constructor() {
+    public constructor() {
        
     }
 
@@ -21,7 +23,7 @@ export class <%= customBotName %> {
      * @param res the Response
      * @param next 
      */
-    requestHandler(req: express.Request, res: express.Response, next: express.NextFunction) {
+    public requestHandler(req: express.Request, res: express.Response, next: express.NextFunction) {
         // parse the incoming message
         let incoming = <builder.IMessage>req.body
 

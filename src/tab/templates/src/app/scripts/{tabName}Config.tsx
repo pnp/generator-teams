@@ -11,7 +11,8 @@ import {
     Surface
 } from 'msteams-ui-components-react';
 import { render } from 'react-dom';
-import { TeamsBaseComponent, ITeamsBaseComponentProps, ITeamsBaseComponentState } from './TeamsBaseComponent'
+import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
+import * as microsoftTeams from '@microsoft/teams-js';
 
 export interface I<%=tabName%>ConfigState extends ITeamsBaseComponentState {
     value: string;
@@ -46,7 +47,7 @@ export class <%=tabName%>Config  extends TeamsBaseComponent<I<%=tabName%>ConfigP
                 // Calculate host dynamically to enable local debugging
                 let host = "https://" + window.location.host;
                 microsoftTeams.settings.setSettings({
-                    contentUrl: host + "/<%=tabName%>Tab.html?data=",
+                    contentUrl: host + "/<%=tabName%>.html?data=",
                     suggestedDisplayName: '<%=tabTitle%>',
                     removeUrl: host + "/<%=tabName%>Remove.html",
                     entityId: this.state.value

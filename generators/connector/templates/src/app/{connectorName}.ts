@@ -1,11 +1,12 @@
 import * as request from 'request';
 import * as teamBuilder from 'botbuilder-teams';
+import { ConnectorDeclaration, IConnector } from 'express-msteams-host';
 const JsonDB = require('node-json-db');
 
 /**
  * The connector data interface
  */
-interface I<%=connectorName%>ConnectorData {
+interface I<%=connectorName%>Data {
     webhookUrl: string;
     user: string;
     appType: string;
@@ -17,7 +18,13 @@ interface I<%=connectorName%>ConnectorData {
 /**
  * Implementation of the "<%=connectorName%>Connector" Office 365 Connector
  */
-export class <%=connectorName%>Connector {
+@ConnectorDeclaration(
+    '/api/connector/connect',
+    '/api/connector/ping',
+    'web/<%=connectorName%>Connect.ejs',
+    '/<%=connectorName%>Connected.html'
+)
+export class <%=connectorName%> implements IConnector {
     private connectors: any;
 
     public constructor() {
@@ -40,13 +47,21 @@ export class <%=connectorName%>Connector {
 
     public Ping(): Promise <void>[] {
         // clean up connectors marked to be deleted
-        this.connectors.push('/connectors',
-            (<I<%=connectorName%>ConnectorData[]>this.connectors.getData('/connectors')).filter((c => {
-                return c.existing;
-            })));
-
+        try {
+            this.connectors.push('/connectors',
+                (<I<%=connectorName%>Data[]>this.connectors.getData('/connectors')).filter((c => {
+                    return c.existing;
+                })));
+        } catch (error) {
+            if (error.name && error.name == 'DataError') {
+                // there's no registered connectors
+                return [];
+            }
+            throw error;
+        }
+    
         // send pings to all subscribers
-        return (<I<%=connectorName%>ConnectorData[]>this.connectors.getData('/connectors')).map((connector, index) => {
+        return (<I<%=connectorName%>Data[]>this.connectors.getData('/connectors')).map((connector, index) => {
             return new Promise<void>((resolve, reject) => {
                 let card = new teamBuilder.O365ConnectorCard();
                 card.title('Sample connector');

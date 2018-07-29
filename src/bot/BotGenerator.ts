@@ -104,7 +104,10 @@ export class BotGenerator extends Generator {
                 this.options.botType = answers.bottype;
                 this.options.botTitle = answers.botname;
                 this.options.botName = lodash.camelCase(answers.botname);
-                if(this.options.staticTab) {
+                if (!this.options.botName.endsWith('Bot')) {
+                    this.options.botName = this.options.botName + 'Bot';
+                }
+                if (this.options.staticTab) {
                     this.options.reactComponents = true;
                 }
             });
@@ -143,7 +146,7 @@ export class BotGenerator extends Generator {
                     "src/app/scripts/{staticTabName}Tab.tsx",
                     "src/app/web/{staticTabName}Tab.html",
                 );
-                
+
                 manifest.staticTabs.push({
                     entityId: Guid.raw(),
                     name: this.options.staticTabTitle,
@@ -152,12 +155,12 @@ export class BotGenerator extends Generator {
                 });
 
                 Yotilities.addAdditionalDeps([
-                    ["msteams-ui-components-react", "^0.5.0"],
+                    ["msteams-ui-components-react", "^0.7.3"],
                     ["react", "^16.1.0"],
-                    ["@types/react", "16.0.38"],
+                    ["@types/react", "16.4.7"],
                     ["react-dom", "^16.2.0"],
-                    ["file-loader", "1.1.6"],
-                    ["typestyle","1.5.1"]
+                    ["file-loader", "1.1.11"],
+                    ["typestyle", "1.5.1"]
                 ], this.fs);
             }
             (<any[]>manifest.bots).push(newbot);
@@ -176,18 +179,20 @@ export class BotGenerator extends Generator {
 
             // update client.ts
             if (this.options.staticTab) {
-                let clientTsPath = "src/app/scripts/client.ts";
-                let clientTs = this.fs.read(clientTsPath);
-                clientTs += `\n// Added by generator-teams`;
-                clientTs += `\nexport * from './${this.options.staticTabName}Tab';`;
-                clientTs += `\n`;
-                this.fs.write(clientTsPath, clientTs);
+                Yotilities.insertTsExportDeclaration(
+                    "src/app/scripts/client.ts",
+                    `./${this.options.staticTabName}Tab`,
+                    `Automatically added for the ${this.options.staticTabName} bot tab`,
+                    this.fs
+                );
             }
 
-            Yotilities.addAdditionalDeps([
-                ['botbuilder', '3.14.0'],
-                ['botbuilder-teams', '0.1.7']
-            ], this.fs);
+            Yotilities.insertTsExportDeclaration(
+                "src/app/TeamsAppsComponents.ts",
+                `./${this.options.botName}.ts`,
+                `Automatically added for the ${this.options.botName} bot`,
+                this.fs
+            );
         }
     }
 }

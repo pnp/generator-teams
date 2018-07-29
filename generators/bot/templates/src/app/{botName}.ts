@@ -4,11 +4,18 @@
 
 import * as builder from 'botbuilder';
 import * as teamBuilder from 'botbuilder-teams';
+import { BotDeclaration, IBot } from 'express-msteams-host';
+
 
 /**
  * Implementation for <%= botTitle %>
  */
-export class <%= botName %> {
+@BotDeclaration(
+    '<%=botid%>',
+    '/api/messages',
+    process.env.MICROSOFT_APP_ID,
+    process.env.MICROSOFT_APP_PASSWORD)
+export class <%= botName %> implements IBot {
     public readonly Connector: teamBuilder.TeamsChatConnector;
     private readonly universalBot: builder.UniversalBot;
 
@@ -16,7 +23,7 @@ export class <%= botName %> {
      * The constructor
      * @param connector 
      */
-    constructor(connector: teamBuilder.TeamsChatConnector) {
+    public constructor(connector: teamBuilder.TeamsChatConnector) {
         this.Connector = connector;
         this.universalBot = new builder.UniversalBot(this.Connector);
 
@@ -97,7 +104,7 @@ export class <%= botName %> {
      * This is the default dialog used by the bot
      * @param session 
      */
-    defaultDialog(session: builder.Session) {
+    private defaultDialog(session: builder.Session) {
         let text = <%= botName %>.extractTextFromMessage(session.message).toLowerCase();
         if (text.startsWith('hello')) {
             session.send('Oh, hello to you as well!');
@@ -114,7 +121,7 @@ export class <%= botName %> {
      * This is the help dialog of the bot
      * @param session 
      */
-    helpDialog(session: builder.Session) {
+    private helpDialog(session: builder.Session) {
         session.send('I\'m just a friendly but rather stupid bot, and right now I don\'t have any valuable help for you!');
         session.endDialog();
     }
@@ -123,7 +130,7 @@ export class <%= botName %> {
      * This is an example of a conversationUpdate event handler
      * @param activity 
      */
-    convUpdateHandler(activity: any) {
+    private convUpdateHandler(activity: any) {
         console.log("Conversation update")
     }
 

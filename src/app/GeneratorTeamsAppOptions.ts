@@ -51,4 +51,6 @@ export class GeneratorTeamsAppOptions {
     messageExtensionDescription: string;
     messageExtensionName: string;
     messageExtensionId: string;
+    /* manifest */
+    existingManifest: any;
 }
