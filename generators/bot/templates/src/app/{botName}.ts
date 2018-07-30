@@ -10,13 +10,14 @@ import { BotDeclaration, IBot } from 'express-msteams-host';
  * Implementation for <%= botTitle %>
  */
 @BotDeclaration(
-    '<%=botid%>',
     '/api/messages',
     process.env.MICROSOFT_APP_ID,
     process.env.MICROSOFT_APP_PASSWORD)
 export class <%= botName %> implements IBot {
     public readonly Connector: teamBuilder.TeamsChatConnector;
     private readonly universalBot: builder.UniversalBot;
+    private inMemoryStorage: builder.IBotStorage;
+
 
     /**
      * The constructor
@@ -24,7 +25,9 @@ export class <%= botName %> implements IBot {
      */
     public constructor(connector: teamBuilder.TeamsChatConnector) {
         this.Connector = connector;
-        this.universalBot = new builder.UniversalBot(this.Connector);
+        this.inMemoryStorage = new builder.MemoryBotStorage();
+        this.universalBot = new builder.UniversalBot(this.Connector).
+            set('storage', this.inMemoryStorage); // Use the in-memory storage for state
 
         // Install sendTyping as middleware
         this.universalBot.use({

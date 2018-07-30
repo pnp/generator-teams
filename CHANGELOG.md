@@ -5,7 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [*2.5.0-preview*] - <*2018-03-21*>
+## [*2.5.0-preview2*] - <*2018-07-30*>
+
+### Fixes
+
+* Fixed an issue where environment was loaded after components loaded
+* Fixed an issue where the bot state was deprecated to use an in-memory state storage
+
+### Changed
+
+* Updated version reference to express-msteams-host
+
+## [*2.5.0-preview*] - <*2018-07-28*>
 
 ### Added
 

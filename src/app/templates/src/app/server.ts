@@ -3,10 +3,12 @@ import * as http from 'http';
 import * as path from 'path';
 import * as morgan from 'morgan';
 import { MsTeamsApiRouter, MsTeamsPageRouter } from 'express-msteams-host';
-import * as allComponents from './TeamsAppsComponents';
 
 // Initialize dotenv, to use .env file settings if existing
 require('dotenv').config();
+
+// The import of components has to be done AFTER the dotenv config
+import * as allComponents from './TeamsAppsComponents';
 
 // Create the Express webserver
 const express = Express();
