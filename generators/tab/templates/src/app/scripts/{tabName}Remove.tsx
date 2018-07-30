@@ -35,7 +35,6 @@ export class <%=tabName%>Remove  extends TeamsBaseComponent<I<%=tabName%>RemoveP
         if (this.inTeams()) {
             microsoftTeams.initialize();
         } else {
-            
         }
     }
 
@@ -54,7 +53,7 @@ export class <%=tabName%>Remove  extends TeamsBaseComponent<I<%=tabName%>RemoveP
                         header: { ...sizes.title, ...weights.semibold },
                         section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
                         input: {},
-                    }
+                    };
 
                     return (
                         <Surface>

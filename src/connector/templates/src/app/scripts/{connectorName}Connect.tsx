@@ -58,9 +58,7 @@ export class <%=connectorName%>Connect extends TeamsBaseComponent<I<%=connectorN
 
         if (this.inTeams()) {
             microsoftTeams.initialize();
-
         } else {
-
         }
     }
 
@@ -83,8 +81,8 @@ export class <%=connectorName%>Connect extends TeamsBaseComponent<I<%=connectorN
                     const colors: IDropdownItemProps[] = availableColors.map(color => {
                         return {
                             text: color.title,
-                            onClick: () => { this.setState({ color: color }) }
-                        }
+                            onClick: () => { this.setState({ color: color }); }
+                        };
                     });
 
                     return (

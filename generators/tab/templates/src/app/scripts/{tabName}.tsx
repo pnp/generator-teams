@@ -31,7 +31,7 @@ export interface I<%=tabName%>Props extends ITeamsBaseComponentProps {
  * Implementation of the <%= tabTitle %> content page
  */
 export class <%=tabName%> extends TeamsBaseComponent<I<%=tabName%>Props, I<%=tabName%>State> {
- 
+
     public componentWillMount() {
         this.updateTheme(this.getQueryVariable('theme'));
         this.setState({
@@ -41,7 +41,7 @@ export class <%=tabName%> extends TeamsBaseComponent<I<%=tabName%>Props, I<%=tab
         if (this.inTeams()) {
             microsoftTeams.initialize();
             microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
-            microsoftTeams.getContext(context => {
+            microsoftTeams.getContext((context) => {
                 this.setState({
                     entityId: context.entityId
                 });
@@ -53,7 +53,7 @@ export class <%=tabName%> extends TeamsBaseComponent<I<%=tabName%>Props, I<%=tab
         }
     }
 
-    /** 
+    /**
      * The render() method to create the UI of the tab
      */
     public render() {
@@ -71,7 +71,7 @@ export class <%=tabName%> extends TeamsBaseComponent<I<%=tabName%>Props, I<%=tab
                         header: { ...sizes.title, ...weights.semibold },
                         section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
                         footer: { ...sizes.xsmall }
-                    }
+                    };
 
                     return (
                         <Surface>

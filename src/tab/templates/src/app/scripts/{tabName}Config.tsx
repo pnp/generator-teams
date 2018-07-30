@@ -45,7 +45,7 @@ export class <%=tabName%>Config  extends TeamsBaseComponent<I<%=tabName%>ConfigP
 
             microsoftTeams.settings.registerOnSaveHandler((saveEvent: microsoftTeams.settings.SaveEvent) => {
                 // Calculate host dynamically to enable local debugging
-                let host = "https://" + window.location.host;
+                const host = "https://" + window.location.host;
                 microsoftTeams.settings.setSettings({
                     contentUrl: host + "/<%=tabName%>.html?data=",
                     suggestedDisplayName: '<%=tabTitle%>',
@@ -54,9 +54,7 @@ export class <%=tabName%>Config  extends TeamsBaseComponent<I<%=tabName%>ConfigP
                 });
                 saveEvent.notifySuccess();
             });
-
         } else {
-
         }
     }
 
@@ -75,7 +73,7 @@ export class <%=tabName%>Config  extends TeamsBaseComponent<I<%=tabName%>ConfigP
                         header: { ...sizes.title, ...weights.semibold },
                         section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
                         input: {},
-                    }
+                    };
 
                     return (
                         <Surface>

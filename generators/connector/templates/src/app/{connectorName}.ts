@@ -45,7 +45,7 @@ export class <%=connectorName%> implements IConnector {
         }
     }
 
-    public Ping(): Promise <void>[] {
+    public Ping(): Array<Promise <void>> {
         // clean up connectors marked to be deleted
         try {
             this.connectors.push('/connectors',
@@ -59,28 +59,28 @@ export class <%=connectorName%> implements IConnector {
             }
             throw error;
         }
-    
+
         // send pings to all subscribers
         return (<I<%=connectorName%>Data[]>this.connectors.getData('/connectors')).map((connector, index) => {
             return new Promise<void>((resolve, reject) => {
-                let card = new teamBuilder.O365ConnectorCard();
+                const card = new teamBuilder.O365ConnectorCard();
                 card.title('Sample connector');
                 card.text(`This is a sample Office 365 Connector`);
 
                 // set the theme to the user configured theme color
                 card.themeColor(connector.color); 
 
-                let section = new teamBuilder.O365ConnectorCardSection();
+                const section = new teamBuilder.O365ConnectorCardSection();
                 section.activityTitle('Ping');
                 section.activityText(`This is just a sample ping`);
 
-                let fact = new teamBuilder.O365ConnectorCardFact();
+                const fact = new teamBuilder.O365ConnectorCardFact();
                 fact.name('Created by');
                 fact.value(connector.user);
                 section.facts([fact]);
                 card.sections([section]);
 
-                let action = new teamBuilder.O365ConnectorCardViewAction();
+                const action = new teamBuilder.O365ConnectorCardViewAction();
                 action.name('Yo Teams');
                 action.target('http://aka.ms/yoteams');
                 card.potentialAction([action]);
@@ -97,13 +97,13 @@ export class <%=connectorName%> implements IConnector {
                         reject(error)
                     } else {
                         // 410 - the user has removed the connector
-                        if (response.statusCode == 410) {
+                        if (response.statusCode === 410) {
                             this.connectors.push(`/connectors[${index}]/existing`, false);
                         }
                         resolve();
                     }
                 })
-            })
-        })
+            });
+        });
     }
 }

@@ -62,7 +62,7 @@ export class Yotilities {
             ts.createLiteral(literal));
         
         if (comment !== undefined) {
-            const cmt = ts.addSyntheticLeadingComment(exp, ts.SyntaxKind.SingleLineCommentTrivia, comment);
+            const cmt = ts.addSyntheticLeadingComment(exp, ts.SyntaxKind.SingleLineCommentTrivia, ` ${comment}`);
         }
         const update = ts.updateSourceFileNode(src, [
             ...src.statements,

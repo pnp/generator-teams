@@ -1,11 +1,10 @@
-// Copyright (c) Wictor Wilén. All rights reserved. 
+// Copyright (c) Wictor Wilén. All rights reserved.
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
 import * as builder from 'botbuilder';
 import * as teamBuilder from 'botbuilder-teams';
 import { BotDeclaration, IBot } from 'express-msteams-host';
-
 
 /**
  * Implementation for <%= botTitle %>
@@ -29,16 +28,16 @@ export class <%= botName %> implements IBot {
 
         // Install sendTyping as middleware
         this.universalBot.use({
-            botbuilder: function(session, next) {
+            botbuilder: (session, next) => {
                 session.sendTyping();
                 next();
             }
         });
-		
+
         // Add dialogs here
         this.universalBot.dialog('/', this.defaultDialog);
         this.universalBot.dialog('/help', this.helpDialog);
- 
+
         // Control messages
         this.universalBot.on('conversationUpdate', this.convUpdateHandler);
 
@@ -92,7 +91,7 @@ export class <%= botName %> implements IBot {
         this.Connector.onSettingsUpdate(
             (event: builder.IEvent, query: teamBuilder.ComposeExtensionQuery, callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
                 // take care of the setting returned from the dialog, with the value stored in state
-                let setting = query.state;
+                const setting = query.state;
                 callback(<any>null, <any>null, 200);
             }
         )
@@ -105,14 +104,14 @@ export class <%= botName %> implements IBot {
      * @param session 
      */
     private defaultDialog(session: builder.Session) {
-        let text = <%= botName %>.extractTextFromMessage(session.message).toLowerCase();
+        const text = <%= botName %>.extractTextFromMessage(session.message).toLowerCase();
         if (text.startsWith('hello')) {
             session.send('Oh, hello to you as well!');
             session.endDialog();
             return;
         } else if (text.startsWith('help')) {
             session.beginDialog('/help');
-            return
+            return;
         }
         session.endDialog('I\'m terribly sorry, but my master hasn\'t trained me to do anything yet...');    
     }
@@ -125,7 +124,7 @@ export class <%= botName %> implements IBot {
         session.send('I\'m just a friendly but rather stupid bot, and right now I don\'t have any valuable help for you!');
         session.endDialog();
     }
-	
+
     /**
      * This is an example of a conversationUpdate event handler
      * @param activity 
@@ -143,7 +142,7 @@ export class <%= botName %> implements IBot {
         if (message.entities) {
             message.entities.forEach((ent: any) => {
                 s = s.replace(ent.text, '');
-            })            
+            })
         }
         return s.trim();
     }

@@ -9,12 +9,12 @@ import * as allComponents from './TeamsAppsComponents';
 require('dotenv').config();
 
 // Create the Express webserver
-let express = Express();
-let port = process.env.port || process.env.PORT || 3007;
+const express = Express();
+const port = process.env.port || process.env.PORT || 3007;
 
 // Inject the raw request body onto the request object
 express.use(Express.json({
-    verify: (req, res, buf: Buffer, encoding: string):void => {
+    verify: (req, res, buf: Buffer, encoding: string): void => {
         (<any>req).rawBody = buf.toString();
     }
 }));
@@ -31,7 +31,6 @@ express.use(morgan('tiny'));
 express.use('/scripts', Express.static(path.join(__dirname, 'web/scripts')));
 express.use('/assets', Express.static(path.join(__dirname, 'web/assets')));
 
-
 // routing for bots, connectors and incoming web hooks - based on the decorators
 // For more information see: TODO
 express.use(MsTeamsApiRouter(allComponents));
@@ -43,7 +42,7 @@ express.use(MsTeamsPageRouter({
 }));
 
 // Fallback
-express.use(function (req: any, res: any, next: any) {
+express.use( (req: any, res: any, next: any) => {
     res.removeHeader("Content-Security-Policy")
     res.removeHeader("X-Frame-Options"); // IE11
     return next();
@@ -64,4 +63,4 @@ http.createServer(express).listen(port, (err: any) => {
     }
     console.log(`Server running on ${port}`);
 
-})
+});
