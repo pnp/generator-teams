@@ -20,23 +20,24 @@ This generator Generates a Microsoft Teams App that can be used to add Tabs, Bot
 
 > **Important:** If this is the first time you're using Yeoman or installing a Yeoman generator, first install [Git](https://git-scm.com/download) and [Node.js](https://nodejs.org). For developers on Mac, we recommend using [Node Version Manager](https://github.com/creationix/nvm) to install Node.js with the right permissions. When the installation completes, restart your console (or if you are using Windows, restart your machine) to ensure you use the updated system environment variables.
 
-Install `yo` (Yeoman) and `generator-teams` globally using NPM.
+### Prerequisites
+
+Install `yo` (Yeoman), `gulp`, `gulp-cli` and `typescript` globally using NPM.
 
 ``` Shell
-npm install yo generator-teams --global
+npm install yo gulp gulp-cli typescript --global
+```
+
+### Released version
+Install `generator-teams` globally using NPM.
+
+```Shell
+npm install generator-teams --global
 ```
 
 ### Preview versions
 
 Preview versions of the generator will be published with the **preview** tag and can be installed using the following command:
-
-``` Shell
-npm install yo --global
-```
-
-#### Install the preview generator
-
-To install the preview version of the Teams generator, use the `preview` tag:
 
 ``` Shell
 npm install generator-teams@preview --global
