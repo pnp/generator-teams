@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*]
+
+### Fixes
+
+* Fixed an issue with connector template and express-msteams-host incompatibility
+* Removed .ts extensions from AST generated imports
+
+### Changed
+
+* Upgraded npm packages
+
 ## [*2.5.0-preview2*] - <*2018-07-30*>
 
 ### Fixes

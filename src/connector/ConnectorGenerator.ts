@@ -132,7 +132,7 @@ export class ConnectorGenerator extends Generator {
 
             Yotilities.insertTsExportDeclaration(
                 "src/app/TeamsAppsComponents.ts",
-                `./${this.options.connectorName}.ts`,
+                `./${this.options.connectorName}`,
                 `Automatically added for the ${this.options.connectorName} connector`,
                 this.fs
             );

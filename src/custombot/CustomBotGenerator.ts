@@ -61,7 +61,7 @@ export class CustomBotGenerator extends Generator {
 
             Yotilities.insertTsExportDeclaration(
                 "src/app/TeamsAppsComponents.ts",
-                `./${this.options.customBotName}.ts`,
+                `./${this.options.customBotName}`,
                 `Automatically added for the ${this.options.customBotName} outgoing webhook`,
                 this.fs
             );

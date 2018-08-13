@@ -189,7 +189,7 @@ export class BotGenerator extends Generator {
 
             Yotilities.insertTsExportDeclaration(
                 "src/app/TeamsAppsComponents.ts",
-                `./${this.options.botName}.ts`,
+                `./${this.options.botName}`,
                 `Automatically added for the ${this.options.botName} bot`,
                 this.fs
             );

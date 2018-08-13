@@ -1,5 +1,6 @@
 import * as request from 'request';
 import * as teamBuilder from 'botbuilder-teams';
+import { Request } from "express";
 import { ConnectorDeclaration, IConnector } from 'express-msteams-host';
 const JsonDB = require('node-json-db');
 
@@ -32,15 +33,15 @@ export class <%=connectorName%> implements IConnector {
         this.connectors = new JsonDB('connectors', true, false);
     }
 
-    public Connect(body: any) {
-        if (body.state === 'myAppsState') {
+    public Connect(req: Request) {
+        if (req.body.state === 'myAppsState') {
             this.connectors.push('/connectors[]', {
-                webhookUrl: body.webhookUrl,
-                user: body.user,
-                appType: body.appType,
-                groupName: body.groupName,
+                webhookUrl: req.body.webhookUrl,
+                user: req.body.user,
+                appType: req.body.appType,
+                groupName: req.body.groupName,
                 existing: true,
-                color: body.color
+                color: req.body.color
             });
         }
     }

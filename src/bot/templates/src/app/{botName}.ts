@@ -1,7 +1,3 @@
-// Copyright (c) Wictor Wilén. All rights reserved.
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT license.
-
 import * as builder from 'botbuilder';
 import * as teamBuilder from 'botbuilder-teams';
 import { BotDeclaration, IBot } from 'express-msteams-host';
