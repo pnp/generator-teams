@@ -3,6 +3,12 @@ import * as http from 'http';
 import * as path from 'path';
 import * as morgan from 'morgan';
 import { MsTeamsApiRouter, MsTeamsPageRouter } from 'express-msteams-host';
+import * as debug from "debug";
+
+// Initialize debug logging module
+const log = debug("msteams");
+
+log(`Initializing Microsoft Teams Express hosted App...`);
 
 // Initialize dotenv, to use .env file settings if existing
 require('dotenv').config();
@@ -63,6 +69,5 @@ http.createServer(express).listen(port, (err: any) => {
     if (err) {
         return console.error(err);
     }
-    console.log(`Server running on ${port}`);
-
+    log(`Server running on ${port}`);
 });

@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [*Unreleased*]
+## [*2.5.0-preview4*] - <*2018-08-13*>
 
 ### Fixes
 
@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 * Upgraded npm packages
+
+### Added
+
+* Added the debug module, instead of using console logging in the generated solution
 
 ## [*2.5.0-preview2*] - <*2018-07-30*>
 

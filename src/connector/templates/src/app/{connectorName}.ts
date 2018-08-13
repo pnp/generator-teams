@@ -46,7 +46,7 @@ export class <%=connectorName%> implements IConnector {
         }
     }
 
-    public Ping(): Array<Promise <void>> {
+    public Ping(req: Request): Array<Promise <void>> {
         // clean up connectors marked to be deleted
         try {
             this.connectors.push('/connectors',

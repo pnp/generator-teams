@@ -1,6 +1,10 @@
 import * as builder from 'botbuilder';
 import * as teamBuilder from 'botbuilder-teams';
 import { BotDeclaration, IBot } from 'express-msteams-host';
+import * as debug from "debug";
+
+// Initialize debug logging module
+const log = debug("msteams");
 
 /**
  * Implementation for <%= botTitle %>
@@ -13,7 +17,6 @@ export class <%= botName %> implements IBot {
     public readonly Connector: teamBuilder.TeamsChatConnector;
     private readonly universalBot: builder.UniversalBot;
     private inMemoryStorage: builder.IBotStorage;
-
 
     /**
      * The constructor
@@ -40,61 +43,61 @@ export class <%= botName %> implements IBot {
         // Control messages
         this.universalBot.on('conversationUpdate', this.convUpdateHandler);
 
-<% if(messageExtensionType == 'new' || messageExtensionType == 'existing') { %>
-        // Message Extension
-         this.Connector.onQuery('<%=messageExtensionName%>',
-             (event: builder.IEvent, query: teamBuilder.ComposeExtensionQuery, callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
-                if (query.parameters && query.parameters[0] && query.parameters[0].name === 'initialRun') {
-                    // implement an MRU, kind of thing
-                    let firstResponse = teamBuilder.ComposeExtensionResponse.result('list').attachments([
-                        new builder.ThumbnailCard()
-                            .title('Test')
-                            .text('Test')
-                            .images([new builder.CardImage().url('<%=host%>/assets/icon.png')])
-                            .toAttachment()
-                    ]).toResponse();
-                    callback(<any>null, firstResponse, 200);
-                }
-                else {
-                    // Return result response
+        <% if (messageExtensionType == 'new' || messageExtensionType == 'existing') { %>
+            // Message Extension
+            this.Connector.onQuery('<%=messageExtensionName%>',
+                (event: builder.IEvent, query: teamBuilder.ComposeExtensionQuery, callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
+                    if (query.parameters && query.parameters[0] && query.parameters[0].name === 'initialRun') {
+                        // implement an MRU, kind of thing
+                        let firstResponse = teamBuilder.ComposeExtensionResponse.result('list').attachments([
+                            new builder.ThumbnailCard()
+                                .title('Test')
+                                .text('Test')
+                                .images([new builder.CardImage().url('<%=host%>/assets/icon.png')])
+                                .toAttachment()
+                        ]).toResponse();
+                        callback(<any>null, firstResponse, 200);
+                    }
+                    else {
+                        // Return result response
 
-                    let response = teamBuilder.ComposeExtensionResponse.result('list').attachments([
-                        new builder.ThumbnailCard()
-                            .title(`Test`)
-                            .text('test')
-                            .images([new builder.CardImage().url('<%=host%>/assets/icon.png')])
-                            .toAttachment()
-                    ]).toResponse();
-                    callback(<any>null, response, 200);
-                }
-            });
-        // this is used when canUpdateConfiguration is set to true 
-        this.Connector.onQuerySettingsUrl(
-            (event: builder.IEvent, query: teamBuilder.ComposeExtensionQuery, callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
-                callback(<any>null, {
-                    composeExtension: {
-                        type: "config",
-                        suggestedActions: {
-                          actions: [
-                            {
-                              type: "openApp",
-                              title: "<%=messageExtensionTitle%> Configuration",
-                              value: '<%= host %>/<%= messageExtensionName %>Config.html'
+                        let response = teamBuilder.ComposeExtensionResponse.result('list').attachments([
+                            new builder.ThumbnailCard()
+                                .title(`Test`)
+                                .text('test')
+                                .images([new builder.CardImage().url('<%=host%>/assets/icon.png')])
+                                .toAttachment()
+                        ]).toResponse();
+                        callback(<any>null, response, 200);
+                    }
+                });
+            // this is used when canUpdateConfiguration is set to true 
+            this.Connector.onQuerySettingsUrl(
+                (event: builder.IEvent, query: teamBuilder.ComposeExtensionQuery, callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
+                    callback(<any>null, {
+                        composeExtension: {
+                            type: "config",
+                            suggestedActions: {
+                                actions: [
+                                    {
+                                        type: "openApp",
+                                        title: "<%=messageExtensionTitle%> Configuration",
+                                        value: '<%= host %>/<%= messageExtensionName %>Config.html'
+                                    }
+                                ]
                             }
-                          ]
                         }
-                      }
-                }, 200);
-            }
-        )
-        this.Connector.onSettingsUpdate(
-            (event: builder.IEvent, query: teamBuilder.ComposeExtensionQuery, callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
-                // take care of the setting returned from the dialog, with the value stored in state
-                const setting = query.state;
-                callback(<any>null, <any>null, 200);
-            }
-        )
-<% } %>
+                    }, 200);
+                }
+            )
+            this.Connector.onSettingsUpdate(
+                (event: builder.IEvent, query: teamBuilder.ComposeExtensionQuery, callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
+                    // take care of the setting returned from the dialog, with the value stored in state
+                    const setting = query.state;
+                    callback(<any>null, <any>null, 200);
+                }
+            )
+                <% } %>
 
    }
 
@@ -112,9 +115,9 @@ export class <%= botName %> implements IBot {
             session.beginDialog('/help');
             return;
         }
-        session.endDialog('I\'m terribly sorry, but my master hasn\'t trained me to do anything yet...');    
+        session.endDialog('I\'m terribly sorry, but my master hasn\'t trained me to do anything yet...');
     }
-    
+
     /**
      * This is the help dialog of the bot
      * @param session 
@@ -129,7 +132,7 @@ export class <%= botName %> implements IBot {
      * @param activity 
      */
     private convUpdateHandler(activity: any) {
-        console.log("Conversation update")
+        log("Conversation update")
     }
 
     /**
