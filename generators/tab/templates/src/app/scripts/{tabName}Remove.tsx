@@ -11,7 +11,8 @@ import {
     Surface
 } from 'msteams-ui-components-react';
 import { render } from 'react-dom';
-import { TeamsBaseComponent, ITeamsBaseComponentProps, ITeamsBaseComponentState } from './TeamsBaseComponent'
+import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
+import * as microsoftTeams from '@microsoft/teams-js';
 
 export interface I<%=tabName%>RemoveState extends ITeamsBaseComponentState {
     value: string;
@@ -34,7 +35,6 @@ export class <%=tabName%>Remove  extends TeamsBaseComponent<I<%=tabName%>RemoveP
         if (this.inTeams()) {
             microsoftTeams.initialize();
         } else {
-            
         }
     }
 
@@ -53,7 +53,7 @@ export class <%=tabName%>Remove  extends TeamsBaseComponent<I<%=tabName%>RemoveP
                         header: { ...sizes.title, ...weights.semibold },
                         section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
                         input: {},
-                    }
+                    };
 
                     return (
                         <Surface>

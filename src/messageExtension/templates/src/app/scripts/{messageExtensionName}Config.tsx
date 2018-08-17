@@ -11,7 +11,8 @@ import {
     Checkbox
 } from 'msteams-ui-components-react';
 import { render } from 'react-dom';
-import { TeamsBaseComponent, ITeamsBaseComponentProps, ITeamsBaseComponentState } from './TeamsBaseComponent'
+import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
+import * as microsoftTeams from '@microsoft/teams-js';
 
 /**
  * State for the <%=messageExtensionName%>Config React component

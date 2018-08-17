@@ -37,6 +37,9 @@ export class CustomBotGenerator extends Generator {
             ).then((answers: any) => {
                 this.options.customBotTitle = answers.title;
                 this.options.customBotName = lodash.camelCase(answers.title);
+                if (!this.options.customBotName.endsWith('OutgoingWebhook')) {
+                    this.options.customBotName = this.options.customBotName + 'OutgoingWebhook';
+                }
             });
         }
     }
@@ -55,6 +58,13 @@ export class CustomBotGenerator extends Generator {
                     Yotilities.fixFileNames(t, this.options),
                     this.options);
             });
+
+            Yotilities.insertTsExportDeclaration(
+                "src/app/TeamsAppsComponents.ts",
+                `./${this.options.customBotName}`,
+                `Automatically added for the ${this.options.customBotName} outgoing webhook`,
+                this.fs
+            );
         }
     }
 }

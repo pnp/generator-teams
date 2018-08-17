@@ -1,38 +1,46 @@
 # generator-teams
 
+[![npm version](https://badge.fury.io/js/generator-teams.svg)](https://badge.fury.io/js/generator-teams)
+
 A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) Apps.
 
-This generator Generates a Microsoft Teams App that can be used to add Tabs, Bots, Connectors, Compose Extensions and more to Microsoft Teams based on Node.js and TypeScript.
+ | @master | @preview |
+ :--------:|:---------:
+ [![Build Status](https://travis-ci.org/OfficeDev/generator-teams.svg?branch=master)](https://travis-ci.org/OfficeDev/generator-teams)|[![Build Status](https://travis-ci.org/OfficeDev/generator-teams.svg?branch=preview)](https://travis-ci.org/OfficeDev/generator-teams)
 
-[![npmjs](https://nodei.co/npm/generator-teams.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/generator-teams)
+This generator Generates a Microsoft Teams App that can be used to add Tabs, Bots, Connectors, Compose Extensions and more to Microsoft Teams based on Node.js and TypeScript.
 
 > **Note:** The generator has been renamed from `generator-teams-tab` to `generator-teams`.
 > Old package will be marked as deprecated.
 
 ## yo teams Demo
+
 ![Demo](docs/assets/demo.gif)
 
 ## Install
 
-> **Important:** If this is the first time you're using Yeoman or installing a Yeoman generator, first install [Git](https://git-scm.com/download) and [Node.js](https://nodejs.org). For developers on Mac, we recommend using [Node Version Manager](https://github.com/creationix/nvm) to install Node.js with the right permissions. When the installation completes, restart your console (or if you are using Windows, restart your machine) to ensure you use the updated system environment variables.
+> **Important:** If this is the first time you're using Yeoman or installing a Yeoman generator, first install [Node.js](https://nodejs.org). For developers on Mac, we recommend using [Node Version Manager](https://github.com/creationix/nvm) to install Node.js with the right permissions. When the installation completes, restart your console (or if you are using Windows, restart your machine) to ensure you use the updated system environment variables.
 
-Install `yo` (Yeoman) and `generator-teams` globally using NPM.
+### Prerequisites
+
+Install `yo` (Yeoman), `gulp-cli` (Gulp global command line interface) and `typescript` (Typescript compiler) globally using NPM.
 
 ``` Shell
-npm install yo generator-teams --global
+npm install yo gulp-cli typescript --global
+```
+
+
+### Released and stable version
+
+Install `generator-teams` globally using NPM.
+
+```Shell
+npm install generator-teams --global
 ```
 
 ### Preview versions
 
 Preview versions of the generator will be published with the **preview** tag and can be installed using the following command:
-
-``` Shell
-npm install yo --global
-```
-
-#### Install the preview generator
-
-To install the preview version of the Teams generator, use the `preview` tag:
 
 ``` Shell
 npm install generator-teams@preview --global

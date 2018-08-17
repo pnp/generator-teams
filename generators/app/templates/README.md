@@ -11,7 +11,7 @@ Head on over to [official documentation](https://msdn.microsoft.com/en-us/micros
 ## Building the app
 
 ``` bash
-npm i -g gulp
+npm i -g gulp gulp-cli
 gulp build
 ```
 
@@ -76,3 +76,13 @@ This will automatically deploy your files to Azure, download the npm pacakges, b
 12. Wait until the deployment is completed and navigate to <%= host %>/privacy.html to test that the web application is running
 13. Done
 14. Repeat step 11 for every commit you do and want to deploy
+
+## Logging
+
+To enable logging for the solution you need to add `msteams` to the `DEBUG` environment variable. See the [debug package](https://www.npmjs.com/package/debug) for more information.
+
+Example for Windows command line:
+
+> SET DEBUG=msteams
+
+If you are using Microsoft Azure to host your Microsoft Teams app, then you can add `DEBUG` as an Application Setting with the value of `msteams`.

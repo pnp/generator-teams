@@ -12,19 +12,22 @@ import {
     Surface
 } from 'msteams-ui-components-react';
 import { render } from 'react-dom';
-import { TeamsBaseComponent, ITeamsBaseComponentProps, ITeamsBaseComponentState } from './TeamsBaseComponent'
+import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
+import * as microsoftTeams from '@microsoft/teams-js';
 
-export interface I<%=connectorName%>ConnectorConnectState extends ITeamsBaseComponentState {
+export interface I<%=connectorName%>ConnectState extends ITeamsBaseComponentState {
     color: IColor | undefined;
     submit: boolean;
 }
-export interface I<%=connectorName%>ConnectorConnectProps extends ITeamsBaseComponentProps {
+
+export interface I<%=connectorName%>ConnectProps extends ITeamsBaseComponentProps {
     webhookUrl: string;
     user: string;
     appType: string;
     groupName: string;
     state: string;
 }
+
 interface IColor {
     title: string;
     code: string;
@@ -44,7 +47,7 @@ const availableColors: IColor[] = [
 /**
  * Implementation of the <%=connectorName%> Connector connect page
  */
-export class <%=connectorName%>ConnectorConnect extends TeamsBaseComponent<I<%=connectorName%>ConnectorConnectProps, I<%=connectorName%>ConnectorConnectState> {
+export class <%=connectorName%>Connect extends TeamsBaseComponent<I<%=connectorName%>ConnectProps, I<%=connectorName%>ConnectState> {
 
     public componentWillMount() {
         this.updateTheme(this.getQueryVariable('theme'));
@@ -55,9 +58,7 @@ export class <%=connectorName%>ConnectorConnect extends TeamsBaseComponent<I<%=c
 
         if (this.inTeams()) {
             microsoftTeams.initialize();
-
         } else {
-
         }
     }
 
@@ -80,8 +81,8 @@ export class <%=connectorName%>ConnectorConnect extends TeamsBaseComponent<I<%=c
                     const colors: IDropdownItemProps[] = availableColors.map(color => {
                         return {
                             text: color.title,
-                            onClick: () => { this.setState({ color: color }) }
-                        }
+                            onClick: () => { this.setState({ color: color }); }
+                        };
                     });
 
                     return (

@@ -11,7 +11,8 @@ import {
     Surface
 } from 'msteams-ui-components-react';
 import { render } from 'react-dom';
-import { TeamsBaseComponent, ITeamsBaseComponentProps, ITeamsBaseComponentState } from './TeamsBaseComponent'
+import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
+import * as microsoftTeams from '@microsoft/teams-js';
 
 export interface I<%=tabName%>ConfigState extends ITeamsBaseComponentState {
     value: string;
@@ -44,18 +45,16 @@ export class <%=tabName%>Config  extends TeamsBaseComponent<I<%=tabName%>ConfigP
 
             microsoftTeams.settings.registerOnSaveHandler((saveEvent: microsoftTeams.settings.SaveEvent) => {
                 // Calculate host dynamically to enable local debugging
-                let host = "https://" + window.location.host;
+                const host = "https://" + window.location.host;
                 microsoftTeams.settings.setSettings({
-                    contentUrl: host + "/<%=tabName%>Tab.html?data=",
+                    contentUrl: host + "/<%=tabName%>.html?data=",
                     suggestedDisplayName: '<%=tabTitle%>',
                     removeUrl: host + "/<%=tabName%>Remove.html",
                     entityId: this.state.value
                 });
                 saveEvent.notifySuccess();
             });
-
         } else {
-            
         }
     }
 
@@ -74,7 +73,7 @@ export class <%=tabName%>Config  extends TeamsBaseComponent<I<%=tabName%>ConfigP
                         header: { ...sizes.title, ...weights.semibold },
                         section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
                         input: {},
-                    }
+                    };
 
                     return (
                         <Surface>
@@ -88,7 +87,7 @@ export class <%=tabName%>Config  extends TeamsBaseComponent<I<%=tabName%>ConfigP
                                             autoFocus
                                             style={styles.input}
                                             placeholder="Enter a value here"
-                                            label="Enter a vlue"
+                                            label="Enter a value"
                                             errorLabel={!this.state.value ? "This value is required" : undefined}
                                             value={this.state.value}
                                             onChange={(e) =>{

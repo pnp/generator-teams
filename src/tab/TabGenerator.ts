@@ -40,6 +40,9 @@ export class TabGenerator extends Generator {
             ).then((answers: any) => {
                 this.options.tabTitle = answers.tabTitle;
                 this.options.tabName = lodash.camelCase(this.options.tabTitle);
+                if (!this.options.tabName.endsWith('Tab')) {
+                    this.options.tabName = this.options.tabName + 'Tab';
+                }
                 this.options.reactComponents = true;
             });
         }
@@ -48,9 +51,9 @@ export class TabGenerator extends Generator {
         if (this.options.tab) {
             let templateFiles = [
                 "src/app/scripts/{tabName}Config.tsx",
-                "src/app/scripts/{tabName}Tab.tsx",
+                "src/app/scripts/{tabName}.tsx",
                 "src/app/scripts/{tabName}Remove.tsx",
-                "src/app/web/{tabName}Tab.html",
+                "src/app/web/{tabName}.html",
                 "src/app/web/{tabName}Remove.html",
                 "src/app/web/{tabName}Config.html",
             ];
@@ -64,7 +67,7 @@ export class TabGenerator extends Generator {
                     this.options);
             });
 
-            
+
 
             // Update manifest
             let manifestPath = "src/manifest/manifest.json";
@@ -81,25 +84,33 @@ export class TabGenerator extends Generator {
             this.fs.writeJSON(manifestPath, manifest);
 
             Yotilities.addAdditionalDeps([
-                ["msteams-ui-components-react", "^0.5.0"],
+                ["msteams-ui-components-react", "^0.7.3"],
                 ["react", "^16.1.0"],
-                ["@types/react", "16.0.38"],
+                ["@types/react", "16.4.7"],
                 ["react-dom", "^16.2.0"],
-                ["file-loader", "1.1.6"],
-                ["typestyle","1.5.1"]
+                ["file-loader", "1.1.11"],
+                ["typestyle", "1.5.1"]
             ], this.fs);
 
             // update client.ts
-            let clientTsPath = "src/app/scripts/client.ts";
-            let clientTs = this.fs.read(clientTsPath);
-            clientTs += `\n// Added by generator-teams`;
-            clientTs += `\nexport * from './${this.options.tabName}Config';`;
-            clientTs += `\nexport * from './${this.options.tabName}Tab';`;
-            clientTs += `\nexport * from './${this.options.tabName}Remove';`;
-            clientTs += `\n`;
-            this.fs.write(clientTsPath, clientTs);
-            
-
+            Yotilities.insertTsExportDeclaration(
+                "src/app/scripts/client.ts",
+                `./${this.options.tabName}`,
+                `Automatically added for the ${this.options.tabName} tab`,
+                this.fs
+            );
+            Yotilities.insertTsExportDeclaration(
+                "src/app/scripts/client.ts",
+                `./${this.options.tabName}Config`,
+                undefined,
+                this.fs
+            );
+            Yotilities.insertTsExportDeclaration(
+                "src/app/scripts/client.ts",
+                `./${this.options.tabName}Remove`,
+                undefined,
+                this.fs
+            );
         }
     }
 }

@@ -10,27 +10,28 @@ import {
     Surface
 } from 'msteams-ui-components-react';
 import { render } from 'react-dom';
-import { TeamsBaseComponent, ITeamsBaseComponentProps, ITeamsBaseComponentState } from './TeamsBaseComponent'
+import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
+import * as microsoftTeams from '@microsoft/teams-js';
 
 /**
  * State for the <%=tabName%>Tab React component
  */
-export interface I<%=tabName%>TabState extends ITeamsBaseComponentState {
+export interface I<%=tabName%>State extends ITeamsBaseComponentState {
     entityId?: string;
 }
 
 /**
  * Properties for the <%=tabName%>Tab React component
  */
-export interface I<%=tabName%>TabProps extends ITeamsBaseComponentProps {
+export interface I<%=tabName%>Props extends ITeamsBaseComponentProps {
 
 }
 
 /**
  * Implementation of the <%= tabTitle %> content page
  */
-export class <%=tabName%>Tab extends TeamsBaseComponent<I<%=tabName%>TabProps, I<%=tabName%>TabState> {
- 
+export class <%=tabName%> extends TeamsBaseComponent<I<%=tabName%>Props, I<%=tabName%>State> {
+
     public componentWillMount() {
         this.updateTheme(this.getQueryVariable('theme'));
         this.setState({
@@ -40,7 +41,7 @@ export class <%=tabName%>Tab extends TeamsBaseComponent<I<%=tabName%>TabProps, I
         if (this.inTeams()) {
             microsoftTeams.initialize();
             microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
-            microsoftTeams.getContext(context => {
+            microsoftTeams.getContext((context) => {
                 this.setState({
                     entityId: context.entityId
                 });
@@ -52,7 +53,7 @@ export class <%=tabName%>Tab extends TeamsBaseComponent<I<%=tabName%>TabProps, I
         }
     }
 
-    /** 
+    /**
      * The render() method to create the UI of the tab
      */
     public render() {
@@ -70,7 +71,7 @@ export class <%=tabName%>Tab extends TeamsBaseComponent<I<%=tabName%>TabProps, I
                         header: { ...sizes.title, ...weights.semibold },
                         section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
                         footer: { ...sizes.xsmall }
-                    }
+                    };
 
                     return (
                         <Surface>

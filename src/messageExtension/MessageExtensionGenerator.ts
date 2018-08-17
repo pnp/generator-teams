@@ -7,6 +7,7 @@ import * as lodash from 'lodash';
 import * as chalk from 'chalk';
 import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
+import * as ts from 'typescript';
 
 
 let yosay = require('yosay');
@@ -156,21 +157,20 @@ export class MessageExtensionGenerator extends Generator {
             });
 
             Yotilities.addAdditionalDeps([
-                ["msteams-ui-components-react", "^0.5.0"],
+                ["msteams-ui-components-react", "^0.7.3"],
                 ["react", "^16.1.0"],
-                ["@types/react", "16.0.38"],
+                ["@types/react", "16.4.7"],
                 ["react-dom", "^16.2.0"],
-                ["file-loader", "1.1.6"],
+                ["file-loader", "1.1.11"],
                 ["typestyle", "1.5.1"]
             ], this.fs);
 
-            let clientTsPath = "src/app/scripts/client.ts";
-            let clientTs = this.fs.read(clientTsPath);
-            clientTs += `\n// Added by generator-teams`;
-            clientTs += `\nexport * from './${this.options.messageExtensionName}Config';`;
-            clientTs += `\n`;
-            this.fs.write(clientTsPath, clientTs);
-
+            Yotilities.insertTsExportDeclaration(
+                "src/app/scripts/client.ts",
+                `./${this.options.messageExtensionName}Config`,
+                `Automatically added for the ${this.options.messageExtensionName} message extension`,
+                this.fs
+            );
         }
     }
 }
