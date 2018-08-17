@@ -5,42 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [*2.5.0-preview4*] - <*2018-08-13*>
-
-### Fixes
-
-* Fixed an issue with connector template and express-msteams-host incompatibility
-* Removed .ts extensions from AST generated imports
+## [*2.5.0*] - <*2018-08-17*>
 
 ### Changed
-
-* Upgraded npm packages
-
-### Added
-
-* Added the debug module, instead of using console logging in the generated solution
-
-## [*2.5.0-preview2*] - <*2018-07-30*>
-
-### Fixes
-
-* Fixed an issue where environment was loaded after components loaded
-* Fixed an issue where the bot state was deprecated to use an in-memory state storage
-
-### Changed
-
-* Updated version reference to express-msteams-host
-
-## [*2.5.0-preview*] - <*2018-07-28*>
-
-### Added
 
 * Added TypeScript decorators and interfaces for Connectors, Bots and Outgoing webhooks so that they dynamically can be loaded - defined in the [express-ms-teams-host](https://www.npmjs.com/package/express-msteams-host) package.
 * All server side TypeScript components are now exported via the `TeamsAppsComponents.ts` file
 * Added the `@microsoft/teams-js` package
-
-### Changed
-
 * Changed to AST for TypeScript generation
 * References for Bot Framework and Bot Framework Microsoft Teams extensions are always referenced
 * Ensured consistent file name ending (`Bot`, `Connector`, `Tab`, `OutgoingWebhook`)
@@ -51,6 +22,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Moved the React SPA control to separate package ([msteams-react-base-component](https://www.npmjs.com/package/msteams-react-base-component)) so that the control can be updated independently of the generator
 * Fixed the headers bug (#40)
 * Fixed the schema issue (#38)
+* Upgraded npm packages
+
+### Fixes
+
+* Fixed an issue with connector template and express-msteams-host incompatibility
+* Removed .ts extensions from AST generated imports
+* Fixed an issue where environment was loaded after components loaded
+* Fixed an issue where the bot state was deprecated to use an in-memory state storage
+
+### Added
+
+* Added the debug module, instead of using console logging in the generated solution
 
 ### Removed
 
