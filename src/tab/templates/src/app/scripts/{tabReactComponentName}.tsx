@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import {
     PrimaryButton,
     TeamsComponentContext,
@@ -8,32 +8,32 @@ import {
     PanelHeader,
     PanelFooter,
     Surface
-} from 'msteams-ui-components-react';
-import { render } from 'react-dom';
-import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
-import * as microsoftTeams from '@microsoft/teams-js';
+} from "msteams-ui-components-react";
+import { render } from "react-dom";
+import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from "msteams-react-base-component";
+import * as microsoftTeams from "@microsoft/teams-js";
 
 /**
- * State for the <%=tabName%>Tab React component
+ * State for the <%=tabReactComponentName%>Tab React component
  */
-export interface I<%=tabName%>State extends ITeamsBaseComponentState {
+export interface I<%=tabReactComponentName%>State extends ITeamsBaseComponentState {
     entityId?: string;
 }
 
 /**
- * Properties for the <%=tabName%>Tab React component
+ * Properties for the <%=tabReactComponentName%>Tab React component
  */
-export interface I<%=tabName%>Props extends ITeamsBaseComponentProps {
+export interface I<%=tabReactComponentName%>Props extends ITeamsBaseComponentProps {
 
 }
 
 /**
- * Implementation of the <%= tabTitle %> content page
+ * Implementation of the <%= tabReactComponentName %> content page
  */
-export class <%=tabName%> extends TeamsBaseComponent<I<%=tabName%>Props, I<%=tabName%>State> {
+export class <%=tabReactComponentName%> extends TeamsBaseComponent<I<%=tabReactComponentName%>Props, I<%=tabReactComponentName%>State> {
 
     public componentWillMount() {
-        this.updateTheme(this.getQueryVariable('theme'));
+        this.updateTheme(this.getQueryVariable("theme"));
         this.setState({
             fontSize: this.pageFontSize()
         });
@@ -68,9 +68,9 @@ export class <%=tabName%> extends TeamsBaseComponent<I<%=tabName%>Props, I<%=tab
                     const { rem, font } = context;
                     const { sizes, weights } = font;
                     const styles = {
+                        footer: { ...sizes.xsmall },
                         header: { ...sizes.title, ...weights.semibold },
-                        section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
-                        footer: { ...sizes.xsmall }
+                        section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) }
                     };
 
                     return (

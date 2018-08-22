@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import {
     PrimaryButton,
     TeamsComponentContext,
@@ -9,25 +9,25 @@ import {
     PanelFooter,
     Input,
     Surface
-} from 'msteams-ui-components-react';
-import { render } from 'react-dom';
-import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
-import * as microsoftTeams from '@microsoft/teams-js';
+} from "msteams-ui-components-react";
+import { render } from "react-dom";
+import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from "msteams-react-base-component";
+import * as microsoftTeams from "@microsoft/teams-js";
 
-export interface I<%=tabName%>RemoveState extends ITeamsBaseComponentState {
+export interface I<%=tabReactComponentName%>RemoveState extends ITeamsBaseComponentState {
     value: string;
 }
-export interface I<%=tabName%>RemoveProps extends ITeamsBaseComponentProps {
+export interface I<%=tabReactComponentName%>RemoveProps extends ITeamsBaseComponentProps {
 
 }
 
 /**
  * Implementation of <%= tabTitle %> remove page
  */
-export class <%=tabName%>Remove  extends TeamsBaseComponent<I<%=tabName%>RemoveProps, I<%=tabName%>RemoveState> {
+export class <%=tabReactComponentName%>Remove  extends TeamsBaseComponent<I<%=tabReactComponentName%>RemoveProps, I<%=tabReactComponentName%>RemoveState> {
 
     public componentWillMount() {
-        this.updateTheme(this.getQueryVariable('theme'));
+        this.updateTheme(this.getQueryVariable("theme"));
         this.setState({
             fontSize: this.pageFontSize()
         });
@@ -51,8 +51,8 @@ export class <%=tabName%>Remove  extends TeamsBaseComponent<I<%=tabName%>RemoveP
                     const { sizes, weights } = font;
                     const styles = {
                         header: { ...sizes.title, ...weights.semibold },
-                        section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
                         input: {},
+                        section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) }
                     };
 
                     return (
@@ -63,7 +63,9 @@ export class <%=tabName%>Remove  extends TeamsBaseComponent<I<%=tabName%>RemoveP
                                 </PanelHeader>
                                 <PanelBody>
                                     <div style={styles.section}>
-                                    You can just add stuff here if you want to clean up when removing the tab. For instance, if you have stored data in an external repository, you can delete or archive it here. If you don't need this remove page you can remove it.
+                                    You can just add stuff here if you want to clean up when removing the tab. For instance,
+                                    if you have stored data in an external repository, you can delete or archive it here.
+                                    If you don't need this remove page you can remove it.
                                     </div>
 
                                 </PanelBody>

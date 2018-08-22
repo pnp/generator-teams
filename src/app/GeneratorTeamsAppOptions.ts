@@ -24,6 +24,7 @@ export class GeneratorTeamsAppOptions {
     tab: boolean;
     tabTitle: string;
     tabName: string;
+    tabReactComponentName: string;
     reactComponents: boolean;
     websitePrefix: string;
     /* Bots */

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import {
     PrimaryButton,
     TeamsComponentContext,
@@ -9,26 +9,26 @@ import {
     PanelFooter,
     Input,
     Surface
-} from 'msteams-ui-components-react';
-import { render } from 'react-dom';
-import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
-import * as microsoftTeams from '@microsoft/teams-js';
+} from "msteams-ui-components-react";
+import { render } from "react-dom";
+import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from "msteams-react-base-component";
+import * as microsoftTeams from "@microsoft/teams-js";
 
-export interface I<%=tabName%>ConfigState extends ITeamsBaseComponentState {
+export interface I<%=tabReactComponentName%>ConfigState extends ITeamsBaseComponentState {
     value: string;
 }
 
-export interface I<%=tabName%>ConfigProps extends ITeamsBaseComponentProps {
+export interface I<%=tabReactComponentName%>ConfigProps extends ITeamsBaseComponentProps {
 
 }
 
 /**
  * Implementation of <%= tabTitle %> configuration page
  */
-export class <%=tabName%>Config  extends TeamsBaseComponent<I<%=tabName%>ConfigProps, I<%=tabName%>ConfigState> {
+export class <%=tabReactComponentName%>Config  extends TeamsBaseComponent<I<%=tabReactComponentName%>ConfigProps, I<%=tabReactComponentName%>ConfigState> {
 
     public componentWillMount() {
-        this.updateTheme(this.getQueryVariable('theme'));
+        this.updateTheme(this.getQueryVariable("theme"));
         this.setState({
             fontSize: this.pageFontSize()
         });
@@ -48,9 +48,9 @@ export class <%=tabName%>Config  extends TeamsBaseComponent<I<%=tabName%>ConfigP
                 const host = "https://" + window.location.host;
                 microsoftTeams.settings.setSettings({
                     contentUrl: host + "/<%=tabName%>.html?data=",
-                    suggestedDisplayName: '<%=tabTitle%>',
+                    entityId: this.state.value,
                     removeUrl: host + "/<%=tabName%>Remove.html",
-                    entityId: this.state.value
+                    suggestedDisplayName: "<%=tabTitle%>"
                 });
                 saveEvent.notifySuccess();
             });
@@ -71,8 +71,8 @@ export class <%=tabName%>Config  extends TeamsBaseComponent<I<%=tabName%>ConfigP
                     const { sizes, weights } = font;
                     const styles = {
                         header: { ...sizes.title, ...weights.semibold },
-                        section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
                         input: {},
+                        section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) }
                     };
 
                     return (
@@ -90,10 +90,10 @@ export class <%=tabName%>Config  extends TeamsBaseComponent<I<%=tabName%>ConfigP
                                             label="Enter a value"
                                             errorLabel={!this.state.value ? "This value is required" : undefined}
                                             value={this.state.value}
-                                            onChange={(e) =>{
+                                            onChange={(e) => {
                                                 this.setState({
                                                     value: e.target.value
-                                                })
+                                                });
                                             }}
                                             required />
                                     </div>
