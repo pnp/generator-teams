@@ -32,9 +32,11 @@ export class GeneratorTeamsAppOptions {
     staticTab: boolean;
     staticTabName: string;
     staticTabTitle: string;
+    staticTabClassName: string;
     botType: string = "";
     botTitle: string;
     botName: string;
+    botClassName: string;
     /* Outgoing webhook */
     customBot: boolean;
     customBotTitle: string;

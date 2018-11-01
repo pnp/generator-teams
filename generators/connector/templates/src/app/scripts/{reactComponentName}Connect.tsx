@@ -15,12 +15,12 @@ import { render } from 'react-dom';
 import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
 import * as microsoftTeams from '@microsoft/teams-js';
 
-export interface I<%=connectorName%>ConnectState extends ITeamsBaseComponentState {
+export interface I<%=reactComponentName%>ConnectState extends ITeamsBaseComponentState {
     color: IColor | undefined;
     submit: boolean;
 }
 
-export interface I<%=connectorName%>ConnectProps extends ITeamsBaseComponentProps {
+export interface I<%=reactComponentName%>ConnectProps extends ITeamsBaseComponentProps {
     webhookUrl: string;
     user: string;
     appType: string;
@@ -45,9 +45,9 @@ const availableColors: IColor[] = [
 ];
 
 /**
- * Implementation of the <%=connectorName%> Connector connect page
+ * Implementation of the <%=reactComponentName%> Connector connect page
  */
-export class <%=connectorName%>Connect extends TeamsBaseComponent<I<%=connectorName%>ConnectProps, I<%=connectorName%>ConnectState> {
+export class <%=reactComponentName%>Connect extends TeamsBaseComponent<I<%=reactComponentName%>ConnectProps, I<%=reactComponentName%>ConnectState> {
 
     public componentWillMount() {
         this.updateTheme(this.getQueryVariable('theme'));

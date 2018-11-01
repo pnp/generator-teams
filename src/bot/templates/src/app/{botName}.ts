@@ -1,32 +1,47 @@
-import * as builder from 'botbuilder';
-import * as teamBuilder from 'botbuilder-teams';
-import { BotDeclaration, IBot } from 'express-msteams-host';
+import * as builder from "botbuilder";
+import * as teamBuilder from "botbuilder-teams";
+import { BotDeclaration, IBot } from "express-msteams-host";
 import * as debug from "debug";
 
 // Initialize debug logging module
 const log = debug("msteams");
 
 /**
- * Implementation for <%= botTitle %>
+ * Implementation for <%= botClassName %>
  */
 @BotDeclaration(
-    '/api/messages',
+    "/api/messages",
     process.env.MICROSOFT_APP_ID,
     process.env.MICROSOFT_APP_PASSWORD)
-export class <%= botName %> implements IBot {
+export class <%= botClassName %> implements IBot {
+
+    /**
+     * Extracts text only from messages, removing all entity references
+     * @param message builder.IMessage
+     */
+    private static extractTextFromMessage(message: builder.IMessage): string {
+        let s = (message.text) ? message.text : "";
+        if (message.entities) {
+            message.entities.forEach((ent: any) => {
+                s = s.replace(ent.text, "");
+            });
+        }
+        return s.trim();
+    }
+
     public readonly Connector: teamBuilder.TeamsChatConnector;
     private readonly universalBot: builder.UniversalBot;
     private inMemoryStorage: builder.IBotStorage;
 
     /**
      * The constructor
-     * @param connector 
+     * @param connector
      */
     public constructor(connector: teamBuilder.TeamsChatConnector) {
         this.Connector = connector;
         this.inMemoryStorage = new builder.MemoryBotStorage();
         this.universalBot = new builder.UniversalBot(this.Connector).
-            set('storage', this.inMemoryStorage); // Use the in-memory storage for state
+            set("storage", this.inMemoryStorage); // Use the in-memory storage for state
 
         // Install sendTyping as middleware
         this.universalBot.use({
@@ -37,12 +52,11 @@ export class <%= botName %> implements IBot {
         });
 
         // Add dialogs here
-        this.universalBot.dialog('/', this.defaultDialog);
-        this.universalBot.dialog('/help', this.helpDialog);
+        this.universalBot.dialog("/", this.defaultDialog);
+        this.universalBot.dialog("/help", this.helpDialog);
 
         // Control messages
-        this.universalBot.on('conversationUpdate', this.convUpdateHandler);
-
+        this.universalBot.on("conversationUpdate", this.convUpdateHandler);
         <% if (messageExtensionType == 'new' || messageExtensionType == 'existing') { %>
             // Message Extension
             this.Connector.onQuery('<%=messageExtensionName%>',
@@ -60,7 +74,6 @@ export class <%= botName %> implements IBot {
                     }
                     else {
                         // Return result response
-
                         let response = teamBuilder.ComposeExtensionResponse.result('list').attachments([
                             new builder.ThumbnailCard()
                                 .title(`Test`)
@@ -90,62 +103,47 @@ export class <%= botName %> implements IBot {
                     }, 200);
                 }
             )
+
             this.Connector.onSettingsUpdate(
                 (event: builder.IEvent, query: teamBuilder.ComposeExtensionQuery, callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
                     // take care of the setting returned from the dialog, with the value stored in state
                     const setting = query.state;
                     callback(<any>null, <any>null, 200);
                 }
-            )
-                <% } %>
-
-   }
+            );
+        <% } %>}
 
     /**
      * This is the default dialog used by the bot
-     * @param session 
+     * @param session
      */
     private defaultDialog(session: builder.Session) {
-        const text = <%= botName %>.extractTextFromMessage(session.message).toLowerCase();
-        if (text.startsWith('hello')) {
-            session.send('Oh, hello to you as well!');
+        const text = <%= botClassName %>.extractTextFromMessage(session.message).toLowerCase();
+        if (text.startsWith("hello")) {
+            session.send("Oh, hello to you as well!");
             session.endDialog();
             return;
-        } else if (text.startsWith('help')) {
-            session.beginDialog('/help');
+        } else if (text.startsWith("help")) {
+            session.beginDialog("/help");
             return;
         }
-        session.endDialog('I\'m terribly sorry, but my master hasn\'t trained me to do anything yet...');
+        session.endDialog("I\'m terribly sorry, but my master hasn\'t trained me to do anything yet...");
     }
 
     /**
      * This is the help dialog of the bot
-     * @param session 
+     * @param session
      */
     private helpDialog(session: builder.Session) {
-        session.send('I\'m just a friendly but rather stupid bot, and right now I don\'t have any valuable help for you!');
+        session.send("I\'m just a friendly but rather stupid bot, and right now I don\'t have any valuable help for you!");
         session.endDialog();
     }
 
     /**
      * This is an example of a conversationUpdate event handler
-     * @param activity 
+     * @param activity
      */
     private convUpdateHandler(activity: any) {
-        log("Conversation update")
-    }
-
-    /**
-     * Extracts text only from messages, removing all entity references
-     * @param message builder.IMessage
-     */
-    private static extractTextFromMessage(message: builder.IMessage): string {
-        var s = (message.text) ? message.text : '';
-        if (message.entities) {
-            message.entities.forEach((ent: any) => {
-                s = s.replace(ent.text, '');
-            })
-        }
-        return s.trim();
+        log("Conversation update");
     }
 }
