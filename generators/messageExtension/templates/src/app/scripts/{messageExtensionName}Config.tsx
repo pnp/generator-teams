@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import {
     PrimaryButton,
     TeamsComponentContext,
@@ -9,32 +9,32 @@ import {
     PanelFooter,
     Surface,
     Checkbox
-} from 'msteams-ui-components-react';
-import { render } from 'react-dom';
-import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
-import * as microsoftTeams from '@microsoft/teams-js';
+} from "msteams-ui-components-react";
+import { render } from "react-dom";
+import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from "msteams-react-base-component";
+import * as microsoftTeams from "@microsoft/teams-js";
 
 /**
- * State for the <%=messageExtensionName%>Config React component
+ * State for the <%=messageExtensionClassName%>Config React component
  */
-export interface I<%=messageExtensionName%>ConfigState extends ITeamsBaseComponentState {
+export interface I<%=messageExtensionClassName%>ConfigState extends ITeamsBaseComponentState {
     onOrOff: boolean;
 }
 
 /**
- * Properties for the <%=messageExtensionName%>Config React component
+ * Properties for the <%=messageExtensionClassName%>Config React component
  */
-export interface I<%=messageExtensionName%>ConfigProps extends ITeamsBaseComponentProps {
+export interface I<%=messageExtensionClassName%>ConfigProps extends ITeamsBaseComponentProps {
 
 }
 
 /**
  * Implementation of the <%= messageExtensionTitle %> configuration page
  */
-export class <%=messageExtensionName%>Config extends TeamsBaseComponent<I<%=messageExtensionName%>ConfigProps, I<%=messageExtensionName%>ConfigState> {
- 
+export class <%=messageExtensionClassName%>Config extends TeamsBaseComponent<I<%=messageExtensionClassName%>ConfigProps, I<%=messageExtensionClassName%>ConfigState> {
+
     public componentWillMount() {
-        this.updateTheme(this.getQueryVariable('theme'));
+        this.updateTheme(this.getQueryVariable("theme"));
         this.setState({
             fontSize: this.pageFontSize()
         });
@@ -43,7 +43,7 @@ export class <%=messageExtensionName%>Config extends TeamsBaseComponent<I<%=mess
         microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
     }
 
-    /** 
+    /**
      * The render() method to create the UI of the tab
      */
     public render() {
@@ -58,10 +58,10 @@ export class <%=messageExtensionName%>Config extends TeamsBaseComponent<I<%=mess
                     const { rem, font } = context;
                     const { sizes, weights } = font;
                     const styles = {
+                        footer: { ...sizes.xsmall },
                         header: { ...sizes.title, ...weights.semibold },
-                        section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
-                        footer: { ...sizes.xsmall }
-                    }
+                        section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) }
+                    };
 
                     return (
                         <Surface>

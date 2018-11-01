@@ -41,6 +41,7 @@ export class GeneratorTeamsAppOptions {
     customBot: boolean;
     customBotTitle: string;
     customBotName: string;
+    customBotClassName: string;
     /* Connector */
     connector: boolean;
     connectorId: string;
@@ -55,6 +56,7 @@ export class GeneratorTeamsAppOptions {
     messageExtensionDescription: string;
     messageExtensionName: string;
     messageExtensionId: string;
+    messageExtensionClassName: string;
     /* manifest */
     existingManifest: any;
 }

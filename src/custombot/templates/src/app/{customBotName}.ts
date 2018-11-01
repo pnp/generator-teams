@@ -1,13 +1,13 @@
-import * as builder from 'botbuilder';
-import * as express from 'express';
-import * as crypto from 'crypto';
-import { OutgoingWebhookDeclaration, IOutgoingWebhook } from 'express-msteams-host';
+import * as builder from "botbuilder";
+import * as express from "express";
+import * as crypto from "crypto";
+import { OutgoingWebhookDeclaration, IOutgoingWebhook } from "express-msteams-host";
 
 /**
  * Implementation for <%= customBotTitle %>
  */
-@OutgoingWebhookDeclaration('/api/webhook')
-export class <%= customBotName %> implements IOutgoingWebhook {
+@OutgoingWebhookDeclaration("/api/webhook")
+export class <%= customBotClassName %> implements IOutgoingWebhook {
 
     /**
      * The constructor
@@ -23,18 +23,18 @@ export class <%= customBotName %> implements IOutgoingWebhook {
      */
     public requestHandler(req: express.Request, res: express.Response, next: express.NextFunction) {
         // parse the incoming message
-        const incoming = <builder.IMessage>req.body
+        const incoming = req.body as builder.IMessage;
 
         // create the response, any Teams compatible responses can be used
         const message = new builder.Message();
-    
+
         const securityToken = process.env.SECURITY_TOKEN;
         if (securityToken && securityToken.length > 0) {
             // There is a configured security token
-            const auth = req.headers['authorization'];
-            const msgBuf = Buffer.from((<any>req).rawBody, 'utf8');
+            const auth = req.headers.authorization;
+            const msgBuf = Buffer.from((req as any).rawBody, "utf8");
             const msgHash = "HMAC " + crypto.
-                createHmac('sha256', new Buffer(<string>securityToken, "base64")).
+                createHmac("sha256", new Buffer(securityToken as string, "base64")).
                 update(msgBuf).
                 digest("base64");
 
