@@ -47,6 +47,7 @@ export class GeneratorTeamsAppOptions {
     connectorType: string = '';
     connectorTitle: string;
     connectorName: string;
+    connectorComponentName: string;
     /* Message extensions */
     messageExtension: boolean;
     messageExtensionType: string = '';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import {
     PrimaryButton,
     TeamsComponentContext,
@@ -10,17 +10,17 @@ import {
     Dropdown,
     IDropdownItemProps,
     Surface
-} from 'msteams-ui-components-react';
-import { render } from 'react-dom';
-import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
-import * as microsoftTeams from '@microsoft/teams-js';
+} from "msteams-ui-components-react";
+import { render } from "react-dom";
+import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from "msteams-react-base-component";
+import * as microsoftTeams from "@microsoft/teams-js";
 
-export interface I<%=reactComponentName%>ConnectState extends ITeamsBaseComponentState {
+export interface I<%=connectorComponentName%>ConnectState extends ITeamsBaseComponentState {
     color: IColor | undefined;
     submit: boolean;
 }
 
-export interface I<%=reactComponentName%>ConnectProps extends ITeamsBaseComponentProps {
+export interface I<%=connectorComponentName%>ConnectProps extends ITeamsBaseComponentProps {
     webhookUrl: string;
     user: string;
     appType: string;
@@ -29,31 +29,31 @@ export interface I<%=reactComponentName%>ConnectProps extends ITeamsBaseComponen
 }
 
 interface IColor {
-    title: string;
     code: string;
+    title: string;
 }
 
 const availableColors: IColor[] = [
     {
-        title: 'Blue',
-        code: '#dce6ee'
+        code: "#dce6ee",
+        title: "Blue"
     },
     {
-        title: 'Orange',
-        code: '#ffc300'
+        code: "#ffc300",
+        title: "Orange"
     }
 ];
 
 /**
- * Implementation of the <%=reactComponentName%> Connector connect page
+ * Implementation of the <%=connectorComponentName%> Connector connect page
  */
-export class <%=reactComponentName%>Connect extends TeamsBaseComponent<I<%=reactComponentName%>ConnectProps, I<%=reactComponentName%>ConnectState> {
+export class <%=connectorComponentName%>Connect extends TeamsBaseComponent<I<%=connectorComponentName%>ConnectProps, I<%=connectorComponentName%>ConnectState> {
 
     public componentWillMount() {
-        this.updateTheme(this.getQueryVariable('theme'));
+        this.updateTheme(this.getQueryVariable("theme"));
         this.setState({
-            fontSize: this.pageFontSize(),
-            color: undefined
+            color: undefined,
+            fontSize: this.pageFontSize()
         });
 
         if (this.inTeams()) {
@@ -75,13 +75,14 @@ export class <%=reactComponentName%>Connect extends TeamsBaseComponent<I<%=react
                     const { sizes, weights } = font;
                     const styles = {
                         header: { ...sizes.title, ...weights.semibold },
-                        section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
                         input: {},
-                    }
-                    const colors: IDropdownItemProps[] = availableColors.map(color => {
+                        section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) }
+                    };
+
+                    const colors: IDropdownItemProps[] = availableColors.map((color) => {
                         return {
-                            text: color.title,
-                            onClick: () => { this.setState({ color: color }); }
+                            onClick: () => { this.setState({ color }); },
+                            text: color.title
                         };
                     });
 
@@ -100,16 +101,16 @@ export class <%=reactComponentName%>Connect extends TeamsBaseComponent<I<%=react
                                     }}>
 
                                         <div style={styles.section}>
-                                            <input type='hidden' name='webhookUrl' value={this.props.webhookUrl} />
-                                            <input type='hidden' name='user' value={this.props.user} />
-                                            <input type='hidden' name='appType' value={this.props.appType} />
-                                            <input type='hidden' name='groupName' value={this.props.groupName} />
-                                            <input type='hidden' name='state' value={this.props.state} />
-                                            <input type='hidden' name='color' value={this.state.color && this.state.color.code} />
+                                            <input type="hidden" name="webhookUrl" value={this.props.webhookUrl} />
+                                            <input type="hidden" name="user" value={this.props.user} />
+                                            <input type="hidden" name="appType" value={this.props.appType} />
+                                            <input type="hidden" name="groupName" value={this.props.groupName} />
+                                            <input type="hidden" name="state" value={this.props.state} />
+                                            <input type="hidden" name="color" value={this.state.color && this.state.color.code} />
                                             <Dropdown
-                                                label='Card color'
+                                                label="Card color"
                                                 items={colors}
-                                                mainButtonText={this.state.color ? this.state.color.title : 'Choose a color'}
+                                                mainButtonText={this.state.color ? this.state.color.title : "Choose a color"}
                                                 style={styles.input}
                                             >
                                             </Dropdown>

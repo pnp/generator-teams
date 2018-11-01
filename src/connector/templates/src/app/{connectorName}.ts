@@ -1,13 +1,14 @@
-import * as request from 'request';
-import * as teamBuilder from 'botbuilder-teams';
+import * as request from "request";
+import * as teamBuilder from "botbuilder-teams";
 import { Request } from "express";
-import { ConnectorDeclaration, IConnector } from 'express-msteams-host';
-const JsonDB = require('node-json-db');
+import { ConnectorDeclaration, IConnector } from "express-msteams-host";
+import JsonDB = require("node-json-db");
+
 
 /**
  * The connector data interface
  */
-interface I<%=connectorName%>Data {
+interface I<%=connectorComponentName%>Data {
     webhookUrl: string;
     user: string;
     appType: string;
@@ -17,31 +18,31 @@ interface I<%=connectorName%>Data {
 }
 
 /**
- * Implementation of the "<%=connectorName%>Connector" Office 365 Connector
+ * Implementation of the "<%=connectorComponentName%>Connector" Office 365 Connector
  */
 @ConnectorDeclaration(
-    '/api/connector/connect',
-    '/api/connector/ping',
-    'web/<%=connectorName%>Connect.ejs',
-    '/<%=connectorName%>Connected.html'
+    "/api/connector/connect",
+    "/api/connector/ping",
+    "web/<%=connectorComponentName%>Connect.ejs",
+    "/<%=connectorComponentName%>Connected.html"
 )
-export class <%=connectorName%> implements IConnector {
+export class <%=connectorComponentName%> implements IConnector {
     private connectors: any;
 
     public constructor() {
         // Instantiate the node-json-db database (connectors.json)
-        this.connectors = new JsonDB('connectors', true, false);
+        this.connectors = new JsonDB("connectors", true, false);
     }
 
     public Connect(req: Request) {
-        if (req.body.state === 'myAppsState') {
-            this.connectors.push('/connectors[]', {
-                webhookUrl: req.body.webhookUrl,
-                user: req.body.user,
+        if (req.body.state === "myAppsState") {
+            this.connectors.push("/connectors[]", {
                 appType: req.body.appType,
-                groupName: req.body.groupName,
+                color: req.body.color,
                 existing: true,
-                color: req.body.color
+                groupName: req.body.groupName,
+                user: req.body.user,
+                webhookUrl: req.body.webhookUrl
             });
         }
     }
@@ -49,12 +50,12 @@ export class <%=connectorName%> implements IConnector {
     public Ping(req: Request): Array<Promise <void>> {
         // clean up connectors marked to be deleted
         try {
-            this.connectors.push('/connectors',
-                (<I<%=connectorName%>Data[]>this.connectors.getData('/connectors')).filter((c => {
+            this.connectors.push("/connectors",
+                (this.connectors.getData("/connectors") as I<%=connectorComponentName%>Data[]).filter(((c) => {
                     return c.existing;
                 })));
         } catch (error) {
-            if (error.name && error.name == 'DataError') {
+            if (error.name && error.name === "DataError") {
                 // there's no registered connectors
                 return [];
             }
@@ -62,40 +63,40 @@ export class <%=connectorName%> implements IConnector {
         }
 
         // send pings to all subscribers
-        return (<I<%=connectorName%>Data[]>this.connectors.getData('/connectors')).map((connector, index) => {
+        return (this.connectors.getData("/connectors") as I<%=connectorComponentName%>Data[]).map((connector, index) => {
             return new Promise<void>((resolve, reject) => {
                 const card = new teamBuilder.O365ConnectorCard();
-                card.title('Sample connector');
+                card.title("Sample connector");
                 card.text(`This is a sample Office 365 Connector`);
 
                 // set the theme to the user configured theme color
-                card.themeColor(connector.color); 
+                card.themeColor(connector.color);
 
                 const section = new teamBuilder.O365ConnectorCardSection();
-                section.activityTitle('Ping');
+                section.activityTitle("Ping");
                 section.activityText(`This is just a sample ping`);
 
                 const fact = new teamBuilder.O365ConnectorCardFact();
-                fact.name('Created by');
+                fact.name("Created by");
                 fact.value(connector.user);
                 section.facts([fact]);
                 card.sections([section]);
 
                 const action = new teamBuilder.O365ConnectorCardViewAction();
-                action.name('Yo Teams');
-                action.target('http://aka.ms/yoteams');
+                action.name("Yo Teams");
+                action.target("http://aka.ms/yoteams");
                 card.potentialAction([action]);
 
                 request({
-                    method: 'POST',
-                    uri: decodeURI(connector.webhookUrl),
+                    body: JSON.stringify(card.toAttachment().content),
                     headers: {
-                        'content-type': 'application/json',
+                        "content-type": "application/json",
                     },
-                    body: JSON.stringify(card.toAttachment().content)
+                    method: "POST",
+                    uri: decodeURI(connector.webhookUrl)
                 }, (error: any, response: any, body: any) => {
                     if (error) {
-                        reject(error)
+                        reject(error);
                     } else {
                         // 410 - the user has removed the connector
                         if (response.statusCode === 410) {
@@ -103,8 +104,9 @@ export class <%=connectorName%> implements IConnector {
                         }
                         resolve();
                     }
-                })
+                });
             });
         });
     }
 }
+
