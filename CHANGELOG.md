@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*]
+
+### Changed
+
+* Compose Extensions are now refactored into it's own file
+* Disable non-tested and non-supported extensions when running the generator over an existing projects
+* Changed bot implementation to use `TeamsBot` class from `express-msteams-host` instead of using the `IBot` interface
+
+### Added
+
+* Added an option called `--no-telemetry` to opt-out of sending telemetry data when generating solutions
+* Support for adding additional Message Extensions to an already existing project
+
+### Fixes
+
+* Fixed the issue where the description of message extensions was miscalculated
+* Fixed an issue where message extension code was added when externally hosted
+
 ## [*2.5.0*] - <*2018-08-17*>
 
 ### Changed

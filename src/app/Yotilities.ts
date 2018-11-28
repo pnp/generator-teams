@@ -60,13 +60,38 @@ export class Yotilities {
             undefined,
             undefined,
             ts.createLiteral(literal));
-        
+
         if (comment !== undefined) {
             const cmt = ts.addSyntheticLeadingComment(exp, ts.SyntaxKind.SingleLineCommentTrivia, ` ${comment}`);
         }
         const update = ts.updateSourceFileNode(src, [
             ...src.statements,
             exp
+        ]);
+
+        const printer = ts.createPrinter({
+            newLine: ts.NewLineKind.LineFeed,
+            removeComments: false,
+        });
+
+        fs.write(fileName, printer.printFile(update));
+    }
+
+    public static insertImportDeclaration(fileName: string, identifier: string, literal: string, comment: string | undefined, fs: Generator.MemFsEditor): void {
+        let clientTs = fs.read(fileName);
+        const src = ts.createSourceFile(fileName, clientTs, ts.ScriptTarget.ES5, true, ts.ScriptKind.TS);
+        const imp = ts.createImportDeclaration(
+            undefined,
+            undefined,
+            ts.createImportClause(ts.createIdentifier(identifier), undefined),
+            ts.createLiteral(literal));
+
+        if (comment !== undefined) {
+            const cmt = ts.addSyntheticLeadingComment(imp, ts.SyntaxKind.SingleLineCommentTrivia, ` ${comment}`);
+        }
+        const update = ts.updateSourceFileNode(src, [
+            imp,
+            ...src.statements
         ]);
 
         const printer = ts.createPrinter({
