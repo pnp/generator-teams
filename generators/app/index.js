@@ -319,6 +319,7 @@ class GeneratorTeamsApp extends Generator {
             let staticFiles = [
                 "_gitignore",
                 "tsconfig.json",
+                "tslint.json",
                 "tsconfig-client.json",
                 "src/manifest/icon-outline.png",
                 "src/manifest/icon-color.png",
@@ -558,7 +559,7 @@ module.exports = GeneratorTeamsApp_1.GeneratorTeamsApp;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\code\github\generator-teams/src/app/index.ts */"./src/app/index.ts");
+module.exports = __webpack_require__(/*! C:\Contribution\cd-generator-teams/src/app/index.ts */"./src/app/index.ts");
 
 
 /***/ }),

@@ -226,6 +226,7 @@ class TabGenerator extends Generator {
                 if (!this.options.tabName.endsWith('Tab')) {
                     this.options.tabName = this.options.tabName + 'Tab';
                 }
+                this.options.tabReactComponentName = this.options.tabName.charAt(0).toUpperCase() + this.options.tabName.slice(1);
                 this.options.reactComponents = true;
             });
         }
@@ -266,9 +267,9 @@ class TabGenerator extends Generator {
                 ["typestyle", "1.5.1"]
             ], this.fs);
             // update client.ts
-            Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/scripts/client.ts", `./${this.options.tabName}`, `Automatically added for the ${this.options.tabName} tab`, this.fs);
-            Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/scripts/client.ts", `./${this.options.tabName}Config`, undefined, this.fs);
-            Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/scripts/client.ts", `./${this.options.tabName}Remove`, undefined, this.fs);
+            Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/scripts/client.ts", `./${this.options.tabReactComponentName}`, `Automatically added for the ${this.options.tabName} tab`, this.fs);
+            Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/scripts/client.ts", `./${this.options.tabReactComponentName}Config`, undefined, this.fs);
+            Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/scripts/client.ts", `./${this.options.tabReactComponentName}Remove`, undefined, this.fs);
         }
     }
 }
@@ -303,7 +304,7 @@ module.exports = TabGenerator_1.TabGenerator;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\code\github\generator-teams/src/tab/index.ts */"./src/tab/index.ts");
+module.exports = __webpack_require__(/*! C:\Contribution\cd-generator-teams/src/tab/index.ts */"./src/tab/index.ts");
 
 
 /***/ }),

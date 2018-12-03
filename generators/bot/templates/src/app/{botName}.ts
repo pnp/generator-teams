@@ -1,6 +1,6 @@
-import * as builder from 'botbuilder';
-import * as teamBuilder from 'botbuilder-teams';
-import { BotDeclaration, TeamsBot } from 'express-msteams-host';
+import * as builder from "botbuilder";
+import * as teamBuilder from "botbuilder-teams";
+import { BotDeclaration, TeamsBot } from "express-msteams-host";
 
 import * as debug from "debug";
 
@@ -14,9 +14,9 @@ const log = debug("msteams");
     "/api/messages",
     process.env.MICROSOFT_APP_ID,
     process.env.MICROSOFT_APP_PASSWORD)
-
-export class <%= botName %> extends TeamsBot {
+export class <%= botClassName %> extends TeamsBot {
     public readonly Connector: teamBuilder.TeamsChatConnector;
+    
     private readonly universalBot: builder.UniversalBot;
     private inMemoryStorage: builder.IBotStorage;
 
@@ -45,19 +45,18 @@ export class <%= botName %> extends TeamsBot {
 
         // Control messages
 
-        this.universalBot.on('conversationUpdate', this.convUpdateHandler);
-
+        this.universalBot.on("conversationUpdate", this.convUpdateHandler);
 
         // this row must follow the instantiation of the Message Extension object
         super.registerMessageExtensions();
-   }
+    }
 
     /**
      * This is the default dialog used by the bot
      * @param session
      */
     private defaultDialog(session: builder.Session) {
-        const text = <%= botClassName %>.extractTextFromMessage(session.message).toLowerCase();
+        const text = this.extractTextFromMessage(session.message).toLowerCase();
         if (text.startsWith("hello")) {
             session.send("Oh, hello to you as well!");
             session.endDialog();
@@ -84,5 +83,19 @@ export class <%= botName %> extends TeamsBot {
      */
     private convUpdateHandler(activity: any) {
         log("Conversation update");
+    }
+
+    /**
+     * Extracts text only from messages, removing all entity references
+     * @param message builder.IMessage
+     */
+    private extractTextFromMessage(message: builder.IMessage): string {
+        let s = (message.text) ? message.text : "";
+        if (message.entities) {
+            message.entities.forEach((ent: any) => {
+                s = s.replace(ent.text, "");
+            });
+        }
+        return s.trim();
     }
 }

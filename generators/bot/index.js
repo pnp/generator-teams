@@ -313,9 +313,11 @@ class BotGenerator extends Generator {
                 this.options.staticTab = answers.staticTab;
                 this.options.staticTabTitle = answers.staticTabName;
                 this.options.staticTabName = lodash.camelCase(answers.staticTabName);
+                this.options.staticTabClassName = this.options.staticTabName.charAt(0).toUpperCase() + this.options.staticTabName.slice(1);
                 this.options.botType = answers.bottype;
                 this.options.botTitle = answers.botname;
                 this.options.botName = lodash.camelCase(answers.botname);
+                this.options.botClassName = this.options.botName.charAt(0).toUpperCase() + this.options.botName.slice(1);
                 if (!this.options.botName.endsWith('Bot')) {
                     this.options.botName = this.options.botName + 'Bot';
                 }
@@ -416,7 +418,7 @@ module.exports = BotGenerator_1.BotGenerator;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\code\github\generator-teams/src/bot/index.ts */"./src/bot/index.ts");
+module.exports = __webpack_require__(/*! C:\Contribution\cd-generator-teams/src/bot/index.ts */"./src/bot/index.ts");
 
 
 /***/ }),

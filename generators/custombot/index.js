@@ -220,6 +220,7 @@ class CustomBotGenerator extends Generator {
             ]).then((answers) => {
                 this.options.customBotTitle = answers.title;
                 this.options.customBotName = lodash.camelCase(answers.title);
+                this.options.customBotClassName = this.options.customBotName.charAt(0).toUpperCase() + this.options.customBotName.slice(1);
                 if (!this.options.customBotName.endsWith('OutgoingWebhook')) {
                     this.options.customBotName = this.options.customBotName + 'OutgoingWebhook';
                 }
@@ -271,7 +272,7 @@ module.exports = CustomBotGenerator_1.CustomBotGenerator;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\code\github\generator-teams/src/custombot/index.ts */"./src/custombot/index.ts");
+module.exports = __webpack_require__(/*! C:\Contribution\cd-generator-teams/src/custombot/index.ts */"./src/custombot/index.ts");
 
 
 /***/ }),

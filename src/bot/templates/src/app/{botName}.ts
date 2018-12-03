@@ -14,23 +14,9 @@ const log = debug("msteams");
     "/api/messages",
     process.env.MICROSOFT_APP_ID,
     process.env.MICROSOFT_APP_PASSWORD)
-export class <%= botClassName %> implements TeamsBot {
-
-    /**
-     * Extracts text only from messages, removing all entity references
-     * @param message builder.IMessage
-     */
-    private static extractTextFromMessage(message: builder.IMessage): string {
-        let s = (message.text) ? message.text : "";
-        if (message.entities) {
-            message.entities.forEach((ent: any) => {
-                s = s.replace(ent.text, "");
-            });
-        }
-        return s.trim();
-    }
-
+export class <%= botClassName %> extends TeamsBot {
     public readonly Connector: teamBuilder.TeamsChatConnector;
+    
     private readonly universalBot: builder.UniversalBot;
     private inMemoryStorage: builder.IBotStorage;
 
@@ -70,7 +56,7 @@ export class <%= botClassName %> implements TeamsBot {
      * @param session
      */
     private defaultDialog(session: builder.Session) {
-        const text = <%= botClassName %>.extractTextFromMessage(session.message).toLowerCase();
+        const text = this.extractTextFromMessage(session.message).toLowerCase();
         if (text.startsWith("hello")) {
             session.send("Oh, hello to you as well!");
             session.endDialog();
@@ -97,5 +83,19 @@ export class <%= botClassName %> implements TeamsBot {
      */
     private convUpdateHandler(activity: any) {
         log("Conversation update");
+    }
+
+    /**
+     * Extracts text only from messages, removing all entity references
+     * @param message builder.IMessage
+     */
+    private extractTextFromMessage(message: builder.IMessage): string {
+        let s = (message.text) ? message.text : "";
+        if (message.entities) {
+            message.entities.forEach((ent: any) => {
+                s = s.replace(ent.text, "");
+            });
+        }
+        return s.trim();
     }
 }

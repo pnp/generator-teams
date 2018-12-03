@@ -311,9 +311,9 @@ export class MessageExtensionGenerator extends Generator {
 
                 if (cl) {
                     // add the property
-                    const prop = cl.insertProperty(0, {
+                    const prop = cl.insertProperty(1, {
                         scope: Scope.Private,
-                        name: `_${this.options.messageExtensionName}`,
+                        name: `${this.options.messageExtensionName}`,
                         type: this.options.messageExtensionName,
                         docs: [`Local property for ${this.options.messageExtensionName}`],
                     });
@@ -336,7 +336,7 @@ export class MessageExtensionGenerator extends Generator {
                         if (statements.length == 1) {
                             // insert the variable
                             c.insertStatements(statements[0].getChildIndex(), `// Message extension ${this.options.messageExtensionName}
-                            this._${this.options.messageExtensionName} = new ${this.options.messageExtensionName}(this.universalBot);`);
+                            this.${this.options.messageExtensionName} = new ${this.options.messageExtensionName}(this.universalBot);`);
                         } else {
                             // insert variable and registrations
                             c.addStatements(`// Message extension ${this.options.messageExtensionName}
