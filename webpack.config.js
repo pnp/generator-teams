@@ -44,8 +44,8 @@ var config = [{
         libraryTarget: 'commonjs-module'
     },
     externals: nodeModules,
-    devtool: 'none',
-    mode: 'production',
+    devtool: 'sourcemap',
+    mode: 'development',
     resolve: {
         extensions: [".ts", ".tsx", ".js"],
         alias: {}

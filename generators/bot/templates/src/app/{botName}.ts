@@ -1,6 +1,7 @@
-import * as builder from "botbuilder";
-import * as teamBuilder from "botbuilder-teams";
-import { BotDeclaration, IBot } from "express-msteams-host";
+import * as builder from 'botbuilder';
+import * as teamBuilder from 'botbuilder-teams';
+import { BotDeclaration, TeamsBot } from 'express-msteams-host';
+
 import * as debug from "debug";
 
 // Initialize debug logging module
@@ -13,22 +14,8 @@ const log = debug("msteams");
     "/api/messages",
     process.env.MICROSOFT_APP_ID,
     process.env.MICROSOFT_APP_PASSWORD)
-export class <%= botClassName %> implements IBot {
 
-    /**
-     * Extracts text only from messages, removing all entity references
-     * @param message builder.IMessage
-     */
-    private static extractTextFromMessage(message: builder.IMessage): string {
-        let s = (message.text) ? message.text : "";
-        if (message.entities) {
-            message.entities.forEach((ent: any) => {
-                s = s.replace(ent.text, "");
-            });
-        }
-        return s.trim();
-    }
-
+export class <%= botName %> extends TeamsBot {
     public readonly Connector: teamBuilder.TeamsChatConnector;
     private readonly universalBot: builder.UniversalBot;
     private inMemoryStorage: builder.IBotStorage;
@@ -38,6 +25,7 @@ export class <%= botClassName %> implements IBot {
      * @param connector
      */
     public constructor(connector: teamBuilder.TeamsChatConnector) {
+        super(connector);
         this.Connector = connector;
         this.inMemoryStorage = new builder.MemoryBotStorage();
         this.universalBot = new builder.UniversalBot(this.Connector).
@@ -56,62 +44,13 @@ export class <%= botClassName %> implements IBot {
         this.universalBot.dialog("/help", this.helpDialog);
 
         // Control messages
-        this.universalBot.on("conversationUpdate", this.convUpdateHandler);
-<% if (messageExtensionType == 'new' || messageExtensionType == 'existing') { %>
-        // Message Extension
-        this.Connector.onQuery("<%=messageExtensionName%>",
-            (event: builder.IEvent, query: teamBuilder.ComposeExtensionQuery, callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
-                if (query.parameters && query.parameters[0] && query.parameters[0].name === "initialRun") {
-                    // implement an MRU, kind of thing
-                    const firstResponse = teamBuilder.ComposeExtensionResponse.result("list").attachments([
-                        new builder.ThumbnailCard()
-                            .title("Test")
-                            .text("Test")
-                            .images([new builder.CardImage().url("<%=host%>/assets/icon.png")])
-                            .toAttachment()
-                    ]).toResponse();
-                    callback(null as any, firstResponse, 200);
-                } else {
-                    // Return result response
-                    const response = teamBuilder.ComposeExtensionResponse.result("list").attachments([
-                        new builder.ThumbnailCard()
-                            .title(`Test`)
-                            .text("test")
-                            .images([new builder.CardImage().url("<%=host%>/assets/icon.png")])
-                            .toAttachment()
-                    ]).toResponse();
-                    callback(null as any, response, 200);
-                }
-            });
 
-        // this is used when canUpdateConfiguration is set to true
-        this.Connector.onQuerySettingsUrl(
-            (event: builder.IEvent, query: teamBuilder.ComposeExtensionQuery, callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
-                    callback(null as any, {
-                        composeExtension: {
-                            suggestedActions: {
-                                actions: [
-                                    {
-                                        title: "<%=messageExtensionTitle%> Configuration",
-                                        type: "openApp",
-                                        value: "<%= host %>/<%= messageExtensionName %>Config.html"
-                                    }
-                                ]
-                            },
-                            type: "config"
-                        }
-                    }, 200);
-                }
-            );
+        this.universalBot.on('conversationUpdate', this.convUpdateHandler);
 
-        this.Connector.onSettingsUpdate(
-                (event: builder.IEvent, query: teamBuilder.ComposeExtensionQuery, callback: (err: Error, result: teamBuilder.IComposeExtensionResponse, statusCode: number) => void) => {
-                    // take care of the setting returned from the dialog, with the value stored in state
-                    const setting = query.state;
-                    callback(null as any, null as any, 200);
-                }
-            );
-        <% } %>}
+
+        // this row must follow the instantiation of the Message Extension object
+        super.registerMessageExtensions();
+   }
 
     /**
      * This is the default dialog used by the bot

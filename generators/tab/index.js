@@ -1,1 +1,378 @@
-module.exports=function(t){var e={};function i(o){if(e[o])return e[o].exports;var s=e[o]={i:o,l:!1,exports:{}};return t[o].call(s.exports,s,s.exports,i),s.l=!0,s.exports}return i.m=t,i.c=e,i.d=function(t,e,o){i.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:o})},i.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},i.t=function(t,e){if(1&e&&(t=i(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var o=Object.create(null);if(i.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var s in t)i.d(o,s,function(e){return t[e]}.bind(null,s));return o},i.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return i.d(e,"a",e),e},i.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},i.p="",i(i.s=17)}([function(t,e){t.exports=require("path")},function(t,e){t.exports=require("yeoman-generator")},function(t,e){t.exports=require("lodash")},function(t,e,i){"use strict";Object.defineProperty(e,"__esModule",{value:!0});const o=i(4);let s=i(0);const n="package.json";e.Yotilities=class{static validateUrl(t){return/(https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(t)}static fixFileNames(t,e){if(void 0!==t){var i=s.basename(t);if("_"===i[0]){t="."+i.substr(1);var o=s.dirname(t);t=s.join(o,t)}for(var n in e)e.hasOwnProperty(n)&&"string"==typeof e[n]&&(t=t.replace(new RegExp("{"+n+"}","g"),e[n]))}return t}static addAdditionalDeps(t,e){var i=e.readJSON(n);t.forEach(t=>{i.dependencies[t[0]]=t[1]}),e.writeJSON(n,i)}static insertTsExportDeclaration(t,e,i,s){let n=s.read(t);const r=o.createSourceFile(t,n,o.ScriptTarget.ES5,!0,o.ScriptKind.TS),a=o.createExportDeclaration(void 0,void 0,void 0,o.createLiteral(e));void 0!==i&&o.addSyntheticLeadingComment(a,o.SyntaxKind.SingleLineCommentTrivia,` ${i}`);const p=o.updateSourceFileNode(r,[...r.statements,a]),c=o.createPrinter({newLine:o.NewLineKind.LineFeed,removeComments:!1});s.write(t,c.printFile(p))}}},function(t,e){t.exports=require("typescript")},function(t,e){t.exports=require("yosay")},function(t,e){t.exports=require("guid")},,,,,,,,,,,function(t,e,i){t.exports=i(18)},function(t,e,i){"use strict";Object.defineProperty(e,"__esModule",{value:!0});const o=i(19);t.exports=o.TabGenerator},function(t,e,i){"use strict";Object.defineProperty(e,"__esModule",{value:!0});const o=i(1),s=i(2),n=i(3);i(5),i(0),i(6);e.TabGenerator=class extends o{constructor(t,e){super(t,e),e.force=!0,this.options=e.options,this.desc("Adds a tab to a Teams project.")}prompting(){if(this.options.tab)return this.prompt([{type:"input",name:"tabTitle",message:"Default Tab name? (max 16 characters)",default:this.options.title+" Tab",validate:t=>t.length>0&&t.length<=16}]).then(t=>{this.options.tabTitle=t.tabTitle,this.options.tabName=s.camelCase(this.options.tabTitle),this.options.tabName.endsWith("Tab")||(this.options.tabName=this.options.tabName+"Tab"),this.options.tabReactComponentName=this.options.tabName.charAt(0).toUpperCase()+this.options.tabName.slice(1),this.options.reactComponents=!0})}writing(){if(this.options.tab){let e=["src/app/scripts/{tabName}Config.tsx","src/app/scripts/{tabName}.tsx","src/app/scripts/{tabName}Remove.tsx","src/app/web/{tabName}.html","src/app/web/{tabName}Remove.html","src/app/web/{tabName}Config.html"];this.sourceRoot(),e.forEach(t=>{this.fs.copyTpl(this.templatePath(t),n.Yotilities.fixFileNames(t,this.options),this.options)});let i="src/manifest/manifest.json";var t=this.fs.readJSON(i);t.configurableTabs.push({configurationUrl:`${this.options.host}/${this.options.tabName}Config.html`,canUpdateConfiguration:!0,scopes:["team"]}),this.options.host.substring(this.options.host.indexOf("://")+3).split("."),t.validDomains.push(this.options.host.split("https://")[1]),this.fs.writeJSON(i,t),n.Yotilities.addAdditionalDeps([["msteams-ui-components-react","^0.7.3"],["react","^16.1.0"],["@types/react","16.4.7"],["react-dom","^16.2.0"],["file-loader","1.1.11"],["typestyle","1.5.1"]],this.fs),n.Yotilities.insertTsExportDeclaration("src/app/scripts/client.ts",`./${this.options.tabReactComponentName}`,`Automatically added for the ${this.options.tabName} tab`,this.fs),n.Yotilities.insertTsExportDeclaration("src/app/scripts/client.ts",`./${this.options.tabReactComponentName}Config`,void 0,this.fs),n.Yotilities.insertTsExportDeclaration("src/app/scripts/client.ts",`./${this.options.tabReactComponentName}Remove`,void 0,this.fs)}}}}]);
+module.exports =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./src/app/Yotilities.ts":
+/*!*******************************!*\
+  !*** ./src/app/Yotilities.ts ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// Copyright (c) Wictor Wilén. All rights reserved. 
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
+Object.defineProperty(exports, "__esModule", { value: true });
+const ts = __webpack_require__(/*! typescript */ "typescript");
+let path = __webpack_require__(/*! path */ "path");
+const packagePath = "package.json";
+/**
+ * Utility class for the Generator
+ */
+class Yotilities {
+    /**
+     * Validates a URL
+     * @param url Url to validate
+     */
+    static validateUrl(url) {
+        return /(https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(url);
+    }
+    /**
+     * Renames a file based on passed options
+     * @param filename path and name to file
+     * @param options object with replacement properties
+     */
+    static fixFileNames(filename, options) {
+        if (filename !== undefined) {
+            var basename = path.basename(filename);
+            if (basename[0] === '_') {
+                var filename = '.' + basename.substr(1);
+                var dirname = path.dirname(filename);
+                filename = path.join(dirname, filename);
+            }
+            for (var prop in options) {
+                if (options.hasOwnProperty(prop) && typeof options[prop] === 'string') {
+                    filename = filename.replace(new RegExp("{" + prop + "}", 'g'), options[prop]);
+                }
+            }
+        }
+        return filename;
+    }
+    static addAdditionalDeps(dependencies, fs) {
+        var pkg = fs.readJSON(packagePath);
+        dependencies.forEach(dep => {
+            pkg.dependencies[dep[0]] = dep[1];
+        });
+        fs.writeJSON(packagePath, pkg);
+    }
+    static insertTsExportDeclaration(fileName, literal, comment, fs) {
+        let clientTs = fs.read(fileName);
+        const src = ts.createSourceFile(fileName, clientTs, ts.ScriptTarget.ES5, true, ts.ScriptKind.TS);
+        const exp = ts.createExportDeclaration(undefined, undefined, undefined, ts.createLiteral(literal));
+        if (comment !== undefined) {
+            const cmt = ts.addSyntheticLeadingComment(exp, ts.SyntaxKind.SingleLineCommentTrivia, ` ${comment}`);
+        }
+        const update = ts.updateSourceFileNode(src, [
+            ...src.statements,
+            exp
+        ]);
+        const printer = ts.createPrinter({
+            newLine: ts.NewLineKind.LineFeed,
+            removeComments: false,
+        });
+        fs.write(fileName, printer.printFile(update));
+    }
+    static insertImportDeclaration(fileName, identifier, literal, comment, fs) {
+        let clientTs = fs.read(fileName);
+        const src = ts.createSourceFile(fileName, clientTs, ts.ScriptTarget.ES5, true, ts.ScriptKind.TS);
+        const imp = ts.createImportDeclaration(undefined, undefined, ts.createImportClause(ts.createIdentifier(identifier), undefined), ts.createLiteral(literal));
+        if (comment !== undefined) {
+            const cmt = ts.addSyntheticLeadingComment(imp, ts.SyntaxKind.SingleLineCommentTrivia, ` ${comment}`);
+        }
+        const update = ts.updateSourceFileNode(src, [
+            imp,
+            ...src.statements
+        ]);
+        const printer = ts.createPrinter({
+            newLine: ts.NewLineKind.LineFeed,
+            removeComments: false,
+        });
+        fs.write(fileName, printer.printFile(update));
+    }
+}
+exports.Yotilities = Yotilities;
+
+
+/***/ }),
+
+/***/ "./src/tab/TabGenerator.ts":
+/*!*********************************!*\
+  !*** ./src/tab/TabGenerator.ts ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// Copyright (c) Wictor Wilén. All rights reserved. 
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
+Object.defineProperty(exports, "__esModule", { value: true });
+const Generator = __webpack_require__(/*! yeoman-generator */ "yeoman-generator");
+const lodash = __webpack_require__(/*! lodash */ "lodash");
+const Yotilities_1 = __webpack_require__(/*! ./../app/Yotilities */ "./src/app/Yotilities.ts");
+let yosay = __webpack_require__(/*! yosay */ "yosay");
+let path = __webpack_require__(/*! path */ "path");
+let Guid = __webpack_require__(/*! guid */ "guid");
+class TabGenerator extends Generator {
+    constructor(args, opts) {
+        super(args, opts);
+        opts.force = true;
+        this.options = opts.options;
+        this.desc('Adds a tab to a Teams project.');
+    }
+    prompting() {
+        if (this.options.tab) {
+            return this.prompt([
+                {
+                    type: 'input',
+                    name: 'tabTitle',
+                    message: 'Default Tab name? (max 16 characters)',
+                    default: this.options.title + ' Tab',
+                    validate: (input) => {
+                        return input.length > 0 && input.length <= 16;
+                    }
+                },
+            ]).then((answers) => {
+                this.options.tabTitle = answers.tabTitle;
+                this.options.tabName = lodash.camelCase(this.options.tabTitle);
+                if (!this.options.tabName.endsWith('Tab')) {
+                    this.options.tabName = this.options.tabName + 'Tab';
+                }
+                this.options.reactComponents = true;
+            });
+        }
+    }
+    writing() {
+        if (this.options.tab) {
+            let templateFiles = [
+                "src/app/scripts/{tabName}Config.tsx",
+                "src/app/scripts/{tabName}.tsx",
+                "src/app/scripts/{tabName}Remove.tsx",
+                "src/app/web/{tabName}.html",
+                "src/app/web/{tabName}Remove.html",
+                "src/app/web/{tabName}Config.html",
+            ];
+            this.sourceRoot();
+            templateFiles.forEach(t => {
+                this.fs.copyTpl(this.templatePath(t), Yotilities_1.Yotilities.fixFileNames(t, this.options), this.options);
+            });
+            // Update manifest
+            let manifestPath = "src/manifest/manifest.json";
+            var manifest = this.fs.readJSON(manifestPath);
+            manifest.configurableTabs.push({
+                configurationUrl: `${this.options.host}/${this.options.tabName}Config.html`,
+                canUpdateConfiguration: true,
+                scopes: ["team"]
+            });
+            var tmp = this.options.host.substring(this.options.host.indexOf('://') + 3);
+            var arr = tmp.split('.');
+            ;
+            manifest.validDomains.push(this.options.host.split("https://")[1]);
+            this.fs.writeJSON(manifestPath, manifest);
+            Yotilities_1.Yotilities.addAdditionalDeps([
+                ["msteams-ui-components-react", "^0.7.3"],
+                ["react", "^16.1.0"],
+                ["@types/react", "16.4.7"],
+                ["react-dom", "^16.2.0"],
+                ["file-loader", "1.1.11"],
+                ["typestyle", "1.5.1"]
+            ], this.fs);
+            // update client.ts
+            Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/scripts/client.ts", `./${this.options.tabName}`, `Automatically added for the ${this.options.tabName} tab`, this.fs);
+            Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/scripts/client.ts", `./${this.options.tabName}Config`, undefined, this.fs);
+            Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/scripts/client.ts", `./${this.options.tabName}Remove`, undefined, this.fs);
+        }
+    }
+}
+exports.TabGenerator = TabGenerator;
+
+
+/***/ }),
+
+/***/ "./src/tab/index.ts":
+/*!**************************!*\
+  !*** ./src/tab/index.ts ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// Copyright (c) Wictor Wilén. All rights reserved. 
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
+Object.defineProperty(exports, "__esModule", { value: true });
+const TabGenerator_1 = __webpack_require__(/*! ./TabGenerator */ "./src/tab/TabGenerator.ts");
+module.exports = TabGenerator_1.TabGenerator;
+
+
+/***/ }),
+
+/***/ 2:
+/*!********************************!*\
+  !*** multi ./src/tab/index.ts ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! C:\code\github\generator-teams/src/tab/index.ts */"./src/tab/index.ts");
+
+
+/***/ }),
+
+/***/ "guid":
+/*!***********************!*\
+  !*** external "guid" ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("guid");
+
+/***/ }),
+
+/***/ "lodash":
+/*!*************************!*\
+  !*** external "lodash" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("lodash");
+
+/***/ }),
+
+/***/ "path":
+/*!***********************!*\
+  !*** external "path" ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("path");
+
+/***/ }),
+
+/***/ "typescript":
+/*!*****************************!*\
+  !*** external "typescript" ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("typescript");
+
+/***/ }),
+
+/***/ "yeoman-generator":
+/*!***********************************!*\
+  !*** external "yeoman-generator" ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("yeoman-generator");
+
+/***/ }),
+
+/***/ "yosay":
+/*!************************!*\
+  !*** external "yosay" ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("yosay");
+
+/***/ })
+
+/******/ });
+//# sourceMappingURL=index.js.map
