@@ -37,6 +37,7 @@ export class CustomBotGenerator extends Generator {
             ).then((answers: any) => {
                 this.options.customBotTitle = answers.title;
                 this.options.customBotName = lodash.camelCase(answers.title);
+                this.options.customBotClassName = this.options.customBotName.charAt(0).toUpperCase() + this.options.customBotName.slice(1);
                 if (!this.options.customBotName.endsWith('OutgoingWebhook')) {
                     this.options.customBotName = this.options.customBotName + 'OutgoingWebhook';
                 }

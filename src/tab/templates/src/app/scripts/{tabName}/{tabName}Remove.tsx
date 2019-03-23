@@ -12,17 +12,17 @@ import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState 
 import * as microsoftTeams from '@microsoft/teams-js';
 
 
-export interface I<%=tabName%>RemoveState extends ITeamsBaseComponentState {
+export interface I<%=tabReactComponentName%>RemoveState extends ITeamsBaseComponentState {
     value: string;
 }
-export interface I<%=tabName%>RemoveProps extends ITeamsBaseComponentProps {
+export interface I<%=tabReactComponentName%>RemoveProps extends ITeamsBaseComponentProps {
 
 }
 
 /**
  * Implementation of <%= tabTitle %> remove page
  */
-export class <%=tabName%>Remove  extends TeamsBaseComponent<I<%=tabName%>RemoveProps, I<%=tabName%>RemoveState> {
+export class <%=tabReactComponentName%>Remove  extends TeamsBaseComponent<I<%=tabReactComponentName%>RemoveProps, I<%=tabReactComponentName%>RemoveState> {
 
     public componentWillMount() {
         this.updateTheme(this.getQueryVariable('theme'));

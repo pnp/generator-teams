@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import {
     PrimaryButton,
     Panel,
@@ -14,26 +14,26 @@ import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState 
 import * as microsoftTeams from '@microsoft/teams-js';
 
 /**
- * State for the <%=messageExtensionName%>Config React component
+ * State for the <%=messageExtensionClassName%>Config React component
  */
-export interface I<%=messageExtensionName%>ConfigState extends ITeamsBaseComponentState {
+export interface I<%=messageExtensionClassName%>ConfigState extends ITeamsBaseComponentState {
     onOrOff: boolean;
 }
 
 /**
- * Properties for the <%=messageExtensionName%>Config React component
+ * Properties for the <%=messageExtensionClassName%>Config React component
  */
-export interface I<%=messageExtensionName%>ConfigProps extends ITeamsBaseComponentProps {
+export interface I<%=messageExtensionClassName%>ConfigProps extends ITeamsBaseComponentProps {
 
 }
 
 /**
  * Implementation of the <%= messageExtensionTitle %> configuration page
  */
-export class <%=messageExtensionName%>Config extends TeamsBaseComponent<I<%=messageExtensionName%>ConfigProps, I<%=messageExtensionName%>ConfigState> {
- 
+export class <%=messageExtensionClassName%>Config extends TeamsBaseComponent<I<%=messageExtensionClassName%>ConfigProps, I<%=messageExtensionClassName%>ConfigState> {
+
     public componentWillMount() {
-        this.updateTheme(this.getQueryVariable('theme'));
+        this.updateTheme(this.getQueryVariable("theme"));
         this.setState({
             fontSize: this.pageFontSize()
         });
@@ -42,7 +42,7 @@ export class <%=messageExtensionName%>Config extends TeamsBaseComponent<I<%=mess
         microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
     }
 
-    /** 
+    /**
      * The render() method to create the UI of the tab
      */
     public render() {

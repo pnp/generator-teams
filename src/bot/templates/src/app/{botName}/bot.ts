@@ -17,7 +17,7 @@ const log = debug("msteams");
     new MemoryStorage(),
     process.env.MICROSOFT_APP_ID,
     process.env.MICROSOFT_APP_PASSWORD)
-export class <%= botName %> implements IBot {
+export class <%= botClassName %> implements IBot {
     private readonly conversationState: ConversationState;
     private readonly dialogs: DialogSet;
     private dialogState: StatePropertyAccessor<DialogState>;
