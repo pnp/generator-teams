@@ -135,17 +135,22 @@ export class MessageExtensionGenerator extends Generator {
                 this.options.messageExtensionTitle = answers.messageExtensionName;
                 this.options.messageExtensionDescription = answers.messageExtensionDescription;
                 this.options.messageExtensionName = lodash.camelCase(answers.messageExtensionName);
+
                 if (!this.options.messageExtensionName.endsWith(`MessageExtension`)) {
                     this.options.messageExtensionName += `MessageExtension`;
                 }
 
+                this.options.messageExtensionClassName = this.options.messageExtensionName.charAt(0).toUpperCase() + this.options.messageExtensionName.slice(1);
+              
                 if (answers.messageExtensionType == 'new') {
                     // we need to add the Bot, even though the users did not choose to create one
                     this.options.bot = true;
                     this.options.botid = answers.messageExtensionId;
                     this.options.botType = 'botframework';
                     this.options.botTitle = answers.messageExtensionName + ' Bot';
+
                     this.options.botName = lodash.camelCase(this.options.botTitle); // TODO: check valid file name here
+                    this.options.botClassName = this.options.botName.charAt(0).toUpperCase() + this.options.botName.slice(1);
                 } else if (answers.messageExtensionType == 'existing') {
                     // reuse the bot id
 
@@ -306,9 +311,9 @@ export class MessageExtensionGenerator extends Generator {
 
                 if (cl) {
                     // add the property
-                    const prop = cl.insertProperty(0, {
+                    const prop = cl.insertProperty(1, {
                         scope: Scope.Private,
-                        name: `_${this.options.messageExtensionName}`,
+                        name: `${this.options.messageExtensionName}`,
                         type: this.options.messageExtensionName,
                         docs: [`Local property for ${this.options.messageExtensionName}`]
                     });

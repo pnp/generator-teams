@@ -13,18 +13,18 @@ import {
 import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
 import * as microsoftTeams from '@microsoft/teams-js';
 
-export interface I<%=tabName%>ConfigState extends ITeamsBaseComponentState {
+export interface I<%=tabReactComponentName%>ConfigState extends ITeamsBaseComponentState {
     value: string;
 }
 
-export interface I<%=tabName%>ConfigProps extends ITeamsBaseComponentProps {
+export interface I<%=tabReactComponentName%>ConfigProps extends ITeamsBaseComponentProps {
 
 }
 
 /**
  * Implementation of <%= tabTitle %> configuration page
  */
-export class <%=tabName%>Config  extends TeamsBaseComponent<I<%=tabName%>ConfigProps, I<%=tabName%>ConfigState> {
+export class <%=tabReactComponentName%>Config  extends TeamsBaseComponent<I<%=tabReactComponentName%>ConfigProps, I<%=tabReactComponentName%>ConfigState> {
 
     public componentWillMount() {
         this.updateTheme(this.getQueryVariable('theme'));

@@ -10,7 +10,7 @@ const log = debug("msteams");
 /**
  * The connector data interface
  */
-interface I<%=connectorName%>Data {
+interface I<%=connectorComponentName%>Data {
     webhookUrl: string;
     user: string;
     appType: string;
@@ -20,30 +20,30 @@ interface I<%=connectorName%>Data {
 }
 
 /**
- * Implementation of the "<%=connectorName%>Connector" Office 365 Connector
+ * Implementation of the "<%=connectorComponentName%>Connector" Office 365 Connector
  */
 @ConnectorDeclaration(
     '/api/connector/connect',
     '/api/connector/ping',
     'web/<%=connectorName%>Connect.ejs' // TODO: WHAT, EJS??
 )
-export class <%=connectorName%> implements IConnector {
+export class <%=connectorComponentName%> implements IConnector {
     private connectors: any;
 
     public constructor() {
         // Instantiate the node-json-db database (connectors.json)
-        this.connectors = new JsonDB('connectors', true, false);
+        this.connectors = new JsonDB("connectors", true, false);
     }
 
     public Connect(req: Request) {
-        if (req.body.state === 'myAppsState') {
-            this.connectors.push('/connectors[]', {
-                webhookUrl: req.body.webhookUrl,
-                user: req.body.user,
+        if (req.body.state === "myAppsState") {
+            this.connectors.push("/connectors[]", {
                 appType: req.body.appType,
-                groupName: req.body.groupName,
+                color: req.body.color,
                 existing: true,
-                color: req.body.color
+                groupName: req.body.groupName,
+                user: req.body.user,
+                webhookUrl: req.body.webhookUrl
             });
         }
     }
@@ -51,12 +51,12 @@ export class <%=connectorName%> implements IConnector {
     public Ping(req: Request): Array<Promise <void>> {
         // clean up connectors marked to be deleted
         try {
-            this.connectors.push('/connectors',
-                (<I<%=connectorName%>Data[]>this.connectors.getData('/connectors')).filter((c => {
+            this.connectors.push("/connectors",
+                (this.connectors.getData("/connectors") as I<%=connectorComponentName%>Data[]).filter(((c) => {
                     return c.existing;
                 })));
         } catch (error) {
-            if (error.name && error.name == 'DataError') {
+            if (error.name && error.name === "DataError") {
                 // there's no registered connectors
                 return [];
             }
@@ -64,7 +64,7 @@ export class <%=connectorName%> implements IConnector {
         }
 
         // send pings to all subscribers
-        return (<I<%=connectorName%>Data[]>this.connectors.getData('/connectors')).map((connector, index) => {
+        return (this.connectors.getData("/connectors") as I<%=connectorComponentName%>Data[]).map((connector, index) => {
             return new Promise<void>((resolve, reject) => {
                 // TODO: implement adaptive cards when supported
                 const card = {
@@ -99,16 +99,15 @@ export class <%=connectorName%> implements IConnector {
                 log(`Sending card to ${connector.webhookUrl}`);
 
                 request({
-                    method: 'POST',
-                    uri: decodeURI(connector.webhookUrl),
+                    body: JSON.stringify(card.toAttachment().content),
                     headers: {
-                        'content-type': 'application/json',
+                        "content-type": "application/json",
                     },
                     body: JSON.stringify(card)
                 }, (error: any, response: any, body: any) => {
                     log(`Response from Connector endpoint is: ${response.statusCode}`);
                     if (error) {
-                        reject(error)
+                        reject(error);
                     } else {
                         // 410 - the user has removed the connector
                         if (response.statusCode === 410) {
@@ -116,8 +115,9 @@ export class <%=connectorName%> implements IConnector {
                         }
                         resolve();
                     }
-                })
+                });
             });
         });
     }
 }
+

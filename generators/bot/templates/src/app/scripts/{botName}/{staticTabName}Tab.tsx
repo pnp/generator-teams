@@ -14,21 +14,21 @@ import * as microsoftTeams from '@microsoft/teams-js';
 /**
  * State for the <%=staticTabName%>Tab React component
  */
-export interface I<%=staticTabName%>TabState extends ITeamsBaseComponentState {
+export interface I<%=staticTabClassName%>TabState extends ITeamsBaseComponentState {
     
 }
 
 /**
  * Properties for the <%=staticTabName%>Tab React component
  */
-export interface I<%=staticTabName%>TabProps extends ITeamsBaseComponentProps {
+export interface I<%=staticTabClassName%>TabProps extends ITeamsBaseComponentProps {
 
 }
 
 /**
  * Implementation of the <%= staticTabName %> content page
  */
-export class <%=staticTabName%>Tab extends TeamsBaseComponent<I<%=staticTabName%>TabProps, I<%=staticTabName%>TabState> {
+export class <%=staticTabClassName%>Tab extends TeamsBaseComponent<I<%=staticTabClassName%>TabProps, I<%=staticTabClassName%>TabState> {
  
     public componentWillMount() {
         this.updateTheme(this.getQueryVariable('theme'));

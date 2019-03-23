@@ -43,6 +43,7 @@ export class TabGenerator extends Generator {
                 if (!this.options.tabName.endsWith('Tab')) {
                     this.options.tabName = this.options.tabName + 'Tab';
                 }
+                this.options.tabReactComponentName = this.options.tabName.charAt(0).toUpperCase() + this.options.tabName.slice(1);
                 this.options.reactComponents = true;
             });
         }
@@ -91,19 +92,19 @@ export class TabGenerator extends Generator {
             // update client.ts
             Yotilities.insertTsExportDeclaration(
                 "src/app/scripts/client.ts",
-                `./${this.options.tabName}/${this.options.tabName}`,
+                `./${this.options.tabName}/${this.options.tabReactComponentName}`,
                 `Automatically added for the ${this.options.tabName} tab`,
                 this.fs
             );
             Yotilities.insertTsExportDeclaration(
                 "src/app/scripts/client.ts",
-                `./${this.options.tabName}/${this.options.tabName}Config`,
+                `./${this.options.tabName}/${this.options.tabReactComponentName}Config`,
                 undefined,
                 this.fs
             );
             Yotilities.insertTsExportDeclaration(
                 "src/app/scripts/client.ts",
-                `./${this.options.tabName}/${this.options.tabName}Remove`,
+                `./${this.options.tabName}/${this.options.tabReactComponentName}Remove`,
                 undefined,
                 this.fs
             );

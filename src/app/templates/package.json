@@ -38,8 +38,13 @@
     "ts-loader": "5.3.3",
     "typescript": "3.3.4000",
     "vinyl": "2.2.0",
+    "tslint": "^5.11.0",
+    "tslint-webpack-plugin": "^1.2.2",
     "webpack": "4.26.0",
     "yargs": "12.0.1",
     "z-schema": "^3.19.1"
+  }, 
+  "devDependencies": {
+    "tslint-loader": "^3.6.0"
   }
 }

@@ -8,7 +8,7 @@ import { MessagingExtensionQuery, InvokeResponseTypeOf, InvokeResponseTyped, Mes
 const log = debug("msteams");
 
 
-export default class <%= messageExtensionName%> implements IMessageExtension {
+export default class <%= messageExtensionClassName%> implements IMessageExtension {
     
     public async onQuery(context: TurnContext, query: MessagingExtensionQuery): Promise<InvokeResponseTyped<MessagingExtensionResponse>> {
         type R = InvokeResponseTypeOf<'onMessagingExtensionQuery'>;

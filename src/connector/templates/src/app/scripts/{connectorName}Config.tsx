@@ -13,7 +13,7 @@ import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState 
 import * as microsoftTeams from '@microsoft/teams-js';
 import { getContext } from 'msteams-ui-styles-core';
 
-export interface I<%=connectorName%>ConfigState extends ITeamsBaseComponentState {
+export interface I<%=connectorComponentName%>ConfigState extends ITeamsBaseComponentState {
     color: IColor | undefined;
     submit: boolean;
     webhookUrl: string;
@@ -22,7 +22,7 @@ export interface I<%=connectorName%>ConfigState extends ITeamsBaseComponentState
     groupName: string;
 }
 
-export interface I<%=connectorName%>ConfigProps extends ITeamsBaseComponentProps {
+export interface I<%=connectorComponentName%>ConfigProps extends ITeamsBaseComponentProps {
 }
 
 interface IColor {
@@ -44,7 +44,7 @@ const availableColors: IColor[] = [
 /**
  * Implementation of the <%=connectorName%> Connector connect page
  */
-export class <%=connectorName%>Config extends TeamsBaseComponent<I<%=connectorName%>ConfigProps, I<%=connectorName%>ConfigState> {
+export class <%=connectorComponentName%>Config extends TeamsBaseComponent<I<%=connectorComponentName%>ConfigProps, I<%=connectorComponentName%>ConfigState> {
 
     public componentWillMount() {
         this.updateTheme(this.getQueryVariable('theme'));
