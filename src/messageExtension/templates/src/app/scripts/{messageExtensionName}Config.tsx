@@ -1,16 +1,15 @@
 import * as React from 'react';
 import {
     PrimaryButton,
-    TeamsComponentContext,
-    ConnectedComponent,
     Panel,
     PanelBody,
     PanelHeader,
     PanelFooter,
     Surface,
-    Checkbox
+    Checkbox,
+    TeamsThemeContext,
+    getContext
 } from 'msteams-ui-components-react';
-import { render } from 'react-dom';
 import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
 import * as microsoftTeams from '@microsoft/teams-js';
 
@@ -47,59 +46,52 @@ export class <%=messageExtensionName%>Config extends TeamsBaseComponent<I<%=mess
      * The render() method to create the UI of the tab
      */
     public render() {
+        const context = getContext({
+            baseFontSize: this.state.fontSize,
+            style: this.state.theme
+        });
+        const { rem, font } = context;
+        const { sizes, weights } = font;
+        const styles = {
+            header: { ...sizes.title, ...weights.semibold },
+            section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
+            footer: { ...sizes.xsmall }
+        };
         return (
-            <TeamsComponentContext
-                fontSize={this.state.fontSize}
-                theme={this.state.theme}
-            >
-
-                <ConnectedComponent render={(props) => {
-                    const { context } = props;
-                    const { rem, font } = context;
-                    const { sizes, weights } = font;
-                    const styles = {
-                        header: { ...sizes.title, ...weights.semibold },
-                        section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
-                        footer: { ...sizes.xsmall }
-                    }
-
-                    return (
-                        <Surface>
-                            <Panel>
-                                <PanelHeader>
-                                    <div style={styles.header}><%= messageExtensionTitle%> configuration</div>
-                                </PanelHeader>
-                                <PanelBody>
-                                    <div style={styles.section}>
-                                        <Checkbox
-                                            label="On or off?"
-                                            checked={this.state.onOrOff}
-                                            onChecked={(checked: boolean, value: any) => {
-                                                this.setState({
-                                                    onOrOff: checked
-                                                });
-                                            }}>
-                                        </Checkbox>
-                                    </div>
-                                    <div style={styles.section}>
-                                        <PrimaryButton onClick={() => {
-                                            microsoftTeams.authentication.notifySuccess(JSON.stringify({
-                                                setting: this.state.onOrOff
-                                            }));
-                                        }}>OK</PrimaryButton>
-                                    </div>
-                                </PanelBody>
-                                <PanelFooter>
-                                    <div style={styles.footer}>
-                                        (C) Copyright <%=developer%>
-                                    </div>
-                                </PanelFooter>
-                            </Panel>
-                        </Surface>
-                    );
-                }}>
-                </ConnectedComponent>
-            </TeamsComponentContext>
+            <TeamsThemeContext.Provider value={context}>
+                <Surface>
+                    <Panel>
+                        <PanelHeader>
+                            <div style={styles.header}><%= messageExtensionTitle%> configuration</div>
+                        </PanelHeader>
+                        <PanelBody>
+                            <div style={styles.section}>
+                                <Checkbox
+                                    label="On or off?"
+                                    checked={this.state.onOrOff}
+                                    onChecked={(checked: boolean, value: any) => {
+                                        this.setState({
+                                            onOrOff: checked
+                                        });
+                                    }}>
+                                </Checkbox>
+                            </div>
+                            <div style={styles.section}>
+                                <PrimaryButton onClick={() => {
+                                    microsoftTeams.authentication.notifySuccess(JSON.stringify({
+                                        setting: this.state.onOrOff
+                                    }));
+                                }}>OK</PrimaryButton>
+                            </div>
+                        </PanelBody>
+                        <PanelFooter>
+                            <div style={styles.footer}>
+                                (C) Copyright <%=developer%>
+                            </div>
+                        </PanelFooter>
+                    </Panel>
+                </Surface>
+             </TeamsThemeContext.Provider>
         );
     }
 }

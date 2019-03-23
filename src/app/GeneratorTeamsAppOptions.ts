@@ -18,9 +18,8 @@ export class GeneratorTeamsAppOptions {
     'no-telemetry': string;
     namespace: string;
     developer: string;
-    privacy: string;
-    tou: string;
     host: string;
+    hostname: string;
     bot: boolean;
     tab: boolean;
     tabTitle: string;

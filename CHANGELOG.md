@@ -12,16 +12,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Compose Extensions are now refactored into it's own file
 * Disable non-tested and non-supported extensions when running the generator over an existing projects
 * Changed bot implementation to use `TeamsBot` class from `express-msteams-host` instead of using the `IBot` interface
+* Changed the way the manifest/package, now using a *temp* folder for replaceable strings
+* Updated Microsoft Teams schema to 1.3
+* Updated and clarified README files
+* Updated the Connector configuration with new simplified configuration page, which removed a dependency on EJS
 
 ### Added
 
 * Added an option called `--no-telemetry` to opt-out of sending telemetry data when generating solutions
 * Support for adding additional Message Extensions to an already existing project
+* Support for dynamics properties/variables in the manifest.json file
 
 ### Fixes
 
 * Fixed the issue where the description of message extensions was miscalculated
 * Fixed an issue where message extension code was added when externally hosted
+* Fixed an issue where Connectors could not properly be configured
 
 ## [*2.5.0*] - <*2018-08-17*>
 

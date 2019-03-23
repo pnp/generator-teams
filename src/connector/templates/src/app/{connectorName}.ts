@@ -1,8 +1,11 @@
 import * as request from 'request';
-import * as teamBuilder from 'botbuilder-teams';
 import { Request } from "express";
 import { ConnectorDeclaration, IConnector } from 'express-msteams-host';
+import { CardFactory } from 'botbuilder-core';
 const JsonDB = require('node-json-db');
+import * as debug from "debug";
+
+const log = debug("msteams");
 
 /**
  * The connector data interface
@@ -22,8 +25,7 @@ interface I<%=connectorName%>Data {
 @ConnectorDeclaration(
     '/api/connector/connect',
     '/api/connector/ping',
-    'web/<%=connectorName%>Connect.ejs',
-    '/<%=connectorName%>Connected.html'
+    'web/<%=connectorName%>Connect.ejs' // TODO: WHAT, EJS??
 )
 export class <%=connectorName%> implements IConnector {
     private connectors: any;
@@ -64,27 +66,37 @@ export class <%=connectorName%> implements IConnector {
         // send pings to all subscribers
         return (<I<%=connectorName%>Data[]>this.connectors.getData('/connectors')).map((connector, index) => {
             return new Promise<void>((resolve, reject) => {
-                const card = new teamBuilder.O365ConnectorCard();
-                card.title('Sample connector');
-                card.text(`This is a sample Office 365 Connector`);
+                // TODO: implement adaptive cards when supported
+                const card = {
+                    'title': 'Sample Connector',
+                    'text': 'This is a sample Office 365 Connector',
+                    "sections": [
+                        {
+                            "activityTitle": "Ping",
+                            "activityText": "Sample ping ",
+                            "activityImage": "https://ytd5.azurewebsites.net/assets/icon.png",
+                            "facts": [
+                                {
+                                    "name": "Generator",
+                                    "value": "teams"
+                                },
+                                {
+                                    "name": "Created by",
+                                    "value": connector.user
+                                }
+                            ]
+                        }
+                    ],
+                    "potentialAction": [{
+                        "@context": "http://schema.org",
+                        "@type": "ViewAction",
+                        "name": "Yo Teams",
+                        "target": ["http://aka.ms/yoteams"]
+                    }],
+                    'themeColor': connector.color
+                };
 
-                // set the theme to the user configured theme color
-                card.themeColor(connector.color); 
-
-                const section = new teamBuilder.O365ConnectorCardSection();
-                section.activityTitle('Ping');
-                section.activityText(`This is just a sample ping`);
-
-                const fact = new teamBuilder.O365ConnectorCardFact();
-                fact.name('Created by');
-                fact.value(connector.user);
-                section.facts([fact]);
-                card.sections([section]);
-
-                const action = new teamBuilder.O365ConnectorCardViewAction();
-                action.name('Yo Teams');
-                action.target('http://aka.ms/yoteams');
-                card.potentialAction([action]);
+                log(`Sending card to ${connector.webhookUrl}`);
 
                 request({
                     method: 'POST',
@@ -92,8 +104,9 @@ export class <%=connectorName%> implements IConnector {
                     headers: {
                         'content-type': 'application/json',
                     },
-                    body: JSON.stringify(card.toAttachment().content)
+                    body: JSON.stringify(card)
                 }, (error: any, response: any, body: any) => {
+                    log(`Response from Connector endpoint is: ${response.statusCode}`);
                     if (error) {
                         reject(error)
                     } else {

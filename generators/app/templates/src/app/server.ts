@@ -28,8 +28,7 @@ express.use(Express.json({
 }));
 express.use(Express.urlencoded({ extended: true }));
 
- // Express configuration
-express.set('view engine', 'ejs');  
+// Express configuration
 express.set('views', path.join(__dirname, '/'));
 
 // Add simple logging
@@ -50,7 +49,7 @@ express.use(MsTeamsPageRouter({
 }));
 
 // Fallback
-express.use( (req: any, res: any, next: any) => {
+express.use((req: any, res: any, next: any) => {
     res.removeHeader("Content-Security-Policy")
     res.removeHeader("X-Frame-Options"); // IE11
     return next();
@@ -65,9 +64,6 @@ express.use('/', Express.static(path.join(__dirname, 'web/'), {
 express.set('port', port);
 
 // Start the webserver
-http.createServer(express).listen(port, (err: any) => {
-    if (err) {
-        return console.error(err);
-    }
+http.createServer(express).listen(port, () => {
     log(`Server running on ${port}`);
 });

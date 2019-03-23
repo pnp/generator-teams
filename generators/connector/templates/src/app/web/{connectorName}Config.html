@@ -9,16 +9,16 @@
   <!-- endinject -->
 </head>
 
-<body class="ts-middle">
+<body>
   <div id='app'>
-    <p>Connection of
-      <%= connectorTitle%> Connection complete</p>
-    <p>
-      You can now close this browser tab and in Microsoft Teams Connector dialog click Done and exit out of the Connector dialog.
-    </p>
+    Loading...
   </div>
+  </form>
   <!-- inject:js -->
   <!-- endinject -->
+  <script type='text/javascript'>
+    <%=libraryName%>.<%=connectorName%>Config.render(document.getElementById('app'), {});
+  </script>
 </body>
 
 </html>

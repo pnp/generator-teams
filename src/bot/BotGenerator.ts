@@ -143,31 +143,34 @@ export class BotGenerator extends Generator {
             let templateFiles = [];
             if (this.options.staticTab) {
                 templateFiles.push(
-                    "src/app/scripts/{staticTabName}Tab.tsx",
-                    "src/app/web/{staticTabName}Tab.html",
+                    "src/app/scripts/{botName}/{staticTabName}Tab.tsx",
+                    "src/app/web/{botName}/{staticTabName}Tab.html",
+                    "src/app/{botName}/dialogs/HelpDialog.ts",
+                    "src/app/{botName}/dialogs/WelcomeCard.json",
+                    "src/app/{botName}/dialogs/WelcomeDialog.ts"
                 );
 
                 manifest.staticTabs.push({
                     entityId: Guid.raw(),
                     name: this.options.staticTabTitle,
-                    contentUrl: `${this.options.host}/${this.options.staticTabName}Tab.html`,
+                    contentUrl: `https://{{HOSTNAME}}/${this.options.botName}/${this.options.staticTabName}Tab.html`,
                     scopes: ["personal"]
                 });
 
                 Yotilities.addAdditionalDeps([
-                    ["msteams-ui-components-react", "^0.7.3"],
-                    ["react", "^16.1.0"],
-                    ["@types/react", "16.4.7"],
-                    ["react-dom", "^16.2.0"],
+                    ["msteams-ui-components-react", "^0.8.1"],
+                    ["react", "^16.8.4"],
+                    ["@types/react", "16.8.8"],
+                    ["react-dom", "^16.8.4"],
                     ["file-loader", "1.1.11"],
-                    ["typestyle", "1.5.1"]
+                    ["typestyle", "2.0.1"]
                 ], this.fs);
             }
             (<any[]>manifest.bots).push(newbot);
             this.fs.writeJSON(manifestPath, manifest);
 
             if (this.options.botType != 'existing') {
-                templateFiles.push('src/app/{botName}.ts')
+                templateFiles.push('src/app/{botName}/bot.ts')
                 templateFiles.push('README-{botName}.md')
             }
             templateFiles.forEach(t => {
@@ -181,7 +184,7 @@ export class BotGenerator extends Generator {
             if (this.options.staticTab) {
                 Yotilities.insertTsExportDeclaration(
                     "src/app/scripts/client.ts",
-                    `./${this.options.staticTabName}Tab`,
+                    `./${this.options.botName}/${this.options.staticTabName}Tab`,
                     `Automatically added for the ${this.options.staticTabName} bot tab`,
                     this.fs
                 );
@@ -189,7 +192,7 @@ export class BotGenerator extends Generator {
 
             Yotilities.insertTsExportDeclaration(
                 "src/app/TeamsAppsComponents.ts",
-                `./${this.options.botName}`,
+                `./${this.options.botName}/bot`,
                 `Automatically added for the ${this.options.botName} bot`,
                 this.fs
             );

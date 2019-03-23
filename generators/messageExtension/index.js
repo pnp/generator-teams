@@ -422,12 +422,12 @@ class MessageExtensionGenerator extends Generator {
                     this.fs.copyTpl(this.templatePath(t), Yotilities_1.Yotilities.fixFileNames(t, this.options), this.options);
                 });
                 Yotilities_1.Yotilities.addAdditionalDeps([
-                    ["msteams-ui-components-react", "^0.7.3"],
-                    ["react", "^16.1.0"],
-                    ["@types/react", "16.4.7"],
-                    ["react-dom", "^16.2.0"],
+                    ["msteams-ui-components-react", "^0.8.1"],
+                    ["react", "^16.8.4"],
+                    ["@types/react", "16.8.8"],
+                    ["react-dom", "^16.8.4"],
                     ["file-loader", "1.1.11"],
-                    ["typestyle", "1.5.1"]
+                    ["typestyle", "2.0.1"]
                 ], this.fs);
                 Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/scripts/client.ts", `./${this.options.messageExtensionName}Config`, `Automatically added for the ${this.options.messageExtensionName} message extension`, this.fs);
                 // Yotilities.insertImportDeclaration(
@@ -439,7 +439,7 @@ class MessageExtensionGenerator extends Generator {
                 // );
                 // Dynamically insert the reference and hook it up to the Bot
                 const project = new ts_simple_ast_1.default();
-                const file = project.createSourceFile(`src/app/${this.options.botName}.ts`, this.fs.read(`src/app/${this.options.botName}.ts`), {
+                const file = project.createSourceFile(`src/app/${this.options.botName}/bot.ts`, this.fs.read(`src/app/${this.options.botName}/bot.ts`), {
                     overwrite: true
                 });
                 const classes = file.getClasses();
@@ -452,7 +452,7 @@ class MessageExtensionGenerator extends Generator {
                 const pos = lastImport !== undefined ? lastImport.getChildIndex() : 0;
                 const importDecl = file.insertImportDeclaration(pos, {
                     defaultImport: this.options.messageExtensionName,
-                    moduleSpecifier: `./${this.options.messageExtensionName}`,
+                    moduleSpecifier: `../${this.options.messageExtensionName}`,
                 });
                 let hostimports = imports.filter(i => {
                     return i.getModuleSpecifier().getLiteralText() == 'express-msteams-host';
@@ -477,7 +477,7 @@ class MessageExtensionGenerator extends Generator {
                         scope: ts_simple_ast_1.Scope.Private,
                         name: `_${this.options.messageExtensionName}`,
                         type: this.options.messageExtensionName,
-                        docs: [`Local property for ${this.options.messageExtensionName}`],
+                        docs: [`Local property for ${this.options.messageExtensionName}`]
                     });
                     // add the decorator
                     prop.addDecorator({
@@ -488,21 +488,9 @@ class MessageExtensionGenerator extends Generator {
                     const constructors = cl.getConstructors();
                     if (constructors.length > 0) {
                         const c = constructors[0];
-                        let statements = c.getStatements().filter(s => {
-                            return s.getText() == 'super.registerMessageExtensions();';
-                        });
-                        if (statements.length == 1) {
-                            // insert the variable
-                            c.insertStatements(statements[0].getChildIndex(), `// Message extension ${this.options.messageExtensionName}
-                            this._${this.options.messageExtensionName} = new ${this.options.messageExtensionName}(this.universalBot);`);
-                        }
-                        else {
-                            // insert variable and registrations
-                            c.addStatements(`// Message extension ${this.options.messageExtensionName}
-                            this._${this.options.messageExtensionName} = new ${this.options.messageExtensionName}(this.universalBot);
-                            // Register all messge extensions
-                            super.registerMessageExtensions();`);
-                        }
+                        c.insertStatements(0, `// Message extension ${this.options.messageExtensionName}
+                        this._${this.options.messageExtensionName} = new ${this.options.messageExtensionName}();
+                        `);
                     }
                     else {
                         // TODO: log
@@ -512,7 +500,7 @@ class MessageExtensionGenerator extends Generator {
                     // TODO: log
                 }
                 file.formatText();
-                this.fs.write(`src/app/${this.options.botName}.ts`, file.getFullText());
+                this.fs.write(`src/app/${this.options.botName}/bot.ts`, file.getFullText());
             }
         }
     }

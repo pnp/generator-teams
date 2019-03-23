@@ -3,7 +3,7 @@
 // Licensed under the MIT license.
 
 var webpack = require('webpack');
-
+const Dotenv = require('dotenv-webpack');
 var path = require('path');
 var fs = require('fs');
 var argv = require('yargs').argv;
@@ -87,7 +87,9 @@ var config = [{
                 }
             ]
         },
-        plugins: [],
+        plugins: [
+            new Dotenv()
+        ],
         performance: {
             maxEntrypointSize: 400000,
             maxAssetSize: 400000,
