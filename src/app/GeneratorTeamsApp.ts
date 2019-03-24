@@ -33,14 +33,22 @@ export class GeneratorTeamsApp extends Generator {
             default: false,
             description: 'Skips running npm install'
         });
-        AppInsights.setup('6d773b93-ff70-45c5-907c-8edae9bf90eb');
-        delete AppInsights.defaultClient.context.tags['ai.cloud.roleInstance'];
-        AppInsights.Configuration.setAutoCollectExceptions(true);
-        AppInsights.Configuration.setAutoCollectPerformance(true);
-        AppInsights.defaultClient.commonProperties = {
-            version: pkg.version
-        };
-        AppInsights.defaultClient.trackEvent({ name: 'start-generator' });
+        this.option('telemetry', {
+            type: Boolean,
+            default: false,
+            description: 'Does not pass usage telemetry'
+        });
+        if (this.options['no-telemetry']) {
+            AppInsights.setup('6d773b93-ff70-45c5-907c-8edae9bf90eb');
+            delete AppInsights.defaultClient.context.tags['ai.cloud.roleInstance'];
+            AppInsights.Configuration.setAutoCollectExceptions(true);
+            AppInsights.Configuration.setAutoCollectPerformance(true);
+            AppInsights.defaultClient.commonProperties = {
+                version: pkg.version
+            };
+            AppInsights.defaultClient.trackEvent({ name: 'start-generator' });
+        }
+
         this.options.existingManifest = this.fs.readJSON(`./src/manifest/manifest.json`);
     }
 
@@ -121,18 +129,22 @@ export class GeneratorTeamsApp extends Generator {
                         {
                             name: 'A Tab',
                             value: 'tab',
+                            disabled: this.options.existingManifest,
                             checked: true
                         },
                         {
                             name: 'A Bot',
+                            disabled: this.options.existingManifest,
                             value: 'bot'
                         },
                         {
                             name: 'An Outgoing Webhook',
+                            disabled: this.options.existingManifest,
                             value: 'custombot'
                         },
                         {
                             name: 'A Connector',
+                            disabled: this.options.existingManifest,
                             value: 'connector'
                         },
                         {
@@ -158,6 +170,7 @@ export class GeneratorTeamsApp extends Generator {
                 process.exit(0)
             }
             if (!this.options.existingManifest) {
+
                 answers.host = answers.host.endsWith('/') ? answers.host.substr(0, answers.host.length - 1) : answers.host;
                 this.options.title = answers.name;
                 this.options.description = this.description;
@@ -168,10 +181,10 @@ export class GeneratorTeamsApp extends Generator {
                 this.options.developer = answers.developer;
                 this.options.host = answers.host;
                 var tmp: string = this.options.host.substring(this.options.host.indexOf('://') + 3)
+                this.options.hostname = this.options.host.substring(this.options.host.indexOf('://') +3);
+
                 var arr: string[] = tmp.split('.');
                 this.options.namespace = lodash.reverse(arr).join('.');
-                this.options.tou = answers.host + '/tou.html';
-                this.options.privacy = answers.host + '/privacy.html';
                 this.options.id = Guid.raw();
                 if (this.options.host.indexOf('azurewebsites.net') >= 0) {
                     this.options.websitePrefix = this.options.host.substring(this.options.host.indexOf('://') + 3, this.options.host.indexOf('.'));
@@ -214,6 +227,7 @@ export class GeneratorTeamsApp extends Generator {
             let staticFiles = [
                 "_gitignore",
                 "tsconfig.json",
+                "tslint.json",
                 "tsconfig-client.json",
                 "src/manifest/icon-outline.png",
                 "src/manifest/icon-color.png",
@@ -222,7 +236,7 @@ export class GeneratorTeamsApp extends Generator {
                 '_deployment',
                 "src/app/TeamsAppsComponents.ts"
             ]
-            
+
 
             let templateFiles = [
                 "README.md",
@@ -267,34 +281,37 @@ export class GeneratorTeamsApp extends Generator {
 
     public install() {
         // track usage
-        if (this.options.existingManifest) {
-            AppInsights.defaultClient.trackEvent({ name: 'rerun-generator' });
-        }
-        AppInsights.defaultClient.trackEvent({ name: 'end-generator' });
-        if (this.options.bot) {
-            AppInsights.defaultClient.trackEvent({ name: 'bot' });
-            if (this.options.botType == 'existing') {
-                AppInsights.defaultClient.trackEvent({ name: 'bot-existing' });
-            } else {
-                AppInsights.defaultClient.trackEvent({ name: 'bot-new' });
+        if (this.options['no-telemetry']) {
+
+            if (this.options.existingManifest) {
+                AppInsights.defaultClient.trackEvent({ name: 'rerun-generator' });
             }
+            AppInsights.defaultClient.trackEvent({ name: 'end-generator' });
+            if (this.options.bot) {
+                AppInsights.defaultClient.trackEvent({ name: 'bot' });
+                if (this.options.botType == 'existing') {
+                    AppInsights.defaultClient.trackEvent({ name: 'bot-existing' });
+                } else {
+                    AppInsights.defaultClient.trackEvent({ name: 'bot-new' });
+                }
+            }
+            if (this.options.messageExtension) {
+                AppInsights.defaultClient.trackEvent({ name: 'messageExtension' });
+            }
+            if (this.options.connector) {
+                AppInsights.defaultClient.trackEvent({ name: 'connector' });
+            }
+            if (this.options.customBot) {
+                AppInsights.defaultClient.trackEvent({ name: 'outgoingWebhook' });
+            }
+            if (this.options.staticTab) {
+                AppInsights.defaultClient.trackEvent({ name: 'staticTab' });
+            }
+            if (this.options.tab) {
+                AppInsights.defaultClient.trackEvent({ name: 'tab' });
+            }
+            AppInsights.defaultClient.flush();
         }
-        if (this.options.messageExtension) {
-            AppInsights.defaultClient.trackEvent({ name: 'messageExtension' });
-        }
-        if (this.options.connector) {
-            AppInsights.defaultClient.trackEvent({ name: 'connector' });
-        }
-        if (this.options.customBot) {
-            AppInsights.defaultClient.trackEvent({ name: 'outgoingWebhook' });
-        }
-        if (this.options.staticTab) {
-            AppInsights.defaultClient.trackEvent({ name: 'staticTab' });
-        }
-        if (this.options.tab) {
-            AppInsights.defaultClient.trackEvent({ name: 'tab' });
-        }
-        AppInsights.defaultClient.flush();
 
         if (this.options['skip-install']) {
             this.log(chalk.default.yellow('Skipping installation of dependencies. You should run "npm install"'));

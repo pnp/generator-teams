@@ -10,6 +10,8 @@ Head on over to [official documentation](https://msdn.microsoft.com/en-us/micros
 
 ## Building the app
 
+The application is built using the `build` Gulp task.
+
 ``` bash
 npm i -g gulp gulp-cli
 gulp build
@@ -17,9 +19,15 @@ gulp build
 
 ## Building the manifest
 
+To create the Microsoft Teams Apps manifest, run the `manifest` Gulp task. This will generate and validate the package and finally create the package (a zip file) in the `package` folder.
+
 ``` bash
 gulp manifest
 ```
+
+## Configuration
+
+Configuration is stored in the `.env` file.
 
 ## Debug and test locally
 
@@ -55,6 +63,7 @@ To step through code in Visual Studio Code you need to add the following snippet
 
 * dist/* - the files required to host the solution
 * package/* - the Teams extensibility package (zip file) to be uploaded to Microsoft Teams ([how-to](https://msdn.microsoft.com/en-us/microsoft-teams/createpackage#uploading-your-tab-package-to-microsoft-teams))
+* temp - used for temporary processing of files during build time
 
 ## Deploying to Azure using Git
 

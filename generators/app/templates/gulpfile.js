@@ -3,6 +3,7 @@
 // Licensed under the MIT license.
 
 var gulp = require('gulp');
+var vinyl = require('vinyl');
 var webpack = require('webpack');
 var inject = require('gulp-inject');
 const zip = require('gulp-zip');
@@ -14,12 +15,18 @@ var fs = require('fs');
 var ZSchema = require('z-schema');
 var request = require('request');
 var path = require('path');
+const del = require('del'); // rm -rf
+const replace = require('gulp-token-replace');
+
 
 var injectSources = ["./dist/web/scripts/**/*.js", './dist/web/assets/**/*.css']
 var staticFiles = ["./src/app/**/*.html", "./src/app/**/*.ejs", "./src/app/web/assets/**/*"]
 var htmlFiles = ["./src/app/**/*.html", "./src/app/**/*.ejs"]
 var watcherfiles = ["./src/**/*.*"]
-var manifestFiles = ["./src/manifest/**/*.*"]
+var manifestFiles = ["./src/manifest/**/*.*", '!**/*.json']
+var temp = ["./temp"]
+
+
 
 
 /**
@@ -29,6 +36,10 @@ gulp.task('watch', () => {
     gulp.watch(watcherfiles, gulp.series('build'));
 });
 
+// TASK: nuke
+gulp.task('nuke', () => {
+    return del(['temp', 'package', 'dist']);
+});
 
 /**
  * Webpack bundling
@@ -59,8 +70,8 @@ gulp.task('webpack', (callback) => {
  */
 gulp.task('static:copy', () => {
     return gulp.src(staticFiles, {
-            base: "./src/app"
-        })
+        base: "./src/app"
+    })
         .pipe(gulp.dest('./dist/'));
 });
 
@@ -87,16 +98,26 @@ gulp.task('static:inject', () => {
 gulp.task('build', gulp.series('webpack', 'static:copy', 'static:inject'));
 
 /**
+ * Replace parameters in the manifest
+ */
+gulp.task('generate-manifest', (cb) => {
+    require('dotenv').config();
+    return gulp.src('src/manifest/manifest.json')
+        .pipe(replace({ tokens: { ...process.env } }))
+        .pipe(gulp.dest(temp));
+});
+
+/**
  * Schema validation
  */
-gulp.task('validate-manifest', (callback) => {
+gulp.task('schema-validation', (callback) => {
 
-    var filePath = path.join(__dirname, 'src/manifest/manifest.json');
+    var filePath = path.join(__dirname, 'temp/manifest.json');
     fs.readFile(filePath, {
         encoding: 'utf-8'
     }, function (err, data) {
         if (!err) {
-            var requiredUrl = "https://statics.teams.microsoft.com/sdk/v1.2/manifest/MicrosoftTeams.schema.json";
+            var requiredUrl = "https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json";
             var validator = new ZSchema();
             var json = JSON.parse(data);
             var schema = {
@@ -124,6 +145,9 @@ gulp.task('validate-manifest', (callback) => {
     });
 });
 
+gulp.task('validate-manifest', gulp.series('generate-manifest', 'schema-validation'));
+
+
 /**
  * Task for local debugging
  */
@@ -143,6 +167,7 @@ gulp.task('nodemon', (cb) => {
     });
 });
 
+
 gulp.task('serve', gulp.series('build', 'nodemon', 'watch'));
 
 /**
@@ -150,8 +175,9 @@ gulp.task('serve', gulp.series('build', 'nodemon', 'watch'));
  */
 gulp.task('zip', () => {
     return gulp.src(manifestFiles)
+        .pipe(gulp.src('./temp/manifest.json'))
         .pipe(zip('<%=solutionName%>.zip'))
         .pipe(gulp.dest('package'));
 });
 
-gulp.task('manifest', gulp.series('validate-manifest', 'zip'));
+gulp.task('manifest', gulp.series('nuke', 'validate-manifest', 'zip'));

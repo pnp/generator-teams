@@ -1,6 +1,6 @@
 {
   "name": "generator-teams",
-  "version": "2.5.0",
+  "version": "2.7.0-preview",
   "description": "Yeoman generator for Microsoft Teams Apps",
   "main": "generators/app/index.js",
   "scripts": {
@@ -41,23 +41,33 @@
       "url": "https://github.com/billbliss"
     }
   ],
+  "contributors": [
+    "DiZerega, Richard <https://github.com/richdizz>",
+    "van Bergen, Elaine <https://github.com/laneyvb>",
+    "Laskewitz, Daniel <https://github.com/Laskewitz>",
+    "Schaeflein, Paul <https://github.com/pschaeflein>",
+    "Davulcu, Cagdas <https://github.com/cagdasdavulcu>"
+  ],
   "license": "MIT",
   "devDependencies": {
-    "@types/lodash": "^4.14.104",
+    "@types/guid": "^1.0.0",
+    "@types/lodash": "^4.14.118",
     "@types/yeoman-generator": "^2.0.1",
     "@types/yosay": "0.0.29",
     "clean-webpack-plugin": "^0.1.18",
-    "copy-webpack-plugin": "^4.5.0",
-    "ts-loader": "^4.4.2",
+    "copy-webpack-plugin": "^4.6.0",
+    "ts-loader": "^5.3.0",
     "typescript": "^2.6.1",
-    "webpack": "^4.16.3",
-    "webpack-cli": "^3.1.0"
+    "webpack": "^4.26.0",
+    "webpack-cli": "^3.1.2"
   },
   "dependencies": {
-    "applicationinsights": "^1.0.2",
+    "applicationinsights": "^1.0.7",
     "chalk": "^2.3.2",
+    "dotenv": "^6.1.0",
     "guid": "0.0.12",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.11",
+    "ts-simple-ast": "^19.0.0",
     "yeoman-generator": "^3.1.1",
     "yosay": "^2.0.1"
   }

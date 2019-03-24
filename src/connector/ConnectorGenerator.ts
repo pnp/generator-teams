@@ -71,6 +71,7 @@ export class ConnectorGenerator extends Generator {
                 this.options.connectorType = answers.connectorType;
                 this.options.connectorTitle = answers.connectorName;
                 this.options.connectorName = lodash.camelCase(answers.connectorName);
+                this.options.connectorComponentName = this.options.connectorName.charAt(0).toUpperCase() + this.options.connectorName.slice(1);
                 if (!this.options.connectorName.endsWith('Connector')) {
                     this.options.connectorName = this.options.connectorName + 'Connector';
                 }
@@ -83,12 +84,9 @@ export class ConnectorGenerator extends Generator {
             if (this.options.connectorType != 'existing') {
                 let templateFiles = [
                     "README-{connectorName}.md",
-                    "src/app/{connectorName}.ts",
-                    "src/app/web/{connectorName}.html",
-                    "src/app/web/{connectorName}Connect.ejs",
-                    "src/app/scripts/{connectorName}Connect.tsx",
-                    "src/app/web/{connectorName}Connected.html"
-
+                    "src/app/scripts/{connectorName}Config.tsx",
+                    "src/app/web/{connectorName}/config.html",
+                    "src/app/{connectorName}/{connectorComponentName}.ts",
                 ];
 
                 this.sourceRoot()
@@ -105,34 +103,33 @@ export class ConnectorGenerator extends Generator {
             var manifest: any = this.fs.readJSON(manifestPath);
             manifest.connectors.push({
                 connectorId: this.options.connectorId,
+                configurationUrl: `https://{{HOSTNAME}}/${this.options.connectorName}/config.html`, 
                 scopes: ["team"],
             });
             this.fs.writeJSON(manifestPath, manifest);
 
             Yotilities.addAdditionalDeps([
-                ['@types/ejs', '2.6.0'],
                 ['@types/node-json-db', '0.0.1'],
-                ['ejs', '2.6.1'],
                 ['node-json-db', '0.7.5'],
-                ["msteams-ui-components-react", "^0.7.3"],
-                ["react", "^16.1.0"],
-                ["@types/react", "16.4.7"],
-                ["react-dom", "^16.2.0"],
+                ["msteams-ui-components-react", "^0.8.1"],
+                ["react", "^16.8.4"],
+                ["@types/react", "16.8.8"],
+                ["react-dom", "^16.8.4"],
                 ["file-loader", "1.1.11"],
-                ["typestyle", "1.7.2"]
+                ["typestyle", "2.0.1"]
             ], this.fs);
 
             // update client.ts
             Yotilities.insertTsExportDeclaration(
                 "src/app/scripts/client.ts",
-                `./${this.options.connectorName}Connect`,
+                `./${this.options.connectorName}Config`,
                 `Automatically added for the ${this.options.connectorName} connector`,
                 this.fs
             );
 
             Yotilities.insertTsExportDeclaration(
                 "src/app/TeamsAppsComponents.ts",
-                `./${this.options.connectorName}`,
+                `./${this.options.connectorName}/${this.options.connectorComponentName}`,
                 `Automatically added for the ${this.options.connectorName} connector`,
                 this.fs
             );

@@ -1,14 +1,14 @@
 {
-    "$schema": "https://statics.teams.microsoft.com/sdk/v1.2/manifest/MicrosoftTeams.schema.json",
-    "manifestVersion": "1.2",
+    "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.3",
     "id": "<%= id %>",
     "version": "0.0.1",
     "packageName": "<%= namespace %>",
     "developer": {
         "name": "<%=developer %>",
-        "websiteUrl": "<%=host %>",
-        "privacyUrl": "<%=privacy %>",
-        "termsOfUseUrl": "<%=tou %>"
+        "websiteUrl": "https://{{HOSTNAME}}",
+        "privacyUrl": "https://{{HOSTNAME}}/privacy.html",
+        "termsOfUseUrl": "https://{{HOSTNAME}}/tou.html"
     },
     "name": {
         "short": "<%=title%>",
@@ -29,5 +29,7 @@
     "connectors": [],
     "composeExtensions": [],
     "permissions": ["identity", "messageTeamMembers"],
-    "validDomains": []
+    "validDomains": [
+        "{{HOSTNAME}}"
+    ]
 }

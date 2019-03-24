@@ -3,6 +3,8 @@
 // Licensed under the MIT license.
 
 var webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
+var TSLintPlugin = require('tslint-webpack-plugin');
 
 var path = require('path');
 var fs = require('fs');
@@ -49,7 +51,11 @@ var config = [{
                 loader: "ts-loader"
             }]
         },
-        plugins: []
+        plugins: [
+            new TSLintPlugin({
+                files: ['./src/app/*.ts']
+            })
+        ]
     },
     {
         entry: {
@@ -87,7 +93,12 @@ var config = [{
                 }
             ]
         },
-        plugins: [],
+        plugins: [
+            new Dotenv(),
+            new TSLintPlugin({
+                files: ['./src/app/scripts/**/*.ts', './src/app/scripts/**/*.tsx']
+            })
+        ],
         performance: {
             maxEntrypointSize: 400000,
             maxAssetSize: 400000,
