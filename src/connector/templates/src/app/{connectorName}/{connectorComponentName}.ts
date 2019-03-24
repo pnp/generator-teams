@@ -1,8 +1,8 @@
-import * as request from 'request';
+import * as request from "request";
 import { Request } from "express";
-import { ConnectorDeclaration, IConnector } from 'express-msteams-host';
-import { CardFactory } from 'botbuilder-core';
-const JsonDB = require('node-json-db');
+import { ConnectorDeclaration, IConnector, PreventIframe } from "express-msteams-host";
+import { CardFactory } from "botbuilder-core";
+import JsonDB = require("node-json-db");
 import * as debug from "debug";
 
 const log = debug("msteams");
@@ -23,10 +23,11 @@ interface I<%=connectorComponentName%>Data {
  * Implementation of the "<%=connectorComponentName%>Connector" Office 365 Connector
  */
 @ConnectorDeclaration(
-    '/api/connector/connect',
-    '/api/connector/ping',
-    'web/<%=connectorName%>Connect.ejs' // TODO: WHAT, EJS??
+    "/api/connector/connect",
+    "/api/connector/ping",
+    "web/<%=connectorName%>Connect.ejs" // TODO: WHAT, EJS??
 )
+@PreventIframe("/<%=connectorName%>/config.html")
 export class <%=connectorComponentName%> implements IConnector {
     private connectors: any;
 
@@ -57,7 +58,7 @@ export class <%=connectorComponentName%> implements IConnector {
                 })));
         } catch (error) {
             if (error.name && error.name === "DataError") {
-                // there's no registered connectors
+                // there"s no registered connectors
                 return [];
             }
             throw error;
@@ -68,38 +69,38 @@ export class <%=connectorComponentName%> implements IConnector {
             return new Promise<void>((resolve, reject) => {
                 // TODO: implement adaptive cards when supported
                 const card = {
-                    'title': 'Sample Connector',
-                    'text': 'This is a sample Office 365 Connector',
-                    "sections": [
+                    title: "Sample Connector",
+                    text: "This is a sample Office 365 Connector",
+                    sections: [
                         {
-                            "activityTitle": "Ping",
-                            "activityText": "Sample ping ",
-                            "activityImage": "https://ytd5.azurewebsites.net/assets/icon.png",
-                            "facts": [
+                            activityTitle: "Ping",
+                            activityText: "Sample ping ",
+                            activityImage: "https://ytd5.azurewebsites.net/assets/icon.png",
+                            facts: [
                                 {
-                                    "name": "Generator",
-                                    "value": "teams"
+                                    name: "Generator",
+                                    value: "teams"
                                 },
                                 {
-                                    "name": "Created by",
-                                    "value": connector.user
+                                    name: "Created by",
+                                    value: connector.user
                                 }
                             ]
                         }
                     ],
-                    "potentialAction": [{
+                    potentialAction: [{
                         "@context": "http://schema.org",
                         "@type": "ViewAction",
                         "name": "Yo Teams",
                         "target": ["http://aka.ms/yoteams"]
                     }],
-                    'themeColor': connector.color
                 };
 
                 log(`Sending card to ${connector.webhookUrl}`);
 
                 request({
-                    body: JSON.stringify(card.toAttachment().content),
+                    method: "POST",
+                    uri: decodeURI(connector.webhookUrl),
                     headers: {
                         "content-type": "application/json",
                     },

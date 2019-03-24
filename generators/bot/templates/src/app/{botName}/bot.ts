@@ -1,10 +1,10 @@
-import { BotDeclaration, MessageExtensionDeclaration, IBot } from 'express-msteams-host';
+import { BotDeclaration, MessageExtensionDeclaration, IBot, PreventIframe } from "express-msteams-host";
 import * as debug from "debug";
-import { DialogSet, DialogState } from 'botbuilder-dialogs';
-import { StatePropertyAccessor, CardFactory, TurnContext, MemoryStorage, ConversationState, ActivityTypes } from 'botbuilder';
-import HelpDialog from './dialogs/HelpDialog';
-import WelcomeCard from './dialogs/WelcomeDialog';
-import { TeamsContext, TeamsActivityProcessor } from 'botbuilder-teams';
+import { DialogSet, DialogState } from "botbuilder-dialogs";
+import { StatePropertyAccessor, CardFactory, TurnContext, MemoryStorage, ConversationState, ActivityTypes } from "botbuilder";
+import HelpDialog from "./dialogs/HelpDialog";
+import WelcomeCard from "./dialogs/WelcomeDialog";
+import { TeamsContext, TeamsActivityProcessor } from "botbuilder-teams";
 
 // Initialize debug logging module
 const log = debug("msteams");
@@ -13,10 +13,11 @@ const log = debug("msteams");
  * Implementation for <%= botTitle %>
  */
 @BotDeclaration(
-    '/api/messages',
+    "/api/messages",
     new MemoryStorage(),
     process.env.MICROSOFT_APP_ID,
     process.env.MICROSOFT_APP_PASSWORD)
+@PreventIframe("/<%=botName%>/<%=staticTabName%>.html")
 export class <%= botClassName %> implements IBot {
     private readonly conversationState: ConversationState;
     private readonly dialogs: DialogSet;
@@ -29,9 +30,9 @@ export class <%= botClassName %> implements IBot {
      */
     public constructor(conversationState: ConversationState) {
         this.conversationState = conversationState;
-        this.dialogState = conversationState.createProperty('dialogState');
+        this.dialogState = conversationState.createProperty("dialogState");
         this.dialogs = new DialogSet(this.dialogState);
-        this.dialogs.add(new HelpDialog('help'));
+        this.dialogs.add(new HelpDialog("help"));
 
         // incoming messages
         this.activityProc.messageActivityHandler = {
@@ -46,12 +47,12 @@ export class <%= botClassName %> implements IBot {
                             teamsContext.getActivityTextWithoutMentions().toLowerCase() :
                             context.activity.text;
 
-                        if (text.startsWith('hello')) {
-                            await context.sendActivity('Oh, hello to you as well!');
+                        if (text.startsWith("hello")) {
+                            await context.sendActivity("Oh, hello to you as well!");
                             return;
-                        } else if (text.startsWith('help')) {
+                        } else if (text.startsWith("help")) {
                             const dc = await this.dialogs.createContext(context);
-                            await dc.beginDialog('help');
+                            await dc.beginDialog("help");
                         } else {
                             await context.sendActivity(`I\'m terribly sorry, but my master hasn\'t trained me to do anything yet...`);
                         }
@@ -83,7 +84,7 @@ export class <%= botClassName %> implements IBot {
                 const added = context.activity.reactionsAdded;
                 if (added && added[0]) {
                     await context.sendActivity({
-                        textFormat: 'xml',
+                        textFormat: "xml",
                         text: `That was an interesting reaction (<b>${added[0].type}</b>)`
                     });
                 }

@@ -1,6 +1,7 @@
 {
     "extends": "tslint:recommended",
     "rules": {
+        "arrow-parens": false,
         "max-line-length": {
             "options": [256]
         },
@@ -23,7 +24,8 @@
                 "timeEnd",
                 "trace"
             ]
-        }
+        },
+        "object-literal-sort-keys": false
     },
     "jsRules": {
         "max-line-length": {

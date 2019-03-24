@@ -9,9 +9,9 @@ import {
     Checkbox,
     TeamsThemeContext,
     getContext
-} from 'msteams-ui-components-react';
-import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
-import * as microsoftTeams from '@microsoft/teams-js';
+} from "msteams-ui-components-react";
+import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from "msteams-react-base-component";
+import * as microsoftTeams from "@microsoft/teams-js";
 
 /**
  * State for the <%=messageExtensionClassName%>Config React component

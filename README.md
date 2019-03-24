@@ -59,6 +59,7 @@ yo teams [arguments]
  The following arguments can be used:
 
 * `--skip-install` - when used no packages will be installed at the end of the generator and you have to run `npm install` or similar manually.
+* `--no-telemetry` - opt out of sending telemetry data (NOTE: no personal data or names of artefacts are being sent, only information of successful executions and what options are being used).
 
 ## The generated project
 
@@ -101,6 +102,7 @@ For more information on how Tabs and Bots can be used with Teams see the [Teams 
 * [Elaine van Bergen](https://github.com/laneyvb)
 * [Daniel Laskewitz](https://github.com/Laskewitz)
 * [Paul Schaeflein](https://github.com/pschaeflein)
+* [Cagdas Davulcu](https://github.com/cagdasdavulcu)
 
 ## Contributing
 

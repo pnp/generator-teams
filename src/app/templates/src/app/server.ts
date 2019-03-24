@@ -30,7 +30,7 @@ express.use(Express.json({
 express.use(Express.urlencoded({ extended: true }));
 
 // Express configuration
-express.set('views', path.join(__dirname, '/'));
+express.set("views", path.join(__dirname, "/"));
 
 // Add simple logging
 express.use(morgan("tiny"));
@@ -40,21 +40,15 @@ express.use("/scripts", Express.static(path.join(__dirname, "web/scripts")));
 express.use("/assets", Express.static(path.join(__dirname, "web/assets")));
 
 // routing for bots, connectors and incoming web hooks - based on the decorators
-// For more information see: TODO
+// For more information see: https://www.npmjs.com/package/express-msteams-host
 express.use(MsTeamsApiRouter(allComponents));
 
 // routing for pages for tabs and connector configuration
-// For more information see: TODO
+// For more information see: https://www.npmjs.com/package/express-msteams-host
 express.use(MsTeamsPageRouter({
-    root: path.join(__dirname, "web/")
+    root: path.join(__dirname, "web/"),
+    components: allComponents
 }));
-
-// Fallback
-express.use( (req: any, res: any, next: any) => {
-    res.removeHeader("Content-Security-Policy");
-    res.removeHeader("X-Frame-Options"); // IE11
-    return next();
-});
 
 // Set default web page
 express.use("/", Express.static(path.join(__dirname, "web/"), {

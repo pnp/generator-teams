@@ -267,8 +267,8 @@ class ConnectorGenerator extends Generator {
                 let templateFiles = [
                     "README-{connectorName}.md",
                     "src/app/scripts/{connectorName}Config.tsx",
-                    "src/app/web/{connectorName}Config.html",
-                    "src/app/{connectorName}.ts",
+                    "src/app/web/{connectorName}/config.html",
+                    "src/app/{connectorName}/{connectorComponentName}.ts",
                 ];
                 this.sourceRoot();
                 templateFiles.forEach(t => {
@@ -279,7 +279,7 @@ class ConnectorGenerator extends Generator {
             var manifest = this.fs.readJSON(manifestPath);
             manifest.connectors.push({
                 connectorId: this.options.connectorId,
-                configurationUrl: `https://{{HOSTNAME}}/${this.options.connectorName}Config.html`,
+                configurationUrl: `https://{{HOSTNAME}}/${this.options.connectorName}/config.html`,
                 scopes: ["team"],
             });
             this.fs.writeJSON(manifestPath, manifest);
@@ -295,7 +295,7 @@ class ConnectorGenerator extends Generator {
             ], this.fs);
             // update client.ts
             Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/scripts/client.ts", `./${this.options.connectorName}Config`, `Automatically added for the ${this.options.connectorName} connector`, this.fs);
-            Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/TeamsAppsComponents.ts", `./${this.options.connectorName}`, `Automatically added for the ${this.options.connectorName} connector`, this.fs);
+            Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/TeamsAppsComponents.ts", `./${this.options.connectorName}/${this.options.connectorComponentName}`, `Automatically added for the ${this.options.connectorName} connector`, this.fs);
         }
     }
 }

@@ -16,12 +16,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Updated Microsoft Teams schema to 1.3
 * Updated and clarified README files
 * Updated the Connector configuration with new simplified configuration page, which removed a dependency on EJS
+* Reorganized the file structure and file namings
+* Improved class names
 
 ### Added
 
 * Added an option called `--no-telemetry` to opt-out of sending telemetry data when generating solutions
 * Support for adding additional Message Extensions to an already existing project
 * Support for dynamics properties/variables in the manifest.json file
+* Added TSLinting to the build pipeline
 
 ### Fixes
 

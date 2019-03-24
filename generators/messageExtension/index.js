@@ -419,7 +419,7 @@ class MessageExtensionGenerator extends Generator {
             // Externally hosted bots does not have an implementation
             if (this.options.messageExtensionType !== "external") {
                 let templateFiles = [];
-                templateFiles.push("src/app/{messageExtensionName}.ts", "src/app/scripts/{messageExtensionName}Config.tsx", "src/app/web/{messageExtensionName}Config.html");
+                templateFiles.push("src/app/{messageExtensionName}/{messageExtensionClassName}.ts", "src/app/scripts/{messageExtensionClassName}Config.tsx", "src/app/web/{messageExtensionName}/config.html");
                 templateFiles.forEach(t => {
                     this.fs.copyTpl(this.templatePath(t), Yotilities_1.Yotilities.fixFileNames(t, this.options), this.options);
                 });
@@ -453,8 +453,8 @@ class MessageExtensionGenerator extends Generator {
                 const lastImport = imports.length > 0 ? imports[imports.length - 1] : undefined;
                 const pos = lastImport !== undefined ? lastImport.getChildIndex() : 0;
                 const importDecl = file.insertImportDeclaration(pos, {
-                    defaultImport: this.options.messageExtensionName,
-                    moduleSpecifier: `../${this.options.messageExtensionName}`,
+                    defaultImport: this.options.messageExtensionClassName,
+                    moduleSpecifier: `../${this.options.messageExtensionName}/${this.options.messageExtensionClassName}`,
                 });
                 let hostimports = imports.filter(i => {
                     return i.getModuleSpecifier().getLiteralText() == 'express-msteams-host';
@@ -477,9 +477,9 @@ class MessageExtensionGenerator extends Generator {
                     // add the property
                     const prop = cl.insertProperty(1, {
                         scope: ts_simple_ast_1.Scope.Private,
-                        name: `${this.options.messageExtensionName}`,
-                        type: this.options.messageExtensionName,
-                        docs: [`Local property for ${this.options.messageExtensionName}`]
+                        name: `_${this.options.messageExtensionName}`,
+                        type: this.options.messageExtensionClassName,
+                        docs: [`Local property for ${this.options.messageExtensionClassName}`]
                     });
                     // add the decorator
                     prop.addDecorator({
@@ -490,8 +490,8 @@ class MessageExtensionGenerator extends Generator {
                     const constructors = cl.getConstructors();
                     if (constructors.length > 0) {
                         const c = constructors[0];
-                        c.insertStatements(0, `// Message extension ${this.options.messageExtensionName}
-                        this._${this.options.messageExtensionName} = new ${this.options.messageExtensionName}();
+                        c.insertStatements(0, `// Message extension ${this.options.messageExtensionClassName}
+                        this._${this.options.messageExtensionName} = new ${this.options.messageExtensionClassName}();
                         `);
                     }
                     else {

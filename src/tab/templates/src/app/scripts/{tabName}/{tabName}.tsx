@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import {
     PrimaryButton,
     TeamsThemeContext,
@@ -8,9 +8,9 @@ import {
     PanelFooter,
     Surface,
     getContext
-} from 'msteams-ui-components-react';
-import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
-import * as microsoftTeams from '@microsoft/teams-js';
+} from "msteams-ui-components-react";
+import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from "msteams-react-base-component";
+import * as microsoftTeams from "@microsoft/teams-js";
 
 /**
  * State for the <%=tabName%>Tab React component
@@ -32,7 +32,7 @@ export interface I<%=tabReactComponentName%>Props extends ITeamsBaseComponentPro
 export class <%=tabReactComponentName%> extends TeamsBaseComponent<I<%=tabReactComponentName%>Props, I<%=tabReactComponentName%>State> {
 
     public componentWillMount() {
-        this.updateTheme(this.getQueryVariable('theme'));
+        this.updateTheme(this.getQueryVariable("theme"));
         this.setState({
             fontSize: this.pageFontSize()
         });

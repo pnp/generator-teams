@@ -23,13 +23,13 @@ export class <%= customBotClassName %> implements IOutgoingWebhook {
      */
     public requestHandler(req: express.Request, res: express.Response, next: express.NextFunction) {
         // parse the incoming message
-        const incoming = <builder.Activity>req.body
+        const incoming = req.body as builder.Activity;
 
         // create the response, any Teams compatible responses can be used
         const message: Partial<builder.Activity> = {
             type: builder.ActivityTypes.Message
         };
-    
+
         const securityToken = process.env.SECURITY_TOKEN;
         if (securityToken && securityToken.length > 0) {
             // There is a configured security token

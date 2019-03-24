@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import {
     PrimaryButton,
     Panel,
@@ -9,9 +9,9 @@ import {
     Surface,
     getContext,
     TeamsThemeContext
-} from 'msteams-ui-components-react';
-import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
-import * as microsoftTeams from '@microsoft/teams-js';
+} from "msteams-ui-components-react";
+import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from "msteams-react-base-component";
+import * as microsoftTeams from "@microsoft/teams-js";
 
 export interface I<%=tabReactComponentName%>ConfigState extends ITeamsBaseComponentState {
     value: string;
@@ -27,7 +27,7 @@ export interface I<%=tabReactComponentName%>ConfigProps extends ITeamsBaseCompon
 export class <%=tabReactComponentName%>Config  extends TeamsBaseComponent<I<%=tabReactComponentName%>ConfigProps, I<%=tabReactComponentName%>ConfigState> {
 
     public componentWillMount() {
-        this.updateTheme(this.getQueryVariable('theme'));
+        this.updateTheme(this.getQueryVariable("theme"));
         this.setState({
             fontSize: this.pageFontSize()
         });
@@ -46,9 +46,9 @@ export class <%=tabReactComponentName%>Config  extends TeamsBaseComponent<I<%=ta
                 // Calculate host dynamically to enable local debugging
                 const host = "https://" + window.location.host;
                 microsoftTeams.settings.setSettings({
-                    contentUrl: host + "/<%=tabName%>/<%=tabName%>.html?data=",
-                    suggestedDisplayName: '<%=tabTitle%>',
-                    removeUrl: host + "/<%=tabName%>/<%=tabName%>Remove.html",
+                    contentUrl: host + "/<%=tabName%>/?data=",
+                    suggestedDisplayName: "<%=tabTitle%>",
+                    removeUrl: host + "/<%=tabName%>/remove.html",
                     entityId: this.state.value
                 });
                 saveEvent.notifySuccess();
@@ -84,10 +84,10 @@ export class <%=tabReactComponentName%>Config  extends TeamsBaseComponent<I<%=ta
                                     label="Enter a value"
                                     errorLabel={!this.state.value ? "This value is required" : undefined}
                                     value={this.state.value}
-                                    onChange={(e) =>{
+                                    onChange={(e) => {
                                         this.setState({
                                             value: e.target.value
-                                        })
+                                        });
                                     }}
                                     required />
                             </div>

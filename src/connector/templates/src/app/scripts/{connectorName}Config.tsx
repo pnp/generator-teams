@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import {
     Panel,
     PanelBody,
@@ -8,10 +8,10 @@ import {
     IDropdownItemProps,
     Surface,
     TeamsThemeContext
-} from 'msteams-ui-components-react';
-import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
-import * as microsoftTeams from '@microsoft/teams-js';
-import { getContext } from 'msteams-ui-styles-core';
+} from "msteams-ui-components-react";
+import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from "msteams-react-base-component";
+import * as microsoftTeams from "@microsoft/teams-js";
+import { getContext } from "msteams-ui-styles-core";
 
 export interface I<%=connectorComponentName%>ConfigState extends ITeamsBaseComponentState {
     color: IColor | undefined;
@@ -32,12 +32,12 @@ interface IColor {
 
 const availableColors: IColor[] = [
     {
-        title: 'Blue',
-        code: '#dce6ee'
+        title: "Blue",
+        code: "#dce6ee"
     },
     {
-        title: 'Orange',
-        code: '#ffc300'
+        title: "Orange",
+        code: "#ffc300"
     }
 ];
 
@@ -47,7 +47,7 @@ const availableColors: IColor[] = [
 export class <%=connectorComponentName%>Config extends TeamsBaseComponent<I<%=connectorComponentName%>ConfigProps, I<%=connectorComponentName%>ConfigState> {
 
     public componentWillMount() {
-        this.updateTheme(this.getQueryVariable('theme'));
+        this.updateTheme(this.getQueryVariable("theme"));
         this.setState({
             fontSize: this.pageFontSize()
         });
@@ -56,11 +56,10 @@ export class <%=connectorComponentName%>Config extends TeamsBaseComponent<I<%=co
             microsoftTeams.initialize();
 
             microsoftTeams.getContext((context: microsoftTeams.Context) => {
-                console.log(context)
                 this.setState({
-                    color: availableColors.find(c => { return c.code == context.entityId }),
+                    color: availableColors.find(c => c.code === context.entityId),
                 });
-                this.setValidityState(this.state.color != undefined);
+                this.setValidityState(this.state.color !== undefined);
             });
 
             microsoftTeams.settings.registerOnSaveHandler((saveEvent: microsoftTeams.settings.SaveEvent) => {
@@ -70,7 +69,6 @@ export class <%=connectorComponentName%>Config extends TeamsBaseComponent<I<%=co
                     suggestedDisplayName: this.state.color ? this.state.color.title : availableColors[0].title
                 };
                 microsoftTeams.settings.setSettings(settings);
-                
 
                 microsoftTeams.settings.getSettings((s: any) => {
                     this.setState({
@@ -79,8 +77,8 @@ export class <%=connectorComponentName%>Config extends TeamsBaseComponent<I<%=co
                         appType: s.appType,
                     });
 
-                    fetch('/api/connector/connect', {
-                        method: 'POST',
+                    fetch("/api/connector/connect", {
+                        method: "POST",
                         headers: [
                             ["Content-Type", "application/json"]
                         ],
@@ -89,21 +87,20 @@ export class <%=connectorComponentName%>Config extends TeamsBaseComponent<I<%=co
                             user: this.state.user,
                             appType: this.state.appType,
                             groupName: this.state.groupName,
-                            color:this.state.color ? this.state.color.code : availableColors[0].code,
-                            state: 'myAppsState'
+                            color: this.state.color ? this.state.color.code : availableColors[0].code,
+                            state: "myAppsState"
                         })
                     }).then(x => {
-                        if (x.status == 200 || x.status == 302) {
-                            console.log('Connector saved');
+                        if (x.status === 200 || x.status === 302) {
                             saveEvent.notifySuccess();
                         } else {
                             saveEvent.notifyFailure(x.statusText);
                         }
                     }).catch(e => {
                         saveEvent.notifyFailure(e);
-                    })
+                    });
                 });
-            })
+            });
         } else {
             // TODO: remove logic must be implemented
         }
@@ -120,13 +117,13 @@ export class <%=connectorComponentName%>Config extends TeamsBaseComponent<I<%=co
             header: { ...sizes.title, ...weights.semibold },
             section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4), height: "200px" },
             input: {},
-        }
+        };
         const colors: IDropdownItemProps[] = availableColors.map(color => {
             return {
                 text: color.title,
                 onClick: () => {
-                    this.setState({ color: color });
-                    this.setValidityState(color != undefined);
+                    this.setState({ color });
+                    this.setValidityState(color !== undefined);
                 }
             };
         });
@@ -141,9 +138,9 @@ export class <%=connectorComponentName%>Config extends TeamsBaseComponent<I<%=co
 
                                 <div style={styles.section}>
                                     <Dropdown
-                                        label='Card color'
+                                        label="Card color"
                                         items={colors}
-                                        mainButtonText={this.state.color ? this.state.color.title : 'Choose a color'}
+                                        mainButtonText={this.state.color ? this.state.color.title : "Choose a color"}
                                         style={styles.input}
                                     >
                                     </Dropdown>

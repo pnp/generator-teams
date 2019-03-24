@@ -231,13 +231,13 @@ class CustomBotGenerator extends Generator {
         if (this.options.customBot) {
             let templateFiles = [
                 "README-{customBotName}.md",
-                "src/app/{customBotName}.ts"
+                "src/app/{customBotName}/{customBotClassName}.ts"
             ];
             this.sourceRoot();
             templateFiles.forEach(t => {
                 this.fs.copyTpl(this.templatePath(t), Yotilities_1.Yotilities.fixFileNames(t, this.options), this.options);
             });
-            Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/TeamsAppsComponents.ts", `./${this.options.customBotName}`, `Automatically added for the ${this.options.customBotName} outgoing webhook`, this.fs);
+            Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/TeamsAppsComponents.ts", `./${this.options.customBotName}/${this.options.customBotClassName}`, `Automatically added for the ${this.options.customBotName} outgoing webhook`, this.fs);
         }
     }
 }

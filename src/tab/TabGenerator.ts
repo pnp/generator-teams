@@ -54,9 +54,10 @@ export class TabGenerator extends Generator {
                 "src/app/scripts/{tabName}/{tabName}Config.tsx",
                 "src/app/scripts/{tabName}/{tabName}.tsx",
                 "src/app/scripts/{tabName}/{tabName}Remove.tsx",
-                "src/app/web/{tabName}/{tabName}.html",
-                "src/app/web/{tabName}/{tabName}Remove.html",
-                "src/app/web/{tabName}/{tabName}Config.html",
+                "src/app/{tabName}/{tabReactComponentName}.ts",
+                "src/app/web/{tabName}/index.html",
+                "src/app/web/{tabName}/remove.html",
+                "src/app/web/{tabName}/config.html",
             ];
 
             this.sourceRoot()
@@ -68,13 +69,11 @@ export class TabGenerator extends Generator {
                     this.options);
             });
 
-
-
             // Update manifest
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
             (<any[]>manifest.configurableTabs).push({
-                configurationUrl: `https://{{HOSTNAME}}/${this.options.tabName}/${this.options.tabName}Config.html`,
+                configurationUrl: `https://{{HOSTNAME}}/${this.options.tabName}/config.html`,
                 canUpdateConfiguration: true,
                 scopes: ["team"]
             });
@@ -106,6 +105,13 @@ export class TabGenerator extends Generator {
                 "src/app/scripts/client.ts",
                 `./${this.options.tabName}/${this.options.tabReactComponentName}Remove`,
                 undefined,
+                this.fs
+            );
+
+            Yotilities.insertTsExportDeclaration(
+                "src/app/TeamsAppsComponents.ts",
+                `./${this.options.tabName}/${this.options.tabReactComponentName}`,
+                `Automatically added for the ${this.options.tabName} tab`,
                 this.fs
             );
         }

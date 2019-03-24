@@ -237,9 +237,10 @@ class TabGenerator extends Generator {
                 "src/app/scripts/{tabName}/{tabName}Config.tsx",
                 "src/app/scripts/{tabName}/{tabName}.tsx",
                 "src/app/scripts/{tabName}/{tabName}Remove.tsx",
-                "src/app/web/{tabName}/{tabName}.html",
-                "src/app/web/{tabName}/{tabName}Remove.html",
-                "src/app/web/{tabName}/{tabName}Config.html",
+                "src/app/{tabName}/{tabReactComponentName}.ts",
+                "src/app/web/{tabName}/index.html",
+                "src/app/web/{tabName}/remove.html",
+                "src/app/web/{tabName}/config.html",
             ];
             this.sourceRoot();
             templateFiles.forEach(t => {
@@ -249,7 +250,7 @@ class TabGenerator extends Generator {
             let manifestPath = "src/manifest/manifest.json";
             var manifest = this.fs.readJSON(manifestPath);
             manifest.configurableTabs.push({
-                configurationUrl: `https://{{HOSTNAME}}/${this.options.tabName}/${this.options.tabName}Config.html`,
+                configurationUrl: `https://{{HOSTNAME}}/${this.options.tabName}/config.html`,
                 canUpdateConfiguration: true,
                 scopes: ["team"]
             });
@@ -266,6 +267,7 @@ class TabGenerator extends Generator {
             Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/scripts/client.ts", `./${this.options.tabName}/${this.options.tabReactComponentName}`, `Automatically added for the ${this.options.tabName} tab`, this.fs);
             Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/scripts/client.ts", `./${this.options.tabName}/${this.options.tabReactComponentName}Config`, undefined, this.fs);
             Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/scripts/client.ts", `./${this.options.tabName}/${this.options.tabReactComponentName}Remove`, undefined, this.fs);
+            Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/TeamsAppsComponents.ts", `./${this.options.tabName}/${this.options.tabReactComponentName}`, `Automatically added for the ${this.options.tabName} tab`, this.fs);
         }
     }
 }

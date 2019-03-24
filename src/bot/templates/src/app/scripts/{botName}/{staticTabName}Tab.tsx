@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import {
     Panel,
     PanelBody,
@@ -7,15 +7,15 @@ import {
     Surface,
     TeamsThemeContext,
     getContext
-} from 'msteams-ui-components-react';
-import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from 'msteams-react-base-component'
-import * as microsoftTeams from '@microsoft/teams-js';
+} from "msteams-ui-components-react";
+import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from "msteams-react-base-component";
+import * as microsoftTeams from "@microsoft/teams-js";
 
 /**
  * State for the <%=staticTabName%>Tab React component
  */
 export interface I<%=staticTabClassName%>TabState extends ITeamsBaseComponentState {
-    
+
 }
 
 /**
@@ -29,9 +29,9 @@ export interface I<%=staticTabClassName%>TabProps extends ITeamsBaseComponentPro
  * Implementation of the <%= staticTabName %> content page
  */
 export class <%=staticTabClassName%>Tab extends TeamsBaseComponent<I<%=staticTabClassName%>TabProps, I<%=staticTabClassName%>TabState> {
- 
+
     public componentWillMount() {
-        this.updateTheme(this.getQueryVariable('theme'));
+        this.updateTheme(this.getQueryVariable("theme"));
         this.setState({
             fontSize: this.pageFontSize()
         });
@@ -39,12 +39,10 @@ export class <%=staticTabClassName%>Tab extends TeamsBaseComponent<I<%=staticTab
         if (this.inTeams()) {
             microsoftTeams.initialize();
             microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
-        } else {
-            
         }
     }
 
-    /** 
+    /**
      * The render() method to create the UI of the tab
      */
     public render() {
@@ -68,7 +66,7 @@ export class <%=staticTabClassName%>Tab extends TeamsBaseComponent<I<%=staticTab
                         </PanelHeader>
                         <PanelBody>
                             <div style={styles.section}>
-                                TODO: 
+                                TODO:
                             </div>
                         </PanelBody>
                         <PanelFooter>

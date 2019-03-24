@@ -48,7 +48,7 @@ export class CustomBotGenerator extends Generator {
         if (this.options.customBot) {
             let templateFiles = [
                 "README-{customBotName}.md",
-                "src/app/{customBotName}.ts"
+                "src/app/{customBotName}/{customBotClassName}.ts"
             ];
 
             this.sourceRoot()
@@ -62,7 +62,7 @@ export class CustomBotGenerator extends Generator {
 
             Yotilities.insertTsExportDeclaration(
                 "src/app/TeamsAppsComponents.ts",
-                `./${this.options.customBotName}`,
+                `./${this.options.customBotName}/${this.options.customBotClassName}`,
                 `Automatically added for the ${this.options.customBotName} outgoing webhook`,
                 this.fs
             );

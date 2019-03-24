@@ -146,7 +146,7 @@ export class BotGenerator extends Generator {
             if (this.options.staticTab) {
                 templateFiles.push(
                     "src/app/scripts/{botName}/{staticTabName}Tab.tsx",
-                    "src/app/web/{botName}/{staticTabName}Tab.html",
+                    "src/app/web/{botName}/{staticTabName}.html",
                     "src/app/{botName}/dialogs/HelpDialog.ts",
                     "src/app/{botName}/dialogs/WelcomeCard.json",
                     "src/app/{botName}/dialogs/WelcomeDialog.ts"
@@ -155,7 +155,7 @@ export class BotGenerator extends Generator {
                 manifest.staticTabs.push({
                     entityId: Guid.raw(),
                     name: this.options.staticTabTitle,
-                    contentUrl: `https://{{HOSTNAME}}/${this.options.botName}/${this.options.staticTabName}Tab.html`,
+                    contentUrl: `https://{{HOSTNAME}}/${this.options.botName}/${this.options.staticTabName}.html`,
                     scopes: ["personal"]
                 });
 
