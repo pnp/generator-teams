@@ -65,7 +65,7 @@ export class <%=connectorComponentName%>Config extends TeamsBaseComponent<I<%=co
             microsoftTeams.settings.registerOnSaveHandler((saveEvent: microsoftTeams.settings.SaveEvent) => {
                 const settings: microsoftTeams.settings.Settings = {
                     entityId: this.state.color ? this.state.color.code : availableColors[0].code,
-                    contentUrl: `https://${process.env.HOSTNAME}/<%=connectorName%>/<%=connectorName%>Config.html`, // TODO: FIX
+                    contentUrl: `https://${process.env.HOSTNAME}/<%=connectorName%>/config.html`,
                     suggestedDisplayName: this.state.color ? this.state.color.title : availableColors[0].title
                 };
                 microsoftTeams.settings.setSettings(settings);
@@ -102,7 +102,8 @@ export class <%=connectorComponentName%>Config extends TeamsBaseComponent<I<%=co
                 });
             });
         } else {
-            // TODO: remove logic must be implemented
+            // Not in Microsoft Teams
+            alert("Operation not supported outside of Microsoft Teams");
         }
     }
 

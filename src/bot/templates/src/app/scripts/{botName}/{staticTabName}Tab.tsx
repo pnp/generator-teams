@@ -66,7 +66,7 @@ export class <%=staticTabClassName%>Tab extends TeamsBaseComponent<I<%=staticTab
                         </PanelHeader>
                         <PanelBody>
                             <div style={styles.section}>
-                                TODO:
+                                TODO: Add your content here
                             </div>
                         </PanelBody>
                         <PanelFooter>

@@ -24,8 +24,7 @@ interface I<%=connectorComponentName%>Data {
  */
 @ConnectorDeclaration(
     "/api/connector/connect",
-    "/api/connector/ping",
-    "web/<%=connectorName%>Connect.ejs" // TODO: WHAT, EJS??
+    "/api/connector/ping"
 )
 @PreventIframe("/<%=connectorName%>/config.html")
 export class <%=connectorComponentName%> implements IConnector {
@@ -75,7 +74,7 @@ export class <%=connectorComponentName%> implements IConnector {
                         {
                             activityTitle: "Ping",
                             activityText: "Sample ping ",
-                            activityImage: "https://ytd5.azurewebsites.net/assets/icon.png",
+                            activityImage: "<%=hostname%>/assets/icon.png",
                             facts: [
                                 {
                                     name: "Generator",

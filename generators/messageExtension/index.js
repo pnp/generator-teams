@@ -441,7 +441,7 @@ class MessageExtensionGenerator extends Generator {
                 // );
                 // Dynamically insert the reference and hook it up to the Bot
                 const project = new ts_simple_ast_1.default();
-                const file = project.createSourceFile(`src/app/${this.options.botName}/bot.ts`, this.fs.read(`src/app/${this.options.botName}/bot.ts`), {
+                const file = project.createSourceFile(`src/app/${this.options.botName}/${this.options.botClassName}.ts`, this.fs.read(`src/app/${this.options.botName}/${this.options.botClassName}.ts`), {
                     overwrite: true
                 });
                 const classes = file.getClasses();
@@ -502,7 +502,7 @@ class MessageExtensionGenerator extends Generator {
                     // TODO: log
                 }
                 file.formatText();
-                this.fs.write(`src/app/${this.options.botName}/bot.ts`, file.getFullText());
+                this.fs.write(`src/app/${this.options.botName}/${this.options.botClassName}.ts`, file.getFullText());
             }
         }
     }

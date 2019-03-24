@@ -19,7 +19,7 @@ gulp build
 
 ## Building the manifest
 
-To create the Microsoft Teams Apps manifest, run the `manifest` Gulp task. This will generate and validate the package and finally create the package (a zip file) in the `package` folder.
+To create the Microsoft Teams Apps manifest, run the `manifest` Gulp task. This will generate and validate the package and finally create the package (a zip file) in the `package` folder. The manifest will be validated against the schema and dynamically populated with values from the `.env` file.
 
 ``` bash
 gulp manifest
@@ -27,7 +27,7 @@ gulp manifest
 
 ## Configuration
 
-Configuration is stored in the `.env` file.
+Configuration is stored in the `.env` file. 
 
 ## Debug and test locally
 
@@ -58,6 +58,10 @@ To step through code in Visual Studio Code you need to add the following snippet
     "remoteRoot": "${workspaceRoot}/src/"
 },
 ```
+
+### Using ngrok for local development and hosting
+
+In order to make development locally a great experience it is recommended to use [ngrok]{https://ngrok.io}, which allows you to publish the localhost on a public DNS, so that you can consume the bot and the other resources in Microsoft Teams. Start ngrok locally and either specify a reserved hostname or use a dynamic generated one. Modify the `HOSTNAME` property of the `.env` file with the public hostname you have in ngrok, rebuild the manifest and upload it to Microsoft Teams and start `gulp serve`.
 
 ## Output
 
