@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node dist/server.js",
     "build": "gulp build",
-    "debug": "gulp serve --debug"
+    "debug": "gulp serve --debug",
+    "test": "jest",
+    "coverage": "jest --coverage"
   },
   "dependencies": {
     "@microsoft/teams-js": "1.4.1",
@@ -45,6 +47,38 @@
     "z-schema": "^3.19.1"
   }, 
   "devDependencies": {
+    "@types/enzyme": "^3.9.1",
+    "@types/jest": "^24.0.11",
+    "@types/react-test-renderer": "^16.8.1",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.11.2",
+    "jest": "^24.5.0",
+    "react-test-renderer": "^16.8.5",
     "tslint-loader": "^3.6.0"
+  },
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/test-shim.js",
+      "<rootDir>/test-setup.js"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/test-preprocessor.js"
+    },
+    "testMatch": [
+      "**/__tests__/*.(ts|tsx|js)"
+    ],
+    "collectCoverageFrom": [
+      "src/app/scripts/**/*.{js,jsx,ts,tsx}",
+      "!src/app/scripts/client.ts",
+      "!<rootDir>/node_modules/"
+    ],
+    "coverageReporters": [
+      "text"
+    ]
   }
 }

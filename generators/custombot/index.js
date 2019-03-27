@@ -272,7 +272,7 @@ module.exports = CustomBotGenerator_1.CustomBotGenerator;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\code\github\generator-teams/src/custombot/index.ts */"./src/custombot/index.ts");
+module.exports = __webpack_require__(/*! C:\Contribution\generator-teams/src/custombot/index.ts */"./src/custombot/index.ts");
 
 
 /***/ }),

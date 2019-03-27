@@ -237,6 +237,9 @@ class TabGenerator extends Generator {
                 "src/app/scripts/{tabName}/{tabName}Config.tsx",
                 "src/app/scripts/{tabName}/{tabName}.tsx",
                 "src/app/scripts/{tabName}/{tabName}Remove.tsx",
+                "src/app/scripts/{tabName}/__tests__/{tabName}Config.spec.tsx",
+                "src/app/scripts/{tabName}/__tests__/{tabName}.spec.tsx",
+                "src/app/scripts/{tabName}/__tests__/{tabName}Remove.spec.tsx",
                 "src/app/{tabName}/{tabReactComponentName}.ts",
                 "src/app/web/{tabName}/index.html",
                 "src/app/web/{tabName}/remove.html",
@@ -302,7 +305,7 @@ module.exports = TabGenerator_1.TabGenerator;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\code\github\generator-teams/src/tab/index.ts */"./src/tab/index.ts");
+module.exports = __webpack_require__(/*! C:\Contribution\generator-teams/src/tab/index.ts */"./src/tab/index.ts");
 
 
 /***/ }),

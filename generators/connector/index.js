@@ -330,7 +330,7 @@ module.exports = ConnectorGenerator_1.ConnectorGenerator;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\code\github\generator-teams/src/connector/index.ts */"./src/connector/index.ts");
+module.exports = __webpack_require__(/*! C:\Contribution\generator-teams/src/connector/index.ts */"./src/connector/index.ts");
 
 
 /***/ }),

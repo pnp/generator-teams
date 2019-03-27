@@ -418,7 +418,7 @@ module.exports = BotGenerator_1.BotGenerator;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\code\github\generator-teams/src/bot/index.ts */"./src/bot/index.ts");
+module.exports = __webpack_require__(/*! C:\Contribution\generator-teams/src/bot/index.ts */"./src/bot/index.ts");
 
 
 /***/ }),
