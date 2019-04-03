@@ -5,7 +5,7 @@
     "body": [
       {
         "type": "Image",
-        "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtB3AwMUeNoq4gUBGe6Ocj8kyh3bXa9ZbV7u1fVKQoyKFHdkqU",
+        "url": "<%=hostname%>/assets/icon.png",
         "size": "stretch"
       },
       {
@@ -13,7 +13,7 @@
         "spacing": "medium",
         "size": "default",
         "weight": "bolder",
-        "text": "Welcome to Bot Framework!",
+        "text": "Welcome to <%= title %>",
         "wrap": true,
         "maxLines": 0
       },
@@ -21,7 +21,7 @@
         "type": "TextBlock",
         "size": "default",
         "isSubtle": "yes",
-        "text": "Now that you have successfully run your bot, follow the links in this Adaptive Card to expand your knowledge of Bot Framework.",
+        "text": "Hello, nice to meet you!",
         "wrap": true,
         "maxLines": 0
       }
@@ -29,18 +29,13 @@
     "actions": [
       {
         "type": "Action.OpenUrl",
-        "title": "Get an overview",
-        "url": "https://docs.microsoft.com/en-us/azure/bot-service/?view=azure-bot-service-4.0"
+        "title": "Learn more about Yo Teams",
+        "url": "https://aka.ms/yoteams"
       },
       {
         "type": "Action.OpenUrl",
-        "title": "Ask a question",
-        "url": "https://stackoverflow.com/questions/tagged/botframework"
-      },
-      {
-        "type": "Action.OpenUrl",
-        "title": "Learn how to deploy",
-        "url": "https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-howto-deploy-azure?view=azure-bot-service-4.0"
+        "title": "<%=title%>",
+        "url": "<%=hostname%>"
       }
     ]
   }

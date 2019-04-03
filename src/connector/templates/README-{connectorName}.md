@@ -6,20 +6,19 @@ All Connectors has to be registered in the [Connectors Developer Dashboard](http
 
 1. Choose to add a *New Connector*
 2. Give the Connector a name (`<%= connectorTitle %>`), an image and a short and long description. You also need to add your company/Teams Apps website.
-3. For *Landing pages* for Groups and Teams, add the following URL, which is used to connect and configure your Connector (`<%=host %>/<%=connectorName%>.html`).
-4. In the *Redirect URLs* box enter the Teams Apps website and append `/api/connector/connect` (`<%=host %>/api/connector/connect`).
-5. Ensure that you at least enable the Connector for Microsoft Teams.
-6. Finally accept the license terms and click *Save*.
+3. As *Configuration page for your Connector*  add the following URL, which is used to connect and configure your Connector (`<%=host %>/<%=connectorName%>/config.html`).
+4. In the *Valid domains* box enter the Teams Apps website (`<%=host%>`).
+5. Choose *Yes* on the *enable actions on your Connector Cards* question.
+6. As *Actions URL* add the Connector API endpoint (`<%=host %>/api/connector`).
+7. Finally accept the license terms and click *Save*.
 
 ## Connector implementation details
 
 ### Connector files and pages
 
-* `./src/<%=connectorName%>.ts` - implementation of the Connector that manages registering new subscriptions (`Connect()`) as well as a sample method to send a message to all subscribers (`Ping()`).
-* `./src/web/<%=connectorName%>.html` - this is the landing page that the users will end up on when adding a connector.
-* `./src/web/<%=connectorName%>Connected.html` - Result page after a successful connection.
-* `./src/web/<%=connectorName%>Connect.ejs` - this is the page used by end-users to configure your Connector.
-* `./src/scripts/<%=connectorName%>Connect.tsx` - React component of the connect page.
+* `./src/<%=connectorName%>/<%=connectorComponentName%>.ts` - implementation of the Connector that manages registering new subscriptions (`Connect()`) as well as a sample method to send a message to all subscribers (`Ping()`).
+* `./src/web/<%=connectorName%>/config.html` - the configuration of the Connector .
+* `./src/scripts/<%=connectorName%>Config.tsx` - React component of the configuration page page.
 
 ### Connector end-points
 

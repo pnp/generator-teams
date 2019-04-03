@@ -172,7 +172,7 @@ export class BotGenerator extends Generator {
             this.fs.writeJSON(manifestPath, manifest);
 
             if (this.options.botType != 'existing') {
-                templateFiles.push('src/app/{botName}/bot.ts')
+                templateFiles.push('src/app/{botName}/{botClassName}.ts')
                 templateFiles.push('README-{botName}.md')
             }
             templateFiles.forEach(t => {
@@ -194,7 +194,7 @@ export class BotGenerator extends Generator {
 
             Yotilities.insertTsExportDeclaration(
                 "src/app/TeamsAppsComponents.ts",
-                `./${this.options.botName}/bot`,
+                `./${this.options.botName}/${this.options.botClassName}`,
                 `Automatically added for the ${this.options.botName} bot`,
                 this.fs
             );

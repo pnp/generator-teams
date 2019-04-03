@@ -24,6 +24,7 @@ export class ConnectorGenerator extends Generator {
         this.options = opts.options;
         this.desc('Adds a Connector to a Microsoft Teams Apps project');
     }
+
     public prompting() {
         if (this.options.connector) {
             return this.prompt(
@@ -71,10 +72,11 @@ export class ConnectorGenerator extends Generator {
                 this.options.connectorType = answers.connectorType;
                 this.options.connectorTitle = answers.connectorName;
                 this.options.connectorName = lodash.camelCase(answers.connectorName);
-                this.options.connectorComponentName = this.options.connectorName.charAt(0).toUpperCase() + this.options.connectorName.slice(1);
                 if (!this.options.connectorName.endsWith('Connector')) {
                     this.options.connectorName = this.options.connectorName + 'Connector';
                 }
+                this.options.connectorComponentName = this.options.connectorName.charAt(0).toUpperCase() + this.options.connectorName.slice(1);
+                
                 this.options.reactComponents = true;
             });
         }

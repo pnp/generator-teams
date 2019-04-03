@@ -19,7 +19,7 @@ In order to have one on one chats with the bot you also need to publish it, or y
 
 ## How to configure the bot
 
-The App Id and App Secret, generated during the registration, for the bot are read from the `MICROSOFT_APP_ID` and `MICROSOFT_APP_PASSWORD` environment variables. These can be configured in the Azure Web App under *Application Settings > App Settings*.
+The App Id and App Secret, generated during the registration, for the bot are read from the `MICROSOFT_APP_ID` and `MICROSOFT_APP_PASSWORD` environment variables, specified in the `.env` file. These can be configured in the Azure Web App under *Application Settings > App Settings*.
 
 ## How to test the bot locally
 

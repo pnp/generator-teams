@@ -34,13 +34,15 @@ export class <%= botClassName %> implements IBot {
         this.dialogs = new DialogSet(this.dialogState);
         this.dialogs.add(new HelpDialog("help"));
 
-        // incoming messages
+        // Set up the Activity processing
+        
         this.activityProc.messageActivityHandler = {
+            // Incoming messages
             onMessage: async (context: TurnContext): Promise<void> => {
                 // get the Microsoft Teams context, will be undefined if not in Microsoft Teams
                 const teamsContext: TeamsContext = TeamsContext.from(context);
 
-                // do your stuff here
+                // TODO: add your own bot logic in here
                 switch (context.activity.type) {
                     case ActivityTypes.Message:
                         const text = teamsContext ?
@@ -78,7 +80,7 @@ export class <%= botClassName %> implements IBot {
             }
         };
 
-
+        // Message reactions in Microsoft Teams
         this.activityProc.messageReactionActivityHandler = {
             onMessageReaction: async (context: TurnContext): Promise<void> => {
                 const added = context.activity.reactionsAdded;
@@ -90,11 +92,15 @@ export class <%= botClassName %> implements IBot {
                 }
             }
         };
-
    }
 
+   /**
+    * The Bot Framework `onTurn` handlder.
+    * The Microsoft Teams middleware for Bot Framework uses a custom activity processor (`TeamsActivityProcessor`)
+    * which is configured in the constructor of this sample
+    */
    public async onTurn(context: TurnContext): Promise<any> {
-        // transfer the activity to the TeamsActicityProcessor
+        // transfer the activity to the TeamsActivityProcessor
         await this.activityProc.processIncomingActivity(context);
     }
 }
