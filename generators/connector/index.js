@@ -253,10 +253,10 @@ class ConnectorGenerator extends Generator {
                 this.options.connectorType = answers.connectorType;
                 this.options.connectorTitle = answers.connectorName;
                 this.options.connectorName = lodash.camelCase(answers.connectorName);
-                this.options.connectorComponentName = this.options.connectorName.charAt(0).toUpperCase() + this.options.connectorName.slice(1);
                 if (!this.options.connectorName.endsWith('Connector')) {
                     this.options.connectorName = this.options.connectorName + 'Connector';
                 }
+                this.options.connectorComponentName = this.options.connectorName.charAt(0).toUpperCase() + this.options.connectorName.slice(1);
                 this.options.reactComponents = true;
             });
         }
@@ -330,7 +330,7 @@ module.exports = ConnectorGenerator_1.ConnectorGenerator;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Contribution\generator-teams/src/connector/index.ts */"./src/connector/index.ts");
+module.exports = __webpack_require__(/*! c:\Contribution\generator-teams/src/connector/index.ts */"./src/connector/index.ts");
 
 
 /***/ }),

@@ -94,7 +94,7 @@ module.exports =
 /*! exports provided: name, version, description, main, scripts, files, repository, bugs, homepage, keywords, author, maintainers, contributors, license, devDependencies, dependencies, default */
 /***/ (function(module) {
 
-module.exports = {"name":"generator-teams","version":"2.7.0-preview","description":"Yeoman generator for Microsoft Teams Apps","main":"generators/app/index.js","scripts":{"build":"node_modules/.bin/webpack"},"files":["generators"],"repository":{"type":"git","url":"https://github.com/OfficeDev/generator-teams.git"},"bugs":{"url":"https://github.com/OfficeDev/generator-teams/issues"},"homepage":"https://github.com/OfficeDev/generator-teams","keywords":["yeoman-generator","Microsoft Teams","microsoft-teams","Office 365","office-365","bot","bot-framework","botbuilder","chatbot"],"author":"Wictor Wilén (wictor@wictorwilen.se)","maintainers":[{"name":"Wictor Wilén","email":"wictor@wictorwilen.se","url":"http://www.wictorwilen.se"},{"name":"Bill Bliss","email":"billbl@microsoft.com","url":"https://github.com/billbliss"}],"contributors":["DiZerega, Richard <https://github.com/richdizz>","van Bergen, Elaine <https://github.com/laneyvb>","Laskewitz, Daniel <https://github.com/Laskewitz>","Schaeflein, Paul <https://github.com/pschaeflein>","Davulcu, Cagdas <https://github.com/cagdasdavulcu>"],"license":"MIT","devDependencies":{"@types/guid":"^1.0.0","@types/lodash":"^4.14.118","@types/yeoman-generator":"^2.0.1","@types/yosay":"0.0.29","clean-webpack-plugin":"^0.1.18","copy-webpack-plugin":"^4.6.0","ts-loader":"^5.3.0","typescript":"^2.6.1","webpack":"^4.26.0","webpack-cli":"^3.1.2"},"dependencies":{"applicationinsights":"^1.0.7","chalk":"^2.3.2","dotenv":"^6.1.0","guid":"0.0.12","lodash":"^4.17.11","ts-simple-ast":"^19.0.0","yeoman-generator":"^3.1.1","yosay":"^2.0.1"}};
+module.exports = {"name":"generator-teams","version":"2.7.0-preview2","description":"Yeoman generator for Microsoft Teams Apps","main":"generators/app/index.js","scripts":{"build":"node_modules/.bin/webpack"},"files":["generators"],"repository":{"type":"git","url":"https://github.com/OfficeDev/generator-teams.git"},"bugs":{"url":"https://github.com/OfficeDev/generator-teams/issues"},"homepage":"https://github.com/OfficeDev/generator-teams","keywords":["yeoman-generator","Microsoft Teams","microsoft-teams","Office 365","office-365","bot","bot-framework","botbuilder","chatbot"],"author":"Wictor Wilén (wictor@wictorwilen.se)","maintainers":[{"name":"Wictor Wilén","email":"wictor@wictorwilen.se","url":"http://www.wictorwilen.se"},{"name":"Bill Bliss","email":"billbl@microsoft.com","url":"https://github.com/billbliss"}],"contributors":["DiZerega, Richard <https://github.com/richdizz>","van Bergen, Elaine <https://github.com/laneyvb>","Laskewitz, Daniel <https://github.com/Laskewitz>","Schaeflein, Paul <https://github.com/pschaeflein>","Davulcu, Cagdas <https://github.com/cagdasdavulcu>"],"license":"MIT","devDependencies":{"@types/guid":"^1.0.0","@types/lodash":"^4.14.118","@types/yeoman-generator":"^2.0.1","@types/yosay":"0.0.29","clean-webpack-plugin":"^0.1.18","copy-webpack-plugin":"^4.6.0","ts-loader":"^5.3.0","typescript":"^2.6.1","webpack":"^4.26.0","webpack-cli":"^3.1.2"},"dependencies":{"applicationinsights":"^1.0.7","chalk":"^2.3.2","dotenv":"^6.1.0","guid":"0.0.12","lodash":"^4.17.11","ts-simple-ast":"^19.0.0","yeoman-generator":"^3.1.1","yosay":"^2.0.1"}};
 
 /***/ }),
 
@@ -353,7 +353,7 @@ class GeneratorTeamsApp extends Generator {
             // if we have added any react based components
             if (this.options.reactComponents) {
                 Yotilities_1.Yotilities.addAdditionalDeps([
-                    ["msteams-react-base-component", "~1.0.0"]
+                    ["msteams-react-base-component", "1.1.0"]
                 ], this.fs);
             }
         }
@@ -561,7 +561,7 @@ module.exports = GeneratorTeamsApp_1.GeneratorTeamsApp;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Contribution\generator-teams/src/app/index.ts */"./src/app/index.ts");
+module.exports = __webpack_require__(/*! c:\Contribution\generator-teams/src/app/index.ts */"./src/app/index.ts");
 
 
 /***/ }),

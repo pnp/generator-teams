@@ -311,9 +311,11 @@ class BotGenerator extends Generator {
             ]).then((answers) => {
                 this.options.botid = answers.botid;
                 this.options.staticTab = answers.staticTab;
-                this.options.staticTabTitle = answers.staticTabName;
-                this.options.staticTabName = lodash.camelCase(answers.staticTabName);
-                this.options.staticTabClassName = this.options.staticTabName.charAt(0).toUpperCase() + this.options.staticTabName.slice(1);
+                if (this.options.staticTab) {
+                    this.options.staticTabTitle = answers.staticTabName;
+                    this.options.staticTabName = lodash.camelCase(answers.staticTabName);
+                    this.options.staticTabClassName = this.options.staticTabName.charAt(0).toUpperCase() + this.options.staticTabName.slice(1);
+                }
                 this.options.botType = answers.bottype;
                 this.options.botTitle = answers.botname;
                 this.options.botName = lodash.camelCase(answers.botname);
@@ -373,7 +375,7 @@ class BotGenerator extends Generator {
             manifest.bots.push(newbot);
             this.fs.writeJSON(manifestPath, manifest);
             if (this.options.botType != 'existing') {
-                templateFiles.push('src/app/{botName}/bot.ts');
+                templateFiles.push('src/app/{botName}/{botClassName}.ts');
                 templateFiles.push('README-{botName}.md');
             }
             templateFiles.forEach(t => {
@@ -383,7 +385,7 @@ class BotGenerator extends Generator {
             if (this.options.staticTab) {
                 Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/scripts/client.ts", `./${this.options.botName}/${this.options.staticTabName}Tab`, `Automatically added for the ${this.options.staticTabName} bot tab`, this.fs);
             }
-            Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/TeamsAppsComponents.ts", `./${this.options.botName}/bot`, `Automatically added for the ${this.options.botName} bot`, this.fs);
+            Yotilities_1.Yotilities.insertTsExportDeclaration("src/app/TeamsAppsComponents.ts", `./${this.options.botName}/${this.options.botClassName}`, `Automatically added for the ${this.options.botName} bot`, this.fs);
         }
     }
 }
@@ -418,7 +420,7 @@ module.exports = BotGenerator_1.BotGenerator;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Contribution\generator-teams/src/bot/index.ts */"./src/bot/index.ts");
+module.exports = __webpack_require__(/*! c:\Contribution\generator-teams/src/bot/index.ts */"./src/bot/index.ts");
 
 
 /***/ }),
