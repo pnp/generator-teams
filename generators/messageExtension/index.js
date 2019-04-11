@@ -538,7 +538,7 @@ module.exports = MessageExtensionGenerator_1.MessageExtensionGenerator;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! c:\Contribution\generator-teams/src/messageExtension/index.ts */"./src/messageExtension/index.ts");
+module.exports = __webpack_require__(/*! C:\Contribution\generator-teams/src/messageExtension/index.ts */"./src/messageExtension/index.ts");
 
 
 /***/ }),

@@ -8,13 +8,13 @@ import { ThemeStyle } from "msteams-ui-styles-core";
 describe("<%=tabReactComponentName%> Component", () => {
     // Snapshot Test Sample
     it("should match the snapshot", () => {
-        const tree = renderer.create(<<%=tabReactComponentName%> theme={ ThemeStyle.Light } fontSize={14} />).toJSON();
+        const tree = renderer.create(<<%=tabReactComponentName%> <% if (!connector) { %>theme={ ThemeStyle.Light } fontSize={14}<% } %> />).toJSON();
         expect(tree).toMatchSnapshot();
     });
 
     // Component Test Sample
     it("should render the tab", () => {
-        const component = shallow(<<%=tabReactComponentName%> theme={ ThemeStyle.Light } fontSize={14} />);
+        const component = shallow(<<%=tabReactComponentName%> <% if (!connector) { %>theme={ ThemeStyle.Light } fontSize={14}<% } %> />);
         const divResult = component.containsMatchingElement(<div>This is your tab</div>);
 
         expect(divResult).toBeTruthy();
@@ -24,7 +24,7 @@ describe("<%=tabReactComponentName%> Component", () => {
     it("should show alert on button click", () => {
         window.alert = jest.fn();
 
-        const component = mount(<<%=tabReactComponentName%> theme={ ThemeStyle.Light } fontSize={14} />);
+        const component = mount(<<%=tabReactComponentName%> <% if (!connector) { %>theme={ ThemeStyle.Light } fontSize={14}<% } %> />);
         const button = component.find("button");
         button.simulate("click");
 

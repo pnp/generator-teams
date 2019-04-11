@@ -561,7 +561,7 @@ module.exports = GeneratorTeamsApp_1.GeneratorTeamsApp;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! c:\Contribution\generator-teams/src/app/index.ts */"./src/app/index.ts");
+module.exports = __webpack_require__(/*! C:\Contribution\generator-teams/src/app/index.ts */"./src/app/index.ts");
 
 
 /***/ }),

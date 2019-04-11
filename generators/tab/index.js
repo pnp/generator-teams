@@ -305,7 +305,7 @@ module.exports = TabGenerator_1.TabGenerator;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! c:\Contribution\generator-teams/src/tab/index.ts */"./src/tab/index.ts");
+module.exports = __webpack_require__(/*! C:\Contribution\generator-teams/src/tab/index.ts */"./src/tab/index.ts");
 
 
 /***/ }),
