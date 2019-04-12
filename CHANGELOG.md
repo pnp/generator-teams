@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Support for adding additional Message Extensions to an already existing project
 * Support for dynamics properties/variables in the manifest.json file
 * Added TSLinting to the build pipeline
+* Added support for testing using Jest and Enzyme. Use `npm run test` and `npm run coverage`
 
 ### Fixes
 
