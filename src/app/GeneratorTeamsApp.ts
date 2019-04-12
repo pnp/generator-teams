@@ -62,7 +62,7 @@ export class GeneratorTeamsApp extends Generator {
 
         // check schema version:
         if (this.options.existingManifest) {
-            if (this.options.existingManifest["$schema"] != 'https://statics.teams.microsoft.com/sdk/v1.2/manifest/MicrosoftTeams.schema.json') {
+            if (this.options.existingManifest["$schema"] != 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json') {
                 this.log(chalk.default.red('You are running the generator on an already existing project, but on a non supported-schema.'));
                 process.exit(1);
             }

@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-* Messaging Extensions are now refactored into it's own file
+* Using Bot Framework version 4+
+* Messaging Extensions are now refactored into it's own file, using the `botbuilder-teams-messagingextensions` middleware
 * Disable non-tested and non-supported extensions when running the generator over an existing projects
 * Changed the way the manifest/package, now using a *temp* folder for replaceable strings
 * Updated Microsoft Teams schema to 1.3
@@ -17,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Updated the Connector configuration with new simplified configuration page, which removed a dependency on EJS
 * Reorganized the file structure and file namings
 * Improved auto generated class names formatting
+* Updated all npm references
 
 ### Added
 

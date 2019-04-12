@@ -7,7 +7,7 @@ import * as lodash from 'lodash';
 import * as chalk from 'chalk';
 import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
-import Project, { Scope, Decorator, Node, ClassDeclaration } from "ts-simple-ast";
+import Project, { Scope, Decorator, Node, ClassDeclaration } from "ts-morph";
 import * as ts from 'typescript';
 import * as path from 'path';
 import * as Guid from 'guid';
@@ -141,7 +141,7 @@ export class MessageExtensionGenerator extends Generator {
                 }
 
                 this.options.messageExtensionClassName = this.options.messageExtensionName.charAt(0).toUpperCase() + this.options.messageExtensionName.slice(1);
-              
+
                 if (answers.messageExtensionType == 'new') {
                     // we need to add the Bot, even though the users did not choose to create one
                     this.options.bot = true;
@@ -158,13 +158,13 @@ export class MessageExtensionGenerator extends Generator {
                         this.options.messageExtensionId = answers.botId;
                         // if we already have a project, let's find the bot implementation class
                         const project = new Project();
-                        project.addExistingSourceFiles(`${this.destinationRoot()}/src/app/*.ts`);
+                        project.addExistingSourceFiles(`${this.destinationRoot()}/src/app/**/*.ts`);
                         const botClasses = project.getSourceFiles().map(s => {
                             return s.getClasses().map<{ c: ClassDeclaration, id: string } | undefined>(c => {
                                 const dec: Decorator | undefined = c.getDecorator('BotDeclaration');
                                 if (dec) {
                                     // arg 2 is the id
-                                    const idarg = dec.getArguments()[1];
+                                    const idarg = dec.getArguments()[2];
                                     const idargval = idarg.getText();
                                     if (Guid.isGuid(idargval)) {
                                         return { c: c, id: idargval };
@@ -190,7 +190,8 @@ export class MessageExtensionGenerator extends Generator {
                             return c !== undefined && c.id == answers.botId;
                         });
                         if (botClass) {
-                            this.options.botName = botClass.c.getName() as string;
+                            this.options.botClassName = botClass.c.getName() as string;
+                            this.options.botName = botClass.c.getSourceFile().getBaseNameWithoutExtension() as string;
                         } else {
                             this.log(chalk.default.red('Unable to continue, as I could not locate the Bot implementation'));
                             this.log(chalk.default.red('Please verify that you have a valid Guid or a valid environment variable in your BotDeclaration.'));
@@ -258,7 +259,8 @@ export class MessageExtensionGenerator extends Generator {
                     ["@types/react", "16.8.8"],
                     ["react-dom", "^16.8.4"],
                     ["file-loader", "1.1.11"],
-                    ["typestyle", "2.0.1"]
+                    ["typestyle", "2.0.1"],
+                    ["botbuilder-teams-messagingextensions", "1.0.0"]
                 ], this.fs);
 
                 Yotilities.insertTsExportDeclaration(
@@ -315,14 +317,21 @@ export class MessageExtensionGenerator extends Generator {
                         scope: Scope.Private,
                         name: `_${this.options.messageExtensionName}`,
                         type: this.options.messageExtensionClassName,
-                        docs: [`Local property for ${this.options.messageExtensionClassName}`]
+                        docs: [`Local property for ${this.options.messageExtensionClassName}`],
                     });
-                    
+
                     // add the decorator
                     prop.addDecorator({
                         name: 'MessageExtensionDeclaration',
                         arguments: [`"${this.options.messageExtensionName}"`]
                     });
+                    const children = prop.getChildren();
+                    if (children && children.length > 0) {
+                        const declaration = children.find(c => { return c.getKind() == ts.SyntaxKind.PropertyDeclaration; });
+                        if (declaration) {
+                            cl.insertText(declaration.getPos(), "// tslint:disable-next-line: variable-name\n");
+                        }
+                    }
 
 
                     // hook up the logic in the constructor

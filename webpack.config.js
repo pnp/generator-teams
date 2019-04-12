@@ -65,9 +65,7 @@ var config = [{
         }]
     },
     plugins: [
-        new CleanWebpackPlugin(
-            ['./generators'], {}
-        ),
+        new CleanWebpackPlugin(),
         new CopyWebpackPlugin([{
             from: 'src/app/templates',
             to: 'app/templates'
