@@ -2,21 +2,32 @@
 topic: sample
 products:
 - Office 365
+- Microsoft Teams
 languages:
 - TypeScript
+- Node.js
+- React
+- HTML
 extensions:
   contentType: tools
+  technologies:
+  - Tabs
+  - Microsoft Bot Framework
+  - Messaging Extensions
+  - Connectors
+  - Outgoing Webhooks
   createdDate: 3/3/2017 2:24:18 AM
 ---
 # generator-teams
 
-[![npm version](https://badge.fury.io/js/generator-teams.svg)](https://badge.fury.io/js/generator-teams)
+[![npm version](https://badge.fury.io/js/generator-teams.svg)](https://badge.fury.io/js/generator-teams) ![npm](https://img.shields.io/npm/dt/generator-teams.svg) ![NPM](https://img.shields.io/npm/l/generator-teams.svg) ![GitHub issues](https://img.shields.io/github/issues/officedev/generator-teams.svg) ![GitHub closed issues](https://img.shields.io/github/issues-closed/officedev/generator-teams.svg) ![GitHub stars](https://img.shields.io/github/stars/officedev/generator-teams.svg)
 
 A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) Apps.
 
  | @master | @preview |
  :--------:|:---------:
- [![Build Status](https://travis-ci.org/OfficeDev/generator-teams.svg?branch=master)](https://travis-ci.org/OfficeDev/generator-teams)|[![Build Status](https://travis-ci.org/OfficeDev/generator-teams.svg?branch=preview)](https://travis-ci.org/OfficeDev/generator-teams)
+ ![npm (latest)](https://img.shields.io/npm/v/generator-teams/latest.svg)|![npm (preview)](https://img.shields.io/npm/v/generator-teams/preview.svg)
+ ![Travis (.org) branch](https://img.shields.io/travis/OfficeDev/generator-teams/master.svg)|![Travis (.org) branch](https://img.shields.io/travis/OfficeDev/generator-teams/preview.svg)
 
 This generator Generates a Microsoft Teams App that can be used to add Tabs, Bots, Connectors, Compose Extensions and more to Microsoft Teams based on Node.js and TypeScript.
 
