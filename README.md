@@ -1,3 +1,13 @@
+---
+topic: sample
+products:
+- Office 365
+languages:
+- TypeScript
+extensions:
+  contentType: tools
+  createdDate: 3/3/2017 2:24:18 AM
+---
 # generator-teams
 
 [![npm version](https://badge.fury.io/js/generator-teams.svg)](https://badge.fury.io/js/generator-teams)
