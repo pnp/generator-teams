@@ -16,6 +16,9 @@
     "@types/express-session": "1.15.10",
     "@types/morgan": "1.7.35",
     "@types/request": "2.47.1",
+    "@types/enzyme": "^3.9.1",
+    "@types/jest": "^24.0.11",
+    "@types/react-test-renderer": "^16.8.1",
     "botbuilder": "4.3.2",
     "botbuilder-dialogs": "4.3.2",
     "botbuilder-teams": "4.0.0-beta1",
@@ -33,7 +36,7 @@
     "gulp-inject": "4.3.2",
     "gulp-token-replace": "1.1.2",
     "gulp-zip": "4.2.0",
-    "morgan": "1.9.0",
+    "morgan": "1.9.1",
     "nodemon": "1.18.3",
     "plugin-error": "1.0.1",
     "request": "2.88.0",
@@ -44,17 +47,15 @@
     "tslint-webpack-plugin": "^1.2.2",
     "webpack": "4.26.0",
     "yargs": "12.0.1",
-    "z-schema": "^3.19.1"
-  }, 
-  "devDependencies": {
-    "@types/enzyme": "^3.9.1",
-    "@types/jest": "^24.0.11",
-    "@types/react-test-renderer": "^16.8.1",
+    "z-schema": "^3.19.1",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.11.2",
     "jest": "^24.5.0",
     "react-test-renderer": "^16.8.5",
     "tslint-loader": "^3.6.0"
+  }, 
+  "devDependencies": {
+   
   },
   "jest": {
     "setupFiles": [
