@@ -77,18 +77,19 @@ This will automatically deploy your files to Azure, download the npm pacakges, b
 
 1. Log into [the Azure Portal](https://portal.azure.com)
 2. Create a new *Resource Group* or use an existing one
-3. Create a new *Web App* and give it the name of your tab, the same you used when asked for URL in the Yeoman generator. In your case <%= host %>.
-4. Go to the created Web App and configure *Deployment Credentials*. Not that this is only done once per Microsoft Azure Account.
-5. Go to *Deployment Options*
-6. Choose *Local Git Repository* as source and click *OK*
-7. In your tab folder initialize a Git repository using `git init`
-8. Build the solution using `gulp build` to make sure you don't have any errors
-9. Commit all your files using `git add -A && git commit -m "Initial commit"`
-10. Run the following command to set up the remote repository: `git remote add azure https://<username>@<%=websitePrefix%>.scm.azurewebsites.net:443/<%=websitePrefix%>.git`. You need to replace <username> with the name of the user you set up in _Deployment Credentials_. You can also copy the URL from *Options* in the Azure Web App.
-11. To push your code use to Azure use the following command: `git push azure master`, you will be asked for your credentials the first time
-12. Wait until the deployment is completed and navigate to <%= host %>/privacy.html to test that the web application is running
-13. Done
-14. Repeat step 11 for every commit you do and want to deploy
+3. Create a new *Web App* with Windows App Service Plan and give it the name of your tab, the same you used when asked for URL in the Yeoman generator. In your case <%= host %>.
+4. Add the following keys in the Application Settings: Key -> "WEBSITE_NODE_DEFAULT_VERSION" Value -> "8.10.0" and Key -> "SCM_COMMAND_IDLE_TIMEOUT" Value -> "1800"
+5. Go to the created Web App and configure *Deployment Credentials*. Not that this is only done once per Microsoft Azure Account.
+6. Go to *Deployment Options*
+7. Choose *Local Git Repository* as source and click *OK*
+8. In your tab folder initialize a Git repository using `git init`
+9. Build the solution using `gulp build` to make sure you don't have any errors
+10. Commit all your files using `git add -A && git commit -m "Initial commit"`
+11. Run the following command to set up the remote repository: `git remote add azure https://<username>@<%=websitePrefix%>.scm.azurewebsites.net:443/<%=websitePrefix%>.git`. You need to replace <username> with the name of the user you set up in _Deployment Credentials_. You can also copy the URL from *Options* in the Azure Web App.
+12. To push your code use to Azure use the following command: `git push azure master`, you will be asked for your credentials the first time
+13. Wait until the deployment is completed and navigate to <%= host %>/privacy.html to test that the web application is running
+14. Done
+15. Repeat step 11 for every commit you do and want to deploy
 
 ## Logging
 
