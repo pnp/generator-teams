@@ -164,6 +164,11 @@ export class GeneratorTeamsApp extends Generator {
                     validate: Yotilities.validateUrl,
                     when: () => !this.options.existingManifest,
                 },
+                {
+                    type: 'confirm',
+                    name: 'unitTestsEnabled',
+                    message: 'Would you like to include Test framework and initial tests?',
+                }
             ]
         ).then((answers: any) => {
             if (answers.confirmedAdd == false) {
@@ -209,6 +214,8 @@ export class GeneratorTeamsApp extends Generator {
             this.options.connector = (<string[]>answers.parts).indexOf('connector') != -1;
             this.options.customBot = (<string[]>answers.parts).indexOf('custombot') != -1;
             this.options.messageExtension = (<string[]>answers.parts).indexOf('messageextension') != -1;
+
+            this.options.unitTestsEnabled = answers.unitTestsEnabled;
 
             this.options.reactComponents = false; // set to false initially
 

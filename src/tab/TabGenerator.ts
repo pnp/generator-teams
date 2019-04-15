@@ -35,16 +35,10 @@ export class TabGenerator extends Generator {
                         validate: (input) => {
                             return input.length > 0 && input.length <= 16;
                         }
-                    },
-                    {
-                        type: 'confirm',
-                        name: 'unitTestsEnabled',
-                        message: 'Would you like to include Test framework and initial tests?',
                     }
                 ]
             ).then((answers: any) => {
                 this.options.tabTitle = answers.tabTitle;
-                this.options.unitTestsEnabled = answers.unitTestsEnabled;
                 this.options.tabName = lodash.camelCase(this.options.tabTitle);
                 if (!this.options.tabName.endsWith('Tab')) {
                     this.options.tabName = this.options.tabName + 'Tab';
