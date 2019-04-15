@@ -130,6 +130,7 @@ export class MessageExtensionGenerator extends Generator {
                     }
                 ]
             ).then((answers: any) => {
+                this.options.staticTab = false;
                 this.options.messageExtensionId = answers.messageExtensionId;
                 this.options.messageExtensionType = answers.messageExtensionType;
                 this.options.messageExtensionTitle = answers.messageExtensionName;
@@ -211,6 +212,7 @@ export class MessageExtensionGenerator extends Generator {
 
     public writing() {
         if (this.options.messageExtension) {
+            this.options.staticTab = false;
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
             if (!manifest.composeExtensions) {
