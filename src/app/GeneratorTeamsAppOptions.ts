@@ -29,7 +29,7 @@ export class GeneratorTeamsAppOptions {
     websitePrefix: string;
     /* Bots */
     botid: string = '';
-    staticTab: boolean;
+    staticTab: boolean = false;
     staticTabName: string;
     staticTabTitle: string;
     staticTabClassName: string;

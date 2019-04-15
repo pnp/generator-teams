@@ -74,7 +74,7 @@ export class <%=connectorComponentName%> implements IConnector {
                         {
                             activityTitle: "Ping",
                             activityText: "Sample ping ",
-                            activityImage: "<%=hostname%>/assets/icon.png",
+                            activityImage: `https://${process.env.HOSTNAME}/assets/icon.png`,
                             facts: [
                                 {
                                     name: "Generator",

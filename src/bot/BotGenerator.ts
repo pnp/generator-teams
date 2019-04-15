@@ -149,14 +149,12 @@ export class BotGenerator extends Generator {
 
             this.sourceRoot()
             let templateFiles = [];
+
             if (this.options.staticTab) {
                 templateFiles.push(
-                    "src/app/scripts/{botName}/{staticTabName}Tab.tsx",
-                    "src/app/web/{botName}/{staticTabName}.html",
-                    "src/app/{botName}/dialogs/HelpDialog.ts",
-                    "src/app/{botName}/dialogs/WelcomeCard.json",
-                    "src/app/{botName}/dialogs/WelcomeDialog.ts"
-                );
+                "src/app/scripts/{botName}/{staticTabClassName}Tab.tsx",
+                "src/app/web/{botName}/{staticTabName}.html",
+            );
 
                 manifest.staticTabs.push({
                     entityId: Guid.raw(),
@@ -178,8 +176,13 @@ export class BotGenerator extends Generator {
             this.fs.writeJSON(manifestPath, manifest);
 
             if (this.options.botType != 'existing') {
-                templateFiles.push('src/app/{botName}/{botClassName}.ts')
-                templateFiles.push('README-{botName}.md')
+                templateFiles.push(
+                    "README-{botName}.md",
+                    "src/app/{botName}/{botClassName}.ts",
+                    "src/app/{botName}/dialogs/HelpDialog.ts",
+                    "src/app/{botName}/dialogs/WelcomeCard.json",
+                    "src/app/{botName}/dialogs/WelcomeDialog.ts"
+                );
             }
             templateFiles.forEach(t => {
                 this.fs.copyTpl(
@@ -192,7 +195,7 @@ export class BotGenerator extends Generator {
             if (this.options.staticTab) {
                 Yotilities.insertTsExportDeclaration(
                     "src/app/scripts/client.ts",
-                    `./${this.options.botName}/${this.options.staticTabName}Tab`,
+                    `./${this.options.botName}/${this.options.staticTabClassName}Tab`,
                     `Automatically added for the ${this.options.staticTabName} bot tab`,
                     this.fs
                 );

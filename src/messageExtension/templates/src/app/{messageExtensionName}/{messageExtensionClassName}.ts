@@ -12,7 +12,7 @@ const log = debug("msteams");
 export default class <%= messageExtensionClassName%> implements IMessagingExtensionMiddlewareProcessor {
 
     public async onQuery(context: TurnContext, query: MessagingExtensionQuery): Promise<MessagingExtensionResult> {
-        const card = CardFactory.heroCard("Test", "Test", ["<%=host%>/assets/icon.png"]);
+        const card = CardFactory.heroCard("Test", "Test", [`https://${process.env.HOSTNAME}/assets/icon.png`]);
 
         if (query.parameters && query.parameters[0] && query.parameters[0].name === "initialRun") {
             // initial run
@@ -40,7 +40,7 @@ export default class <%= messageExtensionClassName%> implements IMessagingExtens
     public async onQuerySettingsUrl(context: TurnContext): Promise<{ title: string, value: string }> {
         return Promise.resolve({
             title: "<%=messageExtensionTitle%> Configuration",
-            value: "<%= host %>/<%= messageExtensionName %>/config.html"
+            value: `https://${process.env.HOSTNAME}/<%= messageExtensionName %>/config.html`
         });
     }
 

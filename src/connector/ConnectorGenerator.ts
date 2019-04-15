@@ -86,7 +86,7 @@ export class ConnectorGenerator extends Generator {
             if (this.options.connectorType != 'existing') {
                 let templateFiles = [
                     "README-{connectorName}.md",
-                    "src/app/scripts/{connectorName}Config.tsx",
+                    "src/app/scripts/{connectorName}/{connectorComponentName}Config.tsx",
                     "src/app/web/{connectorName}/config.html",
                     "src/app/{connectorName}/{connectorComponentName}.ts",
                 ];
@@ -124,7 +124,7 @@ export class ConnectorGenerator extends Generator {
             // update client.ts
             Yotilities.insertTsExportDeclaration(
                 "src/app/scripts/client.ts",
-                `./${this.options.connectorName}Config`,
+                `./${this.options.connectorName}/${this.options.connectorComponentName}Config`,
                 `Automatically added for the ${this.options.connectorName} connector`,
                 this.fs
             );

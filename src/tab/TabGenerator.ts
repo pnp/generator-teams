@@ -51,12 +51,12 @@ export class TabGenerator extends Generator {
     public writing() {
         if (this.options.tab) {
             let templateFiles = [
-                "src/app/scripts/{tabName}/{tabName}Config.tsx",
-                "src/app/scripts/{tabName}/{tabName}.tsx",
-                "src/app/scripts/{tabName}/{tabName}Remove.tsx",
-                "src/app/scripts/{tabName}/__tests__/{tabName}Config.spec.tsx",
-                "src/app/scripts/{tabName}/__tests__/{tabName}.spec.tsx",
-                "src/app/scripts/{tabName}/__tests__/{tabName}Remove.spec.tsx",
+                "src/app/scripts/{tabName}/{tabReactComponentName}Config.tsx",
+                "src/app/scripts/{tabName}/{tabReactComponentName}.tsx",
+                "src/app/scripts/{tabName}/{tabReactComponentName}Remove.tsx",
+                "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}Config.spec.tsx",
+                "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}.spec.tsx",
+                "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}Remove.spec.tsx",
                 "src/app/{tabName}/{tabReactComponentName}.ts",
                 "src/app/web/{tabName}/index.html",
                 "src/app/web/{tabName}/remove.html",

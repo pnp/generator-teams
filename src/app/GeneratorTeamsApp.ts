@@ -35,8 +35,8 @@ export class GeneratorTeamsApp extends Generator {
         });
         this.option('telemetry', {
             type: Boolean,
-            default: false,
-            description: 'Does not pass usage telemetry'
+            default: true,
+            description: 'Pass usage telemetry, use --no-telemetry to not send telemetry. Note, no personal data is sent.'
         });
         if (this.options['no-telemetry']) {
             AppInsights.setup('6d773b93-ff70-45c5-907c-8edae9bf90eb');

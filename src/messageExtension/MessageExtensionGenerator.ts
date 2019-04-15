@@ -130,7 +130,6 @@ export class MessageExtensionGenerator extends Generator {
                     }
                 ]
             ).then((answers: any) => {
-                this.options.staticTab = false;
                 this.options.messageExtensionId = answers.messageExtensionId;
                 this.options.messageExtensionType = answers.messageExtensionType;
                 this.options.messageExtensionTitle = answers.messageExtensionName;
@@ -245,7 +244,7 @@ export class MessageExtensionGenerator extends Generator {
 
                 templateFiles.push(
                     "src/app/{messageExtensionName}/{messageExtensionClassName}.ts",
-                    "src/app/scripts/{messageExtensionClassName}Config.tsx",
+                    "src/app/scripts/{messageExtensionName}/{messageExtensionClassName}Config.tsx",
                     "src/app/web/{messageExtensionName}/config.html",
                 );
                 templateFiles.forEach(t => {
@@ -267,7 +266,7 @@ export class MessageExtensionGenerator extends Generator {
 
                 Yotilities.insertTsExportDeclaration(
                     "src/app/scripts/client.ts",
-                    `./${this.options.messageExtensionName}Config`,
+                    `./${this.options.messageExtensionName}/${this.options.messageExtensionClassName}Config`,
                     `Automatically added for the ${this.options.messageExtensionName} message extension`,
                     this.fs
                 );
