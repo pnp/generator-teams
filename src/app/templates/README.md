@@ -24,6 +24,9 @@ To create the Microsoft Teams Apps manifest, run the `manifest` Gulp task. This 
 ``` bash
 gulp manifest
 ```
+## Working with the devPreview manifest version
+
+You can change the manifest version from the standard `1.3` to `devPreview` by editing the `manifest.json` file and the `manifestVersion` property. The schema validation currently supports `1.3` and `devPreview`, for other options you need to manually edit the `gulpfile.js` file and add the version and schema in the `SCHEMAS` constant. When validating the manifest you will get an error if any other versions are used and you will also get a warning if you have not manually updated the schema reference in the `manifest.json` file (which is recommended for in-editor schema validation).
 
 ## Configuration
 
