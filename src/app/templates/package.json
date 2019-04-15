@@ -5,9 +5,9 @@
   "scripts": {
     "start": "node dist/server.js",
     "build": "gulp build",
-    "debug": "gulp serve --debug",
+    "debug": "gulp serve --debug"<% if (unitTestsEnabled) { %>,
     "test": "jest",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage"<%}%>
   },
   "dependencies": {
     "@microsoft/teams-js": "1.4.1",
@@ -16,9 +16,9 @@
     "@types/express-session": "1.15.10",
     "@types/morgan": "1.7.35",
     "@types/request": "2.47.1",
-    "@types/enzyme": "^3.9.1",
+    <% if (unitTestsEnabled) { %>"@types/enzyme": "^3.9.1",
     "@types/jest": "^24.0.11",
-    "@types/react-test-renderer": "^16.8.1",
+    "@types/react-test-renderer": "^16.8.1",<%}%>
     "botbuilder": "4.3.2",
     "botbuilder-dialogs": "4.3.2",
     "botbuilder-teams": "4.0.0-beta1",
@@ -48,15 +48,15 @@
     "webpack": "4.26.0",
     "yargs": "12.0.1",
     "z-schema": "^3.19.1",
-    "enzyme": "^3.9.0",
+    <% if (unitTestsEnabled) { %>"enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.11.2",
     "jest": "^24.5.0",
-    "react-test-renderer": "^16.8.5",
+    "react-test-renderer": "^16.8.5",<%}%>
     "tslint-loader": "^3.6.0"
   }, 
   "devDependencies": {
    
-  },
+  }<% if (unitTestsEnabled) { %>,
   "jest": {
     "setupFiles": [
       "<rootDir>/test-shim.js",
@@ -81,5 +81,5 @@
     "coverageReporters": [
       "text"
     ]
-  }
+  }<%}%>
 }

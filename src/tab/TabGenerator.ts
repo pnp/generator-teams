@@ -36,9 +36,15 @@ export class TabGenerator extends Generator {
                             return input.length > 0 && input.length <= 16;
                         }
                     },
+                    {
+                        type: 'confirm',
+                        name: 'unitTestsEnabled',
+                        message: 'Would you like to include Test framework and initial tests?',
+                    }
                 ]
             ).then((answers: any) => {
                 this.options.tabTitle = answers.tabTitle;
+                this.options.unitTestsEnabled = answers.unitTestsEnabled;
                 this.options.tabName = lodash.camelCase(this.options.tabTitle);
                 if (!this.options.tabName.endsWith('Tab')) {
                     this.options.tabName = this.options.tabName + 'Tab';
@@ -54,14 +60,19 @@ export class TabGenerator extends Generator {
                 "src/app/scripts/{tabName}/{tabName}Config.tsx",
                 "src/app/scripts/{tabName}/{tabName}.tsx",
                 "src/app/scripts/{tabName}/{tabName}Remove.tsx",
-                "src/app/scripts/{tabName}/__tests__/{tabName}Config.spec.tsx",
-                "src/app/scripts/{tabName}/__tests__/{tabName}.spec.tsx",
-                "src/app/scripts/{tabName}/__tests__/{tabName}Remove.spec.tsx",
                 "src/app/{tabName}/{tabReactComponentName}.ts",
                 "src/app/web/{tabName}/index.html",
                 "src/app/web/{tabName}/remove.html",
                 "src/app/web/{tabName}/config.html",
             ];
+
+            if(this.options.unitTestsEnabled) {
+                templateFiles = templateFiles.concat([
+                    "src/app/scripts/{tabName}/__tests__/{tabName}Config.spec.tsx",
+                    "src/app/scripts/{tabName}/__tests__/{tabName}.spec.tsx",
+                    "src/app/scripts/{tabName}/__tests__/{tabName}Remove.spec.tsx",
+                ]);
+            } 
 
             this.sourceRoot()
 

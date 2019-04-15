@@ -203,6 +203,7 @@ export class GeneratorTeamsApp extends Generator {
                 this.options.host = this.options.existingManifest.developer.websiteUrl;
             }
 
+            this.options.unitTestsEnabled = false;
             this.options.bot = (<string[]>answers.parts).indexOf('bot') != -1;
             this.options.tab = (<string[]>answers.parts).indexOf('tab') != -1;
             this.options.connector = (<string[]>answers.parts).indexOf('connector') != -1;
@@ -241,9 +242,6 @@ export class GeneratorTeamsApp extends Generator {
             let templateFiles = [
                 "README.md",
                 "gulpfile.js",
-                "test-preprocessor.js",
-                "test-setup.js",
-                "test-shim.js",
                 "package.json",
                 ".env",
                 'src/app/server.ts',
@@ -254,6 +252,14 @@ export class GeneratorTeamsApp extends Generator {
                 "src/app/web/tou.html",
                 "src/app/web/privacy.html",
             ];
+
+            if(this.options.unitTestsEnabled) {
+                templateFiles = templateFiles.concat([
+                    "test-preprocessor.js",
+                    "test-setup.js",
+                    "test-shim.js"
+                ]);
+            }
 
             this.sourceRoot()
 
