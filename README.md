@@ -26,6 +26,7 @@ extensions:
 [![GitHub issues](https://img.shields.io/github/issues/officedev/generator-teams.svg)](https://github.com/OfficeDev/generator-teams/issues)
 [![GitHub closed issues](https://img.shields.io/github/issues-closed/officedev/generator-teams.svg)](https://github.com/OfficeDev/generator-teams/issues?q=is%3Aissue+is%3Aclosed) 
 [![GitHub stars](https://img.shields.io/github/stars/officedev/generator-teams.svg)](https://github.com/OfficeDev/generator-teams/stargazers)
+[![Gitter](https://badges.gitter.im/OfficeDev/generator-teams.svg)](https://gitter.im/OfficeDev/generator-teams?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) Apps.
 
