@@ -20,14 +20,19 @@ extensions:
 ---
 # generator-teams
 
-[![npm version](https://badge.fury.io/js/generator-teams.svg)](https://badge.fury.io/js/generator-teams) ![npm](https://img.shields.io/npm/dt/generator-teams.svg) ![NPM](https://img.shields.io/npm/l/generator-teams.svg) ![GitHub issues](https://img.shields.io/github/issues/officedev/generator-teams.svg) ![GitHub closed issues](https://img.shields.io/github/issues-closed/officedev/generator-teams.svg) ![GitHub stars](https://img.shields.io/github/stars/officedev/generator-teams.svg)
+[![npm version](https://badge.fury.io/js/generator-teams.svg)](https://www.npmjs.com/package/generator-teams)
+[![npm](https://img.shields.io/npm/dt/generator-teams.svg)]((https://www.npmjs.com/package/generator-teams))
+[![MIT](https://img.shields.io/npm/l/generator-teams.svg)](https://github.com/OfficeDev/generator-teams/blob/master/LICENSE.md)
+[![GitHub issues](https://img.shields.io/github/issues/officedev/generator-teams.svg)](https://github.com/OfficeDev/generator-teams/issues)
+[![GitHub closed issues](https://img.shields.io/github/issues-closed/officedev/generator-teams.svg)](https://github.com/OfficeDev/generator-teams/issues?q=is%3Aissue+is%3Aclosed) 
+[![GitHub stars](https://img.shields.io/github/stars/officedev/generator-teams.svg)](https://github.com/OfficeDev/generator-teams/stargazers)
 
 A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) Apps.
 
  | @master | @preview |
  :--------:|:---------:
- ![npm (latest)](https://img.shields.io/npm/v/generator-teams/latest.svg)|![npm (preview)](https://img.shields.io/npm/v/generator-teams/preview.svg)
- ![Travis (.org) branch](https://img.shields.io/travis/OfficeDev/generator-teams/master.svg)|![Travis (.org) branch](https://img.shields.io/travis/OfficeDev/generator-teams/preview.svg)
+ [![npm (latest)](https://img.shields.io/npm/v/generator-teams/latest.svg)](https://www.npmjs.com/package/generator-teams)|[![npm (preview)](https://img.shields.io/npm/v/generator-teams/preview.svg)](https://www.npmjs.com/package/generator-teams)
+ [![Travis (.org) branch](https://img.shields.io/travis/OfficeDev/generator-teams/master.svg)](https://travis-ci.org/OfficeDev/generator-teams)|[![Travis (.org) branch](https://img.shields.io/travis/OfficeDev/generator-teams/preview.svg)](https://travis-ci.org/OfficeDev/generator-teams)
 
 This generator Generates a Microsoft Teams App that can be used to add Tabs, Bots, Connectors, Compose Extensions and more to Microsoft Teams based on Node.js and TypeScript.
 

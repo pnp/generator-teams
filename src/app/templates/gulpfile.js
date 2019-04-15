@@ -26,8 +26,19 @@ var watcherfiles = ["./src/**/*.*"]
 var manifestFiles = ["./src/manifest/**/*.*", '!**/*.json']
 var temp = ["./temp"]
 
-
-
+/**
+ * Supported schemas
+ */
+const SCHEMAS = [
+    {
+        version: "1.3",
+        schema: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json"
+    },
+    {
+        version: "devPreview",
+        schema: "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json"
+    }
+];
 
 /**
  * Watches source files and invokes the build task
@@ -117,9 +128,19 @@ gulp.task('schema-validation', (callback) => {
         encoding: 'utf-8'
     }, function (err, data) {
         if (!err) {
-            var requiredUrl = "https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json";
-            var validator = new ZSchema();
             var json = JSON.parse(data);
+            log('Using manifest schema ' + json.manifestVersion);
+            let definition = SCHEMAS.find(s => s.version == json.manifestVersion);
+            if (definition == undefined) {
+                callback(new PluginError("validate-manifest", "Unable to locate schema"));
+                return;
+            }
+            if (json["$schema"] != definition.schema) {
+                log("Note: the defined schema in your manifest does not correspond to the manifestVersion");
+            }
+            var requiredUrl = definition.schema;
+            var validator = new ZSchema();
+
             var schema = {
                 "$ref": requiredUrl
             };

@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Reorganized the file structure and file namings
 * Improved auto generated class names formatting
 * Updated all npm references
+* Updated instructions for Git deployment to Azure (in README file)
 
 ### Added
 
@@ -27,6 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Support for dynamics properties/variables in the manifest.json file
 * Added TSLinting to the build pipeline
 * Added support for testing using Jest and Enzyme. Use `npm run test` and `npm run coverage`
+* Support for validating multiple schemas based on the manifest version (1.3 and devPreview supported)
 
 ### Fixes
 
