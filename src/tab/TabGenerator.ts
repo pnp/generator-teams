@@ -35,7 +35,7 @@ export class TabGenerator extends Generator {
                         validate: (input) => {
                             return input.length > 0 && input.length <= 16;
                         }
-                    },
+                    }
                 ]
             ).then((answers: any) => {
                 this.options.tabTitle = answers.tabTitle;
@@ -54,14 +54,19 @@ export class TabGenerator extends Generator {
                 "src/app/scripts/{tabName}/{tabReactComponentName}Config.tsx",
                 "src/app/scripts/{tabName}/{tabReactComponentName}.tsx",
                 "src/app/scripts/{tabName}/{tabReactComponentName}Remove.tsx",
-                "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}Config.spec.tsx",
-                "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}.spec.tsx",
-                "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}Remove.spec.tsx",
                 "src/app/{tabName}/{tabReactComponentName}.ts",
                 "src/app/web/{tabName}/index.html",
                 "src/app/web/{tabName}/remove.html",
                 "src/app/web/{tabName}/config.html",
             ];
+
+            if(this.options.unitTestsEnabled) {
+                templateFiles = templateFiles.concat([
+                    "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}Config.spec.tsx",
+                    "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}.spec.tsx",
+                    "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}Remove.spec.tsx",
+                ]);
+            } 
 
             this.sourceRoot()
 
