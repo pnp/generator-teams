@@ -7,5 +7,4 @@ import { PreventIframe } from "express-msteams-host";
 @PreventIframe("/<%=tabName%>/config.html")
 @PreventIframe("/<%=tabName%>/remove.html")
 export class <%=tabReactComponentName%> {
-    
 }
