@@ -15,8 +15,8 @@ const log = debug("msteams");
 @BotDeclaration(
     "/api/messages",
     new MemoryStorage(),
-    process.env.MICROSOFT_APP_ID,
-    process.env.MICROSOFT_APP_PASSWORD)
+    process.env.<%= botidEnv %>,
+    process.env.<%= botidEnvSecret %>)
 <% if (staticTab) { %>@PreventIframe("/<%=botName%>/<%=staticTabName%>.html")<% } %>
 export class <%= botClassName %> implements IBot {
     private readonly conversationState: ConversationState;

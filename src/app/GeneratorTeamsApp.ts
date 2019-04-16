@@ -159,7 +159,7 @@ export class GeneratorTeamsApp extends Generator {
                     name: 'host',
                     message: 'The URL where you will host this solution?',
                     default: (answers: any) => {
-                        return `https://${lodash.camelCase(answers.solutionName)}.azurewebsites.net`;
+                        return `https://${lodash.camelCase(answers.solutionName).toLocaleLowerCase()}.azurewebsites.net`;
                     },
                     validate: Yotilities.validateUrl,
                     when: () => !this.options.existingManifest,

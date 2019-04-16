@@ -17,7 +17,7 @@ In order to create a bot you need to first register it in the [Azure portal](htt
 
 ## How to configure the bot
 
-The App Id and App Secret, generated during the registration, for the bot are read from the `MICROSOFT_APP_ID` and `MICROSOFT_APP_PASSWORD` environment variables, specified in the `.env` file. These can be configured in the Azure Web App under *Application Settings > App Settings*.
+The App Id and App Secret, generated during the registration, for the bot are read from the `<%= botidEnv %>` and `<%= botidEnvSecret %>` environment variables, specified in the `.env` file. These can be configured in the Azure Web App under *Application Settings > App Settings*.
 
 ## How to test the bot locally
 

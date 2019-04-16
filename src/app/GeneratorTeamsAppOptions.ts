@@ -30,6 +30,8 @@ export class GeneratorTeamsAppOptions {
     unitTestsEnabled: boolean;
     /* Bots */
     botid: string = '';
+    botidEnv: string = "MICROSOFT_APP_ID";
+    botidEnvSecret: string = "MICROSOFT_APP_PASSWORD";
     staticTab: boolean = false;
     staticTabName: string;
     staticTabTitle: string;

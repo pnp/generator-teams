@@ -131,7 +131,6 @@ export class MessageExtensionGenerator extends Generator {
                     }
                 ]
             ).then((answers: any) => {
-                this.options.messageExtensionId = answers.messageExtensionId;
                 this.options.messageExtensionType = answers.messageExtensionType;
                 this.options.messageExtensionTitle = answers.messageExtensionName;
                 this.options.messageExtensionDescription = answers.messageExtensionDescription;
@@ -147,6 +146,7 @@ export class MessageExtensionGenerator extends Generator {
                     // we need to add the Bot, even though the users did not choose to create one
                     this.options.messagingExtensionBot = true;
                     this.options.botid = answers.messageExtensionId;
+                    this.options.messageExtensionId = `{{${this.options.botidEnv}}}`;
                     this.options.botType = 'botframework';
                     this.options.botTitle = answers.messageExtensionName + ' Bot';
 
@@ -210,7 +210,7 @@ export class MessageExtensionGenerator extends Generator {
                         }
                     } else {
                         // we're adding a bot AND an extension
-                        this.options.messageExtensionId = this.options.botid;
+                        this.options.messageExtensionId = `{{${this.options.botidEnv}}}`;
                     }
                 }
                 this.options.reactComponents = true;
@@ -246,6 +246,7 @@ export class MessageExtensionGenerator extends Generator {
             if (this.options.existingManifest && composeExtension) {
                 composeExtension.commands.push(command);
             } else {
+                // no existing manifest
                 manifest.composeExtensions.push({
                     botId: this.options.messageExtensionId,
                     canUpdateConfiguration: true,

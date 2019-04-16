@@ -21,7 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Updated all npm references
 * Updated instructions for Git deployment to Azure (in README file)
 * Consistency in file names and class names
-
+* Minimized the code scaffolded for Messaging Extension projects without a Bot
 
 ### Added
 
@@ -31,13 +31,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added TSLinting to the build pipeline
 * Added support for testing using Jest and Enzyme. Use `npm run test` and `npm run coverage`
 * Support for validating multiple schemas based on the manifest version (1.3 and devPreview supported)
+* Added support for Connector IDs to use the `.env` file
 
 ### Fixes
 
 * Fixed the issue where the description of message extensions was miscalculated
 * Fixed an issue where message extension code was added when externally hosted
-* Fixed an issue where Connectors could not properly be configured
+* Fixed an issue where Connectors could not properly be configured due to missing typings in Teams JS
 * Bug fixes: #55, #54, #53, #52
+* Fixed an issue where Connectors could not be configured due to case sensitive URLs
 
 ## [*2.5.0*] - <*2018-08-17*>
 
