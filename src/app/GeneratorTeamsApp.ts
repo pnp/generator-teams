@@ -168,6 +168,7 @@ export class GeneratorTeamsApp extends Generator {
                     type: 'confirm',
                     name: 'unitTestsEnabled',
                     message: 'Would you like to include Test framework and initial tests?',
+                    when: () => !this.options.existingManifest,
                 }
             ]
         ).then((answers: any) => {
@@ -325,6 +326,9 @@ export class GeneratorTeamsApp extends Generator {
             }
             if (this.options.tab) {
                 AppInsights.defaultClient.trackEvent({ name: 'tab' });
+            }
+            if (this.options.unitTestsEnabled) {
+                AppInsights.defaultClient.trackEvent({ name: 'unitTests' });
             }
             AppInsights.defaultClient.flush();
         }
