@@ -64,7 +64,7 @@ To step through code in Visual Studio Code you need to add the following snippet
 
 ### Using ngrok for local development and hosting
 
-In order to make development locally a great experience it is recommended to use [ngrok]{https://ngrok.io}, which allows you to publish the localhost on a public DNS, so that you can consume the bot and the other resources in Microsoft Teams. Start ngrok locally and either specify a reserved hostname or use a dynamic generated one. Modify the `HOSTNAME` property of the `.env` file with the public hostname you have in ngrok, rebuild the manifest and upload it to Microsoft Teams and start `gulp serve`.
+In order to make development locally a great experience it is recommended to use [ngrok](https://ngrok.io), which allows you to publish the localhost on a public DNS, so that you can consume the bot and the other resources in Microsoft Teams. Start ngrok locally and either specify a reserved hostname or use a dynamic generated one. Modify the `HOSTNAME` property of the `.env` file with the public hostname you have in ngrok, rebuild the manifest and upload it to Microsoft Teams and start `gulp serve`.
 
 ## Output
 
@@ -81,18 +81,20 @@ This will automatically deploy your files to Azure, download the npm pacakges, b
 1. Log into [the Azure Portal](https://portal.azure.com)
 2. Create a new *Resource Group* or use an existing one
 3. Create a new *Web App* with Windows App Service Plan and give it the name of your tab, the same you used when asked for URL in the Yeoman generator. In your case <%= host %>.
-4. Add the following keys in the Application Settings: Key -> "WEBSITE_NODE_DEFAULT_VERSION" Value -> "8.10.0" and Key -> "SCM_COMMAND_IDLE_TIMEOUT" Value -> "1800"
+4. Add the following keys in the *Configuration* -> *Application Settings*; Name = `WEBSITE_NODE_DEFAULT_VERSION`, Value = `8.10.0` and Name = `SCM_COMMAND_IDLE_TIMEOUT`,  Value = `1800`. Click Save.
 5. Go to *Deployment Center*
-6. Choose *Local Git Repository* as source and *App Service build service* as the Build Provider 
+6. Choose *Local Git* as source and *App Service build service* as the Build Provider 
 7. Click on *Deployment Credentials* and store the App Credentials securely
 8. In your tab folder initialize a Git repository using `git init`
 9. Build the solution using `gulp build` to make sure you don't have any errors
 10. Commit all your files using `git add -A && git commit -m "Initial commit"`
 11. Run the following command to set up the remote repository: `git remote add azure https://<username>@<%=websitePrefix%>.scm.azurewebsites.net:443/<%=websitePrefix%>.git`. You need to replace <username> with the username of the App Credentials you retrieved in _Deployment Credentials_. You can also copy the URL from *Options* in the Azure Web App.
-12. To push your code use to Azure use the following command: `git push azure master`, you will be asked for your credentials the first time, insert the Password for the ApP Credential
+12. To push your code use to Azure use the following command: `git push azure master`, you will be asked for your credentials the first time, insert the Password for the App Credential
 13. Wait until the deployment is completed and navigate to <%= host %>/privacy.html to test that the web application is running
 14. Done
 15. Repeat step 11 for every commit you do and want to deploy
+
+> NOTE: The `.env` file is excluded from source control and will not be pushed to the web site so you need to ensure that all the settings present in the `.env` file are added as application settings to your Azure Web site (except the `PORT` variable which is used for local debugging).
 
 ## Logging
 
