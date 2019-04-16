@@ -187,10 +187,10 @@ export class GeneratorTeamsApp extends Generator {
                 this.options.developer = answers.developer;
                 this.options.host = answers.host;
                 var tmp: string = this.options.host.substring(this.options.host.indexOf('://') + 3)
-                this.options.hostname = this.options.host.substring(this.options.host.indexOf('://') + 3);
+                this.options.hostname = this.options.host.substring(this.options.host.indexOf('://') + 3).toLocaleLowerCase();
 
                 var arr: string[] = tmp.split('.');
-                this.options.namespace = lodash.reverse(arr).join('.');
+                this.options.namespace = lodash.reverse(arr).join('.').toLocaleLowerCase();
                 this.options.id = Guid.raw();
                 if (this.options.host.indexOf('azurewebsites.net') >= 0) {
                     this.options.websitePrefix = this.options.host.substring(this.options.host.indexOf('://') + 3, this.options.host.indexOf('.'));

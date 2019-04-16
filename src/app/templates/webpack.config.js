@@ -94,7 +94,9 @@ var config = [{
             ]
         },
         plugins: [
-            new Dotenv(),
+            new Dotenv({
+                systemvars: true
+            }),
             new TSLintPlugin({
                 files: ['./src/app/scripts/**/*.ts', './src/app/scripts/**/*.tsx']
             })

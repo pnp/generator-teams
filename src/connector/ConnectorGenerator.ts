@@ -104,7 +104,7 @@ export class ConnectorGenerator extends Generator {
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
             manifest.connectors.push({
-                connectorId: this.options.connectorId,
+                connectorId: "{{CONNECTOR_ID}}",
                 configurationUrl: `https://{{HOSTNAME}}/${this.options.connectorName}/config.html`, 
                 scopes: ["team"],
             });

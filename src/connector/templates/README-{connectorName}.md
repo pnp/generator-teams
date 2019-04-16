@@ -11,6 +11,7 @@ All Connectors has to be registered in the [Connectors Developer Dashboard](http
 5. Choose *Yes* on the *enable actions on your Connector Cards* question.
 6. As *Actions URL* add the Connector API endpoint (`<%=host %>/api/connector`).
 7. Finally accept the license terms and click *Save*.
+8. Once the Connector is saved, copy and paste the ID shown in the URL (in the form of a GUID) and add it to your`.env` file `CONNECTOR_ID` property
 
 ## Connector implementation details
 

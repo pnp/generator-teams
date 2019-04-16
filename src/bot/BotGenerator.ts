@@ -134,7 +134,7 @@ export class BotGenerator extends Generator {
                 let manifestPath = "src/manifest/manifest.json";
                 var manifest: any = this.fs.readJSON(manifestPath);
                 var newbot = {
-                    botId: this.options.botid,
+                    botId: "{{MICROSOFT_APP_ID}}",
                     needsChannelSelector: true,
                     isNotificationOnly: false,
                     scopes: ["team", "personal"],

@@ -97,8 +97,9 @@ gulp.task('static:inject', () => {
         ignorePath: 'dist/web',
         addRootSlash: true
     };
-
+    require('dotenv').config();
     return gulp.src(htmlFiles)
+        .pipe(replace({ tokens: { ...process.env } }))
         .pipe(inject(injectSrc, injectOptions)) // inserts custom sources
         .pipe(gulp.dest('./dist'));
 });

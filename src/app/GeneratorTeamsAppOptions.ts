@@ -45,7 +45,7 @@ export class GeneratorTeamsAppOptions {
     customBotClassName: string;
     /* Connector */
     connector: boolean;
-    connectorId: string;
+    connectorId?: string = undefined;
     connectorType: string = '';
     connectorTitle: string;
     connectorName: string;

@@ -104,7 +104,7 @@ export class MessageExtensionGenerator extends Generator {
                         name: 'messageExtensionName',
                         message: 'What is the name of your Message Extension command?',
                         default: this.options.title + ' Message Extension',
-                        validate: (input, answers) => {
+                        validate: (input: string, answers) => {
                             if (answers && answers.messageExtensionType !== 'external') {
                                 let name = lodash.camelCase(input);
                                 if (!name.endsWith(`MessageExtension`)) {
@@ -115,7 +115,7 @@ export class MessageExtensionGenerator extends Generator {
                                     return `There's already a file with the name of ${name}/${className}.ts`;
                                 }
                             }
-                            return input.length > 0;
+                            return input.length > 0 && input.length <= 32;
                         },
                     },
                     {
@@ -125,7 +125,7 @@ export class MessageExtensionGenerator extends Generator {
                         default: (answers: any) => {
                             return `Description of ${answers.messageExtensionName}`
                         },
-                        validate: (input) => {
+                        validate: (input: string) => {
                             return input.length > 0;
                         }
                     }
@@ -156,6 +156,11 @@ export class MessageExtensionGenerator extends Generator {
                     // reuse the bot id
 
                     if (this.options.existingManifest) {
+                        // load local environment variable
+                        require('dotenv').config({
+                            path: `${this.destinationRoot()}${path.sep}.env`
+                        });
+
                         this.options.messageExtensionId = answers.botId;
                         // if we already have a project, let's find the bot implementation class
                         const project = new Project();
@@ -170,10 +175,6 @@ export class MessageExtensionGenerator extends Generator {
                                     if (Guid.isGuid(idargval)) {
                                         return { c: c, id: idargval };
                                     } else {
-                                        // load local environment variable
-                                        require('dotenv').config({
-                                            path: `${this.destinationRoot()}${path.sep}.env`
-                                        });
                                         const calcval = eval(idargval);
                                         if (!Guid.isGuid(calcval)) {
                                             this.log(chalk.default.red('Unable to continue, as I cannot correlate the Bot Id and the TypeScript class'));
@@ -187,8 +188,16 @@ export class MessageExtensionGenerator extends Generator {
                                 return x !== undefined;
                             });
                         })
+                        let botId: string = answers.botId;
+                        if (!Guid.isGuid(botId)) {
+                            try {
+                                botId = eval(`process.env.${botId.replace("{{","").replace("}}","")}`);
+                            } catch {
+                                this.log(chalk.default.yellow(`Unable to find the bot id from: "${botId}"`));
+                            }
+                        }
                         const botClass = lodash.flatten(botClasses).find(c => {
-                            return c !== undefined && c.id == answers.botId;
+                            return c !== undefined && c.id == botId;
                         });
                         if (botClass) {
                             this.options.botClassName = botClass.c.getName() as string;
@@ -214,7 +223,7 @@ export class MessageExtensionGenerator extends Generator {
         if (this.options.messageExtension) {
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
-            
+
             if (!manifest.composeExtensions) {
                 manifest.composeExtensions = [];
             }
@@ -233,7 +242,7 @@ export class MessageExtensionGenerator extends Generator {
                 ]
             };
 
-            let composeExtension = manifest.composeExtensions.find( (ce: { botId: string; }) => ce.botId == this.options.messageExtensionId);
+            let composeExtension = manifest.composeExtensions.find((ce: { botId: string; }) => ce.botId == this.options.messageExtensionId);
             if (this.options.existingManifest && composeExtension) {
                 composeExtension.commands.push(command);
             } else {
@@ -261,7 +270,7 @@ export class MessageExtensionGenerator extends Generator {
                         Yotilities.fixFileNames(t, this.options),
                         this.options);
                 });
-                
+
                 Yotilities.addAdditionalDeps([
                     ["msteams-ui-components-react", "^0.8.1"],
                     ["react", "^16.8.4"],
