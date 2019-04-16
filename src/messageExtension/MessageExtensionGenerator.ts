@@ -110,8 +110,9 @@ export class MessageExtensionGenerator extends Generator {
                                 if (!name.endsWith(`MessageExtension`)) {
                                     name += `MessageExtension`;
                                 }
-                                if (this.fs.exists(`src/app/${name}.ts`)) {
-                                    return `There's already a file with the name of ${name}.ts`;
+                                let className = name.charAt(0).toUpperCase() + name.slice(1);
+                                if (this.fs.exists(`src/app/${name}/${className}.ts`)) {
+                                    return `There's already a file with the name of ${name}/${className}.ts`;
                                 }
                             }
                             return input.length > 0;
@@ -214,28 +215,36 @@ export class MessageExtensionGenerator extends Generator {
             this.options.staticTab = false;
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
+            
             if (!manifest.composeExtensions) {
                 manifest.composeExtensions = [];
             }
-            manifest.composeExtensions.push({
-                botId: this.options.messageExtensionId,
-                canUpdateConfiguration: true,
-                commands: [
+
+            let command = {
+                id: this.options.messageExtensionName,
+                title: this.options.messageExtensionTitle,
+                description: 'Add a clever description here',
+                initialRun: true,
+                parameters: [
                     {
-                        id: this.options.messageExtensionName,
-                        title: this.options.messageExtensionTitle,
-                        description: 'Add a clever description here',
-                        initialRun: true,
-                        parameters: [
-                            {
-                                name: 'parameter',
-                                description: 'Description of the parameter',
-                                title: 'Parameter'
-                            }
-                        ]
+                        name: 'parameter',
+                        description: 'Description of the parameter',
+                        title: 'Parameter'
                     }
                 ]
-            });
+            };
+
+            let composeExtension = manifest.composeExtensions.find( (ce: { botId: string; }) => ce.botId == this.options.messageExtensionId);
+            if (this.options.existingManifest && composeExtension) {
+                composeExtension.commands.push(command);
+            } else {
+                manifest.composeExtensions.push({
+                    botId: this.options.messageExtensionId,
+                    canUpdateConfiguration: true,
+                    commands: [command]
+                });
+            }
+
             this.fs.writeJSON(manifestPath, manifest);
 
             // Externally hosted bots does not have an implementation
