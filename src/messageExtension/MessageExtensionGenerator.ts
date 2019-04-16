@@ -145,7 +145,7 @@ export class MessageExtensionGenerator extends Generator {
 
                 if (answers.messageExtensionType == 'new') {
                     // we need to add the Bot, even though the users did not choose to create one
-                    this.options.bot = true;
+                    this.options.messagingExtensionBot = true;
                     this.options.botid = answers.messageExtensionId;
                     this.options.botType = 'botframework';
                     this.options.botTitle = answers.messageExtensionName + ' Bot';
@@ -212,7 +212,6 @@ export class MessageExtensionGenerator extends Generator {
 
     public writing() {
         if (this.options.messageExtension) {
-            this.options.staticTab = false;
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
             
@@ -262,7 +261,7 @@ export class MessageExtensionGenerator extends Generator {
                         Yotilities.fixFileNames(t, this.options),
                         this.options);
                 });
-
+                
                 Yotilities.addAdditionalDeps([
                     ["msteams-ui-components-react", "^0.8.1"],
                     ["react", "^16.8.4"],

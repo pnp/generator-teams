@@ -58,6 +58,7 @@ export class GeneratorTeamsAppOptions {
     messageExtensionName: string;
     messageExtensionId: string;
     messageExtensionClassName: string;
+    messagingExtensionBot: boolean; // indicates that we need to add a bot to host the messaging extension
     /* manifest */
     existingManifest: any;
 }

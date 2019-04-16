@@ -2,8 +2,8 @@ import { BotDeclaration, MessageExtensionDeclaration, IBot, PreventIframe } from
 import * as debug from "debug";
 import { DialogSet, DialogState } from "botbuilder-dialogs";
 import { StatePropertyAccessor, CardFactory, TurnContext, MemoryStorage, ConversationState, ActivityTypes } from "botbuilder";
-import HelpDialog from "./dialogs/HelpDialog";
-import WelcomeCard from "./dialogs/WelcomeDialog";
+<% if (bot) { %>import HelpDialog from "./dialogs/HelpDialog";<% } %>
+<% if (bot) { %>import WelcomeCard from "./dialogs/WelcomeDialog";<% } %>
 import { TeamsContext, TeamsActivityProcessor } from "botbuilder-teams";
 
 // Initialize debug logging module
@@ -17,8 +17,7 @@ const log = debug("msteams");
     new MemoryStorage(),
     process.env.MICROSOFT_APP_ID,
     process.env.MICROSOFT_APP_PASSWORD)
-<% if (staticTab) { %>
-@PreventIframe("/<%=botName%>/<%=staticTabName%>.html")<% } %>
+<% if (staticTab) { %>@PreventIframe("/<%=botName%>/<%=staticTabName%>.html")<% } %>
 export class <%= botClassName %> implements IBot {
     private readonly conversationState: ConversationState;
     private readonly dialogs: DialogSet;
@@ -33,8 +32,8 @@ export class <%= botClassName %> implements IBot {
         this.conversationState = conversationState;
         this.dialogState = conversationState.createProperty("dialogState");
         this.dialogs = new DialogSet(this.dialogState);
-        this.dialogs.add(new HelpDialog("help"));
-
+        <% if (bot) { %>this.dialogs.add(new HelpDialog("help"));<% } %>
+<% if (bot) { %>
         // Set up the Activity processing
         
         this.activityProc.messageActivityHandler = {
@@ -92,7 +91,7 @@ export class <%= botClassName %> implements IBot {
                     });
                 }
             }
-        };
+        };<% } %>
    }
 
    /**

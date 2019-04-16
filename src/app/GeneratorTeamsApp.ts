@@ -232,6 +232,8 @@ export class GeneratorTeamsApp extends Generator {
     }
 
     public writing() {
+        this.sourceRoot();
+
         if (!this.options.existingManifest) {
             let staticFiles = [
                 "_gitignore",
@@ -245,7 +247,6 @@ export class GeneratorTeamsApp extends Generator {
                 '_deployment',
                 "src/app/TeamsAppsComponents.ts"
             ]
-
 
             let templateFiles = [
                 "README.md",
@@ -269,26 +270,25 @@ export class GeneratorTeamsApp extends Generator {
                 ]);
             }
 
-            this.sourceRoot()
-
             templateFiles.forEach(t => {
                 this.fs.copyTpl(
                     this.templatePath(t),
                     Yotilities.fixFileNames(t, this.options),
                     this.options);
             });
+
             staticFiles.forEach(t => {
                 this.fs.copy(
                     this.templatePath(t),
                     Yotilities.fixFileNames(t, this.options));
-            });
-
-            // if we have added any react based components
-            if (this.options.reactComponents) {
-                Yotilities.addAdditionalDeps([
-                    ["msteams-react-base-component", "1.1.0"]
-                ], this.fs);
-            }
+            });   
+        }
+        
+        // if we have added any react based components
+        if (this.options.reactComponents) {
+            Yotilities.addAdditionalDeps([
+                ["msteams-react-base-component", "1.1.0"]
+            ], this.fs);
         }
     }
 
