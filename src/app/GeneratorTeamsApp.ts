@@ -38,7 +38,7 @@ export class GeneratorTeamsApp extends Generator {
             default: true,
             description: 'Pass usage telemetry, use --no-telemetry to not send telemetry. Note, no personal data is sent.'
         });
-        if (this.options['no-telemetry']) {
+        if (this.options.telemetry) {
             AppInsights.setup('6d773b93-ff70-45c5-907c-8edae9bf90eb');
             delete AppInsights.defaultClient.context.tags['ai.cloud.roleInstance'];
             AppInsights.Configuration.setAutoCollectExceptions(true);
@@ -187,7 +187,7 @@ export class GeneratorTeamsApp extends Generator {
                 this.options.developer = answers.developer;
                 this.options.host = answers.host;
                 var tmp: string = this.options.host.substring(this.options.host.indexOf('://') + 3)
-                this.options.hostname = this.options.host.substring(this.options.host.indexOf('://') +3);
+                this.options.hostname = this.options.host.substring(this.options.host.indexOf('://') + 3);
 
                 var arr: string[] = tmp.split('.');
                 this.options.namespace = lodash.reverse(arr).join('.');
@@ -262,7 +262,7 @@ export class GeneratorTeamsApp extends Generator {
                 "src/app/web/privacy.html",
             ];
 
-            if(this.options.unitTestsEnabled) {
+            if (this.options.unitTestsEnabled) {
                 templateFiles = templateFiles.concat([
                     "test-preprocessor.js",
                     "test-setup.js",
@@ -281,9 +281,9 @@ export class GeneratorTeamsApp extends Generator {
                 this.fs.copy(
                     this.templatePath(t),
                     Yotilities.fixFileNames(t, this.options));
-            });   
+            });
         }
-        
+
         // if we have added any react based components
         if (this.options.reactComponents) {
             Yotilities.addAdditionalDeps([
@@ -298,8 +298,7 @@ export class GeneratorTeamsApp extends Generator {
 
     public install() {
         // track usage
-        if (this.options['no-telemetry']) {
-
+        if (this.options.telemetry) {
             if (this.options.existingManifest) {
                 AppInsights.defaultClient.trackEvent({ name: 'rerun-generator' });
             }
