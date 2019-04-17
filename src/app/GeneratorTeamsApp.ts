@@ -33,14 +33,22 @@ export class GeneratorTeamsApp extends Generator {
             default: false,
             description: 'Skips running npm install'
         });
-        AppInsights.setup('6d773b93-ff70-45c5-907c-8edae9bf90eb');
-        delete AppInsights.defaultClient.context.tags['ai.cloud.roleInstance'];
-        AppInsights.Configuration.setAutoCollectExceptions(true);
-        AppInsights.Configuration.setAutoCollectPerformance(true);
-        AppInsights.defaultClient.commonProperties = {
-            version: pkg.version
-        };
-        AppInsights.defaultClient.trackEvent({ name: 'start-generator' });
+        this.option('telemetry', {
+            type: Boolean,
+            default: true,
+            description: 'Pass usage telemetry, use --no-telemetry to not send telemetry. Note, no personal data is sent.'
+        });
+        if (this.options.telemetry) {
+            AppInsights.setup('6d773b93-ff70-45c5-907c-8edae9bf90eb');
+            delete AppInsights.defaultClient.context.tags['ai.cloud.roleInstance'];
+            AppInsights.Configuration.setAutoCollectExceptions(true);
+            AppInsights.Configuration.setAutoCollectPerformance(true);
+            AppInsights.defaultClient.commonProperties = {
+                version: pkg.version
+            };
+            AppInsights.defaultClient.trackEvent({ name: 'start-generator' });
+        }
+
         this.options.existingManifest = this.fs.readJSON(`./src/manifest/manifest.json`);
     }
 
@@ -54,7 +62,7 @@ export class GeneratorTeamsApp extends Generator {
 
         // check schema version:
         if (this.options.existingManifest) {
-            if (this.options.existingManifest["$schema"] != 'https://statics.teams.microsoft.com/sdk/v1.2/manifest/MicrosoftTeams.schema.json') {
+            if (this.options.existingManifest["$schema"] != 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json') {
                 this.log(chalk.default.red('You are running the generator on an already existing project, but on a non supported-schema.'));
                 process.exit(1);
             }
@@ -121,18 +129,22 @@ export class GeneratorTeamsApp extends Generator {
                         {
                             name: 'A Tab',
                             value: 'tab',
+                            disabled: this.options.existingManifest,
                             checked: true
                         },
                         {
                             name: 'A Bot',
+                            disabled: this.options.existingManifest,
                             value: 'bot'
                         },
                         {
                             name: 'An Outgoing Webhook',
+                            disabled: this.options.existingManifest,
                             value: 'custombot'
                         },
                         {
                             name: 'A Connector',
+                            disabled: this.options.existingManifest,
                             value: 'connector'
                         },
                         {
@@ -147,17 +159,24 @@ export class GeneratorTeamsApp extends Generator {
                     name: 'host',
                     message: 'The URL where you will host this solution?',
                     default: (answers: any) => {
-                        return `https://${lodash.camelCase(answers.solutionName)}.azurewebsites.net`;
+                        return `https://${lodash.camelCase(answers.solutionName).toLocaleLowerCase()}.azurewebsites.net`;
                     },
                     validate: Yotilities.validateUrl,
                     when: () => !this.options.existingManifest,
                 },
+                {
+                    type: 'confirm',
+                    name: 'unitTestsEnabled',
+                    message: 'Would you like to include Test framework and initial tests?',
+                    when: () => !this.options.existingManifest,
+                }
             ]
         ).then((answers: any) => {
             if (answers.confirmedAdd == false) {
                 process.exit(0)
             }
             if (!this.options.existingManifest) {
+
                 answers.host = answers.host.endsWith('/') ? answers.host.substr(0, answers.host.length - 1) : answers.host;
                 this.options.title = answers.name;
                 this.options.description = this.description;
@@ -168,10 +187,10 @@ export class GeneratorTeamsApp extends Generator {
                 this.options.developer = answers.developer;
                 this.options.host = answers.host;
                 var tmp: string = this.options.host.substring(this.options.host.indexOf('://') + 3)
+                this.options.hostname = this.options.host.substring(this.options.host.indexOf('://') + 3).toLocaleLowerCase();
+
                 var arr: string[] = tmp.split('.');
-                this.options.namespace = lodash.reverse(arr).join('.');
-                this.options.tou = answers.host + '/tou.html';
-                this.options.privacy = answers.host + '/privacy.html';
+                this.options.namespace = lodash.reverse(arr).join('.').toLocaleLowerCase();
                 this.options.id = Guid.raw();
                 if (this.options.host.indexOf('azurewebsites.net') >= 0) {
                     this.options.websitePrefix = this.options.host.substring(this.options.host.indexOf('://') + 3, this.options.host.indexOf('.'));
@@ -190,11 +209,14 @@ export class GeneratorTeamsApp extends Generator {
                 this.options.host = this.options.existingManifest.developer.websiteUrl;
             }
 
+            this.options.unitTestsEnabled = false;
             this.options.bot = (<string[]>answers.parts).indexOf('bot') != -1;
             this.options.tab = (<string[]>answers.parts).indexOf('tab') != -1;
             this.options.connector = (<string[]>answers.parts).indexOf('connector') != -1;
             this.options.customBot = (<string[]>answers.parts).indexOf('custombot') != -1;
             this.options.messageExtension = (<string[]>answers.parts).indexOf('messageextension') != -1;
+
+            this.options.unitTestsEnabled = answers.unitTestsEnabled;
 
             this.options.reactComponents = false; // set to false initially
 
@@ -210,10 +232,13 @@ export class GeneratorTeamsApp extends Generator {
     }
 
     public writing() {
+        this.sourceRoot();
+
         if (!this.options.existingManifest) {
             let staticFiles = [
                 "_gitignore",
                 "tsconfig.json",
+                "tslint.json",
                 "tsconfig-client.json",
                 "src/manifest/icon-outline.png",
                 "src/manifest/icon-color.png",
@@ -222,7 +247,6 @@ export class GeneratorTeamsApp extends Generator {
                 '_deployment',
                 "src/app/TeamsAppsComponents.ts"
             ]
-            
 
             let templateFiles = [
                 "README.md",
@@ -238,7 +262,13 @@ export class GeneratorTeamsApp extends Generator {
                 "src/app/web/privacy.html",
             ];
 
-            this.sourceRoot()
+            if (this.options.unitTestsEnabled) {
+                templateFiles = templateFiles.concat([
+                    "test-preprocessor.js",
+                    "test-setup.js",
+                    "test-shim.js"
+                ]);
+            }
 
             templateFiles.forEach(t => {
                 this.fs.copyTpl(
@@ -246,18 +276,19 @@ export class GeneratorTeamsApp extends Generator {
                     Yotilities.fixFileNames(t, this.options),
                     this.options);
             });
+
             staticFiles.forEach(t => {
                 this.fs.copy(
                     this.templatePath(t),
                     Yotilities.fixFileNames(t, this.options));
             });
+        }
 
-            // if we have added any react based components
-            if (this.options.reactComponents) {
-                Yotilities.addAdditionalDeps([
-                    ["msteams-react-base-component", "~1.0.0"]
-                ], this.fs);
-            }
+        // if we have added any react based components
+        if (this.options.reactComponents) {
+            Yotilities.addAdditionalDeps([
+                ["msteams-react-base-component", "1.1.1"]
+            ], this.fs);
         }
     }
 
@@ -267,34 +298,39 @@ export class GeneratorTeamsApp extends Generator {
 
     public install() {
         // track usage
-        if (this.options.existingManifest) {
-            AppInsights.defaultClient.trackEvent({ name: 'rerun-generator' });
-        }
-        AppInsights.defaultClient.trackEvent({ name: 'end-generator' });
-        if (this.options.bot) {
-            AppInsights.defaultClient.trackEvent({ name: 'bot' });
-            if (this.options.botType == 'existing') {
-                AppInsights.defaultClient.trackEvent({ name: 'bot-existing' });
-            } else {
-                AppInsights.defaultClient.trackEvent({ name: 'bot-new' });
+        if (this.options.telemetry) {
+            if (this.options.existingManifest) {
+                AppInsights.defaultClient.trackEvent({ name: 'rerun-generator' });
             }
+            AppInsights.defaultClient.trackEvent({ name: 'end-generator' });
+            if (this.options.bot) {
+                AppInsights.defaultClient.trackEvent({ name: 'bot' });
+                if (this.options.botType == 'existing') {
+                    AppInsights.defaultClient.trackEvent({ name: 'bot-existing' });
+                } else {
+                    AppInsights.defaultClient.trackEvent({ name: 'bot-new' });
+                }
+            }
+            if (this.options.messageExtension) {
+                AppInsights.defaultClient.trackEvent({ name: 'messageExtension' });
+            }
+            if (this.options.connector) {
+                AppInsights.defaultClient.trackEvent({ name: 'connector' });
+            }
+            if (this.options.customBot) {
+                AppInsights.defaultClient.trackEvent({ name: 'outgoingWebhook' });
+            }
+            if (this.options.staticTab) {
+                AppInsights.defaultClient.trackEvent({ name: 'staticTab' });
+            }
+            if (this.options.tab) {
+                AppInsights.defaultClient.trackEvent({ name: 'tab' });
+            }
+            if (this.options.unitTestsEnabled) {
+                AppInsights.defaultClient.trackEvent({ name: 'unitTests' });
+            }
+            AppInsights.defaultClient.flush();
         }
-        if (this.options.messageExtension) {
-            AppInsights.defaultClient.trackEvent({ name: 'messageExtension' });
-        }
-        if (this.options.connector) {
-            AppInsights.defaultClient.trackEvent({ name: 'connector' });
-        }
-        if (this.options.customBot) {
-            AppInsights.defaultClient.trackEvent({ name: 'outgoingWebhook' });
-        }
-        if (this.options.staticTab) {
-            AppInsights.defaultClient.trackEvent({ name: 'staticTab' });
-        }
-        if (this.options.tab) {
-            AppInsights.defaultClient.trackEvent({ name: 'tab' });
-        }
-        AppInsights.defaultClient.flush();
 
         if (this.options['skip-install']) {
             this.log(chalk.default.yellow('Skipping installation of dependencies. You should run "npm install"'));

@@ -37,6 +37,7 @@ export class CustomBotGenerator extends Generator {
             ).then((answers: any) => {
                 this.options.customBotTitle = answers.title;
                 this.options.customBotName = lodash.camelCase(answers.title);
+                this.options.customBotClassName = this.options.customBotName.charAt(0).toUpperCase() + this.options.customBotName.slice(1);
                 if (!this.options.customBotName.endsWith('OutgoingWebhook')) {
                     this.options.customBotName = this.options.customBotName + 'OutgoingWebhook';
                 }
@@ -47,7 +48,7 @@ export class CustomBotGenerator extends Generator {
         if (this.options.customBot) {
             let templateFiles = [
                 "README-{customBotName}.md",
-                "src/app/{customBotName}.ts"
+                "src/app/{customBotName}/{customBotClassName}.ts"
             ];
 
             this.sourceRoot()
@@ -61,7 +62,7 @@ export class CustomBotGenerator extends Generator {
 
             Yotilities.insertTsExportDeclaration(
                 "src/app/TeamsAppsComponents.ts",
-                `./${this.options.customBotName}`,
+                `./${this.options.customBotName}/${this.options.customBotClassName}`,
                 `Automatically added for the ${this.options.customBotName} outgoing webhook`,
                 this.fs
             );

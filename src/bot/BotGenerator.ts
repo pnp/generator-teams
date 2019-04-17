@@ -99,14 +99,22 @@ export class BotGenerator extends Generator {
             ).then((answers: any) => {
                 this.options.botid = answers.botid;
                 this.options.staticTab = answers.staticTab;
-                this.options.staticTabTitle = answers.staticTabName;
-                this.options.staticTabName = lodash.camelCase(answers.staticTabName);
+
+                if (this.options.staticTab) {
+                    this.options.staticTabTitle = answers.staticTabName;
+                    this.options.staticTabName = lodash.camelCase(answers.staticTabName);
+                    this.options.staticTabClassName = this.options.staticTabName.charAt(0).toUpperCase() + this.options.staticTabName.slice(1);
+                }
+
                 this.options.botType = answers.bottype;
                 this.options.botTitle = answers.botname;
                 this.options.botName = lodash.camelCase(answers.botname);
+                this.options.botClassName = this.options.botName.charAt(0).toUpperCase() + this.options.botName.slice(1);
+
                 if (!this.options.botName.endsWith('Bot')) {
                     this.options.botName = this.options.botName + 'Bot';
                 }
+
                 if (this.options.staticTab) {
                     this.options.reactComponents = true;
                 }
@@ -115,60 +123,76 @@ export class BotGenerator extends Generator {
     }
 
     public writing() {
-        if (this.options.bot) {
-            let manifestPath = "src/manifest/manifest.json";
-            var manifest: any = this.fs.readJSON(manifestPath);
-            var newbot = {
-                botId: this.options.botid,
-                needsChannelSelector: true,
-                isNotificationOnly: false,
-                scopes: ["team", "personal"],
-                commandLists: [
-                    {
-                        "scopes": [
-                            "team",
-                            "personal"
-                        ],
-                        "commands": [
-                            {
-                                "title": "Help",
-                                "description": "Shows help information"
-                            }
-                        ]
-                    }
-                ]
-            };
+        // This should run if we add a bot or just a messaging extension
+        if (this.options.bot || this.options.messagingExtensionBot) {
 
             this.sourceRoot()
             let templateFiles = [];
-            if (this.options.staticTab) {
-                templateFiles.push(
-                    "src/app/scripts/{staticTabName}Tab.tsx",
-                    "src/app/web/{staticTabName}Tab.html",
-                );
 
-                manifest.staticTabs.push({
-                    entityId: Guid.raw(),
-                    name: this.options.staticTabTitle,
-                    contentUrl: `${this.options.host}/${this.options.staticTabName}Tab.html`,
-                    scopes: ["personal"]
-                });
+            // only when we have a full bot implementation
+            if (this.options.bot) {
+                let manifestPath = "src/manifest/manifest.json";
+                var manifest: any = this.fs.readJSON(manifestPath);
+                var newbot = {
+                    botId: `{{${this.options.botidEnv}}}`,
+                    needsChannelSelector: true,
+                    isNotificationOnly: false,
+                    scopes: ["team", "personal"],
+                    commandLists: [
+                        {
+                            "scopes": [
+                                "team",
+                                "personal"
+                            ],
+                            "commands": [
+                                {
+                                    "title": "Help",
+                                    "description": "Shows help information"
+                                }
+                            ]
+                        }
+                    ]
+                };
 
-                Yotilities.addAdditionalDeps([
-                    ["msteams-ui-components-react", "^0.7.3"],
-                    ["react", "^16.1.0"],
-                    ["@types/react", "16.4.7"],
-                    ["react-dom", "^16.2.0"],
-                    ["file-loader", "1.1.11"],
-                    ["typestyle", "1.5.1"]
-                ], this.fs);
+                if (this.options.staticTab) {
+                    templateFiles.push(
+                        "src/app/scripts/{botName}/{staticTabClassName}Tab.tsx",
+                        "src/app/web/{botName}/{staticTabName}.html",
+                    );
+
+                    manifest.staticTabs.push({
+                        entityId: Guid.raw(),
+                        name: this.options.staticTabTitle,
+                        contentUrl: `https://{{HOSTNAME}}/${this.options.botName}/${this.options.staticTabName}.html`,
+                        scopes: ["personal"]
+                    });
+
+                    Yotilities.addAdditionalDeps([
+                        ["msteams-ui-components-react", "^0.8.1"],
+                        ["react", "^16.8.4"],
+                        ["@types/react", "16.8.8"],
+                        ["react-dom", "^16.8.4"],
+                        ["file-loader", "1.1.11"],
+                        ["typestyle", "2.0.1"]
+                    ], this.fs);
+                }
+                (<any[]>manifest.bots).push(newbot);
+                this.fs.writeJSON(manifestPath, manifest);
             }
-            (<any[]>manifest.bots).push(newbot);
-            this.fs.writeJSON(manifestPath, manifest);
 
             if (this.options.botType != 'existing') {
-                templateFiles.push('src/app/{botName}.ts')
-                templateFiles.push('README-{botName}.md')
+                templateFiles.push(
+                    "README-{botName}.md",
+                    "src/app/{botName}/{botClassName}.ts",
+                );
+                // add additional files if we have a full bot implementation
+                if(this.options.bot) {
+                    templateFiles.push(
+                        "src/app/{botName}/dialogs/HelpDialog.ts",
+                        "src/app/{botName}/dialogs/WelcomeCard.json",
+                        "src/app/{botName}/dialogs/WelcomeDialog.ts"
+                    );
+                }
             }
             templateFiles.forEach(t => {
                 this.fs.copyTpl(
@@ -181,7 +205,7 @@ export class BotGenerator extends Generator {
             if (this.options.staticTab) {
                 Yotilities.insertTsExportDeclaration(
                     "src/app/scripts/client.ts",
-                    `./${this.options.staticTabName}Tab`,
+                    `./${this.options.botName}/${this.options.staticTabClassName}Tab`,
                     `Automatically added for the ${this.options.staticTabName} bot tab`,
                     this.fs
                 );
@@ -189,7 +213,7 @@ export class BotGenerator extends Generator {
 
             Yotilities.insertTsExportDeclaration(
                 "src/app/TeamsAppsComponents.ts",
-                `./${this.options.botName}`,
+                `./${this.options.botName}/${this.options.botClassName}`,
                 `Automatically added for the ${this.options.botName} bot`,
                 this.fs
             );

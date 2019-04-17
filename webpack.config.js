@@ -44,8 +44,8 @@ var config = [{
         libraryTarget: 'commonjs-module'
     },
     externals: nodeModules,
-    devtool: 'none',
-    mode: 'production',
+    devtool: 'sourcemap',
+    mode: 'development',
     resolve: {
         extensions: [".ts", ".tsx", ".js"],
         alias: {}
@@ -65,9 +65,7 @@ var config = [{
         }]
     },
     plugins: [
-        new CleanWebpackPlugin(
-            ['./generators'], {}
-        ),
+        new CleanWebpackPlugin(),
         new CopyWebpackPlugin([{
             from: 'src/app/templates',
             to: 'app/templates'

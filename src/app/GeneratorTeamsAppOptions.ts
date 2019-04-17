@@ -15,35 +15,43 @@ export class GeneratorTeamsAppOptions {
     shouldUseSubDir: boolean;
     libraryName: string;
     'skip-install': string;
+    telemetry: boolean;
     namespace: string;
     developer: string;
-    privacy: string;
-    tou: string;
     host: string;
+    hostname: string;
     bot: boolean;
     tab: boolean;
     tabTitle: string;
     tabName: string;
+    tabReactComponentName: string;
     reactComponents: boolean;
     websitePrefix: string;
+    unitTestsEnabled: boolean;
     /* Bots */
     botid: string = '';
-    staticTab: boolean;
+    botidEnv: string = "MICROSOFT_APP_ID";
+    botidEnvSecret: string = "MICROSOFT_APP_PASSWORD";
+    staticTab: boolean = false;
     staticTabName: string;
     staticTabTitle: string;
+    staticTabClassName: string;
     botType: string = "";
     botTitle: string;
     botName: string;
+    botClassName: string;
     /* Outgoing webhook */
     customBot: boolean;
     customBotTitle: string;
     customBotName: string;
+    customBotClassName: string;
     /* Connector */
     connector: boolean;
-    connectorId: string;
+    connectorId?: string = undefined;
     connectorType: string = '';
     connectorTitle: string;
     connectorName: string;
+    connectorComponentName: string;
     /* Message extensions */
     messageExtension: boolean;
     messageExtensionType: string = '';
@@ -51,6 +59,8 @@ export class GeneratorTeamsAppOptions {
     messageExtensionDescription: string;
     messageExtensionName: string;
     messageExtensionId: string;
+    messageExtensionClassName: string;
+    messagingExtensionBot: boolean; // indicates that we need to add a bot to host the messaging extension
     /* manifest */
     existingManifest: any;
 }

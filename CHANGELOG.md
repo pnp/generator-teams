@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*]
+
+### Changed
+
+* Using Bot Framework version 4+
+* Messaging Extensions are now refactored into it's own file, using the `botbuilder-teams-messagingextensions` middleware
+* Disable non-tested and non-supported extensions when running the generator over an existing projects
+* Changed the way the manifest/package, now using a *temp* folder for replaceable strings
+* Updated Microsoft Teams schema to 1.3
+* Updated and clarified README files
+* Updated the Connector configuration with new simplified configuration page, which removed a dependency on EJS
+* Reorganized the file structure and file namings
+* Improved auto generated class names formatting
+* Updated all npm references
+* Updated instructions for Git deployment to Azure (in README file)
+* Consistency in file names and class names
+* Minimized the code scaffolded for Messaging Extension projects without a Bot
+
+### Added
+
+* Added an option called `--no-telemetry` to opt-out of sending telemetry data when generating solutions
+* Support for adding additional Message Extensions to an already existing project
+* Support for dynamics properties/variables in the manifest.json file
+* Added TSLinting to the build pipeline
+* Added support for testing using Jest and Enzyme. Use `npm run test` and `npm run coverage`
+* Support for validating multiple schemas based on the manifest version (1.3 and devPreview supported)
+* Added support for Connector IDs to use the `.env` file
+
+### Fixes
+
+* Fixed the issue where the description of message extensions was miscalculated
+* Fixed an issue where message extension code was added when externally hosted
+* Fixed an issue where Connectors could not properly be configured due to missing typings in Teams JS
+* Bug fixes: #55, #54, #53, #52
+* Fixed an issue where Connectors could not be configured due to case sensitive URLs
+
 ## [*2.5.0*] - <*2018-08-17*>
 
 ### Changed

@@ -1,13 +1,45 @@
 branches:
   only:
-    - master
-    - preview
+  - master
+  - preview
 sudo: false
 language: node_js
 cache:
   directories:
   - node_modules
 node_js:
-  - 'stable'
-  - '6.9.1'
-script: "npm run build"
+- stable
+- 6.9.1
+- 8.10.0
+- 8.15.0
+- 10.15.3
+script: npm run build
+
+jobs:
+  include:
+    - stage: npm release
+      node_js: stable
+      deploy:
+        - provider: npm
+          email: "wictor@wictorwilen.se"
+          api_key:
+            secure: cUFJXnzVpmgoX2jNibWa5KqjWaCGbhi4DDP+KEylHiVoi4l4D0Tz+IwctVBz4vPBmksq1/3uRaD1XfubAUZ0QEHeyPYdbMq6y0no/jsogoqAohydkUfu6LXw0fBDQZDzwz5dVwPBfgXq/3nItMZZKZ8Z4yGrV0O7VUfglsxN5NdOZwkEcMj/ilCYytWWwzq7ZaFX0MC13XPBknFUVJtiDaBv5mAsUrVzEfuPrITGKoGqlXeZgmpuahynhKpakypRfbaySxfGtS80AHONE+CPse2agf1RrsQxsm7CSxVHqy2t8llkPor00FkYxnhTuf5Oq+3IxtlkR6F0LTTE0EgnloEMIDm/jdQ+2Nm6Xsw/ol2NCCSksLYX3L78JfeEgCWCFEBGrTQjLX7J4JkSyGilTHHeDUg1TXTh/dNu0qlW87+NXVaBlAkASPyzLo3Vbw0Nc1Gl3bjyM3IPYZzV8MIlwAGz2jGE7ptj8k7ppXh4fESKJZJpx5FA3ML6ItSk9RHWk2bHOJtzySvACeHkEsFTCRWM84NshSSr6Nvy7lDCijs1sQNOI22hnBm9wmuXpHSbTrSJIlY0POKhlIv8OWsKgIiXNYUoVPPzvZaueIcEyymCcUZBLuDm8vHa9vbP+tv0tiq5XVDbPdF2uKyFKvKnkkupL22praSReGs+Lh0Z0Eg=
+          skip_cleanup: true
+          tag: preview
+          on:
+            branch: preview
+        - provider: npm
+          email: "wictor@wictorwilen.se"
+          api_key:
+            secure: cUFJXnzVpmgoX2jNibWa5KqjWaCGbhi4DDP+KEylHiVoi4l4D0Tz+IwctVBz4vPBmksq1/3uRaD1XfubAUZ0QEHeyPYdbMq6y0no/jsogoqAohydkUfu6LXw0fBDQZDzwz5dVwPBfgXq/3nItMZZKZ8Z4yGrV0O7VUfglsxN5NdOZwkEcMj/ilCYytWWwzq7ZaFX0MC13XPBknFUVJtiDaBv5mAsUrVzEfuPrITGKoGqlXeZgmpuahynhKpakypRfbaySxfGtS80AHONE+CPse2agf1RrsQxsm7CSxVHqy2t8llkPor00FkYxnhTuf5Oq+3IxtlkR6F0LTTE0EgnloEMIDm/jdQ+2Nm6Xsw/ol2NCCSksLYX3L78JfeEgCWCFEBGrTQjLX7J4JkSyGilTHHeDUg1TXTh/dNu0qlW87+NXVaBlAkASPyzLo3Vbw0Nc1Gl3bjyM3IPYZzV8MIlwAGz2jGE7ptj8k7ppXh4fESKJZJpx5FA3ML6ItSk9RHWk2bHOJtzySvACeHkEsFTCRWM84NshSSr6Nvy7lDCijs1sQNOI22hnBm9wmuXpHSbTrSJIlY0POKhlIv8OWsKgIiXNYUoVPPzvZaueIcEyymCcUZBLuDm8vHa9vbP+tv0tiq5XVDbPdF2uKyFKvKnkkupL22praSReGs+Lh0Z0Eg=
+          skip_cleanup: true
+          on:
+            branch: master    
+
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/211513eb5775bf38f76e
+    on_success: change  # options: [always|never|change] default: always
+    on_failure: always  # options: [always|never|change] default: always
+    on_start: never     # options: [always|never|change] default: always

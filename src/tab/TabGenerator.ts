@@ -35,7 +35,7 @@ export class TabGenerator extends Generator {
                         validate: (input) => {
                             return input.length > 0 && input.length <= 16;
                         }
-                    },
+                    }
                 ]
             ).then((answers: any) => {
                 this.options.tabTitle = answers.tabTitle;
@@ -43,6 +43,7 @@ export class TabGenerator extends Generator {
                 if (!this.options.tabName.endsWith('Tab')) {
                     this.options.tabName = this.options.tabName + 'Tab';
                 }
+                this.options.tabReactComponentName = this.options.tabName.charAt(0).toUpperCase() + this.options.tabName.slice(1);
                 this.options.reactComponents = true;
             });
         }
@@ -50,13 +51,22 @@ export class TabGenerator extends Generator {
     public writing() {
         if (this.options.tab) {
             let templateFiles = [
-                "src/app/scripts/{tabName}Config.tsx",
-                "src/app/scripts/{tabName}.tsx",
-                "src/app/scripts/{tabName}Remove.tsx",
-                "src/app/web/{tabName}.html",
-                "src/app/web/{tabName}Remove.html",
-                "src/app/web/{tabName}Config.html",
+                "src/app/scripts/{tabName}/{tabReactComponentName}Config.tsx",
+                "src/app/scripts/{tabName}/{tabReactComponentName}.tsx",
+                "src/app/scripts/{tabName}/{tabReactComponentName}Remove.tsx",
+                "src/app/{tabName}/{tabReactComponentName}.ts",
+                "src/app/web/{tabName}/index.html",
+                "src/app/web/{tabName}/remove.html",
+                "src/app/web/{tabName}/config.html",
             ];
+
+            if(this.options.unitTestsEnabled) {
+                templateFiles = templateFiles.concat([
+                    "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}Config.spec.tsx",
+                    "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}.spec.tsx",
+                    "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}Remove.spec.tsx",
+                ]);
+            } 
 
             this.sourceRoot()
 
@@ -67,48 +77,49 @@ export class TabGenerator extends Generator {
                     this.options);
             });
 
-
-
             // Update manifest
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
             (<any[]>manifest.configurableTabs).push({
-                configurationUrl: `${this.options.host}/${this.options.tabName}Config.html`,
+                configurationUrl: `https://{{HOSTNAME}}/${this.options.tabName}/config.html`,
                 canUpdateConfiguration: true,
                 scopes: ["team"]
             });
-            var tmp: string = this.options.host.substring(this.options.host.indexOf('://') + 3)
-            var arr: string[] = tmp.split('.');
-            ;
-            (<string[]>manifest.validDomains).push(this.options.host.split("https://")[1]);
             this.fs.writeJSON(manifestPath, manifest);
 
             Yotilities.addAdditionalDeps([
-                ["msteams-ui-components-react", "^0.7.3"],
-                ["react", "^16.1.0"],
-                ["@types/react", "16.4.7"],
-                ["react-dom", "^16.2.0"],
+                ["msteams-ui-components-react", "^0.8.1"],
+                ["react", "^16.8.4"],
+                ["@types/react", "16.8.8"],
+                ["react-dom", "^16.8.4"],
                 ["file-loader", "1.1.11"],
-                ["typestyle", "1.5.1"]
+                ["typestyle", "2.0.1"]
             ], this.fs);
 
             // update client.ts
             Yotilities.insertTsExportDeclaration(
                 "src/app/scripts/client.ts",
-                `./${this.options.tabName}`,
+                `./${this.options.tabName}/${this.options.tabReactComponentName}`,
                 `Automatically added for the ${this.options.tabName} tab`,
                 this.fs
             );
             Yotilities.insertTsExportDeclaration(
                 "src/app/scripts/client.ts",
-                `./${this.options.tabName}Config`,
+                `./${this.options.tabName}/${this.options.tabReactComponentName}Config`,
                 undefined,
                 this.fs
             );
             Yotilities.insertTsExportDeclaration(
                 "src/app/scripts/client.ts",
-                `./${this.options.tabName}Remove`,
+                `./${this.options.tabName}/${this.options.tabReactComponentName}Remove`,
                 undefined,
+                this.fs
+            );
+
+            Yotilities.insertTsExportDeclaration(
+                "src/app/TeamsAppsComponents.ts",
+                `./${this.options.tabName}/${this.options.tabReactComponentName}`,
+                `Automatically added for the ${this.options.tabName} tab`,
                 this.fs
             );
         }
