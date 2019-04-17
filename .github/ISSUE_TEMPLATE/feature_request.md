@@ -2,19 +2,22 @@
 name: Feature request
 about: Suggest an idea for this project
 title: ''
-labels: ''
+labels: 'request: feature'
 assignees: ''
 
 ---
 
+<!--
+Thank you for suggesting an idea to make Yo Teams better.
+
+Please fill in as much of the template below as you're able.
+-->
+
 **Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+Please describe the problem you are trying to solve.
 
 **Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+Please describe the desired behavior.
 
 **Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
+Please describe alternative solutions or features you have considered.
