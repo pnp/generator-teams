@@ -11,6 +11,7 @@ import Project, { Scope, Decorator, Node, ClassDeclaration } from "ts-morph";
 import * as ts from 'typescript';
 import * as path from 'path';
 import * as Guid from 'guid';
+import { ManifestGeneratorFactory } from '../app/manifestGeneration/ManifestGeneratorFactory';
 
 
 let yosay = require('yosay');
@@ -221,40 +222,20 @@ export class MessageExtensionGenerator extends Generator {
 
     public writing() {
         if (this.options.messageExtension) {
+            const manifestGeneratorFactory = new ManifestGeneratorFactory();
+            const manifestGenerator = manifestGeneratorFactory.createManifestGenerator(this.options.manifestVersion);
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
 
-            if (!manifest.composeExtensions) {
-                manifest.composeExtensions = [];
-            }
-
-            let command = {
-                id: this.options.messageExtensionName,
-                title: this.options.messageExtensionTitle,
-                description: 'Add a clever description here',
-                initialRun: true,
-                parameters: [
-                    {
-                        name: 'parameter',
-                        description: 'Description of the parameter',
-                        title: 'Parameter'
-                    }
-                ]
-            };
-
-            let composeExtension = manifest.composeExtensions.find((ce: { botId: string; }) => ce.botId == this.options.messageExtensionId);
-            if (this.options.existingManifest && composeExtension) {
-                composeExtension.commands.push(command);
-            } else {
-                // no existing manifest
-                manifest.composeExtensions.push({
-                    botId: this.options.messageExtensionId,
-                    canUpdateConfiguration: true,
-                    commands: [command]
-                });
-            }
+            var updateParameters = new Map<string, any>();
+            updateParameters.set("messageExtensionName", this.options.messageExtensionName);    
+            updateParameters.set("messageExtensionTitle", this.options.messageExtensionTitle);    
+            updateParameters.set("messageExtensionId", this.options.messageExtensionId);    
+            updateParameters.set("existingManifest", this.options.existingManifest);    
+            manifestGenerator.updateMessageExtensionManifest(manifest, updateParameters);
 
             this.fs.writeJSON(manifestPath, manifest);
+
 
             // Externally hosted bots does not have an implementation
             if (this.options.messageExtensionType !== "external") {
@@ -288,14 +269,7 @@ export class MessageExtensionGenerator extends Generator {
                     `Automatically added for the ${this.options.messageExtensionName} message extension`,
                     this.fs
                 );
-                // Yotilities.insertImportDeclaration(
-                //     `src/app/${ this.options.botName }.ts`,
-                //     this.options.messageExtensionName,
-                //     `./${ this.options.messageExtensionName }`,
-                //     `Automatically added for the ${ this.options.messageExtensionName } message extension`,
-                //     this.fs
-                // );
-
+ 
                 // Dynamically insert the reference and hook it up to the Bot
                 const project = new Project();
                 const file = project.createSourceFile(`src/app/${this.options.botName}/${this.options.botClassName}.ts`, this.fs.read(`src/app/${this.options.botName}/${this.options.botClassName}.ts`), {

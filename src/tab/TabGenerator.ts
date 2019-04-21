@@ -7,6 +7,8 @@ import * as lodash from 'lodash';
 import * as chalk from 'chalk';
 import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
+import { ManifestGeneratorFactory } from '../app/manifestGeneration/ManifestGeneratorFactory';
+import { IManifestGenerator } from '../app/manifestGeneration/IManifestGenerator';
 
 
 let yosay = require('yosay');
@@ -77,14 +79,17 @@ export class TabGenerator extends Generator {
                     this.options);
             });
 
+
             // Update manifest
+            const manifestGeneratorFactory = new ManifestGeneratorFactory();
+            const manifestGenerator = manifestGeneratorFactory.createManifestGenerator(this.options.manifestVersion);
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
-            (<any[]>manifest.configurableTabs).push({
-                configurationUrl: `https://{{HOSTNAME}}/${this.options.tabName}/config.html`,
-                canUpdateConfiguration: true,
-                scopes: ["team"]
-            });
+
+            var updateParameters = new Map<string, any>();
+            updateParameters.set("tabName", this.options.tabName);    
+            manifestGenerator.updateTabManifest(manifest, updateParameters);
+            
             this.fs.writeJSON(manifestPath, manifest);
 
             Yotilities.addAdditionalDeps([
