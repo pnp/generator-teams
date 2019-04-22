@@ -17,6 +17,7 @@ var request = require('request');
 var path = require('path');
 const del = require('del'); // rm -rf
 const replace = require('gulp-token-replace');
+const ngrok = require('ngrok');
 
 
 var injectSources = ["./dist/web/scripts/**/*.js", './dist/web/assets/**/*.css']
@@ -185,12 +186,30 @@ gulp.task('nodemon', (cb) => {
         if (!started) {
             cb();
             started = true;
+            log('HOSTNAME: ' + process.env.HOSTNAME);
         }
     });
 });
 
+/**
+ * Task for starting ngrok and replacing the HOSTNAME with ngrok tunnel url.
+ * The task also creates a manifest file with ngrok tunnel url.
+ */
+gulp.task('start-ngrok', (cb) => {
+    (async function() {
+        log("[NGROK] starting ngrok...");
+        const url = await ngrok.connect(3007);
+        log('[NGROK] Url: ' + url);
 
-gulp.task('serve', gulp.series('build', 'nodemon', 'watch'));
+        let hostName = url.replace('http://', '');
+        hostName = hostName.replace('https://', '');
+
+        log('[NGROK] HOSTNAME: ' + hostName);
+        process.env.HOSTNAME = hostName;
+
+        cb();
+    })();
+});
 
 /**
  * Creates the tab manifest
@@ -202,4 +221,8 @@ gulp.task('zip', () => {
         .pipe(gulp.dest('package'));
 });
 
+gulp.task('serve', gulp.series('build', 'nodemon', 'watch'));
+
 gulp.task('manifest', gulp.series('nuke', 'validate-manifest', 'zip'));
+
+gulp.task('ngrok-serve', gulp.series('start-ngrok', 'manifest', 'serve'));
