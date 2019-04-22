@@ -1,15 +1,14 @@
 import * as React from "react";
 import { shallow, mount } from "enzyme";
-import * as renderer from "react-test-renderer";
+import toJson from "enzyme-to-json";
 
 import { <%=tabReactComponentName%> } from "../<%=tabReactComponentName%>";
-import { ThemeStyle } from "msteams-ui-styles-core";
 
 describe("<%=tabReactComponentName%> Component", () => {
     // Snapshot Test Sample
     it("should match the snapshot", () => {
-        const tree = renderer.create(<<%=tabReactComponentName%> />).toJSON();
-        expect(tree).toMatchSnapshot();
+        const wrapper = shallow(<<%=tabReactComponentName%> />);
+        expect(toJson(wrapper)).toMatchSnapshot();
     });
 
     // Component Test Sample
@@ -33,4 +32,3 @@ describe("<%=tabReactComponentName%> Component", () => {
         component.unmount();
     });
 });
-

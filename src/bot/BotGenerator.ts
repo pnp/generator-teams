@@ -155,6 +155,12 @@ export class BotGenerator extends Generator {
                         "src/app/scripts/{botName}/{staticTabClassName}Tab.tsx",
                         "src/app/web/{botName}/{staticTabName}.html",
                     );
+
+                    if(this.options.unitTestsEnabled) {
+                        templateFiles.push(
+                            "src/app/scripts/{botName}/__tests__/{staticTabClassName}Tab.spec.tsx"
+                        );
+                    } 
         
                     Yotilities.addAdditionalDeps([
                         ["msteams-ui-components-react", "^0.8.1"],

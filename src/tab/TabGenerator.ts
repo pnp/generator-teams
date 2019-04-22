@@ -63,11 +63,11 @@ export class TabGenerator extends Generator {
             ];
 
             if(this.options.unitTestsEnabled) {
-                templateFiles = templateFiles.concat([
+                templateFiles.push(
                     "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}Config.spec.tsx",
                     "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}.spec.tsx",
                     "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}Remove.spec.tsx",
-                ]);
+                );
             } 
 
             this.sourceRoot()

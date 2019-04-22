@@ -290,11 +290,11 @@ export class GeneratorTeamsApp extends Generator {
 
             // Add unit tests
             if (this.options.unitTestsEnabled) {
-                templateFiles = templateFiles.concat([
+                templateFiles.push(
                     "test-preprocessor.js",
                     "test-setup.js",
                     "test-shim.js"
-                ]);
+                );
             }
 
             templateFiles.forEach(t => {

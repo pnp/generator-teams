@@ -92,6 +92,12 @@ export class ConnectorGenerator extends Generator {
                     "src/app/{connectorName}/{connectorComponentName}.ts",
                 ];
 
+                if(this.options.unitTestsEnabled) {
+                    templateFiles.push(
+                        "src/app/scripts/{connectorName}/__tests__/{connectorComponentName}Config.spec.tsx"
+                    );
+                }
+
                 this.sourceRoot()
 
                 templateFiles.forEach(t => {
