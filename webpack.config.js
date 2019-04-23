@@ -58,7 +58,7 @@ var config = [{
     module: {
         rules: [{
             test: /\.tsx?$/,
-            exclude: [/lib/, /dist/, /templates/],
+            exclude: [/lib/, /dist/, /templates/, /temp-templates/],
             use: [{
                 loader: "ts-loader"
             }]
