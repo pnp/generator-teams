@@ -10,22 +10,19 @@ import * as testHelper from './helpers/TestHelper';
 describe('teams:connector', function () {
 
     const CONNECTOR_HTML_FILES = [
-        'src/app/web/bottest01Bot/aboutBottest01Bot.html'
+        'src/app/web/connectortest01Connector/config.html'
     ];
 
     const CONNECTOR_SCRIPT_FILES = [
-        'src/app/scripts/bottest01Bot/AboutBottest01BotTab.tsx'
+        'src/app/scripts/connectortest01Connector/Connectortest01ConnectorConfig.tsx'
     ];
 
     const CONNECTOR_SCRIPT_TEST_FILES = [
-        'src/app/scripts/bottest01Bot/__tests__/AboutBottest01BotTab.spec.tsx'
+        'src/app/scripts/connectortest01Connector/__tests__/Connectortest01ConnectorConfig.spec.tsx'
     ];
 
     const CONNECTOR_FILES = [
-        'src/app/bottest01Bot/Bottest01Bot.ts',
-        'src/app/bottest01Bot/dialogs/HelpDialog.ts',
-        'src/app/bottest01Bot/dialogs/WelcomeDialog.ts',
-        'src/app/bottest01Bot/dialogs/WelcomeCard.json'
+        'src/app/connectortest01Connector/connectortest01Connector.ts'
     ];
 
     beforeEach(async () => {
@@ -38,7 +35,7 @@ describe('teams:connector', function () {
             .withPrompts({
                 solutionName: 'connector-test-01',
                 whichFolder: 'current',
-                name: 'bottest01',
+                name: 'connectortest01',
                 developer: 'generator teams developer',
                 manifestVersion: 'v1.3',
                 parts: 'connector',
@@ -54,10 +51,10 @@ describe('teams:connector', function () {
         assert.file(testHelper.MANIFEST_FILES);
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_13);
         
-        // assert.file(BOT_SCRIPT_FILES);
-        // assert.file(BOT_SCRIPT_TEST_FILES);
-        // assert.file(BOT_FILES);
-        // assert.file(BOT_HTML_FILES);
+        assert.file(CONNECTOR_SCRIPT_FILES);
+        assert.file(CONNECTOR_SCRIPT_TEST_FILES);
+        assert.file(CONNECTOR_FILES);
+        assert.file(CONNECTOR_HTML_FILES);
     });
 
     it('should generate connector project with v1.3 without unit tests', async () => {
@@ -66,7 +63,7 @@ describe('teams:connector', function () {
             .withPrompts({
                 solutionName: 'connector-test-01',
                 whichFolder: 'current',
-                name: 'bottest01',
+                name: 'connectortest01',
                 developer: 'generator teams developer',
                 manifestVersion: 'v1.3',
                 parts: 'connector',
@@ -94,7 +91,7 @@ describe('teams:connector', function () {
             .withPrompts({
                 solutionName: 'connector-test-01',
                 whichFolder: 'current',
-                name: 'bottest01',
+                name: 'connectortest01',
                 developer: 'generator teams developer',
                 manifestVersion: 'devPreview',
                 parts: 'connector',
@@ -122,7 +119,7 @@ describe('teams:connector', function () {
             .withPrompts({
                 solutionName: 'connector-test-01',
                 whichFolder: 'current',
-                name: 'bottest01',
+                name: 'connectortest01',
                 developer: 'generator teams developer',
                 manifestVersion: 'devPreview',
                 parts: 'connector',
