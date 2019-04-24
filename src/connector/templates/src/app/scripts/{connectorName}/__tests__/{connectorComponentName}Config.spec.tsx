@@ -4,7 +4,7 @@ import toJson from "enzyme-to-json";
 
 import { <%=connectorComponentName%>Config } from "../<%=connectorComponentName%>Config";
 
-describe("<%=tabReactComponentName%>Config Component", () => {
+describe("<%=connectorComponentName%>Config Component", () => {
     // Snapshot Test Sample
     it("should match the snapshot", () => {
         window.alert = jest.fn();

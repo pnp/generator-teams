@@ -35,5 +35,25 @@ export const TEST_FILES = [
     'test-shim.js'
 ];
 
+export const MANIFEST_FILES = [
+    'src/manifest/icon-color.png',
+    'src/manifest/icon-outline.png',
+    'src/manifest/manifest.json',
+];
+
+export const WEB_FILES = [
+    'src/app/web/assets/icon.png',
+    'src/app/web/index.html',
+    'src/app/web/privacy.html',
+    'src/app/web/tou.html'
+];
+
+export const APP_FILES = [
+    'src/app/server.ts',
+    'src/app/TeamsAppsComponents.ts'
+];
+
+export const SCRIPT_FILES = 'src/app/scripts/client.ts';
+
 export const SCHEMA_13 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json';
 export const SCHEMA_DEVPREVIEW = 'https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json';
