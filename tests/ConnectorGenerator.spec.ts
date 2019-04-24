@@ -79,10 +79,10 @@ describe('teams:connector', function () {
         assert.file(testHelper.MANIFEST_FILES);
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_13);
         
-        // assert.file(BOT_SCRIPT_FILES);
-        // assert.noFile(BOT_SCRIPT_TEST_FILES);
-        // assert.file(BOT_FILES);
-        // assert.file(BOT_HTML_FILES);
+        assert.file(CONNECTOR_SCRIPT_FILES);
+        assert.noFile(CONNECTOR_SCRIPT_TEST_FILES);
+        assert.file(CONNECTOR_FILES);
+        assert.file(CONNECTOR_HTML_FILES);
     });
 
     it('should generate connector project with devPreview with unit tests', async () => {
@@ -107,10 +107,10 @@ describe('teams:connector', function () {
         assert.file(testHelper.MANIFEST_FILES);
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_DEVPREVIEW);
         
-        // assert.file(BOT_SCRIPT_FILES);
-        // assert.file(BOT_SCRIPT_TEST_FILES);
-        // assert.file(BOT_FILES);
-        // assert.file(BOT_HTML_FILES);
+        assert.file(CONNECTOR_SCRIPT_FILES);
+        assert.file(CONNECTOR_SCRIPT_TEST_FILES);
+        assert.file(CONNECTOR_FILES);
+        assert.file(CONNECTOR_HTML_FILES);
     });
 
     it('should generate connector project with devPreview without unit tests', async () => {
@@ -135,9 +135,9 @@ describe('teams:connector', function () {
         assert.file(testHelper.MANIFEST_FILES);
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_DEVPREVIEW);
         
-        // assert.file(BOT_SCRIPT_FILES);
-        // assert.noFile(BOT_SCRIPT_TEST_FILES);
-        // assert.file(BOT_FILES);
-        // assert.file(BOT_HTML_FILES);
+        assert.file(CONNECTOR_SCRIPT_FILES);
+        assert.noFile(CONNECTOR_SCRIPT_TEST_FILES);
+        assert.file(CONNECTOR_FILES);
+        assert.file(CONNECTOR_HTML_FILES);
     });
 });
