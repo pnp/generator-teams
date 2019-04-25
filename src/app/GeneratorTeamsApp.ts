@@ -232,7 +232,7 @@ export class GeneratorTeamsApp extends Generator {
             this.options.bot = (<string[]>answers.parts).indexOf('bot') != -1;
             this.options.tab = (<string[]>answers.parts).indexOf('tab') != -1;
             this.options.connector = (<string[]>answers.parts).indexOf('connector') != -1;
-            this.options.customBot = (<string[]>answers.parts).indexOf('custombot') != -1;
+            this.options.customBot = (<string[]>answers.parts).indexOf('custombot') != -1;            
             this.options.messageExtension = (<string[]>answers.parts).indexOf('messageextension') != -1;
 
             this.options.reactComponents = false; // set to false initially

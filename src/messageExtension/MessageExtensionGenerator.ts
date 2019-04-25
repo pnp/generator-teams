@@ -279,9 +279,12 @@ export class MessageExtensionGenerator extends Generator {
  
                 // Dynamically insert the reference and hook it up to the Bot
                 const project = new Project();
-                const file = project.createSourceFile(`src/app/${this.options.botName}/${this.options.botClassName}.ts`, this.fs.read(`src/app/${this.options.botName}/${this.options.botClassName}.ts`), {
+                const file = project.createSourceFile(
+                    `src/app/${this.options.botName}/${this.options.botClassName}.ts`, 
+                    this.fs.read(`src/app/${this.options.botName}/${this.options.botClassName}.ts`), {
                     overwrite: true
                 });
+
                 const classes = file.getClasses()
                 const cl = classes.find(x => {
                     return x.getDecorator('BotDeclaration') != undefined;
@@ -348,6 +351,7 @@ export class MessageExtensionGenerator extends Generator {
                 } else {
                     // TODO: log
                 }
+
                 file.formatText();
                 this.fs.write(`src/app/${this.options.botName}/${this.options.botClassName}.ts`, file.getFullText());
             }
