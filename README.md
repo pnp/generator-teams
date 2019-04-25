@@ -113,6 +113,16 @@ npm run build
 
 The bundled generator and the template files will end up in the `./generators/` folder.
 
+## Test the generator
+
+If you want to run the generator tests, you can run the following command.
+
+``` Shell
+npm test
+```
+
+Yeoman-test packge is being used for the generator tests. (NOTE: Node JS version 8.10.0 is recommended for executing generator tests.)
+
 ### Use it in dev mode
 
 In the `generator-teams` directory use the following command, this will link the local copy of the folder as a global node module.
