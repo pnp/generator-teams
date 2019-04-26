@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## [*2.7.1*] - <*Unreleased*>
+
+### Added
+
+* Support for selecting Microsoft Teams schema *1.3* or *devPreview* when scaffolding project
+* New Gulp command; `ngrok-serve`. This command will build start **ngrok**, using configuration in the `.env` file, build the manifest using the ngrok hostname and then start the web server
+* Added more tests for React components
+
+### Changed
+
+* Refactored manifest generation to support multiple schemas
+
+### Fixes
+
+* Support for building manifest (`gulp manifest`) without network connection (#67)
+
+
 ## [*2.7.0*] - <*2019-04-17*>
 
 ### Changed

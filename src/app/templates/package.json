@@ -18,7 +18,7 @@
     "@types/request": "2.47.1",
     <% if (unitTestsEnabled) { %>"@types/enzyme": "^3.9.1",
     "@types/jest": "^24.0.11",
-    "@types/react-test-renderer": "^16.8.1",<%}%>
+    "@types/enzyme-to-json": "^1.5.3",<%}%>
     "botbuilder": "4.3.2",
     "botbuilder-dialogs": "4.3.2",
     "botbuilder-teams": "4.0.0-beta1",
@@ -37,6 +37,7 @@
     "gulp-token-replace": "1.1.2",
     "gulp-zip": "4.2.0",
     "morgan": "1.9.1",
+    "ngrok": "^3.1.1",
     "nodemon": "1.18.3",
     "plugin-error": "1.0.1",
     "request": "2.88.0",
@@ -51,13 +52,16 @@
     <% if (unitTestsEnabled) { %>"enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.11.2",
     "jest": "^24.5.0",
-    "react-test-renderer": "^16.8.5",<%}%>
+    "enzyme-to-json": "^3.3.5",<%}%>
     "tslint-loader": "^3.6.0"
   }, 
   "devDependencies": {
    
   }<% if (unitTestsEnabled) { %>,
   "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
     "setupFiles": [
       "<rootDir>/test-shim.js",
       "<rootDir>/test-setup.js"

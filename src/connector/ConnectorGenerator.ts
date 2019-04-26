@@ -8,6 +8,7 @@ import * as chalk from 'chalk';
 import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
 import * as ts from 'typescript';
+import { ManifestGeneratorFactory } from '../app/manifestGeneration/ManifestGeneratorFactory';
 
 
 let yosay = require('yosay');
@@ -91,6 +92,12 @@ export class ConnectorGenerator extends Generator {
                     "src/app/{connectorName}/{connectorComponentName}.ts",
                 ];
 
+                if(this.options.unitTestsEnabled) {
+                    templateFiles.push(
+                        "src/app/scripts/{connectorName}/__tests__/{connectorComponentName}Config.spec.tsx"
+                    );
+                }
+
                 this.sourceRoot()
 
                 templateFiles.forEach(t => {
@@ -101,14 +108,15 @@ export class ConnectorGenerator extends Generator {
                 });
             }
 
+            const manifestGeneratorFactory = new ManifestGeneratorFactory();
+            const manifestGenerator = manifestGeneratorFactory.createManifestGenerator(this.options.manifestVersion);
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
-            manifest.connectors.push({
-                connectorId: "{{CONNECTOR_ID}}",
-                configurationUrl: `https://{{HOSTNAME}}/${this.options.connectorName}/config.html`, 
-                scopes: ["team"],
-            });
+
+            manifestGenerator.updateConnectorManifest(manifest, this.options);
+
             this.fs.writeJSON(manifestPath, manifest);
+
 
             Yotilities.addAdditionalDeps([
                 ['@types/node-json-db', '0.0.1'],

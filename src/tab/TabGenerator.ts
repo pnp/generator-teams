@@ -7,7 +7,7 @@ import * as lodash from 'lodash';
 import * as chalk from 'chalk';
 import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
-
+import { ManifestGeneratorFactory } from '../app/manifestGeneration/ManifestGeneratorFactory';
 
 let yosay = require('yosay');
 let path = require('path');
@@ -61,11 +61,11 @@ export class TabGenerator extends Generator {
             ];
 
             if(this.options.unitTestsEnabled) {
-                templateFiles = templateFiles.concat([
+                templateFiles.push(
                     "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}Config.spec.tsx",
                     "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}.spec.tsx",
                     "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}Remove.spec.tsx",
-                ]);
+                );
             } 
 
             this.sourceRoot()
@@ -77,14 +77,15 @@ export class TabGenerator extends Generator {
                     this.options);
             });
 
+
             // Update manifest
+            const manifestGeneratorFactory = new ManifestGeneratorFactory();
+            const manifestGenerator = manifestGeneratorFactory.createManifestGenerator(this.options.manifestVersion);
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
-            (<any[]>manifest.configurableTabs).push({
-                configurationUrl: `https://{{HOSTNAME}}/${this.options.tabName}/config.html`,
-                canUpdateConfiguration: true,
-                scopes: ["team"]
-            });
+   
+            manifestGenerator.updateTabManifest(manifest, this.options);
+            
             this.fs.writeJSON(manifestPath, manifest);
 
             Yotilities.addAdditionalDeps([

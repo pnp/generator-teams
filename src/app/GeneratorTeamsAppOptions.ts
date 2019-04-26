@@ -28,6 +28,7 @@ export class GeneratorTeamsAppOptions {
     reactComponents: boolean;
     websitePrefix: string;
     unitTestsEnabled: boolean;
+    manifestVersion: string;
     /* Bots */
     botid: string = '';
     botidEnv: string = "MICROSOFT_APP_ID";

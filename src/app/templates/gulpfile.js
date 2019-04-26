@@ -17,7 +17,7 @@ var request = require('request');
 var path = require('path');
 const del = require('del'); // rm -rf
 const replace = require('gulp-token-replace');
-
+const ngrok = require('ngrok');
 
 var injectSources = ["./dist/web/scripts/**/*.js", './dist/web/assets/**/*.css']
 var staticFiles = ["./src/app/**/*.html", "./src/app/**/*.ejs", "./src/app/web/assets/**/*"]
@@ -25,6 +25,8 @@ var htmlFiles = ["./src/app/**/*.html", "./src/app/**/*.ejs"]
 var watcherfiles = ["./src/**/*.*"]
 var manifestFiles = ["./src/manifest/**/*.*", '!**/*.json']
 var temp = ["./temp"]
+
+require('dotenv').config();
 
 /**
  * Supported schemas
@@ -97,7 +99,6 @@ gulp.task('static:inject', () => {
         ignorePath: 'dist/web',
         addRootSlash: true
     };
-    require('dotenv').config();
     return gulp.src(htmlFiles)
         .pipe(replace({ tokens: { ...process.env } }))
         .pipe(inject(injectSrc, injectOptions)) // inserts custom sources
@@ -113,7 +114,6 @@ gulp.task('build', gulp.series('webpack', 'static:copy', 'static:inject'));
  * Replace parameters in the manifest
  */
 gulp.task('generate-manifest', (cb) => {
-    require('dotenv').config();
     return gulp.src('src/manifest/manifest.json')
         .pipe(replace({ tokens: { ...process.env } }))
         .pipe(gulp.dest(temp));
@@ -148,15 +148,21 @@ gulp.task('schema-validation', (callback) => {
             request(requiredUrl, {
                 gzip: true
             }, (err, res, body) => {
-                validator.setRemoteReference(requiredUrl, JSON.parse(body));
+                if (!err) {
+                    validator.setRemoteReference(requiredUrl, JSON.parse(body));
 
-                var valid = validator.validate(json, schema);
-                var errors = validator.getLastErrors();
-                if (!valid) {
-                    callback(new PluginError("validate-manifest", errors.map((e) => {
-                        return e.message;
-                    }).join('\n')));
-                } else {
+                    var valid = validator.validate(json, schema);
+                    var errors = validator.getLastErrors();
+                    if (!valid) {
+                        callback(new PluginError("validate-manifest", errors.map((e) => {
+                            return e.message;
+                        }).join('\n')));
+                    } else {
+                        callback();
+                    }
+                }
+                else {
+                    log.warn("WARNING: unable to download and validate schema: " + err.code);
                     callback();
                 }
             })
@@ -185,12 +191,41 @@ gulp.task('nodemon', (cb) => {
         if (!started) {
             cb();
             started = true;
+            log('HOSTNAME: ' + process.env.HOSTNAME);
         }
     });
 });
 
+/**
+ * Task for starting ngrok and replacing the HOSTNAME with ngrok tunnel url.
+ * The task also creates a manifest file with ngrok tunnel url.
+ * See local .env file for configuration
+ */
+gulp.task('start-ngrok', (cb) => {
+    log("[NGROK] starting ngrok...");
+    let conf = {
+        subdomain: process.env.NGROK_SUBDOMAIN,
+        region: process.env.NGROK_REGION,
+        addr: process.env.PORT,
+        authtoken: process.env.NGROK_AUTH
+    };
 
-gulp.task('serve', gulp.series('build', 'nodemon', 'watch'));
+    ngrok.connect(conf).then( (url) => {
+        log('[NGROK] Url: ' + url);
+
+        let hostName = url.replace('http://', '');
+        hostName = hostName.replace('https://', '');
+    
+        log('[NGROK] HOSTNAME: ' + hostName);
+        process.env.HOSTNAME = hostName
+    
+        cb();
+    
+    }).catch( (err) => {
+        log.error(`[NGROK] Error: ${JSON.stringify(err)}`);
+        cb(err.msg);
+    });
+});
 
 /**
  * Creates the tab manifest
@@ -202,4 +237,8 @@ gulp.task('zip', () => {
         .pipe(gulp.dest('package'));
 });
 
+gulp.task('serve', gulp.series('build', 'nodemon', 'watch'));
+
 gulp.task('manifest', gulp.series('nuke', 'validate-manifest', 'zip'));
+
+gulp.task('ngrok-serve', gulp.series('start-ngrok', 'manifest', 'serve'));

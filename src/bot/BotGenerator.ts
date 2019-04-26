@@ -7,6 +7,8 @@ import * as lodash from 'lodash';
 import * as chalk from 'chalk';
 import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
+import { ManifestGeneratorFactory } from '../app/manifestGeneration/ManifestGeneratorFactory';
+import { stringify } from 'querystring';
 
 
 let yosay = require('yosay');
@@ -131,28 +133,15 @@ export class BotGenerator extends Generator {
 
             // only when we have a full bot implementation
             if (this.options.bot) {
+                const manifestGeneratorFactory = new ManifestGeneratorFactory();
+                const manifestGenerator = manifestGeneratorFactory.createManifestGenerator(this.options.manifestVersion);
+
                 let manifestPath = "src/manifest/manifest.json";
                 var manifest: any = this.fs.readJSON(manifestPath);
-                var newbot = {
-                    botId: `{{${this.options.botidEnv}}}`,
-                    needsChannelSelector: true,
-                    isNotificationOnly: false,
-                    scopes: ["team", "personal"],
-                    commandLists: [
-                        {
-                            "scopes": [
-                                "team",
-                                "personal"
-                            ],
-                            "commands": [
-                                {
-                                    "title": "Help",
-                                    "description": "Shows help information"
-                                }
-                            ]
-                        }
-                    ]
-                };
+
+                manifestGenerator.updateBotManifest(manifest, this.options);
+
+                this.fs.writeJSON(manifestPath, manifest);
 
                 if (this.options.staticTab) {
                     templateFiles.push(
@@ -160,13 +149,12 @@ export class BotGenerator extends Generator {
                         "src/app/web/{botName}/{staticTabName}.html",
                     );
 
-                    manifest.staticTabs.push({
-                        entityId: Guid.raw(),
-                        name: this.options.staticTabTitle,
-                        contentUrl: `https://{{HOSTNAME}}/${this.options.botName}/${this.options.staticTabName}.html`,
-                        scopes: ["personal"]
-                    });
-
+                    if(this.options.unitTestsEnabled) {
+                        templateFiles.push(
+                            "src/app/scripts/{botName}/__tests__/{staticTabClassName}Tab.spec.tsx"
+                        );
+                    } 
+        
                     Yotilities.addAdditionalDeps([
                         ["msteams-ui-components-react", "^0.8.1"],
                         ["react", "^16.8.4"],
@@ -176,8 +164,6 @@ export class BotGenerator extends Generator {
                         ["typestyle", "2.0.1"]
                     ], this.fs);
                 }
-                (<any[]>manifest.bots).push(newbot);
-                this.fs.writeJSON(manifestPath, manifest);
             }
 
             if (this.options.botType != 'existing') {

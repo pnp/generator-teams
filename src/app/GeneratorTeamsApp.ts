@@ -8,6 +8,7 @@ import * as chalk from 'chalk';
 import { GeneratorTeamsAppOptions } from './GeneratorTeamsAppOptions';
 import { Yotilities } from './Yotilities';
 import * as AppInsights from 'applicationinsights';
+import { ManifestGeneratorFactory } from './manifestGeneration/ManifestGeneratorFactory';
 
 let yosay = require('yosay');
 let path = require('path');
@@ -61,11 +62,10 @@ export class GeneratorTeamsApp extends Generator {
         this.composeWith('teams:messageExtension', { 'options': this.options });
 
         // check schema version:
-        if (this.options.existingManifest) {
-            if (this.options.existingManifest["$schema"] != 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json') {
-                this.log(chalk.default.red('You are running the generator on an already existing project, but on a non supported-schema.'));
-                process.exit(1);
-            }
+        const isSchemaVersionValid = ManifestGeneratorFactory.isSchemaVersionValid(this.options.existingManifest);
+        if (!isSchemaVersionValid) {
+            this.log(chalk.default.red('You are running the generator on an already existing project, but on a non supported-schema.'));
+            process.exit(1);
         }
     }
 
@@ -120,6 +120,22 @@ export class GeneratorTeamsApp extends Generator {
                     },
                     when: () => !this.options.existingManifest,
                     store: true
+                },
+                {
+                    type: 'list',
+                    name: 'manifestVersion',
+                    message: 'Which manifest version would you like to use?',
+                    default: 'v1.3',
+                    choices: [
+                        {
+                            name: 'v1.3',
+                            value: 'v1.3'
+                        },
+                        {
+                            name: 'Developer Preview',
+                            value: 'devPreview'
+                        }
+                    ]
                 },
                 {
                     type: 'checkbox',
@@ -209,17 +225,15 @@ export class GeneratorTeamsApp extends Generator {
                 this.options.host = this.options.existingManifest.developer.websiteUrl;
             }
 
-            this.options.unitTestsEnabled = false;
+            this.options.manifestVersion = answers.manifestVersion;
+            this.options.unitTestsEnabled = answers.unitTestsEnabled;
             this.options.bot = (<string[]>answers.parts).indexOf('bot') != -1;
             this.options.tab = (<string[]>answers.parts).indexOf('tab') != -1;
             this.options.connector = (<string[]>answers.parts).indexOf('connector') != -1;
             this.options.customBot = (<string[]>answers.parts).indexOf('custombot') != -1;
             this.options.messageExtension = (<string[]>answers.parts).indexOf('messageextension') != -1;
 
-            this.options.unitTestsEnabled = answers.unitTestsEnabled;
-
             this.options.reactComponents = false; // set to false initially
-
         });
     }
 
@@ -254,7 +268,6 @@ export class GeneratorTeamsApp extends Generator {
                 "package.json",
                 ".env",
                 'src/app/server.ts',
-                "src/manifest/manifest.json",
                 "webpack.config.js",
                 "src/app/scripts/client.ts",
                 "src/app/web/index.html",
@@ -262,12 +275,22 @@ export class GeneratorTeamsApp extends Generator {
                 "src/app/web/privacy.html",
             ];
 
+            // Copy the manifest file with selected manifest version
+            const manifestGeneratorFactory = new ManifestGeneratorFactory();
+            const manifestGenerator = manifestGeneratorFactory.createManifestGenerator(this.options.manifestVersion);
+
+            this.fs.writeJSON(
+                Yotilities.fixFileNames("src/manifest/manifest.json", this.options),
+                manifestGenerator.generateManifest(this.options)
+            );
+
+            // Add unit tests
             if (this.options.unitTestsEnabled) {
-                templateFiles = templateFiles.concat([
+                templateFiles.push(
                     "test-preprocessor.js",
                     "test-setup.js",
                     "test-shim.js"
-                ]);
+                );
             }
 
             templateFiles.forEach(t => {
