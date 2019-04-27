@@ -18,10 +18,6 @@ var path = require('path');
 const del = require('del'); // rm -rf
 const replace = require('gulp-token-replace');
 const ngrok = require('ngrok');
-<<<<<<< HEAD
-
-=======
->>>>>>> upstream/preview
 
 var injectSources = ["./dist/web/scripts/**/*.js", './dist/web/assets/**/*.css']
 var staticFiles = ["./src/app/**/*.html", "./src/app/**/*.ejs", "./src/app/web/assets/**/*"]

@@ -231,7 +231,6 @@ export class MessageExtensionGenerator extends Generator {
 
             this.fs.writeJSON(manifestPath, manifest);
 
-
             // Externally hosted bots does not have an implementation
             if (this.options.messageExtensionType !== "external") {
                 let templateFiles = [];
