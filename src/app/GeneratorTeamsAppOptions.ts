@@ -29,6 +29,7 @@ export class GeneratorTeamsAppOptions {
     websitePrefix: string;
     unitTestsEnabled: boolean;
     manifestVersion: string;
+    updateManifestVersion: boolean = false; // Set to true when asked to update manifest
     /* Bots */
     botid: string = '';
     botidEnv: string = "MICROSOFT_APP_ID";

@@ -5,10 +5,11 @@
 import { ManifestVersions } from "./ManifestVersions";
 import { ManifestGenerator as ManifestGenerator13 }  from "./manifestGenerators/generator13/ManifestGenerator";
 import { ManifestGenerator as ManifestGeneratorDevPreview} from "./manifestGenerators/generatorDevPreview/ManifestGenerator";
+import { BaseManifestGenerator } from "./BaseManifestGenerator";
 
 export class ManifestGeneratorFactory {
 
-    private static supportedManifestVersions = [
+    public static supportedManifestVersions = [
         {
             manifestVersion: ManifestVersions.v13,
             schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json"
@@ -23,7 +24,7 @@ export class ManifestGeneratorFactory {
        
     }
 
-    public createManifestGenerator(manifestVersion: string) {
+    public createManifestGenerator(manifestVersion: string): BaseManifestGenerator {
         if(manifestVersion == ManifestVersions.v13) {
             return new ManifestGenerator13();
         } else if(manifestVersion == ManifestVersions.devPreview) {
@@ -35,13 +36,14 @@ export class ManifestGeneratorFactory {
 
     static isSchemaVersionValid(existingManifest: any): boolean {
         if (existingManifest) {
+            let retval = false;
             this.supportedManifestVersions.forEach(manifestVersionItem => {
                 if (existingManifest["$schema"] == manifestVersionItem.schemaUrl) {
-                    return true;
+                    retval = true;
+                    return;
                 }
             });
-
-            return false;
+            return retval;
         } else {
             return true;
         }

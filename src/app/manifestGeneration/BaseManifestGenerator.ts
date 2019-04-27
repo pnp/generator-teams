@@ -61,4 +61,8 @@ export abstract class BaseManifestGenerator {
     public updateConnectorManifest(manifest: any, options: GeneratorTeamsAppOptions): void {
         this.connectorUpdater.updateManifest(manifest, options);
     }
+
+    public abstract supportsUpdateManifest(from: string): boolean;
+
+    public abstract updateManifest(manifest: any, log?: (message?: string, context?: any) => void): any;
 }

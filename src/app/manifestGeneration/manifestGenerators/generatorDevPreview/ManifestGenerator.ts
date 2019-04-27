@@ -8,6 +8,7 @@ import { BotManifestUpdater } from "./BotManifestUpdater";
 import { ConnectorManifestUpdater } from "./ConnectorManifestUpdater";
 import { MessageExtensionManifestUpdater } from "./MessageExtensionManifestUpdater";
 import { GeneratorTeamsAppOptions } from "../../../GeneratorTeamsAppOptions";
+import * as chalk from 'chalk';
 
 export class ManifestGenerator extends BaseManifestGenerator {
     constructor() {
@@ -24,4 +25,29 @@ export class ManifestGenerator extends BaseManifestGenerator {
         manifest.manifestVersion = "devPreview";
         return manifest;
     }
+
+    public supportsUpdateManifest(from: string): boolean {
+        return from === "1.3";
+    }
+
+    public updateManifest(manifest: any, log?: (message?: string, context?: any) => void): any {
+        if (manifest.manifestVersion === "1.3") {
+            manifest["$schema"] = "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json";
+            manifest.manifestVersion = "devPreview";
+
+            if(manifest.composeExtensions) {
+                manifest.composeExtensions.forEach((composeExtension: { commands: { title: string; type: string; }[] }) => {
+                    if(composeExtension.commands) {
+                        composeExtension.commands.forEach( (command: { title: string; type: string; }) => {
+                            if(log) log(chalk.default.whiteBright(`Updating Message Extension "${command.title}" with the "type" property set to "query"`));
+                            command.type = "query";
+                        });
+                    }
+                });
+            }
+            return manifest;
+        } else {
+            throw "Unable to update manifest";
+        }
+    };
 }

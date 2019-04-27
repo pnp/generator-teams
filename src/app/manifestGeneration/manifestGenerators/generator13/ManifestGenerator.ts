@@ -25,4 +25,12 @@ export class ManifestGenerator extends BaseManifestGenerator {
         manifest.manifestVersion = "1.3";
         return manifest;
     }
+
+    public supportsUpdateManifest(from: string): boolean {
+        return false;
+    }
+
+    public updateManifest(manifest: any): any {
+        throw "Unable to update manifest";
+    };
 }

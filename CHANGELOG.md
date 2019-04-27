@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Support for selecting Microsoft Teams schema *1.3* or *devPreview* when scaffolding project
 * New Gulp command; `ngrok-serve`. This command will build start **ngrok**, using configuration in the `.env` file, build the manifest using the ngrok hostname and then start the web server
 * Added more tests for React components
+* Added support for upgrading manifest versions. Currently supported only from *1.3* to *devPreview*
 
 ### Changed
 
@@ -21,7 +22,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixes
 
 * Support for building manifest (`gulp manifest`) without network connection (#67)
-
 
 ## [*2.7.0*] - <*2019-04-17*>
 
