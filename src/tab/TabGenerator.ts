@@ -8,11 +8,6 @@ import * as chalk from 'chalk';
 import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
 import { ManifestGeneratorFactory } from '../app/manifestGeneration/ManifestGeneratorFactory';
-<<<<<<< HEAD
-import { IManifestGenerator } from '../app/manifestGeneration/IManifestGenerator';
-
-=======
->>>>>>> upstream/preview
 
 let yosay = require('yosay');
 let path = require('path');
