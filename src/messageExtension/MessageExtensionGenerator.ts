@@ -226,13 +226,8 @@ export class MessageExtensionGenerator extends Generator {
             const manifestGenerator = manifestGeneratorFactory.createManifestGenerator(this.options.manifestVersion);
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
-
-            var updateParameters = new Map<string, any>();
-            updateParameters.set("messageExtensionName", this.options.messageExtensionName);    
-            updateParameters.set("messageExtensionTitle", this.options.messageExtensionTitle);    
-            updateParameters.set("messageExtensionId", this.options.messageExtensionId);    
-            updateParameters.set("existingManifest", this.options.existingManifest);    
-            manifestGenerator.updateMessageExtensionManifest(manifest, updateParameters);
+ 
+            manifestGenerator.updateMessageExtensionManifest(manifest, this.options);
 
             this.fs.writeJSON(manifestPath, manifest);
 

@@ -1,27 +1,20 @@
-import { IManifestUpdater } from "../../IManifestUpdater";
+// Copyright (c) Wictor Wilén. All rights reserved. 
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
 
+import { IManifestUpdater } from "../../IManifestUpdater";
+import { GeneratorTeamsAppOptions } from "../../../GeneratorTeamsAppOptions";
 
 export class MessageExtensionManifestUpdater implements IManifestUpdater {
-    private messageExtensionName: string;
-    private messageExtensionTitle: string;
-    private messageExtensionId: string;
-    private existingManifest: boolean;
 
-    constructor(messageExtensionName: string, messageExtensionTitle: string, messageExtensionId: string, existingManifest: boolean) {
-        this.messageExtensionName = messageExtensionName;
-        this.messageExtensionTitle = messageExtensionTitle;
-        this.messageExtensionId = messageExtensionId;
-        this.existingManifest = existingManifest;
-    }
-
-    updateManifest(manifest: any): void {
+    public updateManifest(manifest: any, options: GeneratorTeamsAppOptions): void {
         if (!manifest.composeExtensions) {
             manifest.composeExtensions = [];
         }
 
         let command = {
-            id: this.messageExtensionName,
-            title: this.messageExtensionTitle,
+            id: options.messageExtensionName,
+            title: options.messageExtensionTitle,
             description: 'Add a clever description here',
             initialRun: true,
             parameters: [
@@ -33,13 +26,13 @@ export class MessageExtensionManifestUpdater implements IManifestUpdater {
             ]
         };
 
-        let composeExtension = manifest.composeExtensions.find((ce: { botId: string; }) => ce.botId == this.messageExtensionId);
-        if (this.existingManifest && composeExtension) {
+        let composeExtension = manifest.composeExtensions.find((ce: { botId: string; }) => ce.botId == options.messageExtensionId);
+        if (options.existingManifest && composeExtension) {
             composeExtension.commands.push(command);
         } else {
             // no existing manifest
             manifest.composeExtensions.push({
-                botId: this.messageExtensionId,
+                botId: options.messageExtensionId,
                 canUpdateConfiguration: true,
                 commands: [command]
             });

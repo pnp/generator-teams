@@ -8,8 +8,11 @@ import * as chalk from 'chalk';
 import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
 import { ManifestGeneratorFactory } from '../app/manifestGeneration/ManifestGeneratorFactory';
+<<<<<<< HEAD
 import { IManifestGenerator } from '../app/manifestGeneration/IManifestGenerator';
 
+=======
+>>>>>>> upstream/preview
 
 let yosay = require('yosay');
 let path = require('path');
@@ -85,10 +88,8 @@ export class TabGenerator extends Generator {
             const manifestGenerator = manifestGeneratorFactory.createManifestGenerator(this.options.manifestVersion);
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
-
-            var updateParameters = new Map<string, any>();
-            updateParameters.set("tabName", this.options.tabName);    
-            manifestGenerator.updateTabManifest(manifest, updateParameters);
+   
+            manifestGenerator.updateTabManifest(manifest, this.options);
             
             this.fs.writeJSON(manifestPath, manifest);
 

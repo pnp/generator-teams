@@ -113,9 +113,7 @@ export class ConnectorGenerator extends Generator {
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
 
-            var updateParameters = new Map<string, any>();
-            updateParameters.set("connectorName", this.options.connectorName);    
-            manifestGenerator.updateConnectorManifest(manifest, updateParameters);
+            manifestGenerator.updateConnectorManifest(manifest, this.options);
 
             this.fs.writeJSON(manifestPath, manifest);
 

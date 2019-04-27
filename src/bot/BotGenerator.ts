@@ -139,14 +139,7 @@ export class BotGenerator extends Generator {
                 let manifestPath = "src/manifest/manifest.json";
                 var manifest: any = this.fs.readJSON(manifestPath);
 
-                var updateParameters = new Map<string, any>();
-                updateParameters.set("botidEnv", this.options.botidEnv);            
-                updateParameters.set("botName", this.options.botName);
-                updateParameters.set("staticTab", this.options.staticTab);
-                updateParameters.set("staticTabTitle", this.options.staticTabTitle);
-                updateParameters.set("staticTabName", this.options.staticTabName);
-
-                manifestGenerator.updateBotManifest(manifest, updateParameters);
+                manifestGenerator.updateBotManifest(manifest, this.options);
 
                 this.fs.writeJSON(manifestPath, manifest);
 

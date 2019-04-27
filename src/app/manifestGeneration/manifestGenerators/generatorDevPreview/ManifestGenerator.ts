@@ -1,44 +1,53 @@
-import { IManifestGenerator } from "../../IManifestGenerator";
+// Copyright (c) Wictor Wilén. All rights reserved. 
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
+
+import { BaseManifestGenerator } from "../../BaseManifestGenerator";
 import { TabManifestUpdater } from "./TabManifestUpdater";
 import { BotManifestUpdater } from "./BotManifestUpdater";
 import { ConnectorManifestUpdater } from "./ConnectorManifestUpdater";
 import { MessageExtensionManifestUpdater } from "./MessageExtensionManifestUpdater";
+import { GeneratorTeamsAppOptions } from "../../../GeneratorTeamsAppOptions";
+import * as chalk from 'chalk';
 
-export class ManifestGenerator implements IManifestGenerator {
-    updateBotManifest(manifest: any, parameters: Map<string, any>): void {
-        const botidEnv = parameters.get("botidEnv");
-        const botName = parameters.get("botName");
-        const staticTab = parameters.get("staticTab");
-        const staticTabTitle = parameters.get("staticTabTitle");
-        const staticTabName = parameters.get("staticTabName");
-
-        const updater = new BotManifestUpdater(botidEnv, botName, staticTab, staticTabTitle, staticTabName);
-        updater.updateManifest(manifest);
-    }
-    
-    updateMessageExtensionManifest(manifest: any, parameters: Map<string, any>): void {
-        const messageExtensionName = parameters.get("messageExtensionName");
-        const messageExtensionTitle = parameters.get("messageExtensionTitle");
-        const messageExtensionId = parameters.get("messageExtensionId");
-        const existingManifest = parameters.get("existingManifest");
-
-        const updater = new MessageExtensionManifestUpdater(messageExtensionName, messageExtensionTitle, messageExtensionId, existingManifest);
-        updater.updateManifest(manifest);
-    }
-    
-    updateConnectorManifest(manifest: any, parameters: Map<string, any>): void {
-        const connectorName = parameters.get("connectorName");
-        const updater = new ConnectorManifestUpdater(connectorName);
-        updater.updateManifest(manifest);
+export class ManifestGenerator extends BaseManifestGenerator {
+    constructor() {
+        super();
+        this.tabUpdater = new TabManifestUpdater();
+        this.botUpdater = new BotManifestUpdater();
+        this.connectorUpdater = new ConnectorManifestUpdater();
+        this.messageExtensionUpdater = new MessageExtensionManifestUpdater();
     }
 
-    updateTabManifest(manifest: any, parameters: Map<string, any>): void {
-        const tabName = parameters.get("tabName");
-        const updater = new TabManifestUpdater(tabName);
-        updater.updateManifest(manifest);
+    public generateManifest(options: GeneratorTeamsAppOptions): any {
+        const manifest = super.generateManifest(options);
+        manifest["$schema"] = "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json";
+        manifest.manifestVersion = "devPreview";
+        return manifest;
     }
 
-    getManifestFilePath(): string {
-        return "src/manifest/manifest-devPreview.json";
+    public supportsUpdateManifest(from: string): boolean {
+        return from === "1.3";
     }
+
+    public updateManifest(manifest: any, log?: (message?: string, context?: any) => void): any {
+        if (manifest.manifestVersion === "1.3") {
+            manifest["$schema"] = "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json";
+            manifest.manifestVersion = "devPreview";
+
+            if(manifest.composeExtensions) {
+                manifest.composeExtensions.forEach((composeExtension: { commands: { title: string; type: string; }[] }) => {
+                    if(composeExtension.commands) {
+                        composeExtension.commands.forEach( (command: { title: string; type: string; }) => {
+                            if(log) log(chalk.default.whiteBright(`Updating Message Extension "${command.title}" with the "type" property set to "query"`));
+                            command.type = "query";
+                        });
+                    }
+                });
+            }
+            return manifest;
+        } else {
+            throw "Unable to update manifest";
+        }
+    };
 }

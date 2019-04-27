@@ -9,8 +9,7 @@ import { GeneratorTeamsAppOptions } from './GeneratorTeamsAppOptions';
 import { Yotilities } from './Yotilities';
 import * as AppInsights from 'applicationinsights';
 import { ManifestGeneratorFactory } from './manifestGeneration/ManifestGeneratorFactory';
-import { fstat } from 'fs';
-import { IManifestGenerator } from './manifestGeneration/IManifestGenerator';
+import inquirer = require('inquirer');
 
 let yosay = require('yosay');
 let path = require('path');
@@ -67,11 +66,35 @@ export class GeneratorTeamsApp extends Generator {
         const isSchemaVersionValid = ManifestGeneratorFactory.isSchemaVersionValid(this.options.existingManifest);
         if (!isSchemaVersionValid) {
             this.log(chalk.default.red('You are running the generator on an already existing project, but on a non supported-schema.'));
+            if (this.options.telemetry) {
+                AppInsights.defaultClient.trackEvent({ name: 'rerun-generator' });
+                AppInsights.defaultClient.trackException({ exception: { name: 'Invalid schema', message: this.options.existingManifest["$schema"] } });
+                AppInsights.defaultClient.flush();
+            }
             process.exit(1);
         }
     }
 
     public prompting() {
+
+        // find out what manifest versions we can use
+        const manifestGeneratorFactory = new ManifestGeneratorFactory();
+        const versions: inquirer.ChoiceType[] = ManifestGeneratorFactory.supportedManifestVersions.filter(version => {
+            // filter out non supprted upgrades
+            if (this.options.existingManifest) {
+                const manifestGenerator = manifestGeneratorFactory.createManifestGenerator(version.manifestVersion);
+                return manifestGenerator.supportsUpdateManifest(this.options.existingManifest.manifestVersion);
+            } else {
+                return true; // always when not upgrading
+            }
+        }).map(version => {
+            return {
+                name: version.manifestVersion,
+                value: version.manifestVersion,
+            };
+        })
+
+        // return the question series
         return this.prompt(
             [
                 {
@@ -124,20 +147,18 @@ export class GeneratorTeamsApp extends Generator {
                     store: true
                 },
                 {
+                    type: "confirm",
+                    name: "updateManifestVersion",
+                    message: `Do you want to change the current manifest version ${this.options.existingManifest && "(" + this.options.existingManifest.manifestVersion + ")"}?`,
+                    when: (answers) => this.options.existingManifest && versions.length > 0 && answers.confirmedAdd != false,
+                    default: false
+                },
+                {
                     type: 'list',
                     name: 'manifestVersion',
                     message: 'Which manifest version would you like to use?',
-                    default: 'v1.3',
-                    choices: [
-                        {
-                            name: 'v1.3',
-                            value: 'v1.3'
-                        },
-                        {
-                            name: 'Developer Preview',
-                            value: 'devPreview'
-                        }
-                    ]
+                    choices: versions,
+                    when: (answers) => (this.options.existingManifest && answers.updateManifestVersion && versions.length > 0) || (!this.options.existingManifest)
                 },
                 {
                     type: 'checkbox',
@@ -194,7 +215,7 @@ export class GeneratorTeamsApp extends Generator {
                 process.exit(0)
             }
             if (!this.options.existingManifest) {
-
+                // for new projecs
                 answers.host = answers.host.endsWith('/') ? answers.host.substr(0, answers.host.length - 1) : answers.host;
                 this.options.title = answers.name;
                 this.options.description = this.description;
@@ -204,8 +225,9 @@ export class GeneratorTeamsApp extends Generator {
                 this.options.packageName = this.options.libraryName.toLocaleLowerCase();
                 this.options.developer = answers.developer;
                 this.options.host = answers.host;
-                var tmp: string = this.options.host.substring(this.options.host.indexOf('://') + 3)
+                var tmp: string = this.options.host.substring(this.options.host.indexOf('://') + 3);
                 this.options.hostname = this.options.host.substring(this.options.host.indexOf('://') + 3).toLocaleLowerCase();
+                this.options.manifestVersion = answers.manifestVersion;
 
                 var arr: string[] = tmp.split('.');
                 this.options.namespace = lodash.reverse(arr).join('.').toLocaleLowerCase();
@@ -220,14 +242,16 @@ export class GeneratorTeamsApp extends Generator {
                     this.destinationRoot(this.destinationPath(this.options.solutionName));
                 }
             } else {
+                // when updating projects
                 this.options.developer = this.options.existingManifest.developer.name;
                 this.options.title = this.options.existingManifest.name.short;
                 let pkg = this.fs.readJSON(`./package.json`);
                 this.options.libraryName = pkg.name;
                 this.options.host = this.options.existingManifest.developer.websiteUrl;
+                this.options.updateManifestVersion = answers.updateManifestVersion;
+                this.options.manifestVersion = answers.manifestVersion ? answers.manifestVersion : this.options.existingManifest.manifestVersion;
             }
 
-            this.options.manifestVersion = answers.manifestVersion;
             this.options.unitTestsEnabled = answers.unitTestsEnabled;
             this.options.bot = (<string[]>answers.parts).indexOf('bot') != -1;
             this.options.tab = (<string[]>answers.parts).indexOf('tab') != -1;
@@ -280,12 +304,10 @@ export class GeneratorTeamsApp extends Generator {
             // Copy the manifest file with selected manifest version
             const manifestGeneratorFactory = new ManifestGeneratorFactory();
             const manifestGenerator = manifestGeneratorFactory.createManifestGenerator(this.options.manifestVersion);
-            const manifestSourcePath = manifestGenerator.getManifestFilePath();
 
-            this.fs.copyTpl(
-                this.templatePath(manifestSourcePath),
+            this.fs.writeJSON(
                 Yotilities.fixFileNames("src/manifest/manifest.json", this.options),
-                this.options
+                manifestGenerator.generateManifest(this.options)
             );
 
             // Add unit tests
@@ -309,6 +331,16 @@ export class GeneratorTeamsApp extends Generator {
                     this.templatePath(t),
                     Yotilities.fixFileNames(t, this.options));
             });
+        } else {
+            // running the generator on an already existing project
+            if (this.options.updateManifestVersion) {
+                const manifestGeneratorFactory = new ManifestGeneratorFactory();
+                const manifestGenerator = manifestGeneratorFactory.createManifestGenerator(this.options.manifestVersion);
+                this.fs.writeJSON(
+                    Yotilities.fixFileNames("src/manifest/manifest.json", this.options),
+                    manifestGenerator.updateManifest(this.options.existingManifest, this.log)
+                );
+            }
         }
 
         // if we have added any react based components
