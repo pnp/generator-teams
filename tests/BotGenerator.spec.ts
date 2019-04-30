@@ -35,6 +35,7 @@ describe('teams:bot', function () {
     it('should generate bot project with v1.3 with unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_BOT_GENERATOR_PATH + '/bot01')
+            .withArguments('[no-telementry]')
             .withPrompts({
                 solutionName: 'bot-test-01',
                 whichFolder: 'current',
@@ -42,7 +43,7 @@ describe('teams:bot', function () {
                 developer: 'generator teams developer',
                 manifestVersion: 'v1.3',
                 parts: 'bot',
-                unitTestsEnabled: true
+                unitTestsEnabled: true,
             })
             .withGenerators(testHelper.DEPENDENCIES);
 

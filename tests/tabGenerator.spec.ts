@@ -36,6 +36,7 @@ describe('teams:tab', function () {
     it('should generate tab project with v1.3 with unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab01')
+            .withArguments('[no-telementry]')
             .withPrompts({
                 solutionName: 'tab-test-01',
                 whichFolder: 'current',

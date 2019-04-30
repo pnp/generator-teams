@@ -3,6 +3,8 @@
 node_modules
 src
 .github
+tests
+temp-templates
 
 # Files
 *.csproj

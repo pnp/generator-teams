@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added more tests for React components
 * Added support for upgrading manifest versions. Currently supported only from *1.3* to *devPreview*
 * Added support for adding Calling support to a bot, when using *devPreview* manifest version
+* Yeoman testing (feature request #61)
 
 ### Changed
 
@@ -23,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixes
 
 * Support for building manifest (`gulp manifest`) without network connection (#67)
+* Fixed issues in tests (#68)
 
 ## [*2.7.0*] - <*2019-04-17*>
 

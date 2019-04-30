@@ -30,6 +30,7 @@ describe('teams:messageExtension', function () {
     it('should generate message extension project with v1.3 with unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension01')
+            .withArguments('[no-telementry]')
             .withPrompts({
                 solutionName: 'messageExtension-test-01',
                 whichFolder: 'current',

@@ -32,6 +32,7 @@ describe('teams:connector', function () {
     it('should generate connector project with v1.3 with unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_CONNECTOR_GENERATOR_PATH + '/connector01')
+            .withArguments('[no-telementry]')
             .withPrompts({
                 solutionName: 'connector-test-01',
                 whichFolder: 'current',
