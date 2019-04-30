@@ -369,6 +369,9 @@ export class GeneratorTeamsApp extends Generator {
                 } else {
                     AppInsights.defaultClient.trackEvent({ name: 'bot-new' });
                 }
+                if (this.options.botCallingEnabled) {
+                    AppInsights.defaultClient.trackEvent({ name: 'botCalling' });
+                }
             }
             if (this.options.messageExtension) {
                 AppInsights.defaultClient.trackEvent({ name: 'messageExtension' });
@@ -387,6 +390,15 @@ export class GeneratorTeamsApp extends Generator {
             }
             if (this.options.unitTestsEnabled) {
                 AppInsights.defaultClient.trackEvent({ name: 'unitTests' });
+            }
+            if (this.options.updateManifestVersion) {
+                AppInsights.defaultClient.trackEvent({
+                    name: 'udpateManifest',
+                    properties: {
+                        from: this.options.existingManifest.manifestVersion,
+                        to: this.options.manifestVersion
+                    }
+                });
             }
             AppInsights.defaultClient.flush();
         }
