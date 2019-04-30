@@ -9,6 +9,7 @@
     },
     "exclude": [
         "node_modules",
+        "temp-templates",
         "src/app/templates",
         "src/bot/templates",
         "src/tab/templates",
