@@ -42,6 +42,7 @@ export class GeneratorTeamsAppOptions {
     botTitle: string;
     botName: string;
     botClassName: string;
+    botCallingEnabled: boolean = false;
     /* Outgoing webhook */
     customBot: boolean;
     customBotTitle: string;

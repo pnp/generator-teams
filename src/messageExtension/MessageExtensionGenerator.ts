@@ -261,7 +261,7 @@ export class MessageExtensionGenerator extends Generator {
                     ["react-dom", "^16.8.4"],
                     ["file-loader", "1.1.11"],
                     ["typestyle", "2.0.1"],
-                    ["botbuilder-teams-messagingextensions", "1.0.0"]
+                    ["botbuilder-teams-messagingextensions", "1.1.0"]
                 ], this.fs);
 
                 Yotilities.insertTsExportDeclaration(

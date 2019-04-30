@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * New Gulp command; `ngrok-serve`. This command will build start **ngrok**, using configuration in the `.env` file, build the manifest using the ngrok hostname and then start the web server
 * Added more tests for React components
 * Added support for upgrading manifest versions. Currently supported only from *1.3* to *devPreview*
+* Added support for adding Calling support to a bot, when using *devPreview* manifest version
 
 ### Changed
 

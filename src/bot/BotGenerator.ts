@@ -96,12 +96,21 @@ export class BotGenerator extends Generator {
                         default: (answers: any) => {
                             return 'About ' + (answers.bottype != 'existing' ? answers.botname : this.options.title);
                         }
+                    },
+                    {
+                        type: 'confirm',
+                        name: 'botCallingEnabled',
+                        message: 'Do you want to include Bot Calling support?',
+                        when: (answers: any) => {
+                            return this.options.manifestVersion == "devPreview"; // Only available in devPreview for now
+                        },
+                        default: false
                     }
                 ]
             ).then((answers: any) => {
                 this.options.botid = answers.botid;
                 this.options.staticTab = answers.staticTab;
-
+                this.options.botCallingEnabled = answers.botCallingEnabled;
                 if (this.options.staticTab) {
                     this.options.staticTabTitle = answers.staticTabName;
                     this.options.staticTabName = lodash.camelCase(answers.staticTabName);
@@ -149,12 +158,12 @@ export class BotGenerator extends Generator {
                         "src/app/web/{botName}/{staticTabName}.html",
                     );
 
-                    if(this.options.unitTestsEnabled) {
+                    if (this.options.unitTestsEnabled) {
                         templateFiles.push(
                             "src/app/scripts/{botName}/__tests__/{staticTabClassName}Tab.spec.tsx"
                         );
-                    } 
-        
+                    }
+
                     Yotilities.addAdditionalDeps([
                         ["msteams-ui-components-react", "^0.8.1"],
                         ["react", "^16.8.4"],
@@ -172,7 +181,7 @@ export class BotGenerator extends Generator {
                     "src/app/{botName}/{botClassName}.ts",
                 );
                 // add additional files if we have a full bot implementation
-                if(this.options.bot) {
+                if (this.options.bot) {
                     templateFiles.push(
                         "src/app/{botName}/dialogs/HelpDialog.ts",
                         "src/app/{botName}/dialogs/WelcomeCard.json",

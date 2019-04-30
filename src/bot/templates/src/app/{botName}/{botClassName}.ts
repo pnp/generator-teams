@@ -1,11 +1,11 @@
-import { BotDeclaration, MessageExtensionDeclaration, IBot, PreventIframe } from "express-msteams-host";
+import { BotDeclaration, MessageExtensionDeclaration, IBot, PreventIframe<% if (botCallingEnabled) { %>, BotCallingWebhook<% } %> } from "express-msteams-host";
 import * as debug from "debug";
 import { DialogSet, DialogState } from "botbuilder-dialogs";
 import { StatePropertyAccessor, CardFactory, TurnContext, MemoryStorage, ConversationState, ActivityTypes } from "botbuilder";
 <% if (bot) { %>import HelpDialog from "./dialogs/HelpDialog";<% } %>
 <% if (bot) { %>import WelcomeCard from "./dialogs/WelcomeDialog";<% } %>
 import { TeamsContext, TeamsActivityProcessor } from "botbuilder-teams";
-
+<% if (botCallingEnabled) { %>import express = require("express");<% } %>
 // Initialize debug logging module
 const log = debug("msteams");
 
@@ -103,4 +103,18 @@ export class <%= botClassName %> implements IBot {
         // transfer the activity to the TeamsActivityProcessor
         await this.activityProc.processIncomingActivity(context);
     }
+<% if (botCallingEnabled) { %>
+    /**
+     * Webhook for incoming calls
+     */
+    @BotCallingWebhook("/api/calling")
+    public async onIncomingCall(req: express.Request, res: express.Response) {
+        log("Incoming call");
+        // TODO: Implement authorization header validation
+
+        // TODO: Add your management of calls (answer, reject etc.)
+
+        // default, send an access denied
+        res.sendStatus(401);
+    }<% } %>
 }
