@@ -16,10 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added support for upgrading manifest versions. Currently supported only from *1.3* to *devPreview*
 * Added support for adding Calling support to a bot, when using *devPreview* manifest version
 * Yeoman testing (feature request #61)
+* Added an action on the default generated messaging extension
 
 ### Changed
 
 * Refactored manifest generation to support multiple schemas
+* Changed to an adaptive card on the default generated messaging extension including preview mode
 
 ### Fixes
 
