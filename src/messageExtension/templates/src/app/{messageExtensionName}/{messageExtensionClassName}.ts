@@ -50,7 +50,7 @@ export default class <%= messageExtensionClassName%> implements IMessagingExtens
                 text: "Description",
                 images: [
                     {
-                        url: "`https://${process.env.HOSTNAME}/assets/icon.png`
+                        url: `https://${process.env.HOSTNAME}/assets/icon.png`
                     }
                 ]
             }
