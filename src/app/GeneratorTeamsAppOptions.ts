@@ -30,6 +30,8 @@ export class GeneratorTeamsAppOptions {
     unitTestsEnabled: boolean;
     manifestVersion: string;
     updateManifestVersion: boolean = false; // Set to true when asked to update manifest
+    useAzureAppInsights: boolean = false;
+    azureAppInsightsKey?: string = undefined;
     /* Bots */
     botid: string = '';
     botidEnv: string = "MICROSOFT_APP_ID";

@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added support for adding Calling support to a bot, when using *devPreview* manifest version
 * Yeoman testing (feature request #61)
 * Added an action on the default generated messaging extension
+* Added support for Application Insights
 
 ### Changed
 

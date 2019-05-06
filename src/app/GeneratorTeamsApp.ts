@@ -208,7 +208,25 @@ export class GeneratorTeamsApp extends Generator {
                     name: 'unitTestsEnabled',
                     message: 'Would you like to include Test framework and initial tests?',
                     when: () => !this.options.existingManifest,
-                }
+                },
+                {
+                    type: 'confirm',
+                    name: 'useAzureAppInsights',
+                    message: 'Would you like to use Azure Applications Insights for telemetry?',
+                    when: () => !this.options.existingManifest,
+                },
+                {
+                    type: 'input',
+                    name: 'azureAppInsightsKey',
+                    message: 'What is the Azure Application Insights Instrumentation Key?',
+                    default: (answers: any) => {
+                        return Guid.EMPTY;
+                    },
+                    validate: (input) => {
+                        return Guid.isGuid(input);
+                    },
+                    when: (answers) => answers.useAzureAppInsights,
+                },
             ]
         ).then((answers: any) => {
             if (answers.confirmedAdd == false) {
@@ -258,6 +276,8 @@ export class GeneratorTeamsApp extends Generator {
             this.options.connector = (<string[]>answers.parts).indexOf('connector') != -1;
             this.options.customBot = (<string[]>answers.parts).indexOf('custombot') != -1;
             this.options.messageExtension = (<string[]>answers.parts).indexOf('messageextension') != -1;
+            this.options.useAzureAppInsights = answers.useAzureAppInsights;
+            this.options.azureAppInsightsKey = answers.azureAppInsightsKey;
 
             this.options.reactComponents = false; // set to false initially
         });
@@ -347,6 +367,12 @@ export class GeneratorTeamsApp extends Generator {
         if (this.options.reactComponents) {
             Yotilities.addAdditionalDeps([
                 ["msteams-react-base-component", "1.1.1"]
+            ], this.fs);
+        }
+
+        if(this.options.useAzureAppInsights) {
+            Yotilities.addAdditionalDeps([
+                ["applicationinsights", "^1.3.1"]
             ], this.fs);
         }
     }

@@ -63,6 +63,7 @@ describe('teams:messageExtension', function () {
     it('should generate message extension project with v1.3 without unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension02')
+            .withArguments('[no-telementry]')
             .withPrompts({
                 solutionName: 'messageExtension-test-01',
                 whichFolder: 'current',
@@ -95,6 +96,7 @@ describe('teams:messageExtension', function () {
     it('should generate message extension project with devPreview with unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension03')
+            .withArguments('[no-telementry]')
             .withPrompts({
                 solutionName: 'messageExtension-test-01',
                 whichFolder: 'current',
@@ -127,6 +129,7 @@ describe('teams:messageExtension', function () {
     it('should generate message extension project with devPreview without unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension04')
+            .withArguments('[no-telementry]')
             .withPrompts({
                 solutionName: 'messageExtension-test-01',
                 whichFolder: 'current',

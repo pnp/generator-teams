@@ -3,7 +3,7 @@ import * as del from 'del';
 import * as fs from 'fs-extra';
 import * as helpers from 'yeoman-test';
 import * as assert from 'yeoman-assert';
-import { describe, it} from 'mocha';
+import { describe, it } from 'mocha';
 
 import * as testHelper from './helpers/TestHelper';
 
@@ -32,7 +32,7 @@ describe('teams:tab', function () {
     beforeEach(async () => {
         await del([testHelper.TEMP_GENERATOR_PATTERN]);
     });
-    
+
     it('should generate tab project with v1.3 with unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab01')
@@ -66,6 +66,7 @@ describe('teams:tab', function () {
     it('should generate tab project with v1.3 without unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab02')
+            .withArguments('[no-telementry]')
             .withPrompts({
                 solutionName: 'tab-test-01',
                 whichFolder: 'current',
@@ -95,6 +96,7 @@ describe('teams:tab', function () {
     it('should generate tab project with devPreview with unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab03')
+            .withArguments('[no-telementry]')
             .withPrompts({
                 solutionName: 'tab-test-01',
                 whichFolder: 'current',
@@ -106,24 +108,25 @@ describe('teams:tab', function () {
             })
             .withGenerators(testHelper.DEPENDENCIES);
 
-            assert.file(testHelper.ROOT_FILES);
-            assert.file(testHelper.TEST_FILES);
-            assert.file(testHelper.APP_FILES);
-            assert.file(testHelper.SCRIPT_FILES);
-            assert.file(testHelper.WEB_FILES);
-            assert.file(testHelper.MANIFEST_FILES);
-    
-            assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_DEVPREVIEW);
-    
-            assert.file(TAB_HTML_FILES);
-            assert.file(TAB_FILES);
-            assert.file(TAB_SCRIPT_FILES);
-            assert.file(TAB_SCRIPT_TEST_FILES);
+        assert.file(testHelper.ROOT_FILES);
+        assert.file(testHelper.TEST_FILES);
+        assert.file(testHelper.APP_FILES);
+        assert.file(testHelper.SCRIPT_FILES);
+        assert.file(testHelper.WEB_FILES);
+        assert.file(testHelper.MANIFEST_FILES);
+
+        assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_DEVPREVIEW);
+
+        assert.file(TAB_HTML_FILES);
+        assert.file(TAB_FILES);
+        assert.file(TAB_SCRIPT_FILES);
+        assert.file(TAB_SCRIPT_TEST_FILES);
     });
 
     it('should generate tab project with devPReview without unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab04')
+            .withArguments('[no-telementry]')
             .withPrompts({
                 solutionName: 'tab-test-01',
                 whichFolder: 'current',
@@ -148,6 +151,49 @@ describe('teams:tab', function () {
         assert.file(TAB_FILES);
         assert.file(TAB_SCRIPT_FILES);
         assert.noFile(TAB_SCRIPT_TEST_FILES);
+    });
+
+    it('should generate tab project applicatiaon insights', async () => {
+        await helpers.run(testHelper.GENERATOR_PATH)
+            .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab05')
+            .withArguments('[no-telementry]')
+            .withPrompts({
+                solutionName: 'tab-test-01',
+                whichFolder: 'current',
+                name: 'tabtest01',
+                developer: 'generator teams developer',
+                manifestVersion: 'v1.3',
+                parts: 'tab',
+                unitTestsEnabled: false,
+                useAzureAppInsights: true,
+                azureAppInsightsKey: "12341234-1234-1234-1234-123412341234"
+            })
+            .withGenerators(testHelper.DEPENDENCIES);
+
+        assert.fileContent(".env", "APPINSIGHTS_INSTRUMENTATIONKEY=12341234-1234-1234-1234-123412341234");
+        assert.fileContent("package.json", `"applicationinsights": "^1.3.1"`);
+        assert.fileContent("src/app/web/index.html", `var appInsights = window.appInsights`);
+    });
+
+    it('should generate tab project with no applicatiaon insights', async () => {
+        await helpers.run(testHelper.GENERATOR_PATH)
+            .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab06')
+            .withArguments('[no-telementry]')
+            .withPrompts({
+                solutionName: 'tab-test-01',
+                whichFolder: 'current',
+                name: 'tabtest01',
+                developer: 'generator teams developer',
+                manifestVersion: 'v1.3',
+                parts: 'tab',
+                unitTestsEnabled: false,
+                useAzureAppInsights: false
+            })
+            .withGenerators(testHelper.DEPENDENCIES);
+
+        assert.fileContent(".env", "APPINSIGHTS_INSTRUMENTATIONKEY=");
+        assert.noFileContent("package.json", `"applicationinsights": "^1.3.1"`);
+        assert.noFileContent("src/app/web/index.html", `var appInsights = window.appInsights`);
     });
 
 });
