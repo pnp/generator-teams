@@ -150,7 +150,7 @@ export class GeneratorTeamsApp extends Generator {
                     type: "confirm",
                     name: "updateManifestVersion",
                     message: `Do you want to change the current manifest version ${this.options.existingManifest && "(" + this.options.existingManifest.manifestVersion + ")"}?`,
-                    when: (answers) => this.options.existingManifest && versions.length > 0 && answers.confirmedAdd != false,
+                    when: (answers: any) => this.options.existingManifest && versions.length > 0 && answers.confirmedAdd != false,
                     default: false
                 },
                 {
@@ -158,7 +158,7 @@ export class GeneratorTeamsApp extends Generator {
                     name: 'manifestVersion',
                     message: 'Which manifest version would you like to use?',
                     choices: versions,
-                    when: (answers) => (this.options.existingManifest && answers.updateManifestVersion && versions.length > 0) || (!this.options.existingManifest)
+                    when: (answers: any) => (this.options.existingManifest && answers.updateManifestVersion && versions.length > 0) || (!this.options.existingManifest)
                 },
                 {
                     type: 'checkbox',
@@ -191,7 +191,7 @@ export class GeneratorTeamsApp extends Generator {
                             value: 'messageextension',
                         }
                     ],
-                    when: (answers) => answers.confirmedAdd != false
+                    when: (answers: any) => answers.confirmedAdd != false
                 },
                 {
                     type: 'input',
@@ -222,10 +222,10 @@ export class GeneratorTeamsApp extends Generator {
                     default: (answers: any) => {
                         return Guid.EMPTY;
                     },
-                    validate: (input) => {
+                    validate: (input: string) => {
                         return Guid.isGuid(input);
                     },
-                    when: (answers) => answers.useAzureAppInsights,
+                    when: (answers: any) => answers.useAzureAppInsights,
                 },
             ]
         ).then((answers: any) => {
@@ -267,7 +267,7 @@ export class GeneratorTeamsApp extends Generator {
                 this.options.libraryName = pkg.name;
                 this.options.host = this.options.existingManifest.developer.websiteUrl;
                 this.options.updateManifestVersion = answers.updateManifestVersion;
-                this.options.manifestVersion = answers.manifestVersion ? answers.manifestVersion : this.options.existingManifest.manifestVersion;
+                this.options.manifestVersion = answers.manifestVersion ? answers.manifestVersion : ManifestGeneratorFactory.getManifestVersionFromValue(this.options.existingManifest.manifestVersion);
             }
 
             this.options.unitTestsEnabled = answers.unitTestsEnabled;
@@ -370,7 +370,7 @@ export class GeneratorTeamsApp extends Generator {
             ], this.fs);
         }
 
-        if(this.options.useAzureAppInsights) {
+        if (this.options.useAzureAppInsights) {
             Yotilities.addAdditionalDeps([
                 ["applicationinsights", "^1.3.1"]
             ], this.fs);

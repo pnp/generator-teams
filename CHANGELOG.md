@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Refactored manifest generation to support multiple schemas
 * Changed to an adaptive card on the default generated messaging extension including preview mode
+* Node v6 is no longer considered supported
 
 ### Fixes
 

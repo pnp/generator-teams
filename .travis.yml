@@ -9,7 +9,6 @@ cache:
   - node_modules
 node_js:
 - stable
-- 6.9.1
 - 8.10.0
 - 8.15.0
 - 10.15.3

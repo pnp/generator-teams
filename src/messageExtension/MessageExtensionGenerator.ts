@@ -7,7 +7,7 @@ import * as lodash from 'lodash';
 import * as chalk from 'chalk';
 import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
-import Project, { Scope, Decorator, Node, ClassDeclaration } from "ts-morph";
+import { Project, Scope, Decorator, ClassDeclaration } from "ts-morph";
 import * as ts from 'typescript';
 import * as path from 'path';
 import * as Guid from 'guid';
@@ -41,16 +41,12 @@ export class MessageExtensionGenerator extends Generator {
                                 return 'new';
                             }
                         },
-                        choices: answers => {
+                        choices: (answers: any) => {
                             var choices: any[] = [];
-                            choices.push({
-                                name: 'For a Bot hosted somewhere else',
-                                value: 'external'
-                            });
                             if (this.options.botType == 'botframework' || this.options.existingManifest && this.options.existingManifest.bots && this.options.existingManifest.bots.length > 0) {
                                 choices.push({
                                     name: 'For a Bot already created in this project',
-                                    value: 'existing'
+                                    value: 'existing',
                                 });
                             } else {
                                 choices.push({
@@ -58,6 +54,10 @@ export class MessageExtensionGenerator extends Generator {
                                     value: 'new'
                                 });
                             }
+                            choices.push({
+                                name: 'For a Bot hosted somewhere else',
+                                value: 'external'
+                            });
                             return choices;
                         }
                     },
@@ -66,7 +66,7 @@ export class MessageExtensionGenerator extends Generator {
                         type: 'list',
                         name: 'botId',
                         message: 'Choose which bot',
-                        choices: answers => {
+                        choices: (answers: any) => {
                             let choices: any[] = [];
                             if (this.options.existingManifest.bots) {
                                 // TODO: use AST to find the Bot classes as well
@@ -86,14 +86,14 @@ export class MessageExtensionGenerator extends Generator {
                     {
                         type: 'input',
                         name: 'messageExtensionId',
-                        message: (answers) => {
+                        message: (answers: any) => {
                             var message = 'I need the Microsoft App ID for the Bot used by the Message Extension. ';
                             return message;
                         },
                         default: (answers: any) => {
                             return Guid.EMPTY;
                         },
-                        validate: (input) => {
+                        validate: (input: string) => {
                             return Guid.isGuid(input);
                         },
                         when: (answers: any) => {
@@ -105,7 +105,7 @@ export class MessageExtensionGenerator extends Generator {
                         name: 'messageExtensionName',
                         message: 'What is the name of your Message Extension command?',
                         default: this.options.title + ' Message Extension',
-                        validate: (input: string, answers) => {
+                        validate: (input: string, answers: any) => {
                             if (answers && answers.messageExtensionType !== 'external') {
                                 let name = lodash.camelCase(input);
                                 if (!name.endsWith(`MessageExtension`)) {
@@ -192,7 +192,7 @@ export class MessageExtensionGenerator extends Generator {
                         let botId: string = answers.botId;
                         if (!Guid.isGuid(botId)) {
                             try {
-                                botId = eval(`process.env.${botId.replace("{{","").replace("}}","")}`);
+                                botId = eval(`process.env.${botId.replace("{{", "").replace("}}", "")}`);
                             } catch {
                                 this.log(chalk.default.yellow(`Unable to find the bot id from: "${botId}"`));
                             }
@@ -226,7 +226,7 @@ export class MessageExtensionGenerator extends Generator {
             const manifestGenerator = manifestGeneratorFactory.createManifestGenerator(this.options.manifestVersion);
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
- 
+
             manifestGenerator.updateMessageExtensionManifest(manifest, this.options);
 
             this.fs.writeJSON(manifestPath, manifest);
@@ -241,7 +241,7 @@ export class MessageExtensionGenerator extends Generator {
                     "src/app/web/{messageExtensionName}/config.html",
                 );
 
-                if(this.options.unitTestsEnabled) {
+                if (this.options.unitTestsEnabled) {
                     templateFiles.push(
                         "src/app/scripts/{messageExtensionName}/__tests__/{messageExtensionClassName}Config.spec.tsx"
                     );
@@ -261,7 +261,7 @@ export class MessageExtensionGenerator extends Generator {
                     ["react-dom", "^16.8.4"],
                     ["file-loader", "1.1.11"],
                     ["typestyle", "2.0.1"],
-                    ["botbuilder-teams-messagingextensions", "1.2.0-preview"]
+                    ["botbuilder-teams-messagingextensions", "1.2.1"]
                 ], this.fs);
 
                 Yotilities.insertTsExportDeclaration(
@@ -270,14 +270,14 @@ export class MessageExtensionGenerator extends Generator {
                     `Automatically added for the ${this.options.messageExtensionName} message extension`,
                     this.fs
                 );
- 
+
                 // Dynamically insert the reference and hook it up to the Bot
                 const project = new Project();
                 const file = project.createSourceFile(
-                    `src/app/${this.options.botName}/${this.options.botClassName}.ts`, 
+                    `src/app/${this.options.botName}/${this.options.botClassName}.ts`,
                     this.fs.read(`src/app/${this.options.botName}/${this.options.botClassName}.ts`), {
-                    overwrite: true
-                });
+                        overwrite: true
+                    });
 
                 const classes = file.getClasses()
                 const cl = classes.find(x => {

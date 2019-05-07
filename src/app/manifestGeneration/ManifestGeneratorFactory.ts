@@ -3,8 +3,8 @@
 // Licensed under the MIT license.
 
 import { ManifestVersions } from "./ManifestVersions";
-import { ManifestGenerator as ManifestGenerator13 }  from "./manifestGenerators/generator13/ManifestGenerator";
-import { ManifestGenerator as ManifestGeneratorDevPreview} from "./manifestGenerators/generatorDevPreview/ManifestGenerator";
+import { ManifestGenerator as ManifestGenerator13 } from "./manifestGenerators/generator13/ManifestGenerator";
+import { ManifestGenerator as ManifestGeneratorDevPreview } from "./manifestGenerators/generatorDevPreview/ManifestGenerator";
 import { BaseManifestGenerator } from "./BaseManifestGenerator";
 
 export class ManifestGeneratorFactory {
@@ -12,22 +12,35 @@ export class ManifestGeneratorFactory {
     public static supportedManifestVersions = [
         {
             manifestVersion: ManifestVersions.v13,
-            schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json"
+            schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json",
+            manifestValue: "1.3"
         },
         {
             manifestVersion: ManifestVersions.devPreview,
-            schemaUrl: "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json"
+            schemaUrl: "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json",
+            manifestValue: "devPreview"
         }
     ]
-   
+
     constructor() {
-       
+
+    }
+
+    public static getManifestVersionFromValue(value: string): string {
+        const versions = ManifestGeneratorFactory.supportedManifestVersions.filter((v) => {
+            return v.manifestValue == value;
+        });
+        if (versions.length === 1) {
+            return versions[0].manifestVersion;
+        } else {
+            throw new Error("Invalid manifest version.");
+        }
     }
 
     public createManifestGenerator(manifestVersion: string): BaseManifestGenerator {
-        if(manifestVersion == ManifestVersions.v13) {
+        if (manifestVersion == ManifestVersions.v13) {
             return new ManifestGenerator13();
-        } else if(manifestVersion == ManifestVersions.devPreview) {
+        } else if (manifestVersion == ManifestVersions.devPreview) {
             return new ManifestGeneratorDevPreview();
         } else {
             throw new Error("Invalid manifest version.");
