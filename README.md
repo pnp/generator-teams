@@ -47,6 +47,11 @@ When scaffolding the project you will also have the option of adding additional 
 
 * Easy deploy to Microsoft Azure
 * Add unit testing framework and sample unit tests
+* Easily develop and debug using ngrok
+
+## Documentation
+
+The documentation for the generator and the generated project can be found at the [generator-teams Github Wiki](https://github.com/OfficeDev/generator-teams/wiki).
 
 ## The generated project
 

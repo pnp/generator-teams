@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## [*2.7.1*] - <*Unreleased*>
+## [*2.7.1*] - <*2019-05-08*>
 
 ### Added
 
