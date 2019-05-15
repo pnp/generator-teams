@@ -12,7 +12,7 @@ export class MessageExtensionManifestUpdater implements IManifestUpdater {
             manifest.composeExtensions = [];
         }
 
-        let command = {
+        let command: any = {
             id: options.messageExtensionName,
             title: options.messageExtensionTitle,
             description: 'Add a clever description here',
@@ -24,8 +24,32 @@ export class MessageExtensionManifestUpdater implements IManifestUpdater {
                     title: 'Parameter',
                 }
             ],
-            type: "query" // required parameter in devPreview
+            type: options.messagingExtensionType // required parameter in devPreview
         };
+
+        if (options.messagingExtensionType === "action") {
+            if (options.messagingExtensionActionContext) {
+                command.context = options.messagingExtensionActionContext;
+            }
+            switch (options.messagingExtensionActionInputType) {
+                case "static":
+                    command.fetchTask = false;
+                    command.parameters = [{
+                        "name": "email",
+                        "description": "Enter an e-mail address",
+                        "title": "E-mail"
+                    }];
+                    break;
+                case "adaptiveCard":
+                case "taskModule":
+                    command.fetchTask = true;
+                    command.parameters = undefined;
+                    break;
+                default:
+                    throw new Error("Invalid Messaging extension input type");
+            }
+        }
+
 
         let composeExtension = manifest.composeExtensions.find((ce: { botId: string; }) => ce.botId == options.messageExtensionId);
         if (options.existingManifest && composeExtension) {

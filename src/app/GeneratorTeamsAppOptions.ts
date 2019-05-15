@@ -59,13 +59,17 @@ export class GeneratorTeamsAppOptions {
     connectorComponentName: string;
     /* Message extensions */
     messageExtension: boolean;
-    messageExtensionType: string = '';
+    messageExtensionHost: string = '';
     messageExtensionTitle: string;
     messageExtensionDescription: string;
     messageExtensionName: string;
     messageExtensionId: string;
     messageExtensionClassName: string;
     messagingExtensionBot: boolean; // indicates that we need to add a bot to host the messaging extension
+    messagingExtensionType: string = "query";
+    messagingExtensionActionContext?: string[] = undefined;
+    messagingExtensionActionInputType?: string;
+    messagingExtensionActionResponseType?: string;
     /* manifest */
     existingManifest: any;
 }

@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*]
+
+### Added
+* Added the option to choose between a search based or action based messaging extension (only available for `devPreview` manfiests)
+* Added support for action based Message Extensions, can now choose from multiple input types, multiple outputs as well as locations for the actions (only available for `devPreview` manfiests). Note that some combinations are disabled and reserved for future use (as we get official documentation of how they are supposed to be implemented/used)
+
+### Changes
+
+* Dependency for `botbuilder-teams-messagingextensions` has been bumped - with an interface breaking change
+* Changed the wording for messaging extensions from 'what type...` to 'where is your host...'
+
+### Fixes
+
+* Fixed an issue where existing bots could not be found if only messaging extensions was used in a project
 
 ## [*2.7.1*] - <*2019-05-08*>
 

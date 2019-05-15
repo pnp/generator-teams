@@ -32,8 +32,8 @@ export class MessageExtensionGenerator extends Generator {
                 [
                     {
                         type: 'list',
-                        name: 'messageExtensionType',
-                        message: 'What type of Message Extension would you like to create ',
+                        name: 'messageExtensionHost',
+                        message: 'Where is your message extension hosted ',
                         default: (answers: any) => {
                             if (this.options.botType == 'botframework') {
                                 return 'existing';
@@ -43,19 +43,21 @@ export class MessageExtensionGenerator extends Generator {
                         },
                         choices: (answers: any) => {
                             var choices: any[] = [];
-                            if (this.options.botType == 'botframework' || this.options.existingManifest && this.options.existingManifest.bots && this.options.existingManifest.bots.length > 0) {
+                            if (this.options.botType == 'botframework' ||
+                                this.options.existingManifest && this.options.existingManifest.bots && this.options.existingManifest.bots.length > 0 ||
+                                this.options.existingManifest && this.options.existingManifest.composeExtensions && this.options.existingManifest.composeExtensions.length > 0) {
                                 choices.push({
-                                    name: 'For a Bot already created in this project',
+                                    name: 'In a Bot or Messaging Extension already defined in this project',
                                     value: 'existing',
                                 });
                             } else {
                                 choices.push({
-                                    name: 'For a new Bot',
+                                    name: 'In a new Bot',
                                     value: 'new'
                                 });
                             }
                             choices.push({
-                                name: 'For a Bot hosted somewhere else',
+                                name: 'In a Bot hosted somewhere else',
                                 value: 'external'
                             });
                             return choices;
@@ -70,17 +72,22 @@ export class MessageExtensionGenerator extends Generator {
                             let choices: any[] = [];
                             if (this.options.existingManifest.bots) {
                                 // TODO: use AST to find the Bot classes as well
+                                // Check existing bots
                                 choices = this.options.existingManifest.bots.map((b: any) => {
                                     return b.botId;
-                                })
+                                });
+                                // check existing compose extensions
+                                choices = choices.concat(this.options.existingManifest.composeExtensions.map((b: any) => {
+                                    return b.botId;
+                                }));
                             }
                             if (this.options.bot) {
                                 choices.push(this.options.botid);
                             }
-                            return choices;
+                            return choices.filter((value, index, self) => self.indexOf(value) === index); // only return unique
                         },
                         when: (answers: any) => {
-                            return answers.messageExtensionType == 'existing' && this.options.existingManifest !== undefined
+                            return answers.messageExtensionHost == 'existing' && this.options.existingManifest !== undefined
                         }
                     },
                     {
@@ -97,8 +104,101 @@ export class MessageExtensionGenerator extends Generator {
                             return Guid.isGuid(input);
                         },
                         when: (answers: any) => {
-                            return answers.messageExtensionType !== 'existing';
+                            return answers.messageExtensionHost !== 'existing';
                         },
+                    },
+                    {
+                        type: 'list',
+                        name: 'messagingExtensionType',
+                        message: 'What type of messaging extension',
+                        choices: [
+                            {
+                                name: "Search based messaging extension",
+                                value: "query"
+                            },
+                            {
+                                name: "Action based messaging extension",
+                                value: "action"
+                            }
+                        ],
+                        when: (answers: any) => {
+                            return this.options.manifestVersion == "devPreview"; // Only available in devPreview for now
+                        },
+                    },
+                    {
+                        type: 'checkbox',
+                        name: 'messagingExtensionActionContext',
+                        message: "What context do you want your action to work from",
+                        choices: [
+                            {
+                                name: "The compose box",
+                                value: "compose",
+                                checked: true
+                            },
+                            {
+                                name: "The command box",
+                                value: "commandBox",
+                                checked: true
+                            },
+                            {
+                                name: "Conversation messages",
+                                value: "message"
+                            }
+                        ],
+                        when: (answers: any) => {
+                            return answers.messagingExtensionType == "action";
+                        }
+                    },
+                    {
+                        type: 'list',
+                        name: 'messagingExtensionActionInputType',
+                        message: "How would you like to collect information from the user for your action?",
+                        choices: [
+                            {
+                                name: "Using an Adaptive Card",
+                                value: "adaptiveCard",
+                            },
+                            {
+                                name: "Using static properties",
+                                value: "static",
+                            },
+                            {
+                                name: "Using a Task Module",
+                                value: "taskModule"
+                            }
+                        ],
+                        when: (answers: any) => {
+                            return answers.messagingExtensionType == "action";
+                        }
+                    },
+                    {
+                        type: 'list',
+                        name: 'messagingExtensionActionResponseType',
+                        message: "How would you like to respond to the action submit?",
+                        choices: [
+                            {
+                                name: "Use a text message",
+                                value: "message",
+                            },
+                            {
+                                name: "Using an Adaptive Card",
+                                value: "adaptiveCard",
+                            },
+                            {
+                                name: "Using a Task Module response (upcomging feature)",
+                                value: "taskModule",
+                                disabled: "true"
+                            },
+                            {
+                                name: "Using an Authentication response (upcoming feature)",
+                                value: "authn",
+                                disabled: "true"
+                            }
+                        ],
+                        when: (answers: any) => {
+                            return answers.messagingExtensionType == "action";
+                        },
+                        default: "adaptiveCard"
                     },
                     {
                         type: 'input',
@@ -106,7 +206,7 @@ export class MessageExtensionGenerator extends Generator {
                         message: 'What is the name of your Message Extension command?',
                         default: this.options.title + ' Message Extension',
                         validate: (input: string, answers: any) => {
-                            if (answers && answers.messageExtensionType !== 'external') {
+                            if (answers && answers.messageExtensionHost !== 'external') {
                                 let name = lodash.camelCase(input);
                                 if (!name.endsWith(`MessageExtension`)) {
                                     name += `MessageExtension`;
@@ -129,21 +229,28 @@ export class MessageExtensionGenerator extends Generator {
                         validate: (input: string) => {
                             return input.length > 0;
                         }
-                    }
+                    },
                 ]
             ).then((answers: any) => {
-                this.options.messageExtensionType = answers.messageExtensionType;
+                this.options.messageExtensionHost = answers.messageExtensionHost;
                 this.options.messageExtensionTitle = answers.messageExtensionName;
                 this.options.messageExtensionDescription = answers.messageExtensionDescription;
                 this.options.messageExtensionName = lodash.camelCase(answers.messageExtensionName);
-
+                if (answers.messagingExtensionType) {
+                    this.options.messagingExtensionType = answers.messagingExtensionType;
+                }
+                if (this.options.messagingExtensionType === "action") {
+                    this.options.messagingExtensionActionContext = answers.messagingExtensionActionContext;
+                    this.options.messagingExtensionActionInputType = answers.messagingExtensionActionInputType;
+                    this.options.messagingExtensionActionResponseType = answers.messagingExtensionActionResponseType;
+                }
                 if (!this.options.messageExtensionName.endsWith(`MessageExtension`)) {
                     this.options.messageExtensionName += `MessageExtension`;
                 }
 
                 this.options.messageExtensionClassName = this.options.messageExtensionName.charAt(0).toUpperCase() + this.options.messageExtensionName.slice(1);
 
-                if (answers.messageExtensionType == 'new') {
+                if (answers.messageExtensionHost == 'new') {
                     // we need to add the Bot, even though the users did not choose to create one
                     this.options.messagingExtensionBot = true;
                     this.options.botid = answers.messageExtensionId;
@@ -153,7 +260,7 @@ export class MessageExtensionGenerator extends Generator {
 
                     this.options.botName = lodash.camelCase(this.options.botTitle); // TODO: check valid file name here
                     this.options.botClassName = this.options.botName.charAt(0).toUpperCase() + this.options.botName.slice(1);
-                } else if (answers.messageExtensionType == 'existing') {
+                } else if (answers.messageExtensionHost == 'existing') {
                     // reuse the bot id
 
                     if (this.options.existingManifest) {
@@ -232,7 +339,7 @@ export class MessageExtensionGenerator extends Generator {
             this.fs.writeJSON(manifestPath, manifest);
 
             // Externally hosted bots does not have an implementation
-            if (this.options.messageExtensionType !== "external") {
+            if (this.options.messageExtensionHost !== "external") {
                 let templateFiles = [];
 
                 templateFiles.push(
@@ -240,6 +347,13 @@ export class MessageExtensionGenerator extends Generator {
                     "src/app/scripts/{messageExtensionName}/{messageExtensionClassName}Config.tsx",
                     "src/app/web/{messageExtensionName}/config.html",
                 );
+                // add the task module
+                if (this.options.messagingExtensionType == "action" && this.options.messagingExtensionActionInputType === "taskModule") {
+                    templateFiles.push(
+                        "src/app/scripts/{messageExtensionName}/{messageExtensionClassName}Action.tsx",
+                        "src/app/web/{messageExtensionName}/action.html",
+                    );
+                }
 
                 if (this.options.unitTestsEnabled) {
                     templateFiles.push(
@@ -261,7 +375,7 @@ export class MessageExtensionGenerator extends Generator {
                     ["react-dom", "^16.8.4"],
                     ["file-loader", "1.1.11"],
                     ["typestyle", "2.0.1"],
-                    ["botbuilder-teams-messagingextensions", "1.2.1"]
+                    ["botbuilder-teams-messagingextensions", "1.3.0-preview"]
                 ], this.fs);
 
                 Yotilities.insertTsExportDeclaration(
@@ -270,6 +384,14 @@ export class MessageExtensionGenerator extends Generator {
                     `Automatically added for the ${this.options.messageExtensionName} message extension`,
                     this.fs
                 );
+                if (this.options.messagingExtensionType == "action" && this.options.messagingExtensionActionInputType == "taskModule") {
+                    Yotilities.insertTsExportDeclaration(
+                        "src/app/scripts/client.ts",
+                        `./${this.options.messageExtensionName}/${this.options.messageExtensionClassName}Action`,
+                        `Automatically added for the ${this.options.messageExtensionName} message extension action`,
+                        this.fs
+                    );
+                }
 
                 // Dynamically insert the reference and hook it up to the Bot
                 const project = new Project();

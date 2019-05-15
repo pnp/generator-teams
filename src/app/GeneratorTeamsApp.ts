@@ -400,7 +400,15 @@ export class GeneratorTeamsApp extends Generator {
                 }
             }
             if (this.options.messageExtension) {
-                AppInsights.defaultClient.trackEvent({ name: 'messageExtension' });
+                AppInsights.defaultClient.trackEvent({
+                    name: 'messageExtension',
+                    properties: {
+                        type: this.options.messagingExtensionType,
+                        context: this.options.messagingExtensionActionContext ? this.options.messagingExtensionActionContext.join(";") : "",
+                        input: this.options.messagingExtensionActionInputType || "",
+                        response: this.options.messagingExtensionActionResponseType || ""
+                    }
+                });
             }
             if (this.options.connector) {
                 AppInsights.defaultClient.trackEvent({ name: 'connector' });
