@@ -33,6 +33,9 @@ export class TabGenerator extends Generator {
                         message: 'Default Tab name? (max 16 characters)',
                         default: this.options.title + ' Tab',
                         validate: (input) => {
+                            if(! (/^[a-zA-Z].*/.test(input))) {
+                                return "Must start with an alphabetical character";
+                            }
                             return input.length > 0 && input.length <= 16;
                         }
                     }

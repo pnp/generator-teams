@@ -406,7 +406,8 @@ export class GeneratorTeamsApp extends Generator {
                         type: this.options.messagingExtensionType,
                         context: this.options.messagingExtensionActionContext ? this.options.messagingExtensionActionContext.join(";") : "",
                         input: this.options.messagingExtensionActionInputType || "",
-                        response: this.options.messagingExtensionActionResponseType || ""
+                        response: this.options.messagingExtensionActionResponseType || "",
+                        canUpdateConfiguration: this.options.messagingExtensionCanUpdateConfiguration ? "true" : "false"
                     }
                 });
             }

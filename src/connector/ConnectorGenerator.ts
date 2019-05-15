@@ -63,6 +63,9 @@ export class ConnectorGenerator extends Generator {
                         message: 'What is the name of your Connector?',
                         default: this.options.title,
                         validate: (input) => {
+                            if(! (/^[a-zA-Z].*/.test(input))) {
+                                return "Must start with an alphabetical character";
+                            }
                             return input.length > 0;
                         },
                         when: (answers) => answers.connectorType != 'existing'

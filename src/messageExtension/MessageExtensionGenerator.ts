@@ -201,11 +201,37 @@ export class MessageExtensionGenerator extends Generator {
                         default: "adaptiveCard"
                     },
                     {
+                        type: 'confirm',
+                        name: 'messagingExtensionCanUpdateConfiguration',
+                        message: 'Do you require a configuration option?',
+                        default: (answers: any) => {
+                            if (this.options.existingManifest && answers.messageExtensionHost == 'existing') {
+                                return false; // if you haven't added it already, we assume you don't want it this time either
+                            }
+                            return true; // always return true if it's a new project
+                        },
+                        when: (answers) => {
+                            if (this.options.existingManifest && answers.messageExtensionHost == 'existing') {
+                                if (this.options.existingManifest.composeExtensions) {
+                                    const composeExtension = this.options.existingManifest.composeExtensions.find((c: { botId: any; }) => c.botId == answers.botId);
+                                    if (composeExtension && composeExtension.canUpdateConfiguration == false) {
+                                        return true; // if we already have not added a config, then it's ok now
+                                    }
+                                }
+                                return false; // there's already some ME with config in the project
+                            }
+                            return true; // always return true if it's a new project or a new bot
+                        }
+                    },
+                    {
                         type: 'input',
                         name: 'messageExtensionName',
                         message: 'What is the name of your Message Extension command?',
                         default: this.options.title + ' Message Extension',
                         validate: (input: string, answers: any) => {
+                            if(! (/^[a-zA-Z].*/.test(input))) {
+                                return "Must start with an alphabetical character";
+                            }
                             if (answers && answers.messageExtensionHost !== 'external') {
                                 let name = lodash.camelCase(input);
                                 if (!name.endsWith(`MessageExtension`)) {
@@ -235,6 +261,7 @@ export class MessageExtensionGenerator extends Generator {
                 this.options.messageExtensionHost = answers.messageExtensionHost;
                 this.options.messageExtensionTitle = answers.messageExtensionName;
                 this.options.messageExtensionDescription = answers.messageExtensionDescription;
+                this.options.messagingExtensionCanUpdateConfiguration = answers.messagingExtensionCanUpdateConfiguration;
                 this.options.messageExtensionName = lodash.camelCase(answers.messageExtensionName);
                 if (answers.messagingExtensionType) {
                     this.options.messagingExtensionType = answers.messagingExtensionType;
@@ -344,9 +371,13 @@ export class MessageExtensionGenerator extends Generator {
 
                 templateFiles.push(
                     "src/app/{messageExtensionName}/{messageExtensionClassName}.ts",
-                    "src/app/scripts/{messageExtensionName}/{messageExtensionClassName}Config.tsx",
-                    "src/app/web/{messageExtensionName}/config.html",
                 );
+                if (this.options.messagingExtensionCanUpdateConfiguration) {
+                    templateFiles.push(
+                        "src/app/scripts/{messageExtensionName}/{messageExtensionClassName}Config.tsx",
+                        "src/app/web/{messageExtensionName}/config.html",
+                    );
+                }
                 // add the task module
                 if (this.options.messagingExtensionType == "action" && this.options.messagingExtensionActionInputType === "taskModule") {
                     templateFiles.push(
@@ -355,7 +386,7 @@ export class MessageExtensionGenerator extends Generator {
                     );
                 }
 
-                if (this.options.unitTestsEnabled) {
+                if (this.options.unitTestsEnabled && this.options.messagingExtensionCanUpdateConfiguration) {
                     templateFiles.push(
                         "src/app/scripts/{messageExtensionName}/__tests__/{messageExtensionClassName}Config.spec.tsx"
                     );
@@ -368,22 +399,29 @@ export class MessageExtensionGenerator extends Generator {
                         this.options);
                 });
 
+                if (this.options.messagingExtensionCanUpdateConfiguration ||
+                    this.options.messagingExtensionType == "action" && this.options.messagingExtensionActionInputType === "taskModule") {
+                    Yotilities.addAdditionalDeps([
+                        ["msteams-ui-components-react", "^0.8.1"],
+                        ["react", "^16.8.4"],
+                        ["@types/react", "16.8.8"],
+                        ["react-dom", "^16.8.4"],
+                        ["file-loader", "1.1.11"],
+                        ["typestyle", "2.0.1"],
+                    ], this.fs);
+                }
                 Yotilities.addAdditionalDeps([
-                    ["msteams-ui-components-react", "^0.8.1"],
-                    ["react", "^16.8.4"],
-                    ["@types/react", "16.8.8"],
-                    ["react-dom", "^16.8.4"],
-                    ["file-loader", "1.1.11"],
-                    ["typestyle", "2.0.1"],
                     ["botbuilder-teams-messagingextensions", "1.3.0-preview"]
                 ], this.fs);
 
-                Yotilities.insertTsExportDeclaration(
-                    "src/app/scripts/client.ts",
-                    `./${this.options.messageExtensionName}/${this.options.messageExtensionClassName}Config`,
-                    `Automatically added for the ${this.options.messageExtensionName} message extension`,
-                    this.fs
-                );
+                if (this.options.messagingExtensionCanUpdateConfiguration) {
+                    Yotilities.insertTsExportDeclaration(
+                        "src/app/scripts/client.ts",
+                        `./${this.options.messageExtensionName}/${this.options.messageExtensionClassName}Config`,
+                        `Automatically added for the ${this.options.messageExtensionName} message extension`,
+                        this.fs
+                    );
+                }
                 if (this.options.messagingExtensionType == "action" && this.options.messagingExtensionActionInputType == "taskModule") {
                     Yotilities.insertTsExportDeclaration(
                         "src/app/scripts/client.ts",

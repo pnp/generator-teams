@@ -53,12 +53,18 @@ export class MessageExtensionManifestUpdater implements IManifestUpdater {
 
         let composeExtension = manifest.composeExtensions.find((ce: { botId: string; }) => ce.botId == options.messageExtensionId);
         if (options.existingManifest && composeExtension) {
-            composeExtension.commands.push(command);
+            if (options.messagingExtensionCanUpdateConfiguration) {
+                // if we have config for this one, it has to be positioned as the first one
+                composeExtension.commands.unshift(command);
+                composeExtension.canUpdateConfiguration =  options.messagingExtensionCanUpdateConfiguration;
+            } else {
+                composeExtension.commands.push(command);
+            }
         } else {
             // no existing manifest
             manifest.composeExtensions.push({
                 botId: options.messageExtensionId,
-                canUpdateConfiguration: true,
+                canUpdateConfiguration: options.messagingExtensionCanUpdateConfiguration,
                 commands: [command]
             });
         }

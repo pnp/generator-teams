@@ -165,7 +165,7 @@ const log = debug("msteams");
     }
 <% } %>
 <% } %>
-
+<% if (messagingExtensionCanUpdateConfiguration) { %>
     // this is used when canUpdateConfiguration is set to true
     public async onQuerySettingsUrl(context: TurnContext): Promise<{ title: string, value: string }> {
         return Promise.resolve({
@@ -180,5 +180,5 @@ const log = debug("msteams");
         log(`New setting: ${setting}`);
         return Promise.resolve();
     }
-
+<% } %>
 }

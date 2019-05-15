@@ -57,11 +57,45 @@ describe('teams:messageExtension', function () {
         assert.file(testHelper.WEB_FILES);
         assert.file(testHelper.MANIFEST_FILES);
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_13);
-
+        assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ canUpdateConfiguration: true }] })
         assert.file(MESSAGEEXTSION_SCRIPT_FILES);
         assert.file(MESSAGEEXTSION_SCRIPT_TEST_FILES);
         assert.file(MESSAGEEXTSION_FILES);
         assert.file(MESSAGEEXTSION_HTML_FILES);
+    });
+
+    it('should generate message extension project with v1.3 with unit tests, without configuration', async () => {
+        await helpers.run(testHelper.GENERATOR_PATH)
+            .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension01-noconfig')
+            .withArguments('[no-telementry]')
+            .withPrompts({
+                solutionName: 'messageExtension-test-01',
+                whichFolder: 'current',
+                name: 'messageExtensiontest01',
+                developer: 'generator teams developer',
+                manifestVersion: 'v1.3',
+                parts: 'messageextension',
+                unitTestsEnabled: true,
+                messageExtensionHost: 'new',
+                bottype: 'botframework',
+                messageExtensionName: 'messageExtension-test-01',
+                messageExtensionDescription: 'description',
+                messagingExtensionCanUpdateConfiguration: false
+            })
+            .withGenerators(testHelper.DEPENDENCIES);
+
+        assert.file(testHelper.ROOT_FILES);
+        assert.file(testHelper.TEST_FILES);
+        assert.file(testHelper.APP_FILES);
+        assert.file(testHelper.SCRIPT_FILES);
+        assert.file(testHelper.WEB_FILES);
+        assert.file(testHelper.MANIFEST_FILES);
+        assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_13);
+        assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ canUpdateConfiguration: false }] })
+        assert.noFile(MESSAGEEXTSION_SCRIPT_FILES);
+        assert.noFile(MESSAGEEXTSION_SCRIPT_TEST_FILES);
+        assert.file(MESSAGEEXTSION_FILES);
+        assert.noFile(MESSAGEEXTSION_HTML_FILES);
     });
 
     it('should generate message extension project with v1.3 without unit tests', async () => {
@@ -90,7 +124,7 @@ describe('teams:messageExtension', function () {
         assert.file(testHelper.WEB_FILES);
         assert.file(testHelper.MANIFEST_FILES);
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_13);
-
+        assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ canUpdateConfiguration: true }] })
         assert.file(MESSAGEEXTSION_SCRIPT_FILES);
         assert.noFile(MESSAGEEXTSION_SCRIPT_TEST_FILES);
         assert.file(MESSAGEEXTSION_FILES);
@@ -123,11 +157,45 @@ describe('teams:messageExtension', function () {
         assert.file(testHelper.WEB_FILES);
         assert.file(testHelper.MANIFEST_FILES);
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_DEVPREVIEW);
-
+        assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ canUpdateConfiguration: true }] })
         assert.file(MESSAGEEXTSION_SCRIPT_FILES);
         assert.file(MESSAGEEXTSION_SCRIPT_TEST_FILES);
         assert.file(MESSAGEEXTSION_FILES);
         assert.file(MESSAGEEXTSION_HTML_FILES);
+    });
+
+    it('should generate message extension project with devPreview with unit tests, without configuration', async () => {
+        await helpers.run(testHelper.GENERATOR_PATH)
+            .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension03-noconfig')
+            .withArguments('[no-telementry]')
+            .withPrompts({
+                solutionName: 'messageExtension-test-01',
+                whichFolder: 'current',
+                name: 'messageExtensiontest01',
+                developer: 'generator teams developer',
+                manifestVersion: 'devPreview',
+                parts: 'messageextension',
+                unitTestsEnabled: true,
+                messageExtensionHost: 'new',
+                bottype: 'botframework',
+                messageExtensionName: 'messageExtension-test-01',
+                messageExtensionDescription: 'description',
+                messagingExtensionCanUpdateConfiguration: false
+            })
+            .withGenerators(testHelper.DEPENDENCIES);
+
+        assert.file(testHelper.ROOT_FILES);
+        assert.file(testHelper.TEST_FILES);
+        assert.file(testHelper.APP_FILES);
+        assert.file(testHelper.SCRIPT_FILES);
+        assert.file(testHelper.WEB_FILES);
+        assert.file(testHelper.MANIFEST_FILES);
+        assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_DEVPREVIEW);
+        assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ canUpdateConfiguration: false }] })
+        assert.noFile(MESSAGEEXTSION_SCRIPT_FILES);
+        assert.noFile(MESSAGEEXTSION_SCRIPT_TEST_FILES);
+        assert.file(MESSAGEEXTSION_FILES);
+        assert.noFile(MESSAGEEXTSION_HTML_FILES);
     });
 
     it('should generate message extension project with devPreview without unit tests', async () => {
@@ -156,7 +224,7 @@ describe('teams:messageExtension', function () {
         assert.file(testHelper.WEB_FILES);
         assert.file(testHelper.MANIFEST_FILES);
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_DEVPREVIEW);
-
+        assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ canUpdateConfiguration: true }] })
         assert.file(MESSAGEEXTSION_SCRIPT_FILES);
         assert.noFile(MESSAGEEXTSION_SCRIPT_TEST_FILES);
         assert.file(MESSAGEEXTSION_FILES);
@@ -280,4 +348,7 @@ describe('teams:messageExtension', function () {
         assert.fileContent(MESSAGEEXTSION_FILES[0], "public async onSubmitAction(");
         assert.fileContent(MESSAGEEXTSION_FILES[0], "type: \"result\"");
     });
+    
+
+    
 });
