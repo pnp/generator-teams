@@ -34,7 +34,7 @@ describe('teams:messageExtension', function () {
     it('should generate message extension project with v1.3 with unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension01')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'messageExtension-test-01',
                 whichFolder: 'current',
@@ -67,7 +67,7 @@ describe('teams:messageExtension', function () {
     it('should generate message extension project with v1.3 with unit tests, without configuration', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension01-noconfig')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'messageExtension-test-01',
                 whichFolder: 'current',
@@ -101,7 +101,7 @@ describe('teams:messageExtension', function () {
     it('should generate message extension project with v1.3 without unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension02')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'messageExtension-test-01',
                 whichFolder: 'current',
@@ -134,7 +134,7 @@ describe('teams:messageExtension', function () {
     it('should generate message extension project with devPreview with unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension03')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'messageExtension-test-01',
                 whichFolder: 'current',
@@ -167,7 +167,7 @@ describe('teams:messageExtension', function () {
     it('should generate message extension project with devPreview with unit tests, without configuration', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension03-noconfig')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'messageExtension-test-01',
                 whichFolder: 'current',
@@ -201,7 +201,7 @@ describe('teams:messageExtension', function () {
     it('should generate message extension project with devPreview without unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension04')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'messageExtension-test-01',
                 whichFolder: 'current',
@@ -234,7 +234,7 @@ describe('teams:messageExtension', function () {
     it('should generate a query message extension project with devPreview', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension05')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'messageExtension-test-01',
                 whichFolder: 'current',
@@ -259,7 +259,7 @@ describe('teams:messageExtension', function () {
     it('should generate an action message (static with adaptiveCard response) extension project with devPreview', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension06')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'messageExtension-test-01',
                 whichFolder: 'current',
@@ -289,7 +289,7 @@ describe('teams:messageExtension', function () {
     it('should generate an action message (adaptiveCard with adaptiveCard response) extension project with devPreview', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension07')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'messageExtension-test-01',
                 whichFolder: 'current',
@@ -320,7 +320,7 @@ describe('teams:messageExtension', function () {
     it('should generate an action message (taskModule with adaptive card response) extension project with devPreview', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension08')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'messageExtension-test-01',
                 whichFolder: 'current',

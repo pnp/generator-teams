@@ -36,7 +36,7 @@ describe('teams:tab', function () {
     it('should generate tab project with v1.3 with unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab01')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'tab-test-01',
                 whichFolder: 'current',
@@ -66,7 +66,7 @@ describe('teams:tab', function () {
     it('should generate tab project with v1.3 without unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab02')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'tab-test-01',
                 whichFolder: 'current',
@@ -96,7 +96,7 @@ describe('teams:tab', function () {
     it('should generate tab project with devPreview with unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab03')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'tab-test-01',
                 whichFolder: 'current',
@@ -126,7 +126,7 @@ describe('teams:tab', function () {
     it('should generate tab project with devPReview without unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab04')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'tab-test-01',
                 whichFolder: 'current',
@@ -156,7 +156,7 @@ describe('teams:tab', function () {
     it('should generate tab project applicatiaon insights', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab05')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'tab-test-01',
                 whichFolder: 'current',
@@ -178,7 +178,7 @@ describe('teams:tab', function () {
     it('should generate tab project with no applicatiaon insights', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab06')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'tab-test-01',
                 whichFolder: 'current',

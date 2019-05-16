@@ -35,7 +35,7 @@ describe('teams:bot', function () {
     it('should generate bot project with v1.3 with unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_BOT_GENERATOR_PATH + '/bot01')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'bot-test-01',
                 whichFolder: 'current',
@@ -64,7 +64,7 @@ describe('teams:bot', function () {
     it('should generate bot project with v1.3 without unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_BOT_GENERATOR_PATH + '/bot02')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'bot-test-01',
                 whichFolder: 'current',
@@ -93,7 +93,7 @@ describe('teams:bot', function () {
     it('should generate bot project with devPreview with unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_BOT_GENERATOR_PATH + '/bot03')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'bot-test-01',
                 whichFolder: 'current',
@@ -122,7 +122,7 @@ describe('teams:bot', function () {
     it('should generate bot project with devPreview without unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_BOT_GENERATOR_PATH + '/bot04')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'bot-test-01',
                 whichFolder: 'current',

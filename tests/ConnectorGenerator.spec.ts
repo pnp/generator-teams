@@ -32,7 +32,7 @@ describe('teams:connector', function () {
     it('should generate connector project with v1.3 with unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_CONNECTOR_GENERATOR_PATH + '/connector01')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'connector-test-01',
                 whichFolder: 'current',
@@ -61,7 +61,7 @@ describe('teams:connector', function () {
     it('should generate connector project with v1.3 without unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_CONNECTOR_GENERATOR_PATH + '/connector02')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'connector-test-01',
                 whichFolder: 'current',
@@ -90,7 +90,7 @@ describe('teams:connector', function () {
     it('should generate connector project with devPreview with unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_CONNECTOR_GENERATOR_PATH + '/connector03')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'connector-test-01',
                 whichFolder: 'current',
@@ -119,7 +119,7 @@ describe('teams:connector', function () {
     it('should generate connector project with devPreview without unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_CONNECTOR_GENERATOR_PATH + '/connector04')
-            .withArguments('[no-telementry]')
+            .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'connector-test-01',
                 whichFolder: 'current',

@@ -22,7 +22,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixes
 
 * Fixed an issue where existing bots could not be found if only messaging extensions was used in a project
-* Fixed an issue (#70) where names of classes cannot start with a number. Only a-z and A-Z are allowed.
+* Fixed an issue (#70) where names of classes cannot start with a number. Only a-z and A-Z are allowed
+* Fixed an issue where telemetry was sent for tests
 
 ## [*2.7.1*] - <*2019-05-08*>
 
