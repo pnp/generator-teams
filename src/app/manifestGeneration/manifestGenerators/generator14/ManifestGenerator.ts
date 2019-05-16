@@ -4,8 +4,8 @@
 
 import { BaseManifestGenerator } from "../../BaseManifestGenerator";
 import { TabManifestUpdater } from "./TabManifestUpdater";
-import { BotManifestUpdater } from "./BotManifestUpdater";
-import { ConnectorManifestUpdater } from "./ConnectorManifestUpdater";
+import { BotManifestUpdater } from "../generator13/BotManifestUpdater"; // same as v1.3
+import { ConnectorManifestUpdater } from "../generator13/ConnectorManifestUpdater"; // same as v1.3
 import { MessageExtensionManifestUpdater } from "./MessageExtensionManifestUpdater";
 import { GeneratorTeamsAppOptions } from "../../../GeneratorTeamsAppOptions";
 import * as chalk from 'chalk';
@@ -21,19 +21,19 @@ export class ManifestGenerator extends BaseManifestGenerator {
 
     public generateManifest(options: GeneratorTeamsAppOptions): any {
         const manifest = super.generateManifest(options);
-        manifest["$schema"] = "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json";
-        manifest.manifestVersion = "devPreview";
+        manifest["$schema"] = "https://developer.microsoft.com/en-us/json-schemas/teams/v1.4/MicrosoftTeams.schema.json";
+        manifest.manifestVersion = "1.4";
         return manifest;
     }
 
     public supportsUpdateManifest(from: string): boolean {
-        return from === "1.3" || from === "1.4";
+        return from === "1.3";
     }
 
     public updateManifest(manifest: any, log?: (message?: string, context?: any) => void): any {
-        if (manifest.manifestVersion === "1.3" || manifest.manifestVersion === "1.4") {
-            manifest["$schema"] = "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json";
-            manifest.manifestVersion = "devPreview";
+        if (manifest.manifestVersion === "1.3") {
+            manifest["$schema"] = "https://developer.microsoft.com/en-us/json-schemas/teams/v1.4/MicrosoftTeams.schema.json";
+            manifest.manifestVersion = "1.4";
 
             if(manifest.composeExtensions) {
                 manifest.composeExtensions.forEach((composeExtension: { commands: { title: string; type: string; }[] }) => {

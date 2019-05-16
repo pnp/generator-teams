@@ -79,7 +79,7 @@ export class GeneratorTeamsApp extends Generator {
 
         // find out what manifest versions we can use
         const manifestGeneratorFactory = new ManifestGeneratorFactory();
-        const versions: inquirer.ChoiceType[] = ManifestGeneratorFactory.supportedManifestVersions.filter(version => {
+        const versions: inquirer.objects.ChoiceOption[] = ManifestGeneratorFactory.supportedManifestVersions.filter(version => {
             // filter out non supprted upgrades
             if (this.options.existingManifest) {
                 const manifestGenerator = manifestGeneratorFactory.createManifestGenerator(version.manifestVersion);
@@ -91,6 +91,9 @@ export class GeneratorTeamsApp extends Generator {
             return {
                 name: version.manifestVersion,
                 value: version.manifestVersion,
+                extra: {
+                    default: version.default
+                }
             };
         })
 
@@ -158,6 +161,7 @@ export class GeneratorTeamsApp extends Generator {
                     name: 'manifestVersion',
                     message: 'Which manifest version would you like to use?',
                     choices: versions,
+                    default: versions.find( (v: inquirer.objects.ChoiceOption) => v.extra.default)!.value,
                     when: (answers: any) => (this.options.existingManifest && answers.updateManifestVersion && versions.length > 0) || (!this.options.existingManifest)
                 },
                 {

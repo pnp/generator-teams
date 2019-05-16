@@ -4,5 +4,6 @@
 
 export enum ManifestVersions {
     v13 = "v1.3",
+    v14 = "v1.4",
     devPreview = "devPreview"
 }
