@@ -122,7 +122,7 @@ export class MessageExtensionGenerator extends Generator {
                             }
                         ],
                         when: (answers: any) => {
-                            return this.options.manifestVersion == "devPreview"; // Only available in devPreview for now
+                            return this.options.manifestVersion != "v1.3"; // Only available in 1.4 or higher
                         },
                     },
                     {
@@ -146,7 +146,8 @@ export class MessageExtensionGenerator extends Generator {
                             }
                         ],
                         when: (answers: any) => {
-                            return answers.messagingExtensionType == "action";
+                            return answers.messagingExtensionType == "action" &&
+                                this.options.manifestVersion == "devPreview";
                         }
                     },
                     {
@@ -229,7 +230,7 @@ export class MessageExtensionGenerator extends Generator {
                         message: 'What is the name of your Message Extension command?',
                         default: this.options.title + ' Message Extension',
                         validate: (input: string, answers: any) => {
-                            if(! (/^[a-zA-Z].*/.test(input))) {
+                            if (!(/^[a-zA-Z].*/.test(input))) {
                                 return "Must start with an alphabetical character";
                             }
                             if (answers && answers.messageExtensionHost !== 'external') {
@@ -300,23 +301,31 @@ export class MessageExtensionGenerator extends Generator {
                         // if we already have a project, let's find the bot implementation class
                         const project = new Project();
                         project.addExistingSourceFiles(`${this.destinationRoot()}/src/app/**/*.ts`);
+                        // get all classes that has bots
                         const botClasses = project.getSourceFiles().map(s => {
                             return s.getClasses().map<{ c: ClassDeclaration, id: string } | undefined>(c => {
                                 const dec: Decorator | undefined = c.getDecorator('BotDeclaration');
                                 if (dec) {
                                     // arg 2 is the id
                                     const idarg = dec.getArguments()[2];
-                                    const idargval = idarg.getText();
+                                    let idargval = idarg.getText();
+
+                                    // check if the idargval has "-characters
+                                    if (idargval.startsWith("\"") && idargval.endsWith("\"")) {
+                                        idargval = idargval.substr(1, idargval.length - 2);
+                                    }
                                     if (Guid.isGuid(idargval)) {
                                         return { c: c, id: idargval };
                                     } else {
-                                        const calcval = eval(idargval);
-                                        if (!Guid.isGuid(calcval)) {
-                                            this.log(chalk.default.red('Unable to continue, as I cannot correlate the Bot Id and the TypeScript class'));
-                                            this.log(chalk.default.red('Please verify that you have a valid Guid or a valid environment variable in your BotDeclaration.'));
-                                            process.exit(1);
+                                        if (idargval.startsWith("process.env.")) {
+                                            return { c: c, id: `{{${idargval.substring(12)}}}` };
                                         }
-                                        return { c: c, id: calcval };
+                                        if (idargval.startsWith("{") && idargval.endsWith("}")) {
+                                            this.log(chalk.default.red("Please update your Bot ID references to use a Guids that are not encapsulated in { and }."))
+                                        }
+                                        this.log(chalk.default.red('Unable to continue, as I cannot correlate the Bot Id and the TypeScript class'));
+                                        this.log(chalk.default.red('Please verify that you have a valid Guid or a valid environment variable in your BotDeclaration.'));
+                                        process.exit(1);
                                     }
                                 }
                             }).filter(x => {
@@ -324,13 +333,6 @@ export class MessageExtensionGenerator extends Generator {
                             });
                         })
                         let botId: string = answers.botId;
-                        if (!Guid.isGuid(botId)) {
-                            try {
-                                botId = eval(`process.env.${botId.replace("{{", "").replace("}}", "")}`);
-                            } catch {
-                                this.log(chalk.default.yellow(`Unable to find the bot id from: "${botId}"`));
-                            }
-                        }
                         const botClass = lodash.flatten(botClasses).find(c => {
                             return c !== undefined && c.id == botId;
                         });

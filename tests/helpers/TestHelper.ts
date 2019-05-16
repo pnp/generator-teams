@@ -56,4 +56,5 @@ export const APP_FILES = [
 export const SCRIPT_FILES = 'src/app/scripts/client.ts';
 
 export const SCHEMA_13 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json';
+export const SCHEMA_14 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.4/MicrosoftTeams.schema.json';
 export const SCHEMA_DEVPREVIEW = 'https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json';

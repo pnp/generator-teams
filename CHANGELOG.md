@@ -24,6 +24,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed an issue where existing bots could not be found if only messaging extensions was used in a project
 * Fixed an issue (#70) where names of classes cannot start with a number. Only a-z and A-Z are allowed
 * Fixed an issue where telemetry was sent for tests
+* Fixed an issue when non `process.env` variables was used for Bot Id's
+* Fixed an issue where the .env parameter for bots is not added when adding a message extension only during upgrades
 
 ## [*2.7.1*] - <*2019-05-08*>
 

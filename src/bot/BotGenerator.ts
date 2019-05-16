@@ -53,7 +53,7 @@ export class BotGenerator extends Generator {
                         message: 'What is the name of your bot?',
                         default: this.options.title + ' Bot',
                         validate: (input) => {
-                            if(! (/^[a-zA-Z].*/.test(input))) {
+                            if (!(/^[a-zA-Z].*/.test(input))) {
                                 return "Must start with an alphabetical character";
                             }
                             return input.length > 0;
@@ -91,7 +91,7 @@ export class BotGenerator extends Generator {
                         name: 'staticTabName',
                         message: 'What is the title of your static tab for the bot? (max 16 characters)',
                         validate: (input) => {
-                            if(! (/^[a-zA-Z].*/.test(input))) {
+                            if (!(/^[a-zA-Z].*/.test(input))) {
                                 return "Must start with an alphabetical character";
                             }
                             return input.length > 0 && input.length <= 16;
@@ -218,6 +218,9 @@ export class BotGenerator extends Generator {
                 `Automatically added for the ${this.options.botName} bot`,
                 this.fs
             );
+
+            // update .env file
+            Yotilities.addOrUpdateEnv(".env", this.options.botidEnv, this.options.botid, this.fs);
         }
     }
 }

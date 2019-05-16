@@ -35,12 +35,14 @@ export class ManifestGenerator extends BaseManifestGenerator {
             manifest["$schema"] = "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json";
             manifest.manifestVersion = "devPreview";
 
-            if(manifest.composeExtensions) {
+            if (manifest.composeExtensions) {
                 manifest.composeExtensions.forEach((composeExtension: { commands: { title: string; type: string; }[] }) => {
-                    if(composeExtension.commands) {
-                        composeExtension.commands.forEach( (command: { title: string; type: string; }) => {
-                            if(log) log(chalk.default.whiteBright(`Updating Message Extension "${command.title}" with the "type" property set to "query"`));
-                            command.type = "query";
+                    if (composeExtension.commands) {
+                        composeExtension.commands.forEach((command: { title: string; type: string; }) => {
+                            if (command.type === undefined) {
+                                if (log) log(chalk.default.whiteBright(`Updating Message Extension "${command.title}" with the "type" property set to "query"`));
+                                command.type = "query";
+                            }
                         });
                     }
                 });

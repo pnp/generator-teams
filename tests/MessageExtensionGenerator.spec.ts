@@ -64,6 +64,39 @@ describe('teams:messageExtension', function () {
         assert.file(MESSAGEEXTSION_HTML_FILES);
     });
 
+    it('should generate message extension project with v1.4 with unit tests', async () => {
+        await helpers.run(testHelper.GENERATOR_PATH)
+            .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension01-1.4')
+            .withArguments(['--no-telemetry'])
+            .withPrompts({
+                solutionName: 'messageExtension-test-01',
+                whichFolder: 'current',
+                name: 'messageExtensiontest01',
+                developer: 'generator teams developer',
+                manifestVersion: 'v1.4',
+                parts: 'messageextension',
+                unitTestsEnabled: true,
+                messageExtensionHost: 'new',
+                bottype: 'botframework',
+                messageExtensionName: 'messageExtension-test-01',
+                messageExtensionDescription: 'description'
+            })
+            .withGenerators(testHelper.DEPENDENCIES);
+
+        assert.file(testHelper.ROOT_FILES);
+        assert.file(testHelper.TEST_FILES);
+        assert.file(testHelper.APP_FILES);
+        assert.file(testHelper.SCRIPT_FILES);
+        assert.file(testHelper.WEB_FILES);
+        assert.file(testHelper.MANIFEST_FILES);
+        assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_14);
+        assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ canUpdateConfiguration: true }] })
+        assert.file(MESSAGEEXTSION_SCRIPT_FILES);
+        assert.file(MESSAGEEXTSION_SCRIPT_TEST_FILES);
+        assert.file(MESSAGEEXTSION_FILES);
+        assert.file(MESSAGEEXTSION_HTML_FILES);
+    });
+
     it('should generate message extension project with v1.3 with unit tests, without configuration', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension01-noconfig')
@@ -91,6 +124,39 @@ describe('teams:messageExtension', function () {
         assert.file(testHelper.WEB_FILES);
         assert.file(testHelper.MANIFEST_FILES);
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_13);
+        assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ canUpdateConfiguration: false }] })
+        assert.noFile(MESSAGEEXTSION_SCRIPT_FILES);
+        assert.noFile(MESSAGEEXTSION_SCRIPT_TEST_FILES);
+        assert.file(MESSAGEEXTSION_FILES);
+        assert.noFile(MESSAGEEXTSION_HTML_FILES);
+    });
+    it('should generate message extension project with v1.4 with unit tests, without configuration', async () => {
+        await helpers.run(testHelper.GENERATOR_PATH)
+            .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension01-noconfig')
+            .withArguments(['--no-telemetry'])
+            .withPrompts({
+                solutionName: 'messageExtension-test-01',
+                whichFolder: 'current',
+                name: 'messageExtensiontest01',
+                developer: 'generator teams developer',
+                manifestVersion: 'v1.4',
+                parts: 'messageextension',
+                unitTestsEnabled: true,
+                messageExtensionHost: 'new',
+                bottype: 'botframework',
+                messageExtensionName: 'messageExtension-test-01',
+                messageExtensionDescription: 'description',
+                messagingExtensionCanUpdateConfiguration: false
+            })
+            .withGenerators(testHelper.DEPENDENCIES);
+
+        assert.file(testHelper.ROOT_FILES);
+        assert.file(testHelper.TEST_FILES);
+        assert.file(testHelper.APP_FILES);
+        assert.file(testHelper.SCRIPT_FILES);
+        assert.file(testHelper.WEB_FILES);
+        assert.file(testHelper.MANIFEST_FILES);
+        assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_14);
         assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ canUpdateConfiguration: false }] })
         assert.noFile(MESSAGEEXTSION_SCRIPT_FILES);
         assert.noFile(MESSAGEEXTSION_SCRIPT_TEST_FILES);
@@ -256,9 +322,9 @@ describe('teams:messageExtension', function () {
         assert.fileContent(MESSAGEEXTSION_FILES[0], "public async onQuery(");
     });
 
-    it('should generate an action message (static with adaptiveCard response) extension project with devPreview', async () => {
+    it('should generate an action message (static with adaptiveCard response) extension project with 1.4', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
-            .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension06')
+            .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension06-1.4')
             .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'messageExtension-test-01',
@@ -282,6 +348,38 @@ describe('teams:messageExtension', function () {
         assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ commands: [{ type: "action" }] }] });
         assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ commands: [{ fetchTask: false }] }] });
         assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ commands: [{ parameters: {} }] }] });
+        assert.noFileContent(MESSAGEEXTSION_FILES[0], "public async onFetchTask(");
+        assert.fileContent(MESSAGEEXTSION_FILES[0], "public async onSubmitAction(");
+    });
+
+    it('should generate an action message (static with adaptiveCard response) extension project with devPreview', async () => {
+        await helpers.run(testHelper.GENERATOR_PATH)
+            .inDir(testHelper.TEMP_MESSAGEEXTSION_GENERATOR_PATH + '/messageExtension06')
+            .withArguments(['--no-telemetry'])
+            .withPrompts({
+                solutionName: 'messageExtension-test-01',
+                whichFolder: 'current',
+                name: 'messageExtensiontest01',
+                developer: 'generator teams developer',
+                manifestVersion: 'devPreview',
+                parts: 'messageextension',
+                unitTestsEnabled: false,
+                messageExtensionHost: 'new',
+                bottype: 'botframework',
+                messageExtensionName: 'messageExtension-test-01',
+                messageExtensionDescription: 'description',
+                messagingExtensionType: "action",
+                messagingExtensionActionInputType: "static",
+                messagingExtensionActionContext: ["compose", "commandBox"],
+                messagingExtensionActionResponseType: "adaptiveCard"
+            })
+            .withGenerators(testHelper.DEPENDENCIES);
+
+
+        assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ commands: [{ type: "action" }] }] });
+        assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ commands: [{ fetchTask: false }] }] });
+        assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ commands: [{ parameters: {} }] }] });
+        assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ commands: [{ context: ["compose", "commandBox"] }] }] });
         assert.noFileContent(MESSAGEEXTSION_FILES[0], "public async onFetchTask(");
         assert.fileContent(MESSAGEEXTSION_FILES[0], "public async onSubmitAction(");
     });

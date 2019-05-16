@@ -6,6 +6,7 @@ import * as Generator from 'yeoman-generator';
 import * as ts from 'typescript';
 
 let path = require('path');
+const os = require("os");
 
 const packagePath = "package.json";
 
@@ -50,6 +51,17 @@ export class Yotilities {
             (<any>pkg.dependencies)[dep[0]] = dep[1];
         });
         fs.writeJSON(packagePath, pkg);
+    }
+
+    public static addOrUpdateEnv(fileName: string, key: string, value: string, fs: Generator.MemFsEditor): void {
+        const envFile = fs.read(fileName);
+        const output = envFile.split(os.EOL).map(line => {
+            if (line.startsWith(key)) {
+                return `${key}=${value}`;
+            }
+            return line;
+        }).join(os.EOL);
+        fs.write(fileName, output);
     }
 
     public static insertTsExportDeclaration(fileName: string, literal: string, comment: string | undefined, fs: Generator.MemFsEditor): void {
