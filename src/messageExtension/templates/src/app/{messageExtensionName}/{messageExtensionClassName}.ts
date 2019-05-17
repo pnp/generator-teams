@@ -93,7 +93,7 @@ const log = debug("msteams");
 <% if(messagingExtensionActionInputType == "taskModule" ) { %>
     return Promise.resolve<ITaskInfo>({
         title: "Input form",
-        url: `https://${process.env.HOSTNAME}//<%= messageExtensionName %>/action.html`
+        url: `https://${process.env.HOSTNAME}/<%= messageExtensionName %>/action.html`
     });
 <% } %>
 <% if(messagingExtensionActionInputType == "adaptiveCard" ) { %>
