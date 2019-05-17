@@ -163,7 +163,7 @@ export class GeneratorTeamsApp extends Generator {
                     choices: versions,
                     default: versions.find( (v: inquirer.objects.ChoiceOption) => v.extra.default) ? 
                         versions.find( (v: inquirer.objects.ChoiceOption) => v.extra.default)!.value : 
-                        versions[0].value,
+                        (versions[0] ? versions[0].value : ""),
                     when: (answers: any) => (this.options.existingManifest && answers.updateManifestVersion && versions.length > 0) || (!this.options.existingManifest)
                 },
                 {
