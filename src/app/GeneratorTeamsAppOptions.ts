@@ -21,10 +21,7 @@ export class GeneratorTeamsAppOptions {
     host: string;
     hostname: string;
     bot: boolean;
-    tab: boolean;
-    tabTitle: string;
-    tabName: string;
-    tabReactComponentName: string;
+
     reactComponents: boolean;
     websitePrefix: string;
     unitTestsEnabled: boolean;
@@ -32,6 +29,15 @@ export class GeneratorTeamsAppOptions {
     updateManifestVersion: boolean = false; // Set to true when asked to update manifest
     useAzureAppInsights: boolean = false;
     azureAppInsightsKey?: string = undefined;
+
+    /* Tabs */
+    tab: boolean;
+    tabTitle: string;
+    tabName: string;
+    tabReactComponentName: string;
+    tabSharePoint: boolean;
+    tabSharePointHosts: string[] = [];
+    
     /* Bots */
     botid: string = '';
     botidEnv: string = "MICROSOFT_APP_ID";
@@ -68,9 +74,10 @@ export class GeneratorTeamsAppOptions {
     messagingExtensionBot: boolean; // indicates that we need to add a bot to host the messaging extension
     messagingExtensionType: string = "query";
     messagingExtensionActionContext?: string[] = undefined;
-    messagingExtensionActionInputType?: string;
+    messagingExtensionActionInputType: string | undefined = undefined;
     messagingExtensionActionResponseType?: string;
     messagingExtensionCanUpdateConfiguration: boolean = false;
+    messagingExtensionActionResponseTypeConfig: boolean = false;
     /* manifest */
     existingManifest: any;
 }

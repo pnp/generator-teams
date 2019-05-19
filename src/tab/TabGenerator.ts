@@ -33,12 +33,42 @@ export class TabGenerator extends Generator {
                         message: 'Default Tab name? (max 16 characters)',
                         default: this.options.title + ' Tab',
                         validate: (input) => {
-                            if(! (/^[a-zA-Z].*/.test(input))) {
+                            if (!(/^[a-zA-Z].*/.test(input))) {
                                 return "Must start with an alphabetical character";
                             }
                             return input.length > 0 && input.length <= 16;
                         }
-                    }
+                    },
+                    {
+                        type: 'confirm',
+                        name: 'tabSharePoint',
+                        message: 'Do you want this tab to be available in SharePoint Online?',
+                        default: true,
+                        when: (answers: any) => {
+                            return this.options.manifestVersion != "v1.3"; // Only available in 1.4 or higher
+                        },
+                    },
+                    {
+                        type: 'checkbox',
+                        name: 'tabSharePointHosts',
+                        message: "How do you want your tab to be available in SharePoint?",
+                        choices: [
+                            {
+                                name: "As a full page application",
+                                value: "sharePointFullPage",
+                                checked: true
+                            },
+                            {
+                                name: "As a web part",
+                                value: "sharePointWebPart",
+                                checked: true
+                            }
+                        ],
+                        when: (answers: any) => {
+                            return answers.tabSharePoint;
+                        }
+                    },
+
                 ]
             ).then((answers: any) => {
                 this.options.tabTitle = answers.tabTitle;
@@ -48,6 +78,8 @@ export class TabGenerator extends Generator {
                 }
                 this.options.tabReactComponentName = this.options.tabName.charAt(0).toUpperCase() + this.options.tabName.slice(1);
                 this.options.reactComponents = true;
+                this.options.tabSharePointHosts = answers.tabSharePointHosts;
+                this.options.tabSharePoint = answers.tabSharePoint;
             });
         }
     }
@@ -63,13 +95,13 @@ export class TabGenerator extends Generator {
                 "src/app/web/{tabName}/config.html",
             ];
 
-            if(this.options.unitTestsEnabled) {
+            if (this.options.unitTestsEnabled) {
                 templateFiles.push(
                     "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}Config.spec.tsx",
                     "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}.spec.tsx",
                     "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}Remove.spec.tsx",
                 );
-            } 
+            }
 
             this.sourceRoot()
 
@@ -80,15 +112,24 @@ export class TabGenerator extends Generator {
                     this.options);
             });
 
+            if (this.options.tabSharePoint) {
+                const from = "src/app/web/assets/tab-preview.png";
+                const to = "src/app/web/assets/{tabName}-preview.png";
+                this.fs.copy(
+                    this.templatePath(from),
+                    Yotilities.fixFileNames(to, this.options),
+                    this.options);
+            }
+
 
             // Update manifest
             const manifestGeneratorFactory = new ManifestGeneratorFactory();
             const manifestGenerator = manifestGeneratorFactory.createManifestGenerator(this.options.manifestVersion);
             let manifestPath = "src/manifest/manifest.json";
             var manifest: any = this.fs.readJSON(manifestPath);
-   
+
             manifestGenerator.updateTabManifest(manifest, this.options);
-            
+
             this.fs.writeJSON(manifestPath, manifest);
 
             Yotilities.addAdditionalDeps([

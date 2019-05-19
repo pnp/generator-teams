@@ -8,10 +8,15 @@ import { GeneratorTeamsAppOptions } from "../../../GeneratorTeamsAppOptions";
 export class TabManifestUpdater implements IManifestUpdater {
 
     public updateManifest(manifest: any, options: GeneratorTeamsAppOptions): void {
-        (<any[]>manifest.configurableTabs).push({
+        const tab: any = {
             configurationUrl: `https://{{HOSTNAME}}/${options.tabName}/config.html`,
             canUpdateConfiguration: true,
             scopes: ["team", "groupchat"]
-        });
+        };
+        if (options.tabSharePoint) {
+            tab.sharePointPreviewImage = `https://{{HOSTNAME}}/assets/${options.tabName}-preview.png`;
+            tab.supportedSharePointHosts = options.tabSharePointHosts;
+        }
+        (<any[]>manifest.configurableTabs).push(tab);
     }
 }

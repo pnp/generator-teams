@@ -173,38 +173,37 @@ export class MessageExtensionGenerator extends Generator {
                         }
                     },
                     {
-                        type: 'list',
-                        name: 'messagingExtensionActionResponseType',
-                        message: "How would you like to respond to the action submit?",
-                        choices: [
-                            {
-                                name: "Use a text message",
-                                value: "message",
-                            },
-                            {
-                                name: "Using an Adaptive Card",
-                                value: "adaptiveCard",
-                            },
-                            {
-                                name: "Using a Task Module response (upcomging feature)",
-                                value: "taskModule",
-                                disabled: "true"
-                            },
-                            {
-                                name: "Using an Authentication response (upcoming feature)",
-                                value: "authn",
-                                disabled: "true"
-                            }
-                        ],
+                        type: 'confirm',
+                        name: 'messagingExtensionActionResponseTypeConfig',
+                        message: "Do you need configuration or authorization when collecting information?",
                         when: (answers: any) => {
-                            return answers.messagingExtensionType == "action";
+                            return answers.messagingExtensionType == "action" && answers.messagingExtensionActionInputType != "static";
                         },
-                        default: "adaptiveCard"
+                        default: false
                     },
+                    // {
+                    //     type: 'list',
+                    //     name: 'messagingExtensionActionResponseType',
+                    //     message: "How would you like to respond to the action submit?",
+                    //     choices: [
+                    //         {
+                    //             name: "Use a text message",
+                    //             value: "message",
+                    //         },
+                    //         {
+                    //             name: "Using an Adaptive Card",
+                    //             value: "adaptiveCard",
+                    //         }
+                    //     ],
+                    //     when: (answers: any) => {
+                    //         return answers.messagingExtensionType == "action";
+                    //     },
+                    //     default: "adaptiveCard"
+                    // },
                     {
                         type: 'confirm',
                         name: 'messagingExtensionCanUpdateConfiguration',
-                        message: 'Do you require a configuration option?',
+                        message: 'Would you like a Settings option for the messaging extension?',
                         default: (answers: any) => {
                             if (this.options.existingManifest && answers.messageExtensionHost == 'existing') {
                                 return false; // if you haven't added it already, we assume you don't want it this time either
@@ -263,6 +262,7 @@ export class MessageExtensionGenerator extends Generator {
                 this.options.messageExtensionTitle = answers.messageExtensionName;
                 this.options.messageExtensionDescription = answers.messageExtensionDescription;
                 this.options.messagingExtensionCanUpdateConfiguration = answers.messagingExtensionCanUpdateConfiguration;
+                this.options.messagingExtensionActionResponseTypeConfig = answers.messagingExtensionActionResponseTypeConfig;
                 this.options.messageExtensionName = lodash.camelCase(answers.messageExtensionName);
                 if (answers.messagingExtensionType) {
                     this.options.messagingExtensionType = answers.messagingExtensionType;
@@ -270,7 +270,7 @@ export class MessageExtensionGenerator extends Generator {
                 if (this.options.messagingExtensionType === "action") {
                     this.options.messagingExtensionActionContext = answers.messagingExtensionActionContext;
                     this.options.messagingExtensionActionInputType = answers.messagingExtensionActionInputType;
-                    this.options.messagingExtensionActionResponseType = answers.messagingExtensionActionResponseType;
+                    this.options.messagingExtensionActionResponseType = "adaptiveCard";
                 }
                 if (!this.options.messageExtensionName.endsWith(`MessageExtension`)) {
                     this.options.messageExtensionName += `MessageExtension`;
@@ -374,7 +374,7 @@ export class MessageExtensionGenerator extends Generator {
                 templateFiles.push(
                     "src/app/{messageExtensionName}/{messageExtensionClassName}.ts",
                 );
-                if (this.options.messagingExtensionCanUpdateConfiguration) {
+                if (this.options.messagingExtensionCanUpdateConfiguration || this.options.messagingExtensionActionResponseTypeConfig) {
                     templateFiles.push(
                         "src/app/scripts/{messageExtensionName}/{messageExtensionClassName}Config.tsx",
                         "src/app/web/{messageExtensionName}/config.html",
@@ -388,7 +388,8 @@ export class MessageExtensionGenerator extends Generator {
                     );
                 }
 
-                if (this.options.unitTestsEnabled && this.options.messagingExtensionCanUpdateConfiguration) {
+                if (this.options.unitTestsEnabled &&
+                    (this.options.messagingExtensionCanUpdateConfiguration || this.options.messagingExtensionActionResponseTypeConfig)) {
                     templateFiles.push(
                         "src/app/scripts/{messageExtensionName}/__tests__/{messageExtensionClassName}Config.spec.tsx"
                     );
@@ -413,10 +414,10 @@ export class MessageExtensionGenerator extends Generator {
                     ], this.fs);
                 }
                 Yotilities.addAdditionalDeps([
-                    ["botbuilder-teams-messagingextensions", "1.3.0-preview"]
+                    ["botbuilder-teams-messagingextensions", "1.3.0-preview3"]
                 ], this.fs);
 
-                if (this.options.messagingExtensionCanUpdateConfiguration) {
+                if (this.options.messagingExtensionCanUpdateConfiguration || this.options.messagingExtensionActionResponseTypeConfig) {
                     Yotilities.insertTsExportDeclaration(
                         "src/app/scripts/client.ts",
                         `./${this.options.messageExtensionName}/${this.options.messageExtensionClassName}Config`,

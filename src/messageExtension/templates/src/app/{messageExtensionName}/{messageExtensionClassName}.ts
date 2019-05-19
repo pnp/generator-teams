@@ -3,7 +3,7 @@ import { PreventIframe } from "express-msteams-host";
 import { TurnContext, CardFactory } from "botbuilder";
 import { MessagingExtensionQuery, MessagingExtensionResult } from "botbuilder-teams";
 import { IMessagingExtensionMiddlewareProcessor } from "botbuilder-teams-messagingextensions";
-<% if (messagingExtensionType =="action") { %>import { ITaskInfo, ISubmitActionRequest } from "botbuilder-teams-messagingextensions";<% } %>
+<% if (messagingExtensionType =="action") { %>import { ITaskModuleResult, IMessagingExtensionActionRequest } from "botbuilder-teams-messagingextensions";<% } %>
 // Initialize debug logging module
 const log = debug("msteams");
 
@@ -88,50 +88,85 @@ const log = debug("msteams");
 
 <% } %>
 
-<% if (messagingExtensionType =="action" && messagingExtensionActionInputType != "static") { %>
-    public async onFetchTask(context: TurnContext, value: { commandContext: any, context: any, messagePayload: any }): Promise<ITaskInfo> {
-<% if(messagingExtensionActionInputType == "taskModule" ) { %>
-    return Promise.resolve<ITaskInfo>({
-        title: "Input form",
-        url: `https://${process.env.HOSTNAME}/<%= messageExtensionName %>/action.html`
-    });
-<% } %>
-<% if(messagingExtensionActionInputType == "adaptiveCard" ) { %>
-        return Promise.resolve({
-            title: "Input form",
-            card: CardFactory.adaptiveCard({
-                $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
-                type: "AdaptiveCard",
-                version: "1.0",
-                body: [
-                    {
-                        type: "TextBlock",
-                        text: "Please enter an e-mail address"
-                    },
-                    {
-                        type: "Input.Text",
-                        id: "email",
-                        placeholder: "somemail@example.com",
-                        style: "email"
-                    },
-                ],
+<% if (messagingExtensionType =="action" && messagingExtensionActionInputType != "static" || (messagingExtensionActionInputType == "static" && messagingExtensionActionResponseTypeConfig)) { %>
+    public async onFetchTask(context: TurnContext, value: IMessagingExtensionActionRequest): Promise<MessagingExtensionResult | ITaskModuleResult> {
+<% if(messagingExtensionActionResponseTypeConfig && messagingExtensionActionInputType == "static") { %>
+        return Promise.resolve<MessagingExtensionResult>({
+            type: "config", // use "config" or "auth" here
+            suggestedActions: {
                 actions: [
                     {
-                        type: "Action.Submit",
-                        title: "OK",
-                        data: { id: "unique-id" }
+                        type: "openUrl",
+                        value: `https://${process.env.HOSTNAME}/<%= messageExtensionName %>/config.html`,
+                        title: "Configuration"
                     }
                 ]
-            })
+            }
+        });
+<% } %>
+<% if(messagingExtensionActionResponseTypeConfig && messagingExtensionActionInputType != "static") { %>
+        if (!value.state) { // TODO: implement logic when config is persisted
+            return Promise.resolve<MessagingExtensionResult>({
+                type: "config", // use "config" or "auth" here
+                suggestedActions: {
+                    actions: [
+                        {
+                            type: "openUrl",
+                            value: `https://${process.env.HOSTNAME}/<%= messageExtensionName %>/config.html`,
+                            title: "Configuration"
+                        }
+                    ]
+                }
+            });
+        }
+<% } %>
+<% if(messagingExtensionActionInputType == "taskModule" ) { %>
+        return Promise.resolve<ITaskModuleResult>({
+            type: "continue",
+            value: {
+                title: "Input form",
+                url: `https://${process.env.HOSTNAME}/<%= messageExtensionName %>/action.html`
+            }
+        });
+<% } %>
+<% if(messagingExtensionActionInputType == "adaptiveCard" ) { %>
+        return Promise.resolve<ITaskModuleResult>({
+            type: "continue",
+            value: {
+                title: "Input form",
+                card: CardFactory.adaptiveCard({
+                    $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
+                    type: "AdaptiveCard",
+                    version: "1.0",
+                    body: [
+                        {
+                            type: "TextBlock",
+                            text: "Please enter an e-mail address"
+                        },
+                        {
+                            type: "Input.Text",
+                            id: "email",
+                            placeholder: "somemail@example.com",
+                            style: "email"
+                        },
+                    ],
+                    actions: [
+                        {
+                            type: "Action.Submit",
+                            title: "OK",
+                            data: { id: "unique-id" }
+                        }
+                    ]
+                })
+            }
         });
 <% } %>
     }
 <% } %>
 <% if (messagingExtensionType =="action" ) { %>
-
     // handle action response in here
     // See documentation for `MessagingExtensionResult` for details
-    public async onSubmitAction(context: TurnContext, value: ISubmitActionRequest): Promise<MessagingExtensionResult> {
+    public async onSubmitAction(context: TurnContext, value: IMessagingExtensionActionRequest): Promise<MessagingExtensionResult> {
 <% if (messagingExtensionActionResponseType =="message") { %>
         return Promise.resolve({
             type: "message",

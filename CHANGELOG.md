@@ -11,11 +11,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added support for manifest version 1.4, new default
 * Added the option to choose between a search based or action based messaging extension (only available for `devPreview` manfiests)
 * Added support for action based Message Extensions, can now choose from multiple input types, multiple outputs as well as locations for the actions (only available for `devPreview` manfiests). Note that some combinations are disabled and reserved for future use (as we get official documentation of how they are supposed to be implemented/used)
-* Added an option to not include configuration for messaging extensions. Note, can only messaging extension can have the config option.
+* Added an option to not include configuration for messaging extensions. Note, only action messaging extension can have the config option.
+* Added support for publishing a Tab as a SharePoint Web Part or Full Page Application (requires v1.4+)
 
 ### Changes
 
-* Dependency for `botbuilder-teams-messagingextensions` has been bumped - with an interface breaking change
+* Dependency for `botbuilder-teams-messagingextensions` has been bumped (1.3.0+) - with an interface breaking change
 * Changed the wording for messaging extensions from 'what type...` to 'where is your host...'
 * Messaging extensions does not automatically get configuration options, see *Added* above
 

@@ -413,7 +413,8 @@ export class GeneratorTeamsApp extends Generator {
                         context: this.options.messagingExtensionActionContext ? this.options.messagingExtensionActionContext.join(";") : "",
                         input: this.options.messagingExtensionActionInputType || "",
                         response: this.options.messagingExtensionActionResponseType || "",
-                        canUpdateConfiguration: this.options.messagingExtensionCanUpdateConfiguration ? "true" : "false"
+                        canUpdateConfiguration: this.options.messagingExtensionCanUpdateConfiguration ? "true" : "false",
+                        inputConfig: this.options.messagingExtensionActionResponseTypeConfig? "true" : "false"
                     }
                 });
             }

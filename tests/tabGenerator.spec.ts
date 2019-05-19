@@ -93,6 +93,107 @@ describe('teams:tab', function () {
         assert.noFile(TAB_SCRIPT_TEST_FILES);
     });
 
+    it('should generate tab project with v1.4 with unit tests', async () => {
+        await helpers.run(testHelper.GENERATOR_PATH)
+            .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab01-14')
+            .withArguments(['--no-telemetry'])
+            .withPrompts({
+                solutionName: 'tab-test-01',
+                whichFolder: 'current',
+                name: 'tabtest01',
+                developer: 'generator teams developer',
+                manifestVersion: 'v1.4',
+                parts: 'tab',
+                unitTestsEnabled: true
+            })
+            .withGenerators(testHelper.DEPENDENCIES);
+
+        assert.file(testHelper.ROOT_FILES);
+        assert.file(testHelper.TEST_FILES);
+        assert.file(testHelper.APP_FILES);
+        assert.file(testHelper.SCRIPT_FILES);
+        assert.file(testHelper.WEB_FILES);
+        assert.file(testHelper.MANIFEST_FILES);
+
+        assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_14);
+
+        assert.file(TAB_HTML_FILES);
+        assert.file(TAB_FILES);
+        assert.file(TAB_SCRIPT_FILES);
+        assert.file(TAB_SCRIPT_TEST_FILES);
+    });
+
+    it('should generate tab project with v1.4 without unit tests', async () => {
+        await helpers.run(testHelper.GENERATOR_PATH)
+            .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab02-14')
+            .withArguments(['--no-telemetry'])
+            .withPrompts({
+                solutionName: 'tab-test-01',
+                whichFolder: 'current',
+                name: 'tabtest01',
+                developer: 'generator teams developer',
+                manifestVersion: 'v1.4',
+                parts: 'tab',
+                unitTestsEnabled: false
+            })
+            .withGenerators(testHelper.DEPENDENCIES);
+
+        assert.file(testHelper.ROOT_FILES);
+        assert.noFile(testHelper.TEST_FILES);
+        assert.file(testHelper.APP_FILES);
+        assert.file(testHelper.SCRIPT_FILES);
+        assert.file(testHelper.WEB_FILES);
+        assert.file(testHelper.MANIFEST_FILES);
+
+        assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_14);
+
+        assert.file(TAB_HTML_FILES);
+        assert.file(TAB_FILES);
+        assert.file(TAB_SCRIPT_FILES);
+        assert.noFile(TAB_SCRIPT_TEST_FILES);
+    });
+
+    it('should generate tab project with v1.4 with SharePoint config', async () => {
+        await helpers.run(testHelper.GENERATOR_PATH)
+            .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab02-14')
+            .withArguments(['--no-telemetry'])
+            .withPrompts({
+                solutionName: 'tab-test-01',
+                whichFolder: 'current',
+                name: 'tabtest01',
+                developer: 'generator teams developer',
+                manifestVersion: 'v1.4',
+                parts: 'tab',
+                unitTestsEnabled: false,
+                tabSharePoint: true,
+                tabSharePointHosts: ["sharePointFullPage", "sharePointWebPart"]
+            })
+            .withGenerators(testHelper.DEPENDENCIES);
+
+        assert.file(testHelper.ROOT_FILES);
+        assert.noFile(testHelper.TEST_FILES);
+        assert.file(testHelper.APP_FILES);
+        assert.file(testHelper.SCRIPT_FILES);
+        assert.file(testHelper.WEB_FILES);
+        assert.file(testHelper.MANIFEST_FILES);
+
+        assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_14);
+        assert.jsonFileContent('src/manifest/manifest.json', {
+            configurableTabs: [{
+                sharePointPreviewImage: "https://{{HOSTNAME}}/assets/tabtest01Tab-preview.png",
+                supportedSharePointHosts: [
+                    "sharePointFullPage",
+                    "sharePointWebPart"
+                ]
+            }]
+        });
+
+        assert.file(TAB_HTML_FILES);
+        assert.file(TAB_FILES);
+        assert.file(TAB_SCRIPT_FILES);
+        assert.noFile(TAB_SCRIPT_TEST_FILES);
+    });
+
     it('should generate tab project with devPreview with unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab03')
@@ -123,7 +224,7 @@ describe('teams:tab', function () {
         assert.file(TAB_SCRIPT_TEST_FILES);
     });
 
-    it('should generate tab project with devPReview without unit tests', async () => {
+    it('should generate tab project with devPreview without unit tests', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab04')
             .withArguments(['--no-telemetry'])
