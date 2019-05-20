@@ -161,8 +161,8 @@ export class GeneratorTeamsApp extends Generator {
                     name: 'manifestVersion',
                     message: 'Which manifest version would you like to use?',
                     choices: versions,
-                    default: versions.find( (v: inquirer.objects.ChoiceOption) => v.extra.default) ? 
-                        versions.find( (v: inquirer.objects.ChoiceOption) => v.extra.default)!.value : 
+                    default: versions.find((v: inquirer.objects.ChoiceOption) => v.extra.default) ?
+                        versions.find((v: inquirer.objects.ChoiceOption) => v.extra.default)!.value :
                         (versions[0] ? versions[0].value : ""),
                     when: (answers: any) => (this.options.existingManifest && answers.updateManifestVersion && versions.length > 0) || (!this.options.existingManifest)
                 },
@@ -194,6 +194,18 @@ export class GeneratorTeamsApp extends Generator {
                         },
                         {
                             name: 'A Message Extension',
+                            disabled: () => {
+                                this.log(this.options.existingManifest.composeExtensions[0].commands.length )
+                                if (this.options.existingManifest &&
+                                    this.options.existingManifest.composeExtensions &&
+                                    this.options.existingManifest.composeExtensions[0] &&
+                                    this.options.existingManifest.composeExtensions[0].commands) {
+                                        // max 10 commands are allowed
+                                    return this.options.existingManifest.composeExtensions[0].commands.length >= 10;
+                                } else {
+                                    return false;
+                                }
+                            },
                             value: 'messageextension',
                         }
                     ],
@@ -414,7 +426,7 @@ export class GeneratorTeamsApp extends Generator {
                         input: this.options.messagingExtensionActionInputType || "",
                         response: this.options.messagingExtensionActionResponseType || "",
                         canUpdateConfiguration: this.options.messagingExtensionCanUpdateConfiguration ? "true" : "false",
-                        inputConfig: this.options.messagingExtensionActionResponseTypeConfig? "true" : "false"
+                        inputConfig: this.options.messagingExtensionActionResponseTypeConfig ? "true" : "false"
                     }
                 });
             }

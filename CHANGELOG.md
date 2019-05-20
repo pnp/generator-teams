@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed an issue where telemetry was sent for tests
 * Fixed an issue when non `process.env` variables was used for Bot Id's
 * Fixed an issue where the .env parameter for bots is not added when adding a message extension only during upgrades
+* Fixed an issue where more than 10 commands could be added to a message extension
 
 ## [*2.7.1*] - <*2019-05-08*>
 
