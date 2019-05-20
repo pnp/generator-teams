@@ -9,10 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 * Added support for manifest version 1.4, new default
-* Added the option to choose between a search based or action based messaging extension (only available for `devPreview` manfiests)
-* Added support for action based Message Extensions, can now choose from multiple input types, multiple outputs as well as locations for the actions (only available for `devPreview` manfiests). Note that some combinations are disabled and reserved for future use (as we get official documentation of how they are supposed to be implemented/used)
+* Added the option to choose between a search based or action based messaging extension (only available for `1.4`+ manfiests)
+* Added support for action based Message Extensions, can now choose from multiple input types, multiple outputs as well as locations for the actions (only available for `devPreview` manfiests).
 * Added an option to not include configuration for messaging extensions. Note, only action messaging extension can have the config option.
-* Added support for publishing a Tab as a SharePoint Web Part or Full Page Application (requires v1.4+)
+* Added support for publishing a Tab as a SharePoint Web Part or Full Page Application (requires `v1.4`+)
 
 ### Changes
 
