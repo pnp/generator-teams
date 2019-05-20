@@ -195,7 +195,6 @@ export class GeneratorTeamsApp extends Generator {
                         {
                             name: 'A Message Extension',
                             disabled: () => {
-                                this.log(this.options.existingManifest.composeExtensions[0].commands.length )
                                 if (this.options.existingManifest &&
                                     this.options.existingManifest.composeExtensions &&
                                     this.options.existingManifest.composeExtensions[0] &&

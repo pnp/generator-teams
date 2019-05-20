@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*2.8.1*] - <*2019-05-20*>
+
+### Fixes
+* Fixed an issue where projects could not be scaffolded due to a logging error
+
 ## [*2.8.0*] - <*2019-05-20*>
 
 ### Added
