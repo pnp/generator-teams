@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [*Unreleased*]
+## [*2.8.0*] - <*2019-05-20*>
 
 ### Added
 * Added support for manifest version 1.4, new default
