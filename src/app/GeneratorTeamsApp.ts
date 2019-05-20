@@ -10,6 +10,7 @@ import { Yotilities } from './Yotilities';
 import * as AppInsights from 'applicationinsights';
 import { ManifestGeneratorFactory } from './manifestGeneration/ManifestGeneratorFactory';
 import inquirer = require('inquirer');
+import { ManifestVersions } from './manifestGeneration/ManifestVersions';
 
 let yosay = require('yosay');
 let path = require('path');
@@ -167,6 +168,19 @@ export class GeneratorTeamsApp extends Generator {
                     when: (answers: any) => (this.options.existingManifest && answers.updateManifestVersion && versions.length > 0) || (!this.options.existingManifest)
                 },
                 {
+                    type: 'input',
+                    name: 'mpnId',
+                    message: 'Do you have a Microsoft Partner Id? (Leave blank to skip)',
+                    default: undefined,
+                    validate: (input: string) => {
+                        return input.length <= 10;
+                    },
+                    when: (answers) =>{
+                        return !this.options.existingManifest && answers.manifestVersion != ManifestVersions.v13 && answers.manifestVersion != ManifestVersions.v14
+                    },
+                    store: true
+                },
+                {
                     type: 'checkbox',
                     message: 'What do you want to add to your project?',
                     name: 'parts',
@@ -264,7 +278,10 @@ export class GeneratorTeamsApp extends Generator {
                 var tmp: string = this.options.host.substring(this.options.host.indexOf('://') + 3);
                 this.options.hostname = this.options.host.substring(this.options.host.indexOf('://') + 3).toLocaleLowerCase();
                 this.options.manifestVersion = answers.manifestVersion;
-
+                this.options.mpnId = answers.mpnId;
+                if(this.options.mpnId && this.options.mpnId.length == 0) {
+                    this.options.mpnId = undefined;
+                }
                 var arr: string[] = tmp.split('.');
                 this.options.namespace = lodash.reverse(arr).join('.').toLocaleLowerCase();
                 this.options.id = Guid.raw();
@@ -407,7 +424,14 @@ export class GeneratorTeamsApp extends Generator {
             }
             AppInsights.defaultClient.trackEvent({ name: 'end-generator' });
             if (this.options.bot) {
-                AppInsights.defaultClient.trackEvent({ name: 'bot' });
+                AppInsights.defaultClient.trackEvent({
+                    name: 'bot',
+                    properties: {
+                        type: this.options.botType,
+                        calling: this.options.botCallingEnabled ? "true" : "false",
+                        files: this.options.botFilesEnabled ? "true" : "false",
+                    }
+                });
                 if (this.options.botType == 'existing') {
                     AppInsights.defaultClient.trackEvent({ name: 'bot-existing' });
                 } else {

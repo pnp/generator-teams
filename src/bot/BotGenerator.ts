@@ -105,6 +105,15 @@ export class BotGenerator extends Generator {
                     },
                     {
                         type: 'confirm',
+                        name: 'botFilesEnabled',
+                        message: 'Do you want to support file upload to the bot?',
+                        when: (answers: any) => {
+                            return this.options.manifestVersion != "1.3"; // Only available in 1.4+
+                        },
+                        default: false
+                    },
+                    {
+                        type: 'confirm',
                         name: 'botCallingEnabled',
                         message: 'Do you want to include Bot Calling support?',
                         when: (answers: any) => {
@@ -117,6 +126,7 @@ export class BotGenerator extends Generator {
                 this.options.botid = answers.botid;
                 this.options.staticTab = answers.staticTab;
                 this.options.botCallingEnabled = answers.botCallingEnabled;
+                this.options.botFilesEnabled = answers.botFilesEnabled;
                 if (this.options.staticTab) {
                     this.options.staticTabTitle = answers.staticTabName;
                     this.options.staticTabName = lodash.camelCase(answers.staticTabName);

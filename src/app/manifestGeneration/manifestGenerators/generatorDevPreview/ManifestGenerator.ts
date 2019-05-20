@@ -23,11 +23,16 @@ export class ManifestGenerator extends BaseManifestGenerator {
         const manifest = super.generateManifest(options);
         manifest["$schema"] = "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json";
         manifest.manifestVersion = "devPreview";
+
+        if (options.mpnId !== undefined) {
+            manifest.developer.mpnId = options.mpnId;
+        }
+
         return manifest;
     }
 
     public supportsUpdateManifest(from: string): boolean {
-        return from === "1.3" || from === "1.4";
+        return from === "1.3" || from === "1.4" || from == "1.5";
     }
 
     public updateManifest(manifest: any, log?: (message?: string, context?: any) => void): any {
