@@ -13,6 +13,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added suppot for optionally adding Microsoft Partner Id. More info at https://aka.ms/partner 
 * Added files support option for bots (schema version 1.4+)
 
+### Changed
+
+* Updated the `@microsoft/teams-js` package to version `1.4.2`
+* Added strict handling of inquirer answers in the main generator
+
+## [*2.8.1*] - <*2019-05-20*>
+
+### Fixes
+* Fixed an issue where projects could not be scaffolded due to a logging error
+
 ## [*2.8.0*] - <*2019-05-20*>
 
 ### Added
