@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Updated the `@microsoft/teams-js` package to version `1.4.2`
 * Added strict handling of inquirer answers in the main generator
 * Updated `gulpfile.js` to use the `$schema` defined in the manifest file for validation and the `SCHEMAS` object only as backup
+* Clarified some questions that the users is adding Message Extension commands, rather than new message extensions
 
 ### Fixes
 * Fixed an issue when you add a messaging extension to an existing project and has renamed the bot file or folder name

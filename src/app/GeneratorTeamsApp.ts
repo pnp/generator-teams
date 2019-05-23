@@ -222,7 +222,7 @@ export class GeneratorTeamsApp extends Generator {
                             value: 'connector'
                         },
                         {
-                            name: 'A Message Extension',
+                            name: 'A Message Extension Command',
                             disabled: () => {
                                 if (this.options.existingManifest &&
                                     this.options.existingManifest.composeExtensions &&

@@ -110,7 +110,7 @@ export class MessageExtensionGenerator extends Generator {
                     {
                         type: 'list',
                         name: 'messagingExtensionType',
-                        message: 'What type of messaging extension',
+                        message: 'What type of messaging extension command',
                         choices: [
                             {
                                 name: "Search based messaging extension",
@@ -181,25 +181,6 @@ export class MessageExtensionGenerator extends Generator {
                         },
                         default: false
                     },
-                    // {
-                    //     type: 'list',
-                    //     name: 'messagingExtensionActionResponseType',
-                    //     message: "How would you like to respond to the action submit?",
-                    //     choices: [
-                    //         {
-                    //             name: "Use a text message",
-                    //             value: "message",
-                    //         },
-                    //         {
-                    //             name: "Using an Adaptive Card",
-                    //             value: "adaptiveCard",
-                    //         }
-                    //     ],
-                    //     when: (answers: any) => {
-                    //         return answers.messagingExtensionType == "action";
-                    //     },
-                    //     default: "adaptiveCard"
-                    // },
                     {
                         type: 'confirm',
                         name: 'messagingExtensionCanUpdateConfiguration',
