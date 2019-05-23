@@ -4,6 +4,7 @@
 
 import * as Generator from 'yeoman-generator';
 import * as ts from 'typescript';
+import { Project } from "ts-morph";
 
 let path = require('path');
 const os = require("os");
@@ -112,5 +113,39 @@ export class Yotilities {
         });
 
         fs.write(fileName, printer.printFile(update));
+    }
+
+    public static getLibraryNameFromWebpackConfig(): string | undefined {
+        const project = new Project();
+        project.addExistingSourceFile("webpack.config.js");
+        const src = project.getSourceFileOrThrow("webpack.config.js");
+
+
+        // get the config variable
+        const config = src.getVariableDeclarationOrThrow("config");
+        const arr = config.getFirstChildByKind(ts.SyntaxKind.ArrayLiteralExpression);
+        if (arr) {
+            // get the syntax list
+            arr.getChildrenOfKind(ts.SyntaxKind.SyntaxList).forEach(sl => {
+                // get all literals
+                sl.getChildrenOfKind(ts.SyntaxKind.ObjectLiteralExpression).forEach(lit => {
+                    // get the output property
+                    const output = lit.getProperty("output");
+                    if (output) {
+                        // get all literals under output
+                        output.getChildrenOfKind(ts.SyntaxKind.ObjectLiteralExpression).forEach(x => {
+                            const lib = x.getProperty("library");
+                            if (lib) {
+                                const prop = lib.getFirstChildByKind(ts.SyntaxKind.StringLiteral);
+                                if (prop) {
+                                    return prop.getLiteralValue();
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        }
+        return undefined;
     }
 }

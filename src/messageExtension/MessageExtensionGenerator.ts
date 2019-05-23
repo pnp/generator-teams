@@ -147,7 +147,7 @@ export class MessageExtensionGenerator extends Generator {
                         ],
                         when: (answers: any) => {
                             return answers.messagingExtensionType == "action" &&
-                                this.options.manifestVersion == "devPreview";
+                                this.options.manifestVersion != "v1.3" && this.options.manifestVersion != "v1.4";
                         }
                     },
                     {
@@ -337,8 +337,10 @@ export class MessageExtensionGenerator extends Generator {
                             return c !== undefined && c.id == botId;
                         });
                         if (botClass) {
-                            this.options.botClassName = botClass.c.getName() as string;
-                            this.options.botName = botClass.c.getSourceFile().getBaseNameWithoutExtension() as string;
+                            // we need the file name here, because that is what we use and not the actual class name (normally they should be the same though)
+                            this.options.botClassName = botClass.c.getSourceFile().getBaseNameWithoutExtension() as string;
+                            // we need the directory here and not the actual bot name
+                            this.options.botName = botClass.c.getSourceFile().getDirectory().getBaseName() as string;
                         } else {
                             this.log(chalk.default.red('Unable to continue, as I could not locate the Bot implementation'));
                             this.log(chalk.default.red('Please verify that you have a valid Guid or a valid environment variable in your BotDeclaration.'));

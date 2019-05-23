@@ -17,6 +17,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Updated the `@microsoft/teams-js` package to version `1.4.2`
 * Added strict handling of inquirer answers in the main generator
+* Updated `gulpfile.js` to use the `$schema` defined in the manifest file for validation and the `SCHEMAS` object only as backup
+
+### Fixes
+* Fixed an issue when you add a messaging extension to an existing project and has renamed the bot file or folder name
+* Fixed an issue when you add additional pages/scripts to a project and the library name is camel cased. Now correctly cased library name is retrieved from existing `webpack.config.js` file
 
 ## [*2.8.1*] - <*2019-05-20*>
 

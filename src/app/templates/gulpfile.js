@@ -138,16 +138,19 @@ gulp.task('schema-validation', (callback) => {
     }, function (err, data) {
         if (!err) {
             var json = JSON.parse(data);
+            var requiredUrl;
             log('Using manifest schema ' + json.manifestVersion);
-            let definition = SCHEMAS.find(s => s.version == json.manifestVersion);
-            if (definition == undefined) {
-                callback(new PluginError("validate-manifest", "Unable to locate schema"));
-                return;
+            if (!json["$schema"]) {
+                let definition = SCHEMAS.find(s => s.version == json.manifestVersion);
+                if (definition == undefined) {
+                    callback(new PluginError("validate-manifest", "Unable to locate schema"));
+                    return;
+                }
+                requiredUrl = definition.schema;
+            } else {
+                requiredUrl = json["$schema"];
             }
-            if (json["$schema"] != definition.schema) {
-                log("Note: the defined schema in your manifest does not correspond to the manifestVersion");
-            }
-            var requiredUrl = definition.schema;
+
             var validator = new ZSchema();
 
             var schema = {

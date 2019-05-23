@@ -190,7 +190,7 @@ export class GeneratorTeamsApp extends Generator {
                     validate: (input: string) => {
                         return input.length <= 10;
                     },
-                    when: (answers) =>{
+                    when: (answers) => {
                         return !this.options.existingManifest && answers.manifestVersion != ManifestVersions.v13 && answers.manifestVersion != ManifestVersions.v14
                     },
                     store: true
@@ -228,7 +228,7 @@ export class GeneratorTeamsApp extends Generator {
                                     this.options.existingManifest.composeExtensions &&
                                     this.options.existingManifest.composeExtensions[0] &&
                                     this.options.existingManifest.composeExtensions[0].commands) {
-                                        // max 10 commands are allowed
+                                    // max 10 commands are allowed
                                     return this.options.existingManifest.composeExtensions[0].commands.length >= 10;
                                 } else {
                                     return false;
@@ -293,7 +293,7 @@ export class GeneratorTeamsApp extends Generator {
                 this.options.hostname = this.options.host.substring(this.options.host.indexOf('://') + 3).toLocaleLowerCase();
                 this.options.manifestVersion = answers.manifestVersion;
                 this.options.mpnId = answers.mpnId;
-                if(this.options.mpnId && this.options.mpnId.length == 0) {
+                if (this.options.mpnId && this.options.mpnId.length == 0) {
                     this.options.mpnId = undefined;
                 }
                 var arr: string[] = tmp.split('.');
@@ -312,8 +312,15 @@ export class GeneratorTeamsApp extends Generator {
                 // when updating projects
                 this.options.developer = this.options.existingManifest.developer.name;
                 this.options.title = this.options.existingManifest.name.short;
-                let pkg = this.fs.readJSON(`./package.json`);
-                this.options.libraryName = pkg.name;
+                const libraryName = Yotilities.getLibraryNameFromWebpackConfig();
+                if (libraryName) {
+                    this.options.libraryName = libraryName;
+                } else {
+                    const pkg = this.fs.readJSON(`./package.json`);
+                    this.log(chalk.default.yellow(`Unable to locate the library name in webpack.config.js, will use the package name instead (${pkg.name})`));
+                    this.options.libraryName = pkg.name;
+                }
+
                 this.options.host = this.options.existingManifest.developer.websiteUrl;
                 this.options.updateManifestVersion = answers.updateManifestVersion;
                 this.options.manifestVersion = answers.manifestVersion ? answers.manifestVersion : ManifestGeneratorFactory.getManifestVersionFromValue(this.options.existingManifest.manifestVersion);
