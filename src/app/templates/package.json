@@ -56,7 +56,20 @@
     "tslint-loader": "^3.6.0"
   }, 
   "devDependencies": {
-   
+    "autoprefixer": "^9.5.1",
+    "browser-sync": "^2.26.5",
+    "gulp-if": "^2.0.2",
+    "gulp-load-plugins": "^1.6.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "plumber": "^0.4.8",
+    "gulp": "4.0.2",
+    "gulp-inject": "4.3.2",
+    "gulp-token-replace": "1.1.5",
+    "gulp-zip": "4.2.0",
+    "del": "^3.0.0"
   }<% if (unitTestsEnabled) { %>,
   "jest": {
     "snapshotSerializers": [
