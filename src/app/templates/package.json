@@ -70,7 +70,12 @@
     "gulp-token-replace": "1.1.5",
     "gulp-zip": "4.2.0",
     "del": "^3.0.0"
-  }<% if (unitTestsEnabled) { %>,
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "Firefox ESR"
+  ]<% if (unitTestsEnabled) { %>,
   "jest": {
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
