@@ -10,6 +10,7 @@ import { Yotilities } from './Yotilities';
 import * as AppInsights from 'applicationinsights';
 import { ManifestGeneratorFactory } from './manifestGeneration/ManifestGeneratorFactory';
 import inquirer = require('inquirer');
+import { ManifestVersions } from './manifestGeneration/ManifestVersions';
 
 let yosay = require('yosay');
 let path = require('path');
@@ -77,9 +78,24 @@ export class GeneratorTeamsApp extends Generator {
 
     public prompting() {
 
+        interface IAnswers {
+            confirmedAdd: boolean;
+            solutionName: string;
+            whichFolder: string;
+            name: string;
+            developer: string;
+            updateManifestVersion: boolean;
+            manifestVersion: string;
+            mpnId: string;
+            parts: string[];
+            host: string;
+            unitTestsEnabled: boolean;
+            useAzureAppInsights: boolean;
+            azureAppInsightsKey: string;
+        };
         // find out what manifest versions we can use
         const manifestGeneratorFactory = new ManifestGeneratorFactory();
-        const versions: inquirer.objects.ChoiceOption[] = ManifestGeneratorFactory.supportedManifestVersions.filter(version => {
+        const versions: inquirer.objects.ChoiceOption<IAnswers>[] = ManifestGeneratorFactory.supportedManifestVersions.filter(version => {
             // filter out non supprted upgrades
             if (this.options.existingManifest) {
                 const manifestGenerator = manifestGeneratorFactory.createManifestGenerator(version.manifestVersion);
@@ -98,7 +114,7 @@ export class GeneratorTeamsApp extends Generator {
         })
 
         // return the question series
-        return this.prompt(
+        return this.prompt<IAnswers>(
             [
                 {
                     type: 'confirm',
@@ -153,7 +169,7 @@ export class GeneratorTeamsApp extends Generator {
                     type: "confirm",
                     name: "updateManifestVersion",
                     message: `Do you want to change the current manifest version ${this.options.existingManifest && "(" + this.options.existingManifest.manifestVersion + ")"}?`,
-                    when: (answers: any) => this.options.existingManifest && versions.length > 0 && answers.confirmedAdd != false,
+                    when: (answers: IAnswers) => this.options.existingManifest && versions.length > 0 && answers.confirmedAdd != false,
                     default: false
                 },
                 {
@@ -161,10 +177,23 @@ export class GeneratorTeamsApp extends Generator {
                     name: 'manifestVersion',
                     message: 'Which manifest version would you like to use?',
                     choices: versions,
-                    default: versions.find((v: inquirer.objects.ChoiceOption) => v.extra.default) ?
-                        versions.find((v: inquirer.objects.ChoiceOption) => v.extra.default)!.value :
+                    default: versions.find((v: inquirer.objects.ChoiceOption<IAnswers>) => v.extra.default) ?
+                        versions.find((v: inquirer.objects.ChoiceOption<IAnswers>) => v.extra.default)!.value :
                         (versions[0] ? versions[0].value : ""),
-                    when: (answers: any) => (this.options.existingManifest && answers.updateManifestVersion && versions.length > 0) || (!this.options.existingManifest)
+                    when: (answers: IAnswers) => (this.options.existingManifest && answers.updateManifestVersion && versions.length > 0) || (!this.options.existingManifest)
+                },
+                {
+                    type: 'input',
+                    name: 'mpnId',
+                    message: 'Enter your Microsoft Partner Id, if you have one? (Leave blank to skip)',
+                    default: undefined,
+                    validate: (input: string) => {
+                        return input.length <= 10;
+                    },
+                    when: (answers) =>{
+                        return !this.options.existingManifest && answers.manifestVersion != ManifestVersions.v13 && answers.manifestVersion != ManifestVersions.v14
+                    },
+                    store: true
                 },
                 {
                     type: 'checkbox',
@@ -208,13 +237,13 @@ export class GeneratorTeamsApp extends Generator {
                             value: 'messageextension',
                         }
                     ],
-                    when: (answers: any) => answers.confirmedAdd != false
+                    when: (answers: IAnswers) => answers.confirmedAdd != false
                 },
                 {
                     type: 'input',
                     name: 'host',
                     message: 'The URL where you will host this solution?',
-                    default: (answers: any) => {
+                    default: (answers: IAnswers) => {
                         return `https://${lodash.camelCase(answers.solutionName).toLocaleLowerCase()}.azurewebsites.net`;
                     },
                     validate: Yotilities.validateUrl,
@@ -236,16 +265,16 @@ export class GeneratorTeamsApp extends Generator {
                     type: 'input',
                     name: 'azureAppInsightsKey',
                     message: 'What is the Azure Application Insights Instrumentation Key?',
-                    default: (answers: any) => {
+                    default: (answers: IAnswers) => {
                         return Guid.EMPTY;
                     },
                     validate: (input: string) => {
                         return Guid.isGuid(input);
                     },
-                    when: (answers: any) => answers.useAzureAppInsights,
+                    when: (answers: IAnswers) => answers.useAzureAppInsights,
                 },
             ]
-        ).then((answers: any) => {
+        ).then((answers: IAnswers) => {
             if (answers.confirmedAdd == false) {
                 process.exit(0)
             }
@@ -263,7 +292,10 @@ export class GeneratorTeamsApp extends Generator {
                 var tmp: string = this.options.host.substring(this.options.host.indexOf('://') + 3);
                 this.options.hostname = this.options.host.substring(this.options.host.indexOf('://') + 3).toLocaleLowerCase();
                 this.options.manifestVersion = answers.manifestVersion;
-
+                this.options.mpnId = answers.mpnId;
+                if(this.options.mpnId && this.options.mpnId.length == 0) {
+                    this.options.mpnId = undefined;
+                }
                 var arr: string[] = tmp.split('.');
                 this.options.namespace = lodash.reverse(arr).join('.').toLocaleLowerCase();
                 this.options.id = Guid.raw();
@@ -408,7 +440,14 @@ export class GeneratorTeamsApp extends Generator {
             }
             AppInsights.defaultClient.trackEvent({ name: 'end-generator' });
             if (this.options.bot) {
-                AppInsights.defaultClient.trackEvent({ name: 'bot' });
+                AppInsights.defaultClient.trackEvent({
+                    name: 'bot',
+                    properties: {
+                        type: this.options.botType,
+                        calling: this.options.botCallingEnabled ? "true" : "false",
+                        files: this.options.botFilesEnabled ? "true" : "false",
+                    }
+                });
                 if (this.options.botType == 'existing') {
                     AppInsights.defaultClient.trackEvent({ name: 'bot-existing' });
                 } else {

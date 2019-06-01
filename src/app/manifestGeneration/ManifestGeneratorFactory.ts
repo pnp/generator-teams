@@ -5,6 +5,7 @@
 import { ManifestVersions } from "./ManifestVersions";
 import { ManifestGenerator as ManifestGenerator13 } from "./manifestGenerators/generator13/ManifestGenerator";
 import { ManifestGenerator as ManifestGenerator14 } from "./manifestGenerators/generator14/ManifestGenerator";
+import { ManifestGenerator as ManifestGenerator15 } from "./manifestGenerators/generator15/ManifestGenerator";
 import { ManifestGenerator as ManifestGeneratorDevPreview } from "./manifestGenerators/generatorDevPreview/ManifestGenerator";
 import { BaseManifestGenerator } from "./BaseManifestGenerator";
 
@@ -21,6 +22,12 @@ export class ManifestGeneratorFactory {
             manifestVersion: ManifestVersions.v14,
             schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.4/MicrosoftTeams.schema.json",
             manifestValue: "1.4",
+            default: false
+        },
+        {
+            manifestVersion: ManifestVersions.v15,
+            schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json",
+            manifestValue: "1.5",
             default: true
         },
         {
@@ -51,6 +58,8 @@ export class ManifestGeneratorFactory {
             return new ManifestGenerator13();
         } else if (manifestVersion == ManifestVersions.v14) {
             return new ManifestGenerator14();
+        } else if (manifestVersion == ManifestVersions.v15) {
+            return new ManifestGenerator15();
         } else if (manifestVersion == ManifestVersions.devPreview) {
             return new ManifestGeneratorDevPreview();
         } else {

@@ -352,9 +352,12 @@ task('start-ngrok', (cb) => {
         authtoken: process.env.NGROK_AUTH
     };
 
+
     ngrok.connect(conf).then((url) => {
         log('[NGROK] Url: ' + url);
-
+        if (!conf.authtoken) {
+            log("[NGROK] You have been assigned a random ngrok URL that will only be available for this session. You wil need to re-upload the Teams manifest next time you run this command.");
+        }
         let hostName = url.replace('http://', '');
         hostName = hostName.replace('https://', '');
 

@@ -21,6 +21,7 @@ export class GeneratorTeamsAppOptions {
     host: string;
     hostname: string;
     bot: boolean;
+    mpnId?: string = undefined;
 
     reactComponents: boolean;
     websitePrefix: string;
@@ -37,7 +38,7 @@ export class GeneratorTeamsAppOptions {
     tabReactComponentName: string;
     tabSharePoint: boolean;
     tabSharePointHosts: string[] = [];
-    
+
     /* Bots */
     botid: string = '';
     botidEnv: string = "MICROSOFT_APP_ID";
@@ -51,6 +52,7 @@ export class GeneratorTeamsAppOptions {
     botName: string;
     botClassName: string;
     botCallingEnabled: boolean = false;
+    botFilesEnabled: boolean = false;
     /* Outgoing webhook */
     customBot: boolean;
     customBotTitle: string;

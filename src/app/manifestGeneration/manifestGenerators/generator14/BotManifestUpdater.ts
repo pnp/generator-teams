@@ -10,11 +10,11 @@ let Guid = require('guid');
 export class BotManifestUpdater implements IManifestUpdater {
 
     public updateManifest(manifest: any, options: GeneratorTeamsAppOptions): void {
-        var newbot:any = {
+        var newbot: any = {
             botId: `{{${options.botidEnv}}}`,
             needsChannelSelector: true,
             isNotificationOnly: false,
-            scopes: ["team", "personal", "groupchat"],
+            scopes: ["team", "personal"],
             commandLists: [
                 {
                     "scopes": [
@@ -42,11 +42,6 @@ export class BotManifestUpdater implements IManifestUpdater {
 
         if(options.botFilesEnabled) {
             newbot.supportsFiles = true;
-        }
-
-        if(options.botCallingEnabled) {
-            newbot.supportsCalling = true;
-            newbot.supportsVideo = true;
         }
 
         (<any[]>manifest.bots).push(newbot);
