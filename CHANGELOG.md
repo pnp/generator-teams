@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added support for manifest version 1.5, new default
 * Added suppot for optionally adding Microsoft Partner Id. More info at https://aka.ms/partner 
 * Added files support option for bots (schema version 1.4+)
+* Now persists settings for using unit testing, application insights and the library name
+* Added default logging of "msteams" in the `.env` file
 
 ### Changed
 
@@ -22,7 +24,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixes
 * Fixed an issue when you add a messaging extension to an existing project and has renamed the bot file or folder name
-* Fixed an issue when you add additional pages/scripts to a project and the library name is camel cased. Now correctly cased library name is retrieved from existing `webpack.config.js` file
+* Fixed an issue when you add additional pages/scripts to a project and the library name is camel cased. Now correctly cased library name is retrieved from existing `webpack.config.js` file, and then the persisted config if exists, before defaulting to the library name
+* Fixed an issue where Microsoft Partner Id is incorrectly persisted in the Yeoman configuration file
 
 ## [*2.8.1*] - <*2019-05-20*>
 

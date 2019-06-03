@@ -119,8 +119,7 @@ export class Yotilities {
         const project = new Project();
         project.addExistingSourceFile("webpack.config.js");
         const src = project.getSourceFileOrThrow("webpack.config.js");
-
-
+        let retVal = undefined;
         // get the config variable
         const config = src.getVariableDeclarationOrThrow("config");
         const arr = config.getFirstChildByKind(ts.SyntaxKind.ArrayLiteralExpression);
@@ -138,7 +137,7 @@ export class Yotilities {
                             if (lib) {
                                 const prop = lib.getFirstChildByKind(ts.SyntaxKind.StringLiteral);
                                 if (prop) {
-                                    return prop.getLiteralValue();
+                                    retVal = prop.getLiteralValue();
                                 }
                             }
                         });
@@ -146,6 +145,6 @@ export class Yotilities {
                 });
             });
         }
-        return undefined;
+        return retVal;
     }
 }

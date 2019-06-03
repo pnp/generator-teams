@@ -192,8 +192,7 @@ export class GeneratorTeamsApp extends Generator {
                     },
                     when: (answers) => {
                         return !this.options.existingManifest && answers.manifestVersion != ManifestVersions.v13 && answers.manifestVersion != ManifestVersions.v14
-                    },
-                    store: true
+                    }
                 },
                 {
                     type: 'checkbox',
@@ -254,12 +253,14 @@ export class GeneratorTeamsApp extends Generator {
                     name: 'unitTestsEnabled',
                     message: 'Would you like to include Test framework and initial tests?',
                     when: () => !this.options.existingManifest,
+                    store: true
                 },
                 {
                     type: 'confirm',
                     name: 'useAzureAppInsights',
                     message: 'Would you like to use Azure Applications Insights for telemetry?',
                     when: () => !this.options.existingManifest,
+                    store: true
                 },
                 {
                     type: 'input',
@@ -286,6 +287,7 @@ export class GeneratorTeamsApp extends Generator {
                 this.options.solutionName = this.options.solutionName || answers.solutionName;
                 this.options.shouldUseSubDir = answers.whichFolder === 'subdir';
                 this.options.libraryName = lodash.camelCase(this.options.solutionName);
+                this.config.set("libraryName", this.options.libraryName);
                 this.options.packageName = this.options.libraryName.toLocaleLowerCase();
                 this.options.developer = answers.developer;
                 this.options.host = answers.host;
@@ -308,17 +310,29 @@ export class GeneratorTeamsApp extends Generator {
                 if (this.options.shouldUseSubDir) {
                     this.destinationRoot(this.destinationPath(this.options.solutionName));
                 }
+                this.options.unitTestsEnabled = answers.unitTestsEnabled;
+                this.options.useAzureAppInsights = answers.useAzureAppInsights;
+                this.options.azureAppInsightsKey = answers.azureAppInsightsKey;
             } else {
                 // when updating projects
                 this.options.developer = this.options.existingManifest.developer.name;
                 this.options.title = this.options.existingManifest.name.short;
-                const libraryName = Yotilities.getLibraryNameFromWebpackConfig();
+                this.options.useAzureAppInsights = this.config.get("useAzureAppInsights") || false;
+                this.options.unitTestsEnabled = this.config.get("unitTestsEnabled") || false;
+                let libraryName = Yotilities.getLibraryNameFromWebpackConfig(); // let's see if we can find the name in webpack.config.jons (it might have been changed by the user)
+                this.log(libraryName);
                 if (libraryName) {
                     this.options.libraryName = libraryName;
                 } else {
-                    const pkg = this.fs.readJSON(`./package.json`);
-                    this.log(chalk.default.yellow(`Unable to locate the library name in webpack.config.js, will use the package name instead (${pkg.name})`));
-                    this.options.libraryName = pkg.name;
+                    // get the setting from Yo config
+                    libraryName = this.config.get("libraryName");
+                    if (libraryName) {
+                        this.options.libraryName = libraryName!;
+                    } else {
+                        const pkg = this.fs.readJSON(`./package.json`);
+                        this.log(chalk.default.yellow(`Unable to locate the library name in webpack.config.js, will use the package name instead (${pkg.name})`));
+                        this.options.libraryName = pkg.name;
+                    }
                 }
 
                 this.options.host = this.options.existingManifest.developer.websiteUrl;
@@ -326,14 +340,12 @@ export class GeneratorTeamsApp extends Generator {
                 this.options.manifestVersion = answers.manifestVersion ? answers.manifestVersion : ManifestGeneratorFactory.getManifestVersionFromValue(this.options.existingManifest.manifestVersion);
             }
 
-            this.options.unitTestsEnabled = answers.unitTestsEnabled;
+
             this.options.bot = (<string[]>answers.parts).indexOf('bot') != -1;
             this.options.tab = (<string[]>answers.parts).indexOf('tab') != -1;
             this.options.connector = (<string[]>answers.parts).indexOf('connector') != -1;
             this.options.customBot = (<string[]>answers.parts).indexOf('custombot') != -1;
             this.options.messageExtension = (<string[]>answers.parts).indexOf('messageextension') != -1;
-            this.options.useAzureAppInsights = answers.useAzureAppInsights;
-            this.options.azureAppInsightsKey = answers.azureAppInsightsKey;
 
             this.options.reactComponents = false; // set to false initially
         });

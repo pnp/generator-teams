@@ -36,25 +36,32 @@ export class ManifestGenerator extends BaseManifestGenerator {
     }
 
     public updateManifest(manifest: any, log?: (message?: string, context?: any) => void): any {
-        if (manifest.manifestVersion === "1.3" || manifest.manifestVersion === "1.4") {
-            manifest["$schema"] = "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json";
-            manifest.manifestVersion = "devPreview";
+        switch (manifest.manifestVersion) {
+            case "1.3":
+            case "1.4":
+                manifest["$schema"] = "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json";
+                manifest.manifestVersion = "devPreview";
 
-            if (manifest.composeExtensions) {
-                manifest.composeExtensions.forEach((composeExtension: { commands: { title: string; type: string; }[] }) => {
-                    if (composeExtension.commands) {
-                        composeExtension.commands.forEach((command: { title: string; type: string; }) => {
-                            if (command.type === undefined) {
-                                if (log) log(chalk.default.whiteBright(`Updating Message Extension "${command.title}" with the "type" property set to "query"`));
-                                command.type = "query";
-                            }
-                        });
-                    }
-                });
-            }
-            return manifest;
-        } else {
-            throw "Unable to update manifest";
+                if (manifest.composeExtensions) {
+                    manifest.composeExtensions.forEach((composeExtension: { commands: { title: string; type: string; }[] }) => {
+                        if (composeExtension.commands) {
+                            composeExtension.commands.forEach((command: { title: string; type: string; }) => {
+                                if (command.type === undefined) {
+                                    if (log) log(chalk.default.whiteBright(`Updating Message Extension "${command.title}" with the "type" property set to "query"`));
+                                    command.type = "query";
+                                }
+                            });
+                        }
+                    });
+                }
+                return manifest;
+            case "1.5":
+                manifest["$schema"] = "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json";
+                manifest.manifestVersion = "devPreview";
+                return manifest;
+            default:
+                throw "Unable to update manifest";
+
         }
     };
 }
