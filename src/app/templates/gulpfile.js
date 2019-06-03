@@ -2,79 +2,173 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
-var gulp = require('gulp');
-var vinyl = require('vinyl');
-var webpack = require('webpack');
-var inject = require('gulp-inject');
-const zip = require('gulp-zip');
-var nodemon = require('nodemon');
-var argv = require('yargs').argv;
-var PluginError = require('plugin-error');
-var log = require('fancy-log');
-var fs = require('fs');
-var ZSchema = require('z-schema');
-var request = require('request');
-var path = require('path');
-const del = require('del'); // rm -rf
-const replace = require('gulp-token-replace');
-const ngrok = require('ngrok');
+// Load general config
+const config = require('./gulp.config');
 
-var injectSources = ["./dist/web/scripts/**/*.js", './dist/web/assets/**/*.css']
-var staticFiles = ["./src/app/**/*.html", "./src/app/**/*.ejs", "./src/app/web/assets/**/*"]
-var htmlFiles = ["./src/app/**/*.html", "./src/app/**/*.ejs"]
-var watcherfiles = ["./src/**/*.*"]
-var manifestFiles = ["./src/manifest/**/*.*", '!**/*.json']
-var temp = ["./temp"]
+// NodeJS
+const fs = require('fs'),
+    path = require('path');
+
+// Gulp Base
+const {
+    src,
+    dest,
+    watch,
+    series,
+    parallel,
+    lastRun,
+    task
+} = require('gulp');
+
+// gulp plugins
+const inject = require('gulp-inject'),
+    zip = require('gulp-zip'),
+    replace = require('gulp-token-replace'),
+    PluginError = require('plugin-error'),
+    gulpLoadPlugins = require('gulp-load-plugins'),
+    del = require('del');
+
+const $ = gulpLoadPlugins();
+
+// Web Servers
+const browserSync = require('browser-sync'),
+    ngrok = require('ngrok');
+
+// load references
+const
+    // nodemon = require('nodemon'),
+    argv = require('yargs').argv,
+    autoprefixer = require('autoprefixer'),
+    log = require('fancy-log'),
+    ZSchema = require('z-schema'),
+    request = require('request');
+
+
+
+const webpack = require('webpack');
 
 require('dotenv').config();
 
 /**
- * Supported schemas
- */
-const SCHEMAS = [
-    {
-        version: "1.3",
-        schema: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json"
-    },
-    {
-        version: "1.4",
-        schema: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.4/MicrosoftTeams.schema.json"
-    },
-    {
-        version: "1.5",
-        schema: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json"
-    },
-    {
-        version: "devPreview",
-        schema: "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json"
-    }
-];
+ * Configure browserSync
+ *  */
+const server = browserSync.create();
+// Allows to define the port as command line argument
+const port = argv.port || 9000;
 
 /**
- * Watches source files and invokes the build task
+ * Setting up environments
  */
-gulp.task('watch', () => {
-    gulp.watch(watcherfiles, gulp.series('build'));
-});
+const isProd = process.env.NODE_ENV === 'production';
+const isTest = process.env.NODE_ENV === 'test';
+const isDev = !isProd && !isTest;
+
+const styles = () => {
+    return src('src/app/**/*.scss')
+        .pipe($.plumber())
+        .pipe($.if(!isProd, $.sourcemaps.init()))
+        .pipe($.sass.sync({
+            outputStyle: 'expanded',
+            precision: 10,
+            includePaths: ['.']
+        }).on('error', $.sass.logError))
+        .pipe($.postcss([
+            autoprefixer()
+        ]))
+        .pipe($.if(!isProd, $.sourcemaps.write()))
+        .pipe(dest('dist'))
+        .pipe(server.reload({
+            stream: true
+        }));
+};
+
+const startAppServer = () => {
+
+    server.init({
+        notify: false,
+        port,
+        server: {
+            baseDir: ['dist', 'temp'],
+            routes: {
+                '/node_modules': 'node_modules'
+            },
+            https: true,
+            directory: true
+        }
+    });
+
+    injectSources();
+
+    watches();
+}
+
+/**
+ * Register watches
+ */
+const watches = () => {
+
+    // all other watches
+    watch(
+        config.watches,
+        series('build')
+    ).on('change', server.reload);
+
+    // watch for style changes
+    watch('src/app/**/*.scss', styles)
+        .on('unlink', (a, b) => {
+
+            let cssFilename = path.basename(a, '.scss') + '.css',
+                cssDirectory = path.dirname(a).replace('src/app', './dist'),
+                cssPath = path.join(cssDirectory, cssFilename);
+
+            console.log(cssPath, fs.existsSync(cssPath));
+
+            if (fs.existsSync(cssPath)) {
+
+                fs.unlinkSync(cssPath);
+                injectSources();
+                server.reload();
+
+            }
+
+        });
+
+    // watch on new and deleted files
+    watch(config.injectSources)
+        .on('unlink', injectSources)
+        .on('add', injectSources);
+
+
+    // watch for static files
+    watch(config.staticFiles, series('static:copy'));
+}
 
 // TASK: nuke
-gulp.task('nuke', () => {
+task('nuke', () => {
     return del(['temp', 'package', 'dist']);
 });
 
 /**
  * Webpack bundling
  */
-gulp.task('webpack', (callback) => {
-    var webpackConfig = require(process.cwd() + '/webpack.config')
-    webpack(webpackConfig, function (err, stats) {
+task('webpack', (callback) => {
+
+    const webpackConfig = require(
+        path.join(__dirname + '/webpack.config')
+    )
+
+    webpack(webpackConfig, (err, stats) => {
+
         if (err) throw new PluginError("webpack", err);
 
         var jsonStats = stats.toJson();
+
         if (jsonStats.errors.length > 0) {
-            jsonStats.errors.map(function (e) {
+
+            jsonStats.errors.map(e => {
                 log('[Webpack error] ' + e);
             });
+
             throw new PluginError("webpack", "Webpack errors, see log");
         }
         if (jsonStats.warnings.length > 0) {
@@ -89,130 +183,167 @@ gulp.task('webpack', (callback) => {
 /**
  * Copies static files
  */
-gulp.task('static:copy', () => {
-    return gulp.src(staticFiles, {
-        base: "./src/app"
-    })
-        .pipe(gulp.dest('./dist/'));
+task('static:copy', () => {
+    return src(config.staticFiles, {
+            base: "./src/app"
+        })
+        .pipe(
+            dest('./dist/')
+        );
 });
+
+const injectSources = () => {
+
+    var injectSrc = src(config.injectSources);
+
+    var injectOptions = {
+        relative: false,
+        ignorePath: 'dist',
+        addRootSlash: true
+    };
+    return src(config.htmlFiles)
+        .pipe(replace({
+            tokens: {
+                ...process.env
+            }
+        }))
+        .pipe(
+            inject(injectSrc, injectOptions)
+        ) // inserts custom sources
+        .pipe(server.reload({
+            stream: true
+        }))
+        .pipe(
+            dest('./dist')
+        );
+
+};
 
 /**
  * Injects script into pages
  */
-gulp.task('static:inject', () => {
-    var injectSrc = gulp.src(injectSources);
+task('static:inject', () => {
+    var injectSrc = src(config.injectSources);
 
     var injectOptions = {
         relative: false,
-        ignorePath: 'dist/web',
+        ignorePath: 'dist',
         addRootSlash: true
     };
-    return gulp.src(htmlFiles)
-        .pipe(replace({ tokens: { ...process.env } }))
-        .pipe(inject(injectSrc, injectOptions)) // inserts custom sources
-        .pipe(gulp.dest('./dist'));
+    return src(config.htmlFiles)
+        .pipe(replace({
+            tokens: {
+                ...process.env
+            }
+        }))
+        .pipe(
+            inject(injectSrc, injectOptions)
+        ) // inserts custom sources
+        .pipe(
+            dest('./dist')
+        );
 });
 
 /**
  * Build task, that uses webpack and injects scripts into pages
  */
-gulp.task('build', gulp.series('webpack', 'static:copy', 'static:inject'));
+task('build', series('webpack', 'static:copy'));
 
 /**
  * Replace parameters in the manifest
  */
-gulp.task('generate-manifest', (cb) => {
-    return gulp.src('src/manifest/manifest.json')
-        .pipe(replace({ tokens: { ...process.env } }))
-        .pipe(gulp.dest(temp));
+task('generate-manifest', (cb) => {
+    return src('src/manifest/manifest.json')
+        .pipe(replace({
+            tokens: {
+                ...process.env
+            }
+        }))
+        .pipe(dest(config.temp));
 });
 
 /**
  * Schema validation
  */
-gulp.task('schema-validation', (callback) => {
+task('schema-validation', (callback) => {
 
-    var filePath = path.join(__dirname, 'temp/manifest.json');
-    fs.readFile(filePath, {
-        encoding: 'utf-8'
-    }, function (err, data) {
-        if (!err) {
-            var json = JSON.parse(data);
-            var requiredUrl;
-            log('Using manifest schema ' + json.manifestVersion);
-            if (!json["$schema"]) {
-                let definition = SCHEMAS.find(s => s.version == json.manifestVersion);
-                if (definition == undefined) {
-                    callback(new PluginError("validate-manifest", "Unable to locate schema"));
-                    return;
-                }
-                requiredUrl = definition.schema;
-            } else {
-                requiredUrl = json["$schema"];
-            }
+    let filePath = path.join(__dirname, 'temp/manifest.json');
 
-            var validator = new ZSchema();
+    if (fs.existsSync(filePath)) {
 
-            var schema = {
-                "$ref": requiredUrl
-            };
-            request(requiredUrl, {
-                gzip: true
-            }, (err, res, body) => {
-                if (!err) {
-                    validator.setRemoteReference(requiredUrl, JSON.parse(body));
+        let manifest = fs.readFileSync(filePath, {
+                encoding: 'UTF-8'
+            }),
+            manifestJson;
 
-                    var valid = validator.validate(json, schema);
-                    var errors = validator.getLastErrors();
-                    if (!valid) {
-                        callback(new PluginError("validate-manifest", errors.map((e) => {
-                            return e.message;
-                        }).join('\n')));
-                    } else {
-                        callback();
-                    }
-                }
-                else {
-                    log.warn("WARNING: unable to download and validate schema: " + err.code);
+        try {
+
+            manifestJson = JSON.parse(manifest);
+
+        } catch (error) {
+
+            callback(
+                new PluginError(error.message)
+            );
+            return;
+
+        }
+
+        log('Using manifest schema ' + manifestJson.manifestVersion);
+
+        let definition = config.SCHEMAS.find(s => s.version == manifestJson.manifestVersion);
+
+        if (definition === undefined) {
+            callback(new PluginError("validate-manifest", "Unable to locate schema"));
+            return;
+        }
+
+        if (manifestJson["$schema"] !== definition.schema) {
+            log("Note: the defined schema in your manifest does not correspond to the manifestVersion");
+        }
+
+        let requiredUrl = definition.schema;
+        let validator = new ZSchema();
+
+        let schema = {
+            "$ref": requiredUrl
+        };
+
+        request(requiredUrl, {
+            gzip: true
+        }, (err, res, body) => {
+            if (!err) {
+                validator.setRemoteReference(requiredUrl, JSON.parse(body));
+
+                var valid = validator.validate(manifestJson, schema);
+                var errors = validator.getLastErrors();
+                if (!valid) {
+                    callback(new PluginError("validate-manifest", errors.map((e) => {
+                        return e.message;
+                    }).join('\n')));
+                } else {
                     callback();
                 }
-            })
+            } else {
+                log.warn("WARNING: unable to download and validate schema: " + err.code);
+                callback();
+            }
+        })
 
-        } else {
-            callback(PluginError("validate-manifest", err));
-        }
-    });
+    } else {
+        console.log('Manifest doesn\'t exist');
+    }
+
 });
 
-gulp.task('validate-manifest', gulp.series('generate-manifest', 'schema-validation'));
-
-
-/**
- * Task for local debugging
- */
-gulp.task('nodemon', (cb) => {
-    var started = false;
-    var debug = argv.debug !== undefined;
-
-    return nodemon({
-        script: 'dist/server.js',
-        watch: ['dist/server.js'],
-        nodeArgs: debug ? ['--debug'] : []
-    }).on('start', function () {
-        if (!started) {
-            cb();
-            started = true;
-            log('HOSTNAME: ' + process.env.HOSTNAME);
-        }
-    });
-});
+task('validate-manifest', series('generate-manifest', 'schema-validation'));
 
 /**
  * Task for starting ngrok and replacing the HOSTNAME with ngrok tunnel url.
  * The task also creates a manifest file with ngrok tunnel url.
  * See local .env file for configuration
  */
-gulp.task('start-ngrok', (cb) => {
+task('start-ngrok', (cb) => {
     log("[NGROK] starting ngrok...");
     let conf = {
         subdomain: process.env.NGROK_SUBDOMAIN,
@@ -244,15 +375,17 @@ gulp.task('start-ngrok', (cb) => {
 /**
  * Creates the tab manifest
  */
-gulp.task('zip', () => {
-    return gulp.src(manifestFiles)
-        .pipe(gulp.src('./temp/manifest.json'))
-        .pipe(zip('<%=solutionName%>.zip'))
-        .pipe(gulp.dest('package'));
+task('zip', () => {
+    return src(config.manifests)
+        .pipe(src('./temp/manifest.json'))
+        .pipe(zip('team-1.zip'))
+        .pipe(dest('package'));
 });
 
-gulp.task('serve', gulp.series('build', 'nodemon', 'watch'));
+task('styles', styles);
 
-gulp.task('manifest', gulp.series('nuke', 'validate-manifest', 'zip'));
+task('serve', series('nuke', 'build', 'styles', startAppServer));
 
-gulp.task('ngrok-serve', gulp.series('start-ngrok', 'manifest', 'serve'));
+task('manifest', series('nuke', 'validate-manifest', 'zip'));
+
+task('ngrok-serve', series('start-ngrok', 'manifest', 'serve'));
