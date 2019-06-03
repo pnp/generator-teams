@@ -371,6 +371,7 @@ export class GeneratorTeamsApp extends Generator {
                 "src/manifest/icon-outline.png",
                 "src/manifest/icon-color.png",
                 "src/app/web/assets/icon.png",
+                "src/app/web/styles/main.scss",
                 'deploy.cmd',
                 '_deployment',
                 "src/app/TeamsAppsComponents.ts"
@@ -379,6 +380,7 @@ export class GeneratorTeamsApp extends Generator {
             let templateFiles = [
                 "README.md",
                 "gulpfile.js",
+                "gulp.config.js",
                 "package.json",
                 ".env",
                 'src/app/server.ts',
