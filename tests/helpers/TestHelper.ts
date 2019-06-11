@@ -21,6 +21,7 @@ export const ROOT_FILES = [
     '.gitignore',
     'deploy.cmd',
     'gulpfile.js',
+    "gulp.config.js",
     'package.json',
     'README.md',
     'tsconfig-client.json',
@@ -45,7 +46,8 @@ export const WEB_FILES = [
     'src/app/web/assets/icon.png',
     'src/app/web/index.html',
     'src/app/web/privacy.html',
-    'src/app/web/tou.html'
+    'src/app/web/tou.html',
+    "src/app/web/styles/main.scss"
 ];
 
 export const APP_FILES = [

@@ -14,11 +14,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added files support option for bots (schema version 1.4+)
 * Now persists settings for using unit testing, application insights and the library name
 * Added default logging of "msteams" in the `.env` file
+* Added support for SCSS in the build pipeline
+* Added a default styling to the start page
 
 ### Changed
 
 * Updated the `@microsoft/teams-js` package to version `1.4.2`
 * Added strict handling of inquirer answers in the main generator
+* Refactored the gulp build system into `gulpfile.js` and `gulpfile.config.js`
+* Refactored gulp tasks
 * Updated `gulpfile.js` to use the `$schema` defined in the manifest file for validation and the `SCHEMAS` object only as backup
 * Clarified some questions that the users is adding Message Extension commands, rather than new message extensions
 

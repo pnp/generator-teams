@@ -39,7 +39,9 @@ const config = {
             version: "1.5",
             schema: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json"
         }    
-    ]
+    ],
+    // This is the name of the packaged manifest file
+    manifestFileName: "<%=solutionName%>.zip"
 };
 
 module.exports = config;

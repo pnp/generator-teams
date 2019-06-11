@@ -31,12 +31,11 @@ const inject = require('gulp-inject'),
 const $ = gulpLoadPlugins();
 
 // Web Servers
-const browserSync = require('browser-sync'),
-    ngrok = require('ngrok');
+const ngrok = require('ngrok');
 
 // load references
 const
-    // nodemon = require('nodemon'),
+    nodemon = require('nodemon'),
     argv = require('yargs').argv,
     autoprefixer = require('autoprefixer'),
     log = require('fancy-log'),
@@ -49,12 +48,8 @@ const webpack = require('webpack');
 
 require('dotenv').config();
 
-/**
- * Configure browserSync
- *  */
-const server = browserSync.create();
 // Allows to define the port as command line argument
-const port = argv.port || 9000;
+const port = argv.port || 3000;
 
 /**
  * Setting up environments
@@ -76,31 +71,8 @@ const styles = () => {
             autoprefixer()
         ]))
         .pipe($.if(!isProd, $.sourcemaps.write()))
-        .pipe(dest('dist'))
-        .pipe(server.reload({
-            stream: true
-        }));
+        .pipe(dest('dist'));
 };
-
-const startAppServer = () => {
-
-    server.init({
-        notify: false,
-        port,
-        server: {
-            baseDir: ['dist', 'temp'],
-            routes: {
-                '/node_modules': 'node_modules'
-            },
-            https: true,
-            directory: true
-        }
-    });
-
-    injectSources();
-
-    watches();
-}
 
 /**
  * Register watches
@@ -111,10 +83,10 @@ const watches = () => {
     watch(
         config.watches,
         series('build')
-    ).on('change', server.reload);
+    );
 
     // watch for style changes
-    watch('src/app/**/*.scss', styles)
+    watch('src/app/**/*.scss', series('styles', 'static:copy', 'static:inject'))
         .on('unlink', (a, b) => {
 
             let cssFilename = path.basename(a, '.scss') + '.css',
@@ -127,7 +99,6 @@ const watches = () => {
 
                 fs.unlinkSync(cssPath);
                 injectSources();
-                server.reload();
 
             }
 
@@ -143,10 +114,30 @@ const watches = () => {
     watch(config.staticFiles, series('static:copy'));
 }
 
+task('watch', watches);
+
 // TASK: nuke
 task('nuke', () => {
-    return del(['temp', 'package', 'dist']);
+    return del(['temp', 'dist']);
 });
+
+task('nodemon', (callback) => {
+    var started = false;
+    var debug = argv.debug !== undefined;
+
+    return nodemon({
+        script: 'dist/server.js',
+        watch: ['dist/server.js'],
+        nodeArgs: debug ? ['--debug'] : []
+    }).on('start', function () {
+        if (!started) {
+            callback();
+            started = true;
+            log('HOSTNAME: ' + process.env.HOSTNAME);
+        }
+    });
+});
+
 
 /**
  * Webpack bundling
@@ -185,8 +176,8 @@ task('webpack', (callback) => {
  */
 task('static:copy', () => {
     return src(config.staticFiles, {
-            base: "./src/app"
-        })
+        base: "./src/app"
+    })
         .pipe(
             dest('./dist/')
         );
@@ -198,7 +189,7 @@ const injectSources = () => {
 
     var injectOptions = {
         relative: false,
-        ignorePath: 'dist',
+        ignorePath: 'dist/web',
         addRootSlash: true
     };
     return src(config.htmlFiles)
@@ -209,10 +200,7 @@ const injectSources = () => {
         }))
         .pipe(
             inject(injectSrc, injectOptions)
-        ) // inserts custom sources
-        .pipe(server.reload({
-            stream: true
-        }))
+        )
         .pipe(
             dest('./dist')
         );
@@ -222,32 +210,17 @@ const injectSources = () => {
 /**
  * Injects script into pages
  */
-task('static:inject', () => {
-    var injectSrc = src(config.injectSources);
+task('static:inject', injectSources);
 
-    var injectOptions = {
-        relative: false,
-        ignorePath: 'dist',
-        addRootSlash: true
-    };
-    return src(config.htmlFiles)
-        .pipe(replace({
-            tokens: {
-                ...process.env
-            }
-        }))
-        .pipe(
-            inject(injectSrc, injectOptions)
-        ) // inserts custom sources
-        .pipe(
-            dest('./dist')
-        );
-});
+/**
+ * SASS compilation
+ */
+task('styles', styles);
 
 /**
  * Build task, that uses webpack and injects scripts into pages
  */
-task('build', series('webpack', 'static:copy'));
+task('build', series('webpack', 'styles', 'static:copy', 'static:inject'));
 
 /**
  * Replace parameters in the manifest
@@ -272,8 +245,8 @@ task('schema-validation', (callback) => {
     if (fs.existsSync(filePath)) {
 
         let manifest = fs.readFileSync(filePath, {
-                encoding: 'UTF-8'
-            }),
+            encoding: 'UTF-8'
+        }),
             manifestJson;
 
         try {
@@ -378,14 +351,14 @@ task('start-ngrok', (cb) => {
 task('zip', () => {
     return src(config.manifests)
         .pipe(src('./temp/manifest.json'))
-        .pipe(zip('team-1.zip'))
+        .pipe(zip(config.manifestFileName))
         .pipe(dest('package'));
 });
 
 task('styles', styles);
 
-task('serve', series('nuke', 'build', 'styles', startAppServer));
+task('serve', series('nuke', 'build', 'nodemon', 'watch'));
 
-task('manifest', series('nuke', 'validate-manifest', 'zip'));
+task('manifest', series('validate-manifest', 'zip'));
 
 task('ngrok-serve', series('start-ngrok', 'manifest', 'serve'));

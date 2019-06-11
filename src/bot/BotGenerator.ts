@@ -145,7 +145,7 @@ export class BotGenerator extends Generator {
                 if (this.options.staticTab) {
                     this.options.reactComponents = true;
                 }
-            });
+            });          
         }
     }
 
