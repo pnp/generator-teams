@@ -404,4 +404,74 @@ describe('teams:tab', function () {
         assert.noFileContent("src/app/web/index.html", `var appInsights = window.appInsights`);
     });
 
+    it('should generate tab project scoped to groupchat only', async () => {
+        await helpers.run(testHelper.GENERATOR_PATH)
+            .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab06')
+            .withArguments(['--no-telemetry'])
+            .withPrompts({
+                solutionName: 'tab-test-01',
+                whichFolder: 'current',
+                name: 'tabtest01',
+                developer: 'generator teams developer',
+                manifestVersion: 'v1.5',
+                parts: 'tab',
+                tabScopes: ["groupchat"]
+            })
+            .withGenerators(testHelper.DEPENDENCIES);
+
+        assert.jsonFileContent('src/manifest/manifest.json', {
+            configurableTabs: [
+                {
+                    scopes: ["groupchat"]
+                }
+            ]
+        });
+    });
+
+    it('should generate tab project scoped to team only', async () => {
+        await helpers.run(testHelper.GENERATOR_PATH)
+            .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab06')
+            .withArguments(['--no-telemetry'])
+            .withPrompts({
+                solutionName: 'tab-test-01',
+                whichFolder: 'current',
+                name: 'tabtest01',
+                developer: 'generator teams developer',
+                manifestVersion: 'v1.5',
+                parts: 'tab',
+                tabScopes: ["team"]
+            })
+            .withGenerators(testHelper.DEPENDENCIES);
+
+        assert.jsonFileContent('src/manifest/manifest.json', {
+            configurableTabs: [
+                {
+                    scopes: ["team"]
+                }
+            ]
+        });
+    });
+    it('should generate tab project scoped to groupchat and team', async () => {
+        await helpers.run(testHelper.GENERATOR_PATH)
+            .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab06')
+            .withArguments(['--no-telemetry'])
+            .withPrompts({
+                solutionName: 'tab-test-01',
+                whichFolder: 'current',
+                name: 'tabtest01',
+                developer: 'generator teams developer',
+                manifestVersion: 'v1.5',
+                parts: 'tab',
+                tabScopes: ["team", "groupchat"]
+            })
+            .withGenerators(testHelper.DEPENDENCIES);
+
+        assert.jsonFileContent('src/manifest/manifest.json', {
+            configurableTabs: [
+                {
+                    scopes: ["team", "groupchat"]
+                }
+            ]
+        });
+    });
 });
