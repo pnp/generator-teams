@@ -10,7 +10,7 @@ export class TabManifestUpdater implements IManifestUpdater {
         (<any[]>manifest.configurableTabs).push({
             configurationUrl: `https://{{HOSTNAME}}/${options.tabName}/config.html`,
             canUpdateConfiguration: true,
-            scopes: ["team"]
+            scopes: options.tabScopes
         });
     }
 }

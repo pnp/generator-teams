@@ -40,6 +40,26 @@ export class TabGenerator extends Generator {
                         }
                     },
                     {
+                        type: 'checkbox',
+                        name: 'tabScopes',
+                        message: "What scopes do you intend to use for your Tab?",
+                        choices: [
+                            {
+                                name: "In a Team",
+                                value: "team",
+                                checked: true
+                            },
+                            {
+                                name: "In a group chat",
+                                value: "groupchat",
+                                checked: false
+                            }
+                        ],
+                        validate: (input: string, answers: any) => {
+                            return input.length > 0;
+                        }
+                    },
+                    {
                         type: 'confirm',
                         name: 'tabSharePoint',
                         message: 'Do you want this tab to be available in SharePoint Online?',
@@ -80,6 +100,7 @@ export class TabGenerator extends Generator {
                 this.options.reactComponents = true;
                 this.options.tabSharePointHosts = answers.tabSharePointHosts;
                 this.options.tabSharePoint = answers.tabSharePoint;
+                this.options.tabScopes = answers.tabScopes;
             });
         }
     }

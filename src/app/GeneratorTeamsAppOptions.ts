@@ -38,6 +38,7 @@ export class GeneratorTeamsAppOptions {
     tabReactComponentName: string;
     tabSharePoint: boolean;
     tabSharePointHosts: string[] = [];
+    tabScopes: string[];
 
     /* Bots */
     botid: string = '';

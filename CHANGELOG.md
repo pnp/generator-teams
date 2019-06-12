@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added default logging of "msteams" in the `.env` file
 * Added support for SCSS in the build pipeline
 * Added a default styling to the start page
+* Added an option for Tabs to specify scope; *groupcaht* or *team*
 
 ### Changed
 

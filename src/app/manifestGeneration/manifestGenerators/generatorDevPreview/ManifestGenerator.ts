@@ -24,7 +24,7 @@ export class ManifestGenerator extends BaseManifestGenerator {
         manifest["$schema"] = "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json";
         manifest.manifestVersion = "devPreview";
 
-        if (options.mpnId !== undefined) {
+        if (options.mpnId && options.mpnId.length > 0) {
             manifest.developer.mpnId = options.mpnId;
         }
 

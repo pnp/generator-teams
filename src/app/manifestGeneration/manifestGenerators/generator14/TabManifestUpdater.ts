@@ -11,7 +11,7 @@ export class TabManifestUpdater implements IManifestUpdater {
         const tab: any = {
             configurationUrl: `https://{{HOSTNAME}}/${options.tabName}/config.html`,
             canUpdateConfiguration: true,
-            scopes: ["team", "groupchat"]
+            scopes: options.tabScopes
         };
         if(options.tabSharePoint) { 
             tab.sharePointPreviewImage = `https://{{HOSTNAME}}/assets/${options.tabName}-preview.png`;
