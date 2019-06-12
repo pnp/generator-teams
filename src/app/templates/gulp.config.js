@@ -12,8 +12,14 @@ const config = {
         "./src/app/**/*.html", "./src/app/**/*.ejs"
     ],
     watches: [
-        "./src/**/*.*",
-        "!./src/**/*.scss"
+        "./src/app/**/*.*",
+        "!./src/app/**/*.scss",
+        "!./src/app/web/**/*.*",
+        "!./src/app/scripts/**/*.*",
+    ],
+    clientWatches: [
+        "./src/app/scripts/**/*.*",
+        "!./src/app/**/*.scss"
     ],
     manifests: [
         "./src/manifest/**/*.*",

@@ -82,7 +82,12 @@ const watches = () => {
     // all other watches
     watch(
         config.watches,
-        series('build')
+        series('webpack:server')
+    );
+
+    watch(
+        config.clientWatches,
+        series('webpack:client')
     );
 
     // watch for style changes
@@ -111,7 +116,7 @@ const watches = () => {
 
 
     // watch for static files
-    watch(config.staticFiles, series('static:copy'));
+    watch(config.staticFiles, series('static:copy', 'static:inject'));
 }
 
 task('watch', watches);
@@ -139,16 +144,12 @@ task('nodemon', (callback) => {
 });
 
 
-/**
- * Webpack bundling
- */
-task('webpack', (callback) => {
-
+const _webpack = (idx, callback) => {
     const webpackConfig = require(
         path.join(__dirname + '/webpack.config')
     )
 
-    webpack(webpackConfig, (err, stats) => {
+    webpack(webpackConfig[idx], (err, stats) => {
 
         if (err) throw new PluginError("webpack", err);
 
@@ -169,7 +170,21 @@ task('webpack', (callback) => {
         }
         callback();
     });
+}
+
+/**
+ * Webpack bundling
+ */
+task('webpack:client', (callback) => {
+    _webpack(1, callback);
 });
+
+task('webpack:server', (callback) => {
+    _webpack(0, callback);
+});
+
+task('webpack', parallel("webpack:client", "webpack:server"));
+
 
 /**
  * Copies static files

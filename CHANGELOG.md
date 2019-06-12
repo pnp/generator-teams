@@ -17,13 +17,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added support for SCSS in the build pipeline
 * Added a default styling to the start page
 * Added an option for Tabs to specify scope; *groupcaht* or *team*
+* Added a build option called `linting` to be able to opt-out of Typescript linting. Use `gulp serve --no-linting` for faster builds.
 
 ### Changed
 
 * Updated the `@microsoft/teams-js` package to version `1.4.2`
 * Added strict handling of inquirer answers in the main generator
 * Refactored the gulp build system into `gulpfile.js` and `gulpfile.config.js`
-* Refactored gulp tasks
+* Refactored gulp tasks and added new gulp tasks to support independent builds of client side and server side code
+* The `watch` gulp tasks now only rebuilds the parts that has changed (server side code, client side code, styles or static files) which improves incremental build times
 * Updated `gulpfile.js` to use the `$schema` defined in the manifest file for validation and the `SCHEMAS` object only as backup
 * Clarified some questions that the users is adding Message Extension commands, rather than new message extensions
 
