@@ -42,14 +42,9 @@ const
     ZSchema = require('z-schema'),
     request = require('request');
 
-
-
 const webpack = require('webpack');
 
 require('dotenv').config();
-
-// Allows to define the port as command line argument
-const port = argv.port || 3000;
 
 /**
  * Setting up environments
