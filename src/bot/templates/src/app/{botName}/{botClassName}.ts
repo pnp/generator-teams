@@ -59,24 +59,25 @@ export class <%= botClassName %> implements IBot {
                             await context.sendActivity(`I\'m terribly sorry, but my master hasn\'t trained me to do anything yet...`);
                         }
                         break;
-                    case ActivityTypes.ConversationUpdate:
-                        log("Conversation update");
-                        // Display a welcome card when the bot is added to a conversation
-                        if (context.activity.membersAdded && context.activity.membersAdded.length !== 0) {
-                            for (const idx in context.activity.membersAdded) {
-                                if (context.activity.membersAdded[idx].id !== context.activity.recipient.id) {
-                                    const welcomeCard = CardFactory.adaptiveCard(WelcomeCard);
-                                    await context.sendActivity({ attachments: [welcomeCard] });
-                                }
-                            }
-                        }
-                        break;
                     default:
                         break;
                 }
 
                 // Save state changes
                 return this.conversationState.saveChanges(context);
+            }
+        };
+
+        this.activityProc.conversationUpdateActivityHandler = {
+            onConversationUpdateActivity: async (context: TurnContext): Promise<void> => {
+                if (context.activity.membersAdded && context.activity.membersAdded.length !== 0) {
+                    for (const idx in context.activity.membersAdded) {
+                        if (context.activity.membersAdded[idx].id === context.activity.recipient.id) {
+                            const welcomeCard = CardFactory.adaptiveCard(WelcomeCard);
+                            await context.sendActivity({ attachments: [welcomeCard] });
+                        }
+                    }
+                }
             }
         };
 

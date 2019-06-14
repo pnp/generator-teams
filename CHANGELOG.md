@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed an issue when you add a messaging extension to an existing project and has renamed the bot file or folder name
 * Fixed an issue when you add additional pages/scripts to a project and the library name is camel cased. Now correctly cased library name is retrieved from existing `webpack.config.js` file, and then the persisted config if exists, before defaulting to the library name
 * Fixed an issue where Microsoft Partner Id is incorrectly persisted in the Yeoman configuration file
+* Fixed an issue where the bot welcome card was not shown when adding the app to a team
 
 ## [*2.8.1*] - <*2019-05-20*>
 
