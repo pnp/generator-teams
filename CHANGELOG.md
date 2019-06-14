@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [*Unreleased]
+## [*2.9.0*] - <*2019-06-14*>
 
 ### Added
 
@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added default logging of "msteams" in the `.env` file
 * Added support for SCSS in the build pipeline
 * Added a default styling to the start page
-* Added an option for Tabs to specify scope; *groupcaht* or *team*
+* Added an option for Tabs to specify scope; *groupchat* or *team*
 * Added a build option called `linting` to be able to opt-out of Typescript linting. Use `gulp serve --no-linting` for faster builds.
 
 ### Changed
