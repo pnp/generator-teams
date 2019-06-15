@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*2.9.1*] - <*2019-06-15*>
+
+### Fixes
+
+* Removed `postinstall` npm command
+
 ## [*2.9.0*] - <*2019-06-14*>
 
 ### Added
