@@ -27,6 +27,18 @@ describe('teams:tab', function () {
         'src/app/scripts/tabtest01Tab/__tests__/Tabtest01TabRemove.spec.tsx'
     ];
 
+    const TAB_HTML_FILES_STATIC = [
+        'src/app/web/tabtest01Tab/index.html'
+    ];
+
+    const TAB_SCRIPT_FILES_STATIC = [
+        'src/app/scripts/tabtest01Tab/Tabtest01Tab.tsx'
+    ];
+
+    const TAB_SCRIPT_TEST_FILES_STATIC = [
+        'src/app/scripts/tabtest01Tab/__tests__/Tabtest01Tab.spec.tsx'
+    ];
+
     const TAB_FILES = 'src/app/tabtest01Tab/tabtest01Tab.ts';
 
     beforeEach(async () => {
@@ -44,7 +56,8 @@ describe('teams:tab', function () {
                 developer: 'generator teams developer',
                 manifestVersion: 'v1.3',
                 parts: 'tab',
-                unitTestsEnabled: true
+                unitTestsEnabled: true,
+                tabType: "configurable"
             })
             .withGenerators(testHelper.DEPENDENCIES);
 
@@ -57,10 +70,53 @@ describe('teams:tab', function () {
 
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_13);
 
+        assert.jsonFileContent('src/manifest/manifest.json', {
+            configurableTabs: [{
+                "canUpdateConfiguration": true
+            }]
+        });
+
         assert.file(TAB_HTML_FILES);
         assert.file(TAB_FILES);
         assert.file(TAB_SCRIPT_FILES);
         assert.file(TAB_SCRIPT_TEST_FILES);
+    });
+
+    it('should generate a static tab project with v1.3 with unit tests', async () => {
+        await helpers.run(testHelper.GENERATOR_PATH)
+            .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab01')
+            .withArguments(['--no-telemetry'])
+            .withPrompts({
+                solutionName: 'tab-test-01',
+                whichFolder: 'current',
+                name: 'tabtest01',
+                developer: 'generator teams developer',
+                manifestVersion: 'v1.3',
+                parts: 'tab',
+                unitTestsEnabled: true,
+                tabType: "static"
+            })
+            .withGenerators(testHelper.DEPENDENCIES);
+
+        assert.file(testHelper.ROOT_FILES);
+        assert.file(testHelper.TEST_FILES);
+        assert.file(testHelper.APP_FILES);
+        assert.file(testHelper.SCRIPT_FILES);
+        assert.file(testHelper.WEB_FILES);
+        assert.file(testHelper.MANIFEST_FILES);
+
+        assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_13);
+
+        assert.jsonFileContent('src/manifest/manifest.json', {
+            staticTabs: [{
+                "scopes": ["personal"]
+            }]
+        });
+
+        assert.file(TAB_HTML_FILES_STATIC);
+        assert.file(TAB_FILES);
+        assert.file(TAB_SCRIPT_FILES_STATIC);
+        assert.file(TAB_SCRIPT_TEST_FILES_STATIC);
     });
 
     it('should generate tab project with v1.3 without unit tests', async () => {
@@ -74,7 +130,8 @@ describe('teams:tab', function () {
                 developer: 'generator teams developer',
                 manifestVersion: 'v1.3',
                 parts: 'tab',
-                unitTestsEnabled: false
+                unitTestsEnabled: false,
+                tabType: "configurable"
             })
             .withGenerators(testHelper.DEPENDENCIES);
 
@@ -87,10 +144,53 @@ describe('teams:tab', function () {
 
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_13);
 
+        assert.jsonFileContent('src/manifest/manifest.json', {
+            configurableTabs: [{
+                "canUpdateConfiguration": true
+            }]
+        });
+
         assert.file(TAB_HTML_FILES);
         assert.file(TAB_FILES);
         assert.file(TAB_SCRIPT_FILES);
         assert.noFile(TAB_SCRIPT_TEST_FILES);
+    });
+
+    it('should generate a static tab project with v1.3 without unit tests', async () => {
+        await helpers.run(testHelper.GENERATOR_PATH)
+            .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab02')
+            .withArguments(['--no-telemetry'])
+            .withPrompts({
+                solutionName: 'tab-test-01',
+                whichFolder: 'current',
+                name: 'tabtest01',
+                developer: 'generator teams developer',
+                manifestVersion: 'v1.3',
+                parts: 'tab',
+                unitTestsEnabled: false,
+                tabType: "static"
+            })
+            .withGenerators(testHelper.DEPENDENCIES);
+
+        assert.file(testHelper.ROOT_FILES);
+        assert.noFile(testHelper.TEST_FILES);
+        assert.file(testHelper.APP_FILES);
+        assert.file(testHelper.SCRIPT_FILES);
+        assert.file(testHelper.WEB_FILES);
+        assert.file(testHelper.MANIFEST_FILES);
+
+        assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_13);
+
+        assert.jsonFileContent('src/manifest/manifest.json', {
+            staticTabs: [{
+                "scopes": ["personal"]
+            }]
+        });
+
+        assert.file(TAB_HTML_FILES_STATIC);
+        assert.file(TAB_FILES);
+        assert.file(TAB_SCRIPT_FILES_STATIC);
+        assert.noFile(TAB_SCRIPT_TEST_FILES_STATIC);
     });
 
     it('should generate tab project with v1.4 with unit tests', async () => {
@@ -104,7 +204,8 @@ describe('teams:tab', function () {
                 developer: 'generator teams developer',
                 manifestVersion: 'v1.4',
                 parts: 'tab',
-                unitTestsEnabled: true
+                unitTestsEnabled: true,
+                tabType: "configurable"
             })
             .withGenerators(testHelper.DEPENDENCIES);
 
@@ -116,6 +217,12 @@ describe('teams:tab', function () {
         assert.file(testHelper.MANIFEST_FILES);
 
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_14);
+
+        assert.jsonFileContent('src/manifest/manifest.json', {
+            configurableTabs: [{
+                "canUpdateConfiguration": true
+            }]
+        });
 
         assert.file(TAB_HTML_FILES);
         assert.file(TAB_FILES);
@@ -134,7 +241,8 @@ describe('teams:tab', function () {
                 developer: 'generator teams developer',
                 manifestVersion: 'v1.4',
                 parts: 'tab',
-                unitTestsEnabled: false
+                unitTestsEnabled: false,
+                tabType: "configurable"
             })
             .withGenerators(testHelper.DEPENDENCIES);
 
@@ -147,10 +255,53 @@ describe('teams:tab', function () {
 
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_14);
 
+        assert.jsonFileContent('src/manifest/manifest.json', {
+            configurableTabs: [{
+                "canUpdateConfiguration": true
+            }]
+        });
+
         assert.file(TAB_HTML_FILES);
         assert.file(TAB_FILES);
         assert.file(TAB_SCRIPT_FILES);
         assert.noFile(TAB_SCRIPT_TEST_FILES);
+    });
+
+    it('should generate a static tab project with v1.4 without unit tests', async () => {
+        await helpers.run(testHelper.GENERATOR_PATH)
+            .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + '/tab02-14')
+            .withArguments(['--no-telemetry'])
+            .withPrompts({
+                solutionName: 'tab-test-01',
+                whichFolder: 'current',
+                name: 'tabtest01',
+                developer: 'generator teams developer',
+                manifestVersion: 'v1.4',
+                parts: 'tab',
+                unitTestsEnabled: false,
+                tabType: "static"
+            })
+            .withGenerators(testHelper.DEPENDENCIES);
+
+        assert.file(testHelper.ROOT_FILES);
+        assert.noFile(testHelper.TEST_FILES);
+        assert.file(testHelper.APP_FILES);
+        assert.file(testHelper.SCRIPT_FILES);
+        assert.file(testHelper.WEB_FILES);
+        assert.file(testHelper.MANIFEST_FILES);
+
+        assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_14);
+
+        assert.jsonFileContent('src/manifest/manifest.json', {
+            staticTabs: [{
+                "scopes": ["personal"]
+            }]
+        });
+
+        assert.file(TAB_HTML_FILES_STATIC);
+        assert.file(TAB_FILES);
+        assert.file(TAB_SCRIPT_FILES_STATIC);
+        assert.noFile(TAB_SCRIPT_TEST_FILES_STATIC);
     });
 
     it('should generate tab project with v1.4 with SharePoint config', async () => {
@@ -166,7 +317,8 @@ describe('teams:tab', function () {
                 parts: 'tab',
                 unitTestsEnabled: false,
                 tabSharePoint: true,
-                tabSharePointHosts: ["sharePointFullPage", "sharePointWebPart"]
+                tabSharePointHosts: ["sharePointFullPage", "sharePointWebPart"],
+                tabType: "configurable"
             })
             .withGenerators(testHelper.DEPENDENCIES);
 
@@ -205,7 +357,8 @@ describe('teams:tab', function () {
                 developer: 'generator teams developer',
                 manifestVersion: 'v1.5',
                 parts: 'tab',
-                unitTestsEnabled: false
+                unitTestsEnabled: false,
+                tabType: "configurable"
             })
             .withGenerators(testHelper.DEPENDENCIES);
 
@@ -217,6 +370,12 @@ describe('teams:tab', function () {
         assert.file(testHelper.MANIFEST_FILES);
 
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_15);
+
+        assert.jsonFileContent('src/manifest/manifest.json', {
+            configurableTabs: [{
+                "canUpdateConfiguration": true
+            }]
+        });
 
         assert.file(TAB_HTML_FILES);
         assert.file(TAB_FILES);
@@ -237,7 +396,8 @@ describe('teams:tab', function () {
                 parts: 'tab',
                 unitTestsEnabled: false,
                 tabSharePoint: true,
-                tabSharePointHosts: ["sharePointFullPage", "sharePointWebPart"]
+                tabSharePointHosts: ["sharePointFullPage", "sharePointWebPart"],
+                tabType: "configurable"
             })
             .withGenerators(testHelper.DEPENDENCIES);
 
@@ -277,7 +437,8 @@ describe('teams:tab', function () {
                 manifestVersion: 'v1.5',
                 parts: 'tab',
                 unitTestsEnabled: false,
-                mpnId: "1234567890"
+                mpnId: "1234567890",
+                tabType: "configurable"
             })
             .withGenerators(testHelper.DEPENDENCIES);
 
@@ -293,6 +454,11 @@ describe('teams:tab', function () {
             developer: {
                 mpnId: "1234567890"
             }
+        });
+        assert.jsonFileContent('src/manifest/manifest.json', {
+            configurableTabs: [{
+                "canUpdateConfiguration": true
+            }]
         });
         assert.file(TAB_HTML_FILES);
         assert.file(TAB_FILES);
@@ -312,7 +478,8 @@ describe('teams:tab', function () {
                 developer: 'generator teams developer',
                 manifestVersion: 'devPreview',
                 parts: 'tab',
-                unitTestsEnabled: true
+                unitTestsEnabled: true,
+                tabType: "configurable"
             })
             .withGenerators(testHelper.DEPENDENCIES);
 
@@ -324,6 +491,12 @@ describe('teams:tab', function () {
         assert.file(testHelper.MANIFEST_FILES);
 
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_DEVPREVIEW);
+
+        assert.jsonFileContent('src/manifest/manifest.json', {
+            configurableTabs: [{
+                "canUpdateConfiguration": true
+            }]
+        });
 
         assert.file(TAB_HTML_FILES);
         assert.file(TAB_FILES);
@@ -342,7 +515,8 @@ describe('teams:tab', function () {
                 developer: 'generator teams developer',
                 manifestVersion: 'devPreview',
                 parts: 'tab',
-                unitTestsEnabled: false
+                unitTestsEnabled: false,
+                tabType: "configurable"
             })
             .withGenerators(testHelper.DEPENDENCIES);
 
@@ -354,6 +528,12 @@ describe('teams:tab', function () {
         assert.file(testHelper.MANIFEST_FILES);
 
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_DEVPREVIEW);
+
+        assert.jsonFileContent('src/manifest/manifest.json', {
+            configurableTabs: [{
+                "canUpdateConfiguration": true
+            }]
+        });
 
         assert.file(TAB_HTML_FILES);
         assert.file(TAB_FILES);
@@ -374,7 +554,8 @@ describe('teams:tab', function () {
                 parts: 'tab',
                 unitTestsEnabled: false,
                 useAzureAppInsights: true,
-                azureAppInsightsKey: "12341234-1234-1234-1234-123412341234"
+                azureAppInsightsKey: "12341234-1234-1234-1234-123412341234",
+                tabType: "configurable"
             })
             .withGenerators(testHelper.DEPENDENCIES);
 
@@ -395,7 +576,8 @@ describe('teams:tab', function () {
                 manifestVersion: 'v1.3',
                 parts: 'tab',
                 unitTestsEnabled: false,
-                useAzureAppInsights: false
+                useAzureAppInsights: false,
+                tabType: "configurable"
             })
             .withGenerators(testHelper.DEPENDENCIES);
 
@@ -415,7 +597,8 @@ describe('teams:tab', function () {
                 developer: 'generator teams developer',
                 manifestVersion: 'v1.5',
                 parts: 'tab',
-                tabScopes: ["groupchat"]
+                tabScopes: ["groupchat"],
+                tabType: "configurable"
             })
             .withGenerators(testHelper.DEPENDENCIES);
 
@@ -439,7 +622,8 @@ describe('teams:tab', function () {
                 developer: 'generator teams developer',
                 manifestVersion: 'v1.5',
                 parts: 'tab',
-                tabScopes: ["team"]
+                tabScopes: ["team"],
+                tabType: "configurable"
             })
             .withGenerators(testHelper.DEPENDENCIES);
 
@@ -462,7 +646,8 @@ describe('teams:tab', function () {
                 developer: 'generator teams developer',
                 manifestVersion: 'v1.5',
                 parts: 'tab',
-                tabScopes: ["team", "groupchat"]
+                tabScopes: ["team", "groupchat"],
+                tabType: "configurable"
             })
             .withGenerators(testHelper.DEPENDENCIES);
 

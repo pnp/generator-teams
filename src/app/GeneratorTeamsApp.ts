@@ -202,8 +202,19 @@ export class GeneratorTeamsApp extends Generator {
                         {
                             name: 'A Tab',
                             value: 'tab',
-                            disabled: this.options.existingManifest,
-                            checked: true
+                            checked: true,
+                            disabled: () => {
+                                if (this.options.existingManifest &&
+                                    this.options.existingManifest.configurableTabs &&
+                                    this.options.existingManifest.configurableTabs.length >= 1 &&
+                                    this.options.existingManifest.staticTabs &&
+                                    this.options.existingManifest.staticTabs.length >= 10) {
+                                    // max 1 configurable tab and 10 static tabs allowed
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            },
                         },
                         {
                             name: 'A Bot',

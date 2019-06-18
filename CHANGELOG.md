@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*]
+
+### Added
+
+* Added the option to choose between a *configurable* and *static* tab
+* Added the option of adding additional tabs when running the generator over an existing solution
+
 ## [*2.9.1*] - <*2019-06-15*>
 
 ### Fixes

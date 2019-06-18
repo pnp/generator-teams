@@ -39,6 +39,7 @@ export class GeneratorTeamsAppOptions {
     tabSharePoint: boolean;
     tabSharePointHosts: string[] = [];
     tabScopes: string[];
+    tabType: "configurable" | "static";
 
     /* Bots */
     botid: string = '';

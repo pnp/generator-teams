@@ -32,11 +32,41 @@ export class TabGenerator extends Generator {
                         name: 'tabTitle',
                         message: 'Default Tab name? (max 16 characters)',
                         default: this.options.title + ' Tab',
-                        validate: (input) => {
+                        validate: (input: string, answers: any) => {
                             if (!(/^[a-zA-Z].*/.test(input))) {
                                 return "Must start with an alphabetical character";
                             }
+                            let name = lodash.camelCase(input);
+                            if (!name.endsWith(`Tab`)) {
+                                name += `Tab`;
+                            }
+                            let className = name.charAt(0).toUpperCase() + name.slice(1);
+                            if (this.fs.exists(`src/app/${name}/${className}.ts`)) {
+                                return `There's already a file with the name of ${name}/${className}.ts`;
+                            }
                             return input.length > 0 && input.length <= 16;
+                        },
+                    },
+                    {
+                        type: 'list',
+                        name: 'tabType',
+                        message: "Do you want to create a configurable or static tab?",
+                        choices: [
+                            {
+                                name: "Configurable",
+                                value: "configurable",
+                                disabled: () => {
+                                    // only one configurable tab is allowed
+                                    return this.options.existingManifest && this.options.existingManifest.configurableTabs && this.options.existingManifest.configurableTabs.length != 0;
+                                }
+                            },
+                            {
+                                name: "Static",
+                                value: "static",
+                            }
+                        ],
+                        default: () => {
+                            return this.options.existingManifest && this.options.existingManifest.configurableTabs && this.options.existingManifest.configurableTabs.length != 0 ? "static" : "configurable";
                         }
                     },
                     {
@@ -57,6 +87,9 @@ export class TabGenerator extends Generator {
                         ],
                         validate: (input: string, answers: any) => {
                             return input.length > 0;
+                        },
+                        when: (answers: any) => {
+                            return answers.tabType == "configurable";
                         }
                     },
                     {
@@ -65,7 +98,7 @@ export class TabGenerator extends Generator {
                         message: 'Do you want this tab to be available in SharePoint Online?',
                         default: true,
                         when: (answers: any) => {
-                            return this.options.manifestVersion != "v1.3"; // Only available in 1.4 or higher
+                            return answers.tabType == "configurable" && this.options.manifestVersion != "v1.3"; // Only available in 1.4 or higher
                         },
                     },
                     {
@@ -93,6 +126,7 @@ export class TabGenerator extends Generator {
             ).then((answers: any) => {
                 this.options.tabTitle = answers.tabTitle;
                 this.options.tabName = lodash.camelCase(this.options.tabTitle);
+                this.options.tabType = answers.tabType;
                 if (!this.options.tabName.endsWith('Tab')) {
                     this.options.tabName = this.options.tabName + 'Tab';
                 }
@@ -107,21 +141,29 @@ export class TabGenerator extends Generator {
     public writing() {
         if (this.options.tab) {
             let templateFiles = [
-                "src/app/scripts/{tabName}/{tabReactComponentName}Config.tsx",
                 "src/app/scripts/{tabName}/{tabReactComponentName}.tsx",
-                "src/app/scripts/{tabName}/{tabReactComponentName}Remove.tsx",
                 "src/app/{tabName}/{tabReactComponentName}.ts",
                 "src/app/web/{tabName}/index.html",
-                "src/app/web/{tabName}/remove.html",
-                "src/app/web/{tabName}/config.html",
             ];
+            if (this.options.tabType == "configurable") {
+                templateFiles.push(
+                    "src/app/scripts/{tabName}/{tabReactComponentName}Config.tsx",
+                    "src/app/scripts/{tabName}/{tabReactComponentName}Remove.tsx",
+                    "src/app/web/{tabName}/remove.html",
+                    "src/app/web/{tabName}/config.html",
+                );
+            }
 
             if (this.options.unitTestsEnabled) {
                 templateFiles.push(
-                    "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}Config.spec.tsx",
                     "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}.spec.tsx",
-                    "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}Remove.spec.tsx",
                 );
+                if (this.options.tabType == "configurable") {
+                    templateFiles.push(
+                        "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}Config.spec.tsx",
+                        "src/app/scripts/{tabName}/__tests__/{tabReactComponentName}Remove.spec.tsx",
+                    );
+                }
             }
 
             this.sourceRoot()
@@ -169,18 +211,20 @@ export class TabGenerator extends Generator {
                 `Automatically added for the ${this.options.tabName} tab`,
                 this.fs
             );
-            Yotilities.insertTsExportDeclaration(
-                "src/app/scripts/client.ts",
-                `./${this.options.tabName}/${this.options.tabReactComponentName}Config`,
-                undefined,
-                this.fs
-            );
-            Yotilities.insertTsExportDeclaration(
-                "src/app/scripts/client.ts",
-                `./${this.options.tabName}/${this.options.tabReactComponentName}Remove`,
-                undefined,
-                this.fs
-            );
+            if (this.options.tabType == "configurable") {
+                Yotilities.insertTsExportDeclaration(
+                    "src/app/scripts/client.ts",
+                    `./${this.options.tabName}/${this.options.tabReactComponentName}Config`,
+                    undefined,
+                    this.fs
+                );
+                Yotilities.insertTsExportDeclaration(
+                    "src/app/scripts/client.ts",
+                    `./${this.options.tabName}/${this.options.tabReactComponentName}Remove`,
+                    undefined,
+                    this.fs
+                );
+            }
 
             Yotilities.insertTsExportDeclaration(
                 "src/app/TeamsAppsComponents.ts",

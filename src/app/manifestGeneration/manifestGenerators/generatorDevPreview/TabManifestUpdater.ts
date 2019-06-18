@@ -8,15 +8,25 @@ import { GeneratorTeamsAppOptions } from "../../../GeneratorTeamsAppOptions";
 export class TabManifestUpdater implements IManifestUpdater {
 
     public updateManifest(manifest: any, options: GeneratorTeamsAppOptions): void {
-        const tab: any = {
-            configurationUrl: `https://{{HOSTNAME}}/${options.tabName}/config.html`,
-            canUpdateConfiguration: true,
-            scopes: options.tabScopes
-        };
-        if (options.tabSharePoint) {
-            tab.sharePointPreviewImage = `https://{{HOSTNAME}}/assets/${options.tabName}-preview.png`;
-            tab.supportedSharePointHosts = options.tabSharePointHosts;
+        if (options.tabType == "static") {
+            (<any[]>manifest.staticTabs).push({
+                entityId: "default-data",
+                name: options.tabTitle,
+                contentUrl: `https://{{HOSTNAME}}/${options.tabName}/`,
+                scopes: ["personal"]
+            });
         }
-        (<any[]>manifest.configurableTabs).push(tab);
+        else {
+            const tab: any = {
+                configurationUrl: `https://{{HOSTNAME}}/${options.tabName}/config.html`,
+                canUpdateConfiguration: true,
+                scopes: options.tabScopes
+            };
+            if (options.tabSharePoint) {
+                tab.sharePointPreviewImage = `https://{{HOSTNAME}}/assets/${options.tabName}-preview.png`;
+                tab.supportedSharePointHosts = options.tabSharePointHosts;
+            }
+            (<any[]>manifest.configurableTabs).push(tab);
+        }
     }
 }
