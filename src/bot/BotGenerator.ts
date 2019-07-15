@@ -73,7 +73,7 @@ export class BotGenerator extends Generator {
                             return ''
                         },
                         validate: (input) => {
-                            return validate(input);
+                            return validate(input) || input == EmptyGuid.empty;
                         }
                     },
                     {

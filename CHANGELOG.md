@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changes
 
 * Renamed argument for nodemon to use `--inspect` instead of `--debug` due to node.js deprecation warning **DEP0062**
+* Moved from `guid` (deprecated) npm package to `uuid`, `uuid-validate` and a custom empty guid
+* Updated `gulp-inject` version
 
 ## [*2.9.1*] - <*2019-06-15*>
 
@@ -385,7 +387,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 * Updated manifest according to [the manifest schema (0.4)](https://github.com/OfficeDev/Microsoft-teams-docs/blob/master/teams/schema.md)
-* Moved from `guid` (deprecated) npm package to `uuid`, `uuid-validate` and a custom empty guid
 
 ## [*0.4.11*] - <*2017-03-10*>
 

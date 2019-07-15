@@ -53,7 +53,7 @@ export class ConnectorGenerator extends Generator {
                             return EmptyGuid.empty;
                         },
                         validate: (input) => {
-                            return validate(input);
+                            return validate(input) || input == EmptyGuid.empty;
                         }
                     },
                     {

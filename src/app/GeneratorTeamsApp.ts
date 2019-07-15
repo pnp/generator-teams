@@ -13,7 +13,7 @@ import inquirer = require('inquirer');
 import { ManifestVersions } from './manifestGeneration/ManifestVersions';
 import uuid = require('uuid/v1');
 import validate = require('uuid-validate');
-import EmtpyGuid = require('./EmptyGuid');
+import EmptyGuid = require('./EmptyGuid');
 
 let yosay = require('yosay');
 let pkg = require('../../package.json');
@@ -279,10 +279,10 @@ export class GeneratorTeamsApp extends Generator {
                     name: 'azureAppInsightsKey',
                     message: 'What is the Azure Application Insights Instrumentation Key?',
                     default: (answers: IAnswers) => {
-                        return EmtpyGuid.empty;
+                        return EmptyGuid.empty;
                     },
                     validate: (input: string) => {
-                        return validate(input);
+                        return validate(input) || input == EmptyGuid.empty;
                     },
                     when: (answers: IAnswers) => answers.useAzureAppInsights,
                 },

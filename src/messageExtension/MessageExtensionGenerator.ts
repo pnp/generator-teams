@@ -98,7 +98,7 @@ export class MessageExtensionGenerator extends Generator {
                             return EmptyGuid.empty;
                         },
                         validate: (input: string) => {
-                            return validate(input);
+                            return validate(input) || input == EmptyGuid.empty;
                         },
                         when: (answers: any) => {
                             return answers.messageExtensionHost !== 'existing';
@@ -292,7 +292,7 @@ export class MessageExtensionGenerator extends Generator {
                                     if (idargval.startsWith("\"") && idargval.endsWith("\"")) {
                                         idargval = idargval.substr(1, idargval.length - 2);
                                     }
-                                    if (validate(idargval)) {
+                                    if (validate(idargval) || idargval == EmptyGuid.empty) {
                                         return { c: c, id: idargval };
                                     } else {
                                         if (idargval.startsWith("process.env.")) {
