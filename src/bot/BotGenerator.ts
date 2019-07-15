@@ -4,16 +4,11 @@
 
 import * as Generator from 'yeoman-generator';
 import * as lodash from 'lodash';
-import * as chalk from 'chalk';
 import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
 import { ManifestGeneratorFactory } from '../app/manifestGeneration/ManifestGeneratorFactory';
-import { stringify } from 'querystring';
-
-
-let yosay = require('yosay');
-let path = require('path');
-let Guid = require('guid');
+import EmptyGuid = require('../app/EmptyGuid');
+import validate = require('uuid-validate');
 
 export class BotGenerator extends Generator {
     options: GeneratorTeamsAppOptions;
@@ -73,12 +68,12 @@ export class BotGenerator extends Generator {
                         },
                         default: (answers: any) => {
                             if (answers.bottype == 'botframework') {
-                                return Guid.EMPTY;
+                                return EmptyGuid.empty;
                             }
                             return ''
                         },
                         validate: (input) => {
-                            return Guid.isGuid(input);
+                            return validate(input);
                         }
                     },
                     {

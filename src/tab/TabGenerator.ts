@@ -4,15 +4,9 @@
 
 import * as Generator from 'yeoman-generator';
 import * as lodash from 'lodash';
-import * as chalk from 'chalk';
 import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
 import { ManifestGeneratorFactory } from '../app/manifestGeneration/ManifestGeneratorFactory';
-
-let yosay = require('yosay');
-let path = require('path');
-let Guid = require('guid');
-
 
 export class TabGenerator extends Generator {
     options: GeneratorTeamsAppOptions;

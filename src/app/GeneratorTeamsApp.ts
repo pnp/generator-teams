@@ -11,11 +11,12 @@ import * as AppInsights from 'applicationinsights';
 import { ManifestGeneratorFactory } from './manifestGeneration/ManifestGeneratorFactory';
 import inquirer = require('inquirer');
 import { ManifestVersions } from './manifestGeneration/ManifestVersions';
+import uuid = require('uuid/v1');
+import validate = require('uuid-validate');
+import EmtpyGuid = require('./EmptyGuid');
 
 let yosay = require('yosay');
-let path = require('path');
 let pkg = require('../../package.json');
-let Guid = require('guid');
 
 /**
  * The main implementation for the `teams` generator
@@ -278,10 +279,10 @@ export class GeneratorTeamsApp extends Generator {
                     name: 'azureAppInsightsKey',
                     message: 'What is the Azure Application Insights Instrumentation Key?',
                     default: (answers: IAnswers) => {
-                        return Guid.EMPTY;
+                        return EmtpyGuid.empty;
                     },
                     validate: (input: string) => {
-                        return Guid.isGuid(input);
+                        return validate(input);
                     },
                     when: (answers: IAnswers) => answers.useAzureAppInsights,
                 },
@@ -311,7 +312,7 @@ export class GeneratorTeamsApp extends Generator {
                 }
                 var arr: string[] = tmp.split('.');
                 this.options.namespace = lodash.reverse(arr).join('.').toLocaleLowerCase();
-                this.options.id = Guid.raw();
+                this.options.id = uuid();
                 if (this.options.host.indexOf('azurewebsites.net') >= 0) {
                     this.options.websitePrefix = this.options.host.substring(this.options.host.indexOf('://') + 3, this.options.host.indexOf('.'));
                 } else {

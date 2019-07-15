@@ -1,6 +1,6 @@
 {
   "name": "generator-teams",
-  "version": "2.10.0-preview2",
+  "version": "2.10.0-preview3",
   "description": "Yeoman generator for Microsoft Teams Apps",
   "main": "generators/app/index.js",
   "scripts": {
@@ -54,9 +54,10 @@
   "devDependencies": {
     "@types/del": "^4.0.0",
     "@types/fs-extra": "^5.0.5",
-    "@types/guid": "^1.0.0",
     "@types/lodash": "^4.14.123",
     "@types/mocha": "^5.2.6",
+    "@types/uuid": "^3.4.5",
+    "@types/uuid-validate": "0.0.1",
     "@types/yeoman-assert": "^3.1.1",
     "@types/yeoman-generator": "^3.1.1",
     "@types/yeoman-test": "^2.0.2",
@@ -78,10 +79,11 @@
     "applicationinsights": "^1.2.0",
     "chalk": "^2.4.2",
     "dotenv": "^8.0.0",
-    "guid": "0.0.12",
     "lodash": "^4.17.11",
     "ts-morph": "^2.1.0",
     "typescript": "^3.3.4000",
+    "uuid": "^3.3.2",
+    "uuid-validate": "0.0.3",
     "yeoman-generator": "^3.2.0",
     "yosay": "^2.0.1"
   }

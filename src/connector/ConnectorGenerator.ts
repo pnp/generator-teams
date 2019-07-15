@@ -4,16 +4,15 @@
 
 import * as Generator from 'yeoman-generator';
 import * as lodash from 'lodash';
-import * as chalk from 'chalk';
 import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
-import * as ts from 'typescript';
 import { ManifestGeneratorFactory } from '../app/manifestGeneration/ManifestGeneratorFactory';
+import EmptyGuid = require('../app/EmptyGuid');
+import validate = require('uuid-validate');
 
 
 let yosay = require('yosay');
 let path = require('path');
-let Guid = require('guid');
 
 
 export class ConnectorGenerator extends Generator {
@@ -51,10 +50,10 @@ export class ConnectorGenerator extends Generator {
                         name: 'connectorId',
                         message: 'What is the Id of your Connector (found in the Connector Developer Portal)?',
                         default: (answers: any) => {
-                            return Guid.EMPTY;
+                            return EmptyGuid.empty;
                         },
                         validate: (input) => {
-                            return Guid.isGuid(input);
+                            return validate(input);
                         }
                     },
                     {

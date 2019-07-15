@@ -10,12 +10,9 @@ import { Yotilities } from './../app/Yotilities';
 import { Project, Scope, Decorator, ClassDeclaration } from "ts-morph";
 import * as ts from 'typescript';
 import * as path from 'path';
-import * as Guid from 'guid';
+import EmptyGuid = require('../app/EmptyGuid');
+import validate = require('uuid-validate');
 import { ManifestGeneratorFactory } from '../app/manifestGeneration/ManifestGeneratorFactory';
-
-
-let yosay = require('yosay');
-
 
 export class MessageExtensionGenerator extends Generator {
     options: GeneratorTeamsAppOptions;
@@ -98,10 +95,10 @@ export class MessageExtensionGenerator extends Generator {
                             return message;
                         },
                         default: (answers: any) => {
-                            return Guid.EMPTY;
+                            return EmptyGuid.empty;
                         },
                         validate: (input: string) => {
-                            return Guid.isGuid(input);
+                            return validate(input);
                         },
                         when: (answers: any) => {
                             return answers.messageExtensionHost !== 'existing';
@@ -295,7 +292,7 @@ export class MessageExtensionGenerator extends Generator {
                                     if (idargval.startsWith("\"") && idargval.endsWith("\"")) {
                                         idargval = idargval.substr(1, idargval.length - 2);
                                     }
-                                    if (Guid.isGuid(idargval)) {
+                                    if (validate(idargval)) {
                                         return { c: c, id: idargval };
                                     } else {
                                         if (idargval.startsWith("process.env.")) {

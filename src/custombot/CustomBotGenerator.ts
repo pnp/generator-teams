@@ -4,15 +4,8 @@
 
 import * as Generator from 'yeoman-generator';
 import * as lodash from 'lodash';
-import * as chalk from 'chalk';
 import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
-
-
-let yosay = require('yosay');
-let path = require('path');
-let Guid = require('guid');
-
 
 export class CustomBotGenerator extends Generator {
     options: GeneratorTeamsAppOptions;

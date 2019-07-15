@@ -4,8 +4,7 @@
 
 import { IManifestUpdater } from "../../IManifestUpdater";
 import { GeneratorTeamsAppOptions } from "../../../GeneratorTeamsAppOptions";
-
-let Guid = require('guid');
+import uuid = require('uuid/v1');
 
 export class BotManifestUpdater implements IManifestUpdater {
 
@@ -33,7 +32,7 @@ export class BotManifestUpdater implements IManifestUpdater {
 
         if (options.staticTab) {
             manifest.staticTabs.push({
-                entityId: Guid.raw(),
+                entityId: uuid(),
                 name: options.staticTabTitle,
                 contentUrl: `https://{{HOSTNAME}}/${options.botName}/${options.staticTabName}.html`,
                 scopes: ["personal"]
