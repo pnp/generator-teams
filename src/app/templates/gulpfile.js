@@ -128,7 +128,7 @@ task('nodemon', (callback) => {
     return nodemon({
         script: 'dist/server.js',
         watch: ['dist/server.js'],
-        nodeArgs: debug ? ['--debug'] : []
+        nodeArgs: debug ? ['--inspect'] : []
     }).on('start', function () {
         if (!started) {
             callback();

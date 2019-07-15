@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added the option to choose between a *configurable* and *static* tab
 * Added the option of adding additional tabs when running the generator over an existing solution
 
+### Changes
+
+* Renamed argument for nodemon to use `--inspect` instead of `--debug` due to node.js deprecation warning **DEP0062**
+
 ## [*2.9.1*] - <*2019-06-15*>
 
 ### Fixes
