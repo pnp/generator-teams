@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [*Unreleased*]
 
+### Fixes
+
+* Fixed invalid payload error in the bot welcome card
+
 ### Added
 
 * Added the option to choose between a *configurable* and *static* tab

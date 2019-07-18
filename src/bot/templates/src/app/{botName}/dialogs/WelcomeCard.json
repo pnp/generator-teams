@@ -20,7 +20,7 @@
       {
         "type": "TextBlock",
         "size": "default",
-        "isSubtle": "yes",
+        "isSubtle": true,
         "text": "Hello, nice to meet you!",
         "wrap": true,
         "maxLines": 0
