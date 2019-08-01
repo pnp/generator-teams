@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*]
+
+### Added
+
+* Added the support for localization of apps (manifest version 1.5+)
+* Added generator version in `.yo-rc.json` - to be used when upgrading core files
+* Added support for upgrading of core build files
+
 ## [*2.10.0*] - <*2019-07-18*>
 
 ### Fixes

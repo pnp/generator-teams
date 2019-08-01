@@ -14,6 +14,8 @@ import { ManifestVersions } from './manifestGeneration/ManifestVersions';
 import uuid = require('uuid/v1');
 import validate = require('uuid-validate');
 import EmptyGuid = require('./EmptyGuid');
+import { CoreFilesUpdaterFactory } from './coreFilesUpdater/CoreFilesUpdaterFactory';
+
 
 let yosay = require('yosay');
 let pkg = require('../../package.json');
@@ -63,6 +65,7 @@ export class GeneratorTeamsApp extends Generator {
         this.composeWith('teams:custombot', { 'options': this.options });
         this.composeWith('teams:connector', { 'options': this.options });
         this.composeWith('teams:messageExtension', { 'options': this.options });
+        this.composeWith('teams:localization', { 'options': this.options });
 
         // check schema version:
         const isSchemaVersionValid = ManifestGeneratorFactory.isSchemaVersionValid(this.options.existingManifest);
@@ -93,6 +96,7 @@ export class GeneratorTeamsApp extends Generator {
             unitTestsEnabled: boolean;
             useAzureAppInsights: boolean;
             azureAppInsightsKey: string;
+            updateBuildSystem: boolean;
         };
         // find out what manifest versions we can use
         const manifestGeneratorFactory = new ManifestGeneratorFactory();
@@ -114,6 +118,11 @@ export class GeneratorTeamsApp extends Generator {
             };
         })
 
+        let generatorVersion = this.config.get("generator-version");
+        if (!generatorVersion && this.options.existingManifest && this.fs.exists("gulp.config.js")) {
+            generatorVersion = "2.9.0";
+        }
+
         // return the question series
         return this.prompt<IAnswers>(
             [
@@ -123,6 +132,13 @@ export class GeneratorTeamsApp extends Generator {
                     default: false,
                     message: `You are running the generator on an already existing project, "${this.options.existingManifest && this.options.existingManifest.name.short}", are you sure you want to continue?`,
                     when: () => this.options.existingManifest,
+                },
+                {
+                    type: 'confirm',
+                    name: 'updateBuildSystem',
+                    default: false,
+                    message: 'Update build system core files? WARNING: Ensure your source code is under version control so you can merge any customizations of the core files!',
+                    when: (answers: IAnswers) => this.options.existingManifest && generatorVersion && generatorVersion != pkg.version && answers.confirmedAdd == true
                 },
                 {
                     type: 'input',
@@ -197,7 +213,7 @@ export class GeneratorTeamsApp extends Generator {
                 },
                 {
                     type: 'checkbox',
-                    message: 'What do you want to add to your project?',
+                    message: 'What features do you want to add to your project?',
                     name: 'parts',
                     choices: [
                         {
@@ -246,6 +262,18 @@ export class GeneratorTeamsApp extends Generator {
                                 }
                             },
                             value: 'messageextension',
+                        },
+                        {
+                            name: "Localization support",
+                            disabled: (answers: IAnswers) => {
+                                // disabled for 1.3 and 1.4
+                                return answers.manifestVersion == ManifestVersions.v13 ||
+                                    answers.manifestVersion == ManifestVersions.v14 ||
+                                    this.options.existingManifest && (
+                                        this.options.existingManifest.manifestVersion == ManifestVersions.v13 ||
+                                        this.options.existingManifest.manifestVersion == ManifestVersions.v14)
+                            },
+                            value: "localization"
                         }
                     ],
                     when: (answers: IAnswers) => answers.confirmedAdd != false
@@ -350,6 +378,7 @@ export class GeneratorTeamsApp extends Generator {
                 this.options.host = this.options.existingManifest.developer.websiteUrl;
                 this.options.updateManifestVersion = answers.updateManifestVersion;
                 this.options.manifestVersion = answers.manifestVersion ? answers.manifestVersion : ManifestGeneratorFactory.getManifestVersionFromValue(this.options.existingManifest.manifestVersion);
+                this.options.updateBuildSystem = answers.updateBuildSystem;
             }
 
 
@@ -358,6 +387,7 @@ export class GeneratorTeamsApp extends Generator {
             this.options.connector = (<string[]>answers.parts).indexOf('connector') != -1;
             this.options.customBot = (<string[]>answers.parts).indexOf('custombot') != -1;
             this.options.messageExtension = (<string[]>answers.parts).indexOf('messageextension') != -1;
+            this.options.localization = (<string[]>answers.parts).indexOf('localization') != -1;
 
             this.options.reactComponents = false; // set to false initially
         });
@@ -375,6 +405,8 @@ export class GeneratorTeamsApp extends Generator {
         this.sourceRoot();
 
         if (!this.options.existingManifest) {
+            // This is a new project
+
             let staticFiles = [
                 "_gitignore",
                 "tsconfig.json",
@@ -457,6 +489,27 @@ export class GeneratorTeamsApp extends Generator {
                 ["applicationinsights", "^1.3.1"]
             ], this.fs);
         }
+
+        if (this.options.updateBuildSystem) {
+            let currentVersion = this.config.get("generator-version");
+            if (!currentVersion && this.options.existingManifest && this.fs.exists("gulp.config.js")) {
+                // assume this is v 2.9
+                currentVersion = "2.9.0";
+            }
+
+            const coreFilesUpdater = CoreFilesUpdaterFactory.createCoreFilesUpdater(currentVersion);
+            if (coreFilesUpdater) {
+                const result = coreFilesUpdater.updateCoreFiles(this.options, this.fs);
+                if (this.options.telemetry) {
+                    AppInsights.defaultClient.trackEvent({ name: 'update-core-files', properties: { result: result ? "true" : "false" } });
+                }
+            } else {
+                this.log("WARNING: Unable to update build system automatically"); // TODO: add wiki article on how to update and link to it
+            }
+        }
+
+        // Store the package version so that we can use it as a refernce when upgrading
+        this.config.set("generator-version", pkg.version);
     }
 
     public conflicts() {
@@ -522,6 +575,15 @@ export class GeneratorTeamsApp extends Generator {
                     properties: {
                         from: this.options.existingManifest.manifestVersion,
                         to: this.options.manifestVersion
+                    }
+                });
+            }
+            if (this.options.localization) {
+                AppInsights.defaultClient.trackEvent({
+                    name: 'localization',
+                    properties: {
+                        defaultLanguage: this.options.defaultLanguage || "",
+                        additionalLanguage: this.options.additionalLanguage || ""
                     }
                 });
             }

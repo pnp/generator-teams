@@ -36,7 +36,11 @@ var config = [{
         ],
         messageExtension: [
             __dirname + '/src/messageExtension/index.ts'
+        ],
+        localization: [
+            __dirname + '/src/localization/index.ts'
         ]
+        
     },
     output: {
         path: __dirname + '/generators/',

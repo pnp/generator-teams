@@ -22,6 +22,7 @@ export class GeneratorTeamsAppOptions {
     hostname: string;
     bot: boolean;
     mpnId?: string = undefined;
+    updateBuildSystem: boolean = false;
 
     reactComponents: boolean;
     websitePrefix: string;
@@ -84,4 +85,8 @@ export class GeneratorTeamsAppOptions {
     messagingExtensionActionResponseTypeConfig: boolean = false;
     /* manifest */
     existingManifest: any;
+    /* Localization */
+    localization: boolean;
+    defaultLanguage: string | undefined;
+    additionalLanguage: string | undefined;
 }

@@ -8,6 +8,8 @@ import { BotManifestUpdater } from "./BotManifestUpdater";
 import { ConnectorManifestUpdater } from "./ConnectorManifestUpdater";
 import { MessageExtensionManifestUpdater } from "./MessageExtensionManifestUpdater";
 import { GeneratorTeamsAppOptions } from "../../../GeneratorTeamsAppOptions";
+import { LocalizationManifestUpdater } from "../generator15/LocalizationManifestUpdater";
+
 import * as chalk from 'chalk';
 
 export class ManifestGenerator extends BaseManifestGenerator {
@@ -17,6 +19,8 @@ export class ManifestGenerator extends BaseManifestGenerator {
         this.botUpdater = new BotManifestUpdater();
         this.connectorUpdater = new ConnectorManifestUpdater();
         this.messageExtensionUpdater = new MessageExtensionManifestUpdater();
+        this.localizationUpdater = new LocalizationManifestUpdater();
+
     }
 
     public generateManifest(options: GeneratorTeamsAppOptions): any {

@@ -23,7 +23,7 @@ const config = {
     ],
     manifests: [
         "./src/manifest/**/*.*",
-        '!**/*.json'
+        '!**/manifest.json'
     ],
     temp: [
         "./temp"

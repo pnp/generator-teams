@@ -5,7 +5,8 @@ export const DEPENDENCIES = [
     '../../../generators/bot',
     '../../../generators/connector',
     '../../../generators/custombot',
-    '../../../generators/messageExtension'
+    '../../../generators/messageExtension',
+    '../../../generators/localization'
 ];
 
 export const GENERATOR_PATH = path.join(__dirname, '../../generators/app');
@@ -15,6 +16,7 @@ export const TEMP_BOT_GENERATOR_PATH = path.join(__dirname, '../../temp-template
 export const TEMP_MESSAGEEXTSION_GENERATOR_PATH = path.join(__dirname, '../../temp-templates/messageExtension');
 export const TEMP_CONNECTOR_GENERATOR_PATH = path.join(__dirname, '../../temp-templates/connector');
 export const TEMP_CUSTOMBOT_GENERATOR_PATH = path.join(__dirname, '../../temp-templates/custombot');
+export const TEMP_LOCALIZATION_GENERATOR_PATH = path.join(__dirname, '../../temp-templates/localization');
 
 export const ROOT_FILES = [
     '.deployment',

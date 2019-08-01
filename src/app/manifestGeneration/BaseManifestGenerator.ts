@@ -1,15 +1,15 @@
-import { GeneratorTeamsAppOptions } from "../GeneratorTeamsAppOptions";
-import { IManifestUpdater } from "./IManifestUpdater";
-
 // Copyright (c) Wictor Wilén. All rights reserved. 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
+import { GeneratorTeamsAppOptions } from "../GeneratorTeamsAppOptions";
+import { IManifestUpdater } from "./IManifestUpdater";
 
 export abstract class BaseManifestGenerator {
     protected tabUpdater: IManifestUpdater;
     protected botUpdater: IManifestUpdater;
     protected messageExtensionUpdater: IManifestUpdater;
     protected connectorUpdater: IManifestUpdater;
+    protected localizationUpdater: IManifestUpdater;
 
     public generateManifest(options: GeneratorTeamsAppOptions): any {
         return {
@@ -61,8 +61,14 @@ export abstract class BaseManifestGenerator {
     public updateConnectorManifest(manifest: any, options: GeneratorTeamsAppOptions): void {
         this.connectorUpdater.updateManifest(manifest, options);
     }
+    public updateLocalizationManifest(manifest: any, options: GeneratorTeamsAppOptions): void {
+        if (this.localizationUpdater) {
+            this.localizationUpdater.updateManifest(manifest, options);
+        }
+    }
 
     public abstract supportsUpdateManifest(from: string): boolean;
 
     public abstract updateManifest(manifest: any, log?: (message?: string, context?: any) => void): any;
+
 }
