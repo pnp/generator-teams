@@ -1,24 +1,14 @@
 ---
 topic: sample
 products:
-- Office 365
-- Microsoft Teams
+- office-365
 languages:
-- TypeScript
-- Node.js
-- React
-- HTML
+- typescript
 extensions:
   contentType: tools
-  technologies:
-  - Tabs
-  - Microsoft Bot Framework
-  - Messaging Extensions
-  - Connectors
-  - Outgoing Webhooks
   createdDate: 3/3/2017 2:24:18 AM
 ---
-# Microsoft Teams App Project Generator - #YoTeams
+ Microsoft Teams App Project Generator - #YoTeams
 
 [![npm version](https://badge.fury.io/js/generator-teams.svg)](https://www.npmjs.com/package/generator-teams)
 [![npm](https://img.shields.io/npm/dt/generator-teams.svg)]((https://www.npmjs.com/package/generator-teams))
