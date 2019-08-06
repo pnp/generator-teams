@@ -19,7 +19,6 @@ export class LocalizationGenerator extends Generator {
     }
     public prompting() {
         if (this.options.localization) {
-            // TODO: see if there's any default already added
             return this.prompt(
                 [
                     {
