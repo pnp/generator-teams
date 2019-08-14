@@ -34,7 +34,7 @@ describe('teams:localization', function () {
 
     });
 
-    it('should generate a v1.5 project with localizationInfo', async () => {
+    it('should generate a v1.5 project with localizationInfo, using std setting for default language tag', async () => {
         await helpers.run(testHelper.GENERATOR_PATH)
             .inDir(testHelper.TEMP_LOCALIZATION_GENERATOR_PATH + '/localization02')
             .withArguments(['--no-telemetry'])
@@ -48,7 +48,7 @@ describe('teams:localization', function () {
             })
             .withGenerators(testHelper.DEPENDENCIES);
 
-        assert.jsonFileContent('src/manifest/manifest.json', { localizationInfo: {} });
+            assert.jsonFileContent('src/manifest/manifest.json', { localizationInfo: { defaultLanguageTag: "en-us" } });
 
     });
 
@@ -139,6 +139,24 @@ describe('teams:localization', function () {
             }
         });
         assert.file('src/manifest/se-sv.json');
+    });
+
+    it('should generate a v1.5 project with a tab, and not add any localization info', async () => {
+        await helpers.run(testHelper.GENERATOR_PATH)
+            .inDir(testHelper.TEMP_LOCALIZATION_GENERATOR_PATH + '/localization06')
+            .withArguments(['--no-telemetry'])
+            .withPrompts({
+                solutionName: 'localization-test-06',
+                whichFolder: 'current',
+                name: 'localizationtest06',
+                developer: 'generator teams developer',
+                manifestVersion: 'v1.5',
+                parts: 'tab',
+                tabType: "configurable"
+            })
+            .withGenerators(testHelper.DEPENDENCIES);
+
+            assert.noJsonFileContent('src/manifest/manifest.json', { localizationInfo: { } });
 
     });
 

@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*2.11.1*] - <*2019-08-14*>
+
+### Fixes
+
+* Fixed an issue where invalid localization info was written to the manifest (#81)
+* Fixed some issues with typings for the `inquirer` package
+
 ## [*2.11.0*] - <*2019-08-06*>
 
 ### Added
