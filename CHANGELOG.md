@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+
+### Changes
+
+* Moved to `@stardust/stardust-react` for user experience, replacing `msteams-ui-components-react`. See TODO for more information and upgrade details
+
 ## [*2.11.1*] - <*2019-08-14*>
 
 ### Fixes

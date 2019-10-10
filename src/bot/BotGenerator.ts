@@ -140,7 +140,7 @@ export class BotGenerator extends Generator {
                 if (this.options.staticTab) {
                     this.options.reactComponents = true;
                 }
-            });          
+            });
         }
     }
 
@@ -176,7 +176,7 @@ export class BotGenerator extends Generator {
                     }
 
                     Yotilities.addAdditionalDeps([
-                        ["msteams-ui-components-react", "^0.8.1"],
+                        ["@stardust-ui/react", "^0.38.1"],
                         ["react", "^16.8.4"],
                         ["@types/react", "16.8.8"],
                         ["react-dom", "^16.8.4"],

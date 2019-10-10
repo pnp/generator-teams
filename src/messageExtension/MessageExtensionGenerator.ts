@@ -385,7 +385,7 @@ export class MessageExtensionGenerator extends Generator {
                 if (this.options.messagingExtensionCanUpdateConfiguration ||
                     this.options.messagingExtensionType == "action" && this.options.messagingExtensionActionInputType === "taskModule") {
                     Yotilities.addAdditionalDeps([
-                        ["msteams-ui-components-react", "^0.8.1"],
+                        ["@stardust-ui/react", "^0.38.1"],
                         ["react", "^16.8.4"],
                         ["@types/react", "16.8.8"],
                         ["react-dom", "^16.8.4"],
