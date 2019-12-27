@@ -1,14 +1,4 @@
----
-topic: sample
-products:
-- office-365
-languages:
-- typescript
-extensions:
-  contentType: tools
-  createdDate: 3/3/2017 2:24:18 AM
----
- Microsoft Teams App Project Generator - #YoTeams
+Microsoft Teams App Project Generator - #YoTeams
 
 [![npm version](https://badge.fury.io/js/generator-teams.svg)](https://www.npmjs.com/package/generator-teams)
 [![npm](https://img.shields.io/npm/dt/generator-teams.svg)]((https://www.npmjs.com/package/generator-teams))
