@@ -1,4 +1,4 @@
-Microsoft Teams App Project Generator - #YoTeams
+# Microsoft Teams App Project Generator - #YoTeams
 
 [![npm version](https://badge.fury.io/js/generator-teams.svg)](https://www.npmjs.com/package/generator-teams)
 [![npm](https://img.shields.io/npm/dt/generator-teams.svg)]((https://www.npmjs.com/package/generator-teams))
