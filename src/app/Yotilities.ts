@@ -54,6 +54,14 @@ export class Yotilities {
         fs.writeJSON(packagePath, pkg);
     }
 
+    public static addAdditionalDevDeps(devDependencies: [string, string][], fs: Generator.MemFsEditor) {
+        var pkg: any = fs.readJSON(packagePath);
+        devDependencies.forEach(dep => {
+            (<any>pkg.devDependencies)[dep[0]] = dep[1];
+        });
+        fs.writeJSON(packagePath, pkg);
+    }
+
     public static addOrUpdateEnv(fileName: string, key: string, value: string, fs: Generator.MemFsEditor): void {
         const envFile = fs.read(fileName);
         const output = envFile.split(os.EOL).map(line => {

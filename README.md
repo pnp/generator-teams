@@ -147,6 +147,7 @@ For more information on how Tabs and Bots can be used with Teams see the [Teams 
 * [Paul Schaeflein](https://github.com/pschaeflein)
 * [Cagdas Davulcu](https://github.com/cagdasdavulcu)
 * [Stefan Bauer](https://github.com/StfBauer)
+* [Andrew Connell](https://github.com/andrewconnell)
 
 ## Be a part of the movement
 
