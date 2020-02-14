@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Moved to `@stardust/stardust-react` for user experience, replacing `msteams-ui-components-react`. See TODO for more information and upgrade details
 
+### Added
+
+* Added compression support for HTTP requests
+
+
 ## [*2.11.1*] - <*2019-08-14*>
 
 ### Fixes
