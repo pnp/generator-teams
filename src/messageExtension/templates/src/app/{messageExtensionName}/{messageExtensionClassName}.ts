@@ -1,7 +1,6 @@
 import * as debug from "debug";
 import { PreventIframe } from "express-msteams-host";
-import { TurnContext, CardFactory } from "botbuilder";
-import { MessagingExtensionQuery, MessagingExtensionResult } from "botbuilder-teams";
+import { TurnContext, CardFactory, MessagingExtensionQuery, MessagingExtensionResult } from "botbuilder";
 import { IMessagingExtensionMiddlewareProcessor } from "botbuilder-teams-messagingextensions";
 <% if (messagingExtensionType =="action") { %>import { ITaskModuleResult, IMessagingExtensionActionRequest } from "botbuilder-teams-messagingextensions";<% } %>
 // Initialize debug logging module

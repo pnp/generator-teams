@@ -121,12 +121,15 @@ export class ConnectorGenerator extends Generator {
 
 
             Yotilities.addAdditionalDeps([
-                ['@types/node-json-db', '0.0.1'],
                 ['node-json-db', '0.7.5'],
-                ["msteams-ui-components-react", "^0.8.1"],
-                ["react", "^16.8.4"],
-                ["@types/react", "16.8.8"],
-                ["react-dom", "^16.8.4"],
+                ["@fluentui/react", "^0.43.1"],
+                ["react", "^16.8.6"],
+                ["react-dom", "^16.8.6"]
+            ], this.fs);
+
+            Yotilities.addAdditionalDevDeps([
+                ['@types/node-json-db', '0.0.1'],
+                ["@types/react", "16.8.10"],
                 ["file-loader", "1.1.11"],
                 ["typestyle", "2.0.1"]
             ], this.fs);

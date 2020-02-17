@@ -1,14 +1,5 @@
 import * as React from "react";
-import {
-    PrimaryButton,
-    TeamsThemeContext,
-    Panel,
-    PanelBody,
-    PanelHeader,
-    PanelFooter,
-    Surface,
-    getContext
-} from "msteams-ui-components-react";
+import { Provider, Flex, Text, Button, Header } from "@fluentui/react";
 import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from "msteams-react-base-component";
 import * as microsoftTeams from "@microsoft/teams-js";
 
@@ -44,6 +35,7 @@ export class <%=tabReactComponentName%> extends TeamsBaseComponent<I<%=tabReactC
                 this.setState({
                     entityId: context.entityId
                 });
+                this.updateTheme(context.theme);
             });
         } else {
             this.setState({
@@ -56,40 +48,31 @@ export class <%=tabReactComponentName%> extends TeamsBaseComponent<I<%=tabReactC
      * The render() method to create the UI of the tab
      */
     public render() {
-        const context = getContext({
-            baseFontSize: this.state.fontSize,
-            style: this.state.theme
-        });
-        const { rem, font } = context;
-        const { sizes, weights } = font;
-        const styles = {
-            header: { ...sizes.title, ...weights.semibold },
-            section: { ...sizes.base, marginTop: rem(1.4), marginBottom: rem(1.4) },
-            footer: { ...sizes.xsmall }
-        };
         return (
-            <TeamsThemeContext.Provider value={context}>
-                <Surface>
-                    <Panel>
-                        <PanelHeader>
-                            <div style={styles.header}>This is your tab</div>
-                        </PanelHeader>
-                        <PanelBody>
-                            <div style={styles.section}>
-                                {this.state.entityId}
+            <Provider theme={this.state.theme}>
+                <Flex fill={true} column styles={{
+                    padding: ".8rem 0 .8rem .5rem"
+                }}>
+                    <Flex.Item>
+                        <Header content="This is your tab" />
+                    </Flex.Item>
+                    <Flex.Item>
+                        <div>
+                            <div>
+                                <Text content={this.state.entityId} />
                             </div>
-                            <div style={styles.section}>
-                                <PrimaryButton onClick={() => alert("It worked!")}>A sample button</PrimaryButton>
+                            <div>
+                                <Button onClick={() => alert("It worked!")}>A sample button</Button>
                             </div>
-                        </PanelBody>
-                        <PanelFooter>
-                            <div style={styles.footer}>
-                                (C) Copyright <%=developer%>
-                            </div>
-                        </PanelFooter>
-                    </Panel>
-                </Surface>
-            </TeamsThemeContext.Provider>
+                        </div>
+                    </Flex.Item>
+                    <Flex.Item styles={{
+                        padding: ".8rem 0 .8rem .5rem"
+                    }}>
+                        <Text size="smaller" content="(C) Copyright <%=developer%>" />
+                    </Flex.Item>
+                </Flex>
+            </Provider>
         );
     }
 }
