@@ -176,13 +176,13 @@ export class BotGenerator extends Generator {
                     }
 
                     Yotilities.addAdditionalDeps([
-                        ["@stardust-ui/react", "^0.38.1"],
-                        ["react", "^16.8.4"],
-                        ["react-dom", "^16.8.4"]
+                        ["@fluentui/react", "^0.43.1"],
+                        ["react", "^16.8.6"],
+                        ["react-dom", "^16.8.6"]
                     ], this.fs);
 
                     Yotilities.addAdditionalDevDeps([
-                        ["@types/react", "16.8.8"],
+                        ["@types/react", "16.8.10"],
                         ["file-loader", "1.1.11"],
                         ["typestyle", "2.0.1"]
                     ], this.fs);

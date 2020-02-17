@@ -9,12 +9,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changes
 
-* Moved to `@stardust/stardust-react` for user experience, replacing `msteams-ui-components-react`. See TODO for more information and upgrade details
+* Moved to `@fluentui/react` for user experience, replacing `msteams-ui-components-react`. See TODO for more information and upgrade details
+* Refactored `package.json` so it properly uses `dependencies` and `devDependencies`.
+* Updated `.deployment` file to properly work with the new `devDependencies`
+* Updated to Teams SDK `1.6.0`
+* Migrated to `botbuilder@4.7.1`
+* Default bot implementation are now extending `TeamsActivityHandler`
 
 ### Added
 
 * Added compression support for HTTP requests
-
 
 ## [*2.11.1*] - <*2019-08-14*>
 

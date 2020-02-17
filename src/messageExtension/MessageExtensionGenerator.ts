@@ -385,19 +385,19 @@ export class MessageExtensionGenerator extends Generator {
                 if (this.options.messagingExtensionCanUpdateConfiguration ||
                     this.options.messagingExtensionType == "action" && this.options.messagingExtensionActionInputType === "taskModule") {
                     Yotilities.addAdditionalDeps([
-                        ["@stardust-ui/react", "^0.38.1"],
-                        ["react", "^16.8.4"],
-                        ["react-dom", "^16.8.4"]
+                        ["@fluentui/react", "^0.43.1"],
+                        ["react", "^16.8.6"],
+                        ["react-dom", "^16.8.6"]
                     ], this.fs);
 
                     Yotilities.addAdditionalDevDeps([
-                        ["@types/react", "16.8.8"],
+                        ["@types/react", "16.8.10"],
                         ["file-loader", "1.1.11"],
                         ["typestyle", "2.0.1"]
                     ], this.fs);
                 }
                 Yotilities.addAdditionalDeps([
-                    ["botbuilder-teams-messagingextensions", "1.4.0"]
+                    ["botbuilder-teams-messagingextensions", "1.5.0-preview2"]
                 ], this.fs);
 
                 if (this.options.messagingExtensionCanUpdateConfiguration || this.options.messagingExtensionActionResponseTypeConfig) {
@@ -481,7 +481,8 @@ export class MessageExtensionGenerator extends Generator {
                     const constructors = cl.getConstructors();
                     if (constructors.length > 0) {
                         const c = constructors[0];
-                        c.insertStatements(0, `// Message extension ${this.options.messageExtensionClassName}
+                        // use index 1, as we need to insert it after the super();
+                        c.insertStatements(1, `// Message extension ${this.options.messageExtensionClassName}
                         this._${this.options.messageExtensionName} = new ${this.options.messageExtensionClassName}();
                         `);
 

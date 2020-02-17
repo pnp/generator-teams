@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Provider, Flex, Text, Header } from "@stardust-ui/react";
+import { Provider, Flex, Text, Header } from "@fluentui/react";
 import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from "msteams-react-base-component";
 import * as microsoftTeams from "@microsoft/teams-js";
 
