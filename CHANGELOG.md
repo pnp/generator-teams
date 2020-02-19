@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Updated to Teams SDK `1.6.0`
 * Migrated to `botbuilder@4.7.1`
 * Default bot implementation are now extending `TeamsActivityHandler`
+* Removed image from bot welcome card
 
 ### Added
 
