@@ -2,7 +2,7 @@ import * as debug from "debug";
 import { PreventIframe } from "express-msteams-host";
 import { TurnContext, CardFactory, MessagingExtensionQuery, MessagingExtensionResult } from "botbuilder";
 import { IMessagingExtensionMiddlewareProcessor } from "botbuilder-teams-messagingextensions";
-<% if (messagingExtensionType =="action") { %>import { ITaskModuleResult, IMessagingExtensionActionRequest } from "botbuilder-teams-messagingextensions";<% } %>
+<% if (messagingExtensionType =="action") { %>import { TaskModuleRequest, TaskModuleContinueResponse } from "botbuilder";<% } %>
 // Initialize debug logging module
 const log = debug("msteams");
 
@@ -88,7 +88,7 @@ const log = debug("msteams");
 <% } %>
 
 <% if (messagingExtensionType =="action" && messagingExtensionActionInputType != "static" || (messagingExtensionActionInputType == "static" && messagingExtensionActionResponseTypeConfig)) { %>
-    public async onFetchTask(context: TurnContext, value: IMessagingExtensionActionRequest): Promise<MessagingExtensionResult | ITaskModuleResult> {
+    public async onFetchTask(context: TurnContext, value: MessagingExtensionQuery): Promise<MessagingExtensionResult | TaskModuleContinueResponse> {
 <% if(messagingExtensionActionResponseTypeConfig && messagingExtensionActionInputType == "static") { %>
         return Promise.resolve<MessagingExtensionResult>({
             type: "config", // use "config" or "auth" here
@@ -120,7 +120,7 @@ const log = debug("msteams");
         }
 <% } %>
 <% if(messagingExtensionActionInputType == "taskModule" ) { %>
-        return Promise.resolve<ITaskModuleResult>({
+        return Promise.resolve<TaskModuleContinueResponse>({
             type: "continue",
             value: {
                 title: "Input form",
@@ -129,7 +129,7 @@ const log = debug("msteams");
         });
 <% } %>
 <% if(messagingExtensionActionInputType == "adaptiveCard" ) { %>
-        return Promise.resolve<ITaskModuleResult>({
+        return Promise.resolve<TaskModuleContinueResponse>({
             type: "continue",
             value: {
                 title: "Input form",
@@ -165,7 +165,7 @@ const log = debug("msteams");
 <% if (messagingExtensionType =="action" ) { %>
     // handle action response in here
     // See documentation for `MessagingExtensionResult` for details
-    public async onSubmitAction(context: TurnContext, value: IMessagingExtensionActionRequest): Promise<MessagingExtensionResult> {
+    public async onSubmitAction(context: TurnContext, value: TaskModuleRequest): Promise<MessagingExtensionResult> {
 <% if (messagingExtensionActionResponseType =="message") { %>
         return Promise.resolve({
             type: "message",

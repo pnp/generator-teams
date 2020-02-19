@@ -55,7 +55,6 @@ export class <%= botClassName %> extends TeamsActivityHandler {
                 default:
                     break;
             }
-
             // Save state changes
             return this.conversationState.saveChanges(context);
         });
@@ -69,7 +68,6 @@ export class <%= botClassName %> extends TeamsActivityHandler {
                     }
                 }
             }
-
         });
 
         this.onMessageReaction(async (context: TurnContext): Promise<void> => {

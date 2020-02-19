@@ -25,7 +25,8 @@ export class <%=messageExtensionClassName%>Config extends TeamsBaseComponent<I<%
     public componentWillMount() {
         this.updateTheme(this.getQueryVariable("theme"));
         this.setState({
-            fontSize: this.pageFontSize()
+            fontSize: this.pageFontSize(),
+            onOrOff: true
         });
 
         microsoftTeams.initialize();
@@ -45,7 +46,8 @@ export class <%=messageExtensionClassName%>Config extends TeamsBaseComponent<I<%
                             <Checkbox
                                 label="On or off?"
                                 toggle
-                                checked={this.state.onOrOff}/>
+                                checked={this.state.onOrOff}
+                                onChange={() => { this.setState({ onOrOff: !this.state.onOrOff }); }} />
                             <Button onClick={() =>
                                 microsoftTeams.authentication.notifySuccess(JSON.stringify({
                                     setting: this.state.onOrOff
