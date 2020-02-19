@@ -4,11 +4,6 @@
     "version": "1.0",
     "body": [
       {
-        "type": "Image",
-        "url": "https://<%=hostname%>/assets/icon.png",
-        "size": "stretch"
-      },
-      {
         "type": "TextBlock",
         "spacing": "medium",
         "size": "default",
