@@ -9,7 +9,7 @@ import { describe, it } from 'mocha';
 
 import * as testHelper from './helpers/TestHelper';
 
-describe('teams:localization', function () {
+describe('unit tests - teams:localization', function () {
 
 
     beforeEach(async () => {

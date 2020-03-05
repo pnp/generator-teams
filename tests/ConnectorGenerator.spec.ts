@@ -7,7 +7,7 @@ import { describe, it} from 'mocha';
 
 import * as testHelper from './helpers/TestHelper';
 
-describe('teams:connector', function () {
+describe('unit tests - teams:connector', function () {
 
     const CONNECTOR_HTML_FILES = [
         'src/app/web/connectortest01Connector/config.html'

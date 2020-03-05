@@ -7,7 +7,7 @@ import { describe, it } from 'mocha';
 
 import * as testHelper from './helpers/TestHelper';
 
-describe('teams:bot', async () => {
+describe('unit tests - teams:bot', async () => {
 
     const BOT_HTML_FILES = [
         'src/app/web/bottest01Bot/aboutBottest01Bot.html'

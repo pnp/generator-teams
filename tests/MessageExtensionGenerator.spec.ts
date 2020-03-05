@@ -5,7 +5,7 @@ import { describe, it } from 'mocha';
 
 import * as testHelper from './helpers/TestHelper';
 
-describe('teams:messageExtension', function () {
+describe('unit tests - teams:messageExtension', function () {
 
     const MESSAGEEXTSION_HTML_FILES = [
         'src/app/web/messageExtensionTest01MessageExtension/config.html'

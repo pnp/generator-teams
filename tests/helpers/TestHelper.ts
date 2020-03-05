@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as npmRun  from 'npm-run';
 
 export const DEPENDENCIES = [
     '../../../generators/tab',
@@ -56,6 +57,19 @@ export const APP_FILES = [
     'src/app/server.ts',
     'src/app/TeamsAppsComponents.ts'
 ];
+
+export async function runNpmCommand(command: string, path: string): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+        npmRun.exec(command,{cwd: path}, 
+            function (err: any, stdout: any, stderr: any) {
+                if(err) {
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            });
+    });
+}
 
 export const SCRIPT_FILES = 'src/app/scripts/client.ts';
 

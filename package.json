@@ -4,8 +4,9 @@
   "description": "Yeoman generator for Microsoft Teams Apps",
   "main": "generators/app/index.js",
   "scripts": {
-    "build": "node_modules/.bin/webpack",
-    "test": "npm run build && mocha -r ts-node/register tests/**/*.spec.ts --timeout 15000"
+    "build": "rimraf temp-templates/* && node_modules/.bin/webpack",
+    "test": "npm run build && mocha -r ts-node/register tests/**/*.spec.ts --grep 'unit tests -' --timeout 15000",
+    "test-integration": "npm run build && mocha -r ts-node/register tests/**/*.spec.ts --grep 'integration tests -' --timeout 600s"
   },
   "files": [
     "generators"
@@ -57,6 +58,7 @@
     "@types/fs-extra": "^5.0.5",
     "@types/lodash": "^4.14.123",
     "@types/mocha": "^5.2.6",
+    "@types/npm-run": "^5.0.0",
     "@types/semver": "^6.0.1",
     "@types/uuid": "^3.4.5",
     "@types/uuid-validate": "0.0.1",
@@ -70,6 +72,8 @@
     "del": "^4.1.0",
     "fs-extra": "^7.0.1",
     "mocha": "^6.1.4",
+    "npm-run": "^5.0.1",
+    "rimraf": "^3.0.2",
     "ts-loader": "^6.0.0",
     "ts-node": "^8.1.0",
     "webpack": "^4.29.6",
