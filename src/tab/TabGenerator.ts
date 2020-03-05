@@ -190,7 +190,7 @@ export class TabGenerator extends Generator {
             this.fs.writeJSON(manifestPath, manifest);
 
             Yotilities.addAdditionalDeps([
-                ["@fluentui/react", "^0.43.1"],
+                ["@fluentui/react", "~0.45.0"],
                 ["react", "^16.8.6"],
                 ["react-dom", "^16.8.6"]
             ], this.fs);
