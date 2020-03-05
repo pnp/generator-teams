@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## [*Unreleased*]
 
 ### Changes
 
@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 * Added compression support for HTTP requests
+* Integration tests first version, `npm run test-integration` (#103)
 
 ## [*2.11.1*] - <*2019-08-14*>
 
