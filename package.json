@@ -4,9 +4,9 @@
   "description": "Yeoman generator for Microsoft Teams Apps",
   "main": "generators/app/index.js",
   "scripts": {
-    "build": "rimraf temp-templates/* && node_modules/.bin/webpack",
-    "test": "npm run build && mocha -r ts-node/register tests/**/*.spec.ts --grep 'unit tests -' --timeout 15000",
-    "test-integration": "npm run build && mocha -r ts-node/register tests/**/*.spec.ts --grep 'integration tests -' --timeout 600s"
+    "build": "node_modules/.bin/webpack",
+    "test": "rimraf temp-templates/* && npm run build && mocha -r ts-node/register tests/**/*.spec.ts --grep \"unit tests -\" --timeout 15000",
+    "test-integration": "rimraf temp-templates/* && npm run build && mocha -r ts-node/register tests/**/*.spec.ts --grep \"integration tests -\" --timeout 600s"
   },
   "files": [
     "generators"
@@ -50,7 +50,7 @@
     "Schaeflein, Paul <https://github.com/pschaeflein>",
     "Davulcu, Cagdas <https://github.com/cagdasdavulcu>",
     "Bauer, Stefan <https://github.com/StfBauer>",
-    "Connell, Andrew <https://github.com/andrewconnell"
+    "Connell, Andrew <https://github.com/andrewconnell>"
   ],
   "license": "MIT",
   "devDependencies": {
