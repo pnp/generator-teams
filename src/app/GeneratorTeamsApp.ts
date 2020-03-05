@@ -466,6 +466,28 @@ export class GeneratorTeamsApp extends Generator {
                     Yotilities.fixFileNames(t, this.options));
             });
         } else {
+            if (this.options.updateBuildSystem) {
+                let currentVersion = this.config.get("generator-version");
+                if (!currentVersion && this.options.existingManifest && this.fs.exists("gulp.config.js")) {
+                    // assume this is v 2.9
+                    currentVersion = "2.9.0";
+                }
+
+                const coreFilesUpdater = CoreFilesUpdaterFactory.createCoreFilesUpdater(currentVersion);
+                if (coreFilesUpdater) {
+                    const result = coreFilesUpdater.updateCoreFiles(this.options, this.fs);
+                    if (this.options.telemetry) {
+                        AppInsights.defaultClient.trackEvent({ name: 'update-core-files', properties: { result: result ? "true" : "false" } });
+                    }
+                } else {
+                    this.log(chalk.default.red("WARNING: Unable to update build system automatically. See https://github.com/OfficeDev/generator-teams/wiki/Upgrading-projects"));
+                    if (this.options.telemetry) {
+                        AppInsights.defaultClient.trackEvent({ name: 'update-core-files-failed', properties: { currentVersion, generatorVersion: pkg.verison } });
+                    }
+                    process.exit(2);
+                }
+            }
+
             // running the generator on an already existing project
             if (this.options.updateManifestVersion) {
                 const manifestGeneratorFactory = new ManifestGeneratorFactory();
@@ -480,7 +502,7 @@ export class GeneratorTeamsApp extends Generator {
         // if we have added any react based components
         if (this.options.reactComponents) {
             Yotilities.addAdditionalDeps([
-                ["msteams-react-base-component", "2.0.0-preview"]
+                ["msteams-react-base-component", "2.0.0"]
             ], this.fs);
         }
 
@@ -488,24 +510,6 @@ export class GeneratorTeamsApp extends Generator {
             Yotilities.addAdditionalDeps([
                 ["applicationinsights", "^1.3.1"]
             ], this.fs);
-        }
-
-        if (this.options.updateBuildSystem) {
-            let currentVersion = this.config.get("generator-version");
-            if (!currentVersion && this.options.existingManifest && this.fs.exists("gulp.config.js")) {
-                // assume this is v 2.9
-                currentVersion = "2.9.0";
-            }
-
-            const coreFilesUpdater = CoreFilesUpdaterFactory.createCoreFilesUpdater(currentVersion);
-            if (coreFilesUpdater) {
-                const result = coreFilesUpdater.updateCoreFiles(this.options, this.fs);
-                if (this.options.telemetry) {
-                    AppInsights.defaultClient.trackEvent({ name: 'update-core-files', properties: { result: result ? "true" : "false" } });
-                }
-            } else {
-                this.log("WARNING: Unable to update build system automatically. See https://github.com/OfficeDev/generator-teams/wiki/Upgrading-projects");
-            }
         }
 
         // Store the package version so that we can use it as a refernce when upgrading

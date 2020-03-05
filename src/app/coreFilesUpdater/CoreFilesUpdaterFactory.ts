@@ -9,9 +9,11 @@ import { CoreFilesUpdater_2_11 } from "./coreFilesUpdaters/CoreFilesUpdater_2_11
 export class CoreFilesUpdaterFactory {
     public static createCoreFilesUpdater(currentVersion: string): BaseCoreFilesUpdater | undefined {
         // gulp.config.js update (2.9.* or 2.10.*)
-        if (semver.lt(currentVersion, "2.11.0")) {
+        if (semver.lt(currentVersion, "2.11.1")) {
             return new CoreFilesUpdater_2_11();
-        }
+        } else if (semver.lt(currentVersion, "2.12.0")) {
+            return undefined;
+        };
         return undefined;
     }
 }

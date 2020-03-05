@@ -2,20 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/) 
+The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
 ### Changes
 
-* Moved to `@fluentui/react` for user experience, replacing `msteams-ui-components-react`. See TODO for more information and upgrade details
+* Moved to `@fluentui/react` for user experience, replacing `msteams-ui-components-react`. See [2.12.0 release notes](https://github.com/OfficeDev/generator-teams/wiki/Release-notes-2.12.0) for more information and upgrade details (#84)
 * Refactored `package.json` so it properly uses `dependencies` and `devDependencies`.
-* Updated `.deployment` file to properly work with the new `devDependencies`
-* Updated to Teams SDK `1.6.0`
-* Migrated to `botbuilder@4.7.1`
+* Updated `.deployment` file to properly work with the new `devDependencies` (#93)
+* Updated to Teams SDK `1.6.0` (#96)
+* Migrated to `botbuilder@4.7.1` (#89)
 * Default bot implementation are now extending `TeamsActivityHandler`
 * Removed image from bot welcome card
+* Prohibits *core file updates* from earlier versions to 2.12.0 and higher, see release notes for details.
 
 ### Added
 
