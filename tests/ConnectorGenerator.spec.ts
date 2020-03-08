@@ -1,13 +1,11 @@
-import * as path from 'path';
 import * as del from 'del';
-import * as fs from 'fs-extra';
 import * as helpers from 'yeoman-test';
 import * as assert from 'yeoman-assert';
 import { describe, it} from 'mocha';
 
 import * as testHelper from './helpers/TestHelper';
 
-describe('unit tests - teams:connector', function () {
+describe('teams:connector', function () {
 
     const CONNECTOR_HTML_FILES = [
         'src/app/web/connectortest01Connector/config.html'
@@ -30,8 +28,10 @@ describe('unit tests - teams:connector', function () {
     });
     
     it('should generate connector project with v1.3 with unit tests', async () => {
+        const projectPath = testHelper.TEMP_CONNECTOR_GENERATOR_PATH + "/connector-v13-withUnitT";
+
         await helpers.run(testHelper.GENERATOR_PATH)
-            .inDir(testHelper.TEMP_CONNECTOR_GENERATOR_PATH + '/connector01')
+            .inDir(projectPath)
             .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'connector-test-01',
@@ -56,11 +56,24 @@ describe('unit tests - teams:connector', function () {
         assert.file(CONNECTOR_SCRIPT_TEST_FILES);
         assert.file(CONNECTOR_FILES);
         assert.file(CONNECTOR_HTML_FILES);
+
+        if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            assert.equal(false, npmInstallResult);
+      
+            const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+            assert.equal(false, npmRunBuildResult);
+      
+            const npmRunTestResult = await testHelper.runNpmCommand("npm run test", projectPath);
+            assert.equal(false, npmRunTestResult);
+        }
     });
 
     it('should generate connector project with v1.3 without unit tests', async () => {
+        const projectPath = testHelper.TEMP_CONNECTOR_GENERATOR_PATH + "/connector-v13-withoutUnitT";
+
         await helpers.run(testHelper.GENERATOR_PATH)
-            .inDir(testHelper.TEMP_CONNECTOR_GENERATOR_PATH + '/connector02')
+            .inDir(projectPath)
             .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'connector-test-01',
@@ -85,11 +98,21 @@ describe('unit tests - teams:connector', function () {
         assert.noFile(CONNECTOR_SCRIPT_TEST_FILES);
         assert.file(CONNECTOR_FILES);
         assert.file(CONNECTOR_HTML_FILES);
+
+        if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            assert.equal(false, npmInstallResult);
+      
+            const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+            assert.equal(false, npmRunBuildResult);
+        }
     });
 
     it('should generate connector project with devPreview with unit tests', async () => {
+        const projectPath = testHelper.TEMP_CONNECTOR_GENERATOR_PATH + "/connector-dev-withUnitT";
+
         await helpers.run(testHelper.GENERATOR_PATH)
-            .inDir(testHelper.TEMP_CONNECTOR_GENERATOR_PATH + '/connector03')
+            .inDir(projectPath)
             .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'connector-test-01',
@@ -114,11 +137,24 @@ describe('unit tests - teams:connector', function () {
         assert.file(CONNECTOR_SCRIPT_TEST_FILES);
         assert.file(CONNECTOR_FILES);
         assert.file(CONNECTOR_HTML_FILES);
+
+        if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            assert.equal(false, npmInstallResult);
+      
+            const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+            assert.equal(false, npmRunBuildResult);
+      
+            const npmRunTestResult = await testHelper.runNpmCommand("npm run test", projectPath);
+            assert.equal(false, npmRunTestResult);
+        }
     });
 
     it('should generate connector project with devPreview without unit tests', async () => {
+        const projectPath = testHelper.TEMP_CONNECTOR_GENERATOR_PATH + "/connector-dev-withoutUnitT";
+
         await helpers.run(testHelper.GENERATOR_PATH)
-            .inDir(testHelper.TEMP_CONNECTOR_GENERATOR_PATH + '/connector04')
+            .inDir(projectPath)
             .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'connector-test-01',
@@ -143,5 +179,13 @@ describe('unit tests - teams:connector', function () {
         assert.noFile(CONNECTOR_SCRIPT_TEST_FILES);
         assert.file(CONNECTOR_FILES);
         assert.file(CONNECTOR_HTML_FILES);
+
+        if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            assert.equal(false, npmInstallResult);
+      
+            const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+            assert.equal(false, npmRunBuildResult);
+        }
     });
 });

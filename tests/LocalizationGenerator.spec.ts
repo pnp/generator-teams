@@ -9,7 +9,7 @@ import { describe, it } from 'mocha';
 
 import * as testHelper from './helpers/TestHelper';
 
-describe('unit tests - teams:localization', function () {
+describe('teams:localization', function () {
 
 
     beforeEach(async () => {
@@ -17,8 +17,10 @@ describe('unit tests - teams:localization', function () {
     });
 
     it('should generate a v1.4 project without localizationInfo', async () => {
+        const projectPath = testHelper.TEMP_LOCALIZATION_GENERATOR_PATH + "/localization01-v14-withoutLocalization";
+
         await helpers.run(testHelper.GENERATOR_PATH)
-            .inDir(testHelper.TEMP_LOCALIZATION_GENERATOR_PATH + '/localization01')
+            .inDir(projectPath)
             .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'localization-test-01',
@@ -32,11 +34,20 @@ describe('unit tests - teams:localization', function () {
 
         assert.noJsonFileContent('src/manifest/manifest.json', { localizationInfo: {} });
 
+        if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            assert.equal(false, npmInstallResult);
+      
+            const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+            assert.equal(false, npmRunBuildResult);
+        }
     });
 
     it('should generate a v1.5 project with localizationInfo, using std setting for default language tag', async () => {
+        const projectPath = testHelper.TEMP_LOCALIZATION_GENERATOR_PATH + "/localization01-v14-withLocalization";
+
         await helpers.run(testHelper.GENERATOR_PATH)
-            .inDir(testHelper.TEMP_LOCALIZATION_GENERATOR_PATH + '/localization02')
+            .inDir(projectPath)
             .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'localization-test-02',
@@ -48,13 +59,23 @@ describe('unit tests - teams:localization', function () {
             })
             .withGenerators(testHelper.DEPENDENCIES);
 
-            assert.jsonFileContent('src/manifest/manifest.json', { localizationInfo: { defaultLanguageTag: "en-us" } });
+        assert.jsonFileContent('src/manifest/manifest.json', { localizationInfo: { defaultLanguageTag: "en-us" } });
+
+        if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            assert.equal(false, npmInstallResult);
+      
+            const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+            assert.equal(false, npmRunBuildResult);
+        }
 
     });
 
     it('should generate a v1.5 project with a default language tag', async () => {
+        const projectPath = testHelper.TEMP_LOCALIZATION_GENERATOR_PATH + "/localization01-v15-withLocalization";
+
         await helpers.run(testHelper.GENERATOR_PATH)
-            .inDir(testHelper.TEMP_LOCALIZATION_GENERATOR_PATH + '/localization03')
+            .inDir(projectPath)
             .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'localization-test-03',
@@ -70,11 +91,21 @@ describe('unit tests - teams:localization', function () {
 
         assert.jsonFileContent('src/manifest/manifest.json', { localizationInfo: { defaultLanguageTag: "en-us" } });
 
+        if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            assert.equal(false, npmInstallResult);
+      
+            const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+            assert.equal(false, npmRunBuildResult);
+        }
+
     });
 
     it('should generate a v1.5 project with a localization file', async () => {
+        const projectPath = testHelper.TEMP_LOCALIZATION_GENERATOR_PATH + "/localization01-v15-withLocFile";
+
         await helpers.run(testHelper.GENERATOR_PATH)
-            .inDir(testHelper.TEMP_LOCALIZATION_GENERATOR_PATH + '/localization04')
+            .inDir(projectPath)
             .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'localization-test-04',
@@ -108,11 +139,21 @@ describe('unit tests - teams:localization', function () {
             "description.short": "TODO: add short description here",
             "description.full": "TODO: add full description here"
         });
+
+        if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            assert.equal(false, npmInstallResult);
+      
+            const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+            assert.equal(false, npmRunBuildResult);
+        }
     });
 
     it('should generate a devPreview project with a localization file', async () => {
+        const projectPath = testHelper.TEMP_LOCALIZATION_GENERATOR_PATH + "/localization01-dev-withLocalization";
+
         await helpers.run(testHelper.GENERATOR_PATH)
-            .inDir(testHelper.TEMP_LOCALIZATION_GENERATOR_PATH + '/localization05')
+            .inDir(projectPath)
             .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'localization-test-05',
@@ -139,11 +180,21 @@ describe('unit tests - teams:localization', function () {
             }
         });
         assert.file('src/manifest/se-sv.json');
+
+        if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            assert.equal(false, npmInstallResult);
+      
+            const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+            assert.equal(false, npmRunBuildResult);
+        }
     });
 
     it('should generate a v1.5 project with a tab, and not add any localization info', async () => {
+        const projectPath = testHelper.TEMP_LOCALIZATION_GENERATOR_PATH + "/localization01-dev-withTab";
+
         await helpers.run(testHelper.GENERATOR_PATH)
-            .inDir(testHelper.TEMP_LOCALIZATION_GENERATOR_PATH + '/localization06')
+            .inDir(projectPath)
             .withArguments(['--no-telemetry'])
             .withPrompts({
                 solutionName: 'localization-test-06',
@@ -156,8 +207,15 @@ describe('unit tests - teams:localization', function () {
             })
             .withGenerators(testHelper.DEPENDENCIES);
 
-            assert.noJsonFileContent('src/manifest/manifest.json', { localizationInfo: { } });
+        assert.noJsonFileContent('src/manifest/manifest.json', { localizationInfo: { } });
 
+        if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            assert.equal(false, npmInstallResult);
+      
+            const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+            assert.equal(false, npmRunBuildResult);
+        }
     });
 
 });

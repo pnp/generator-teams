@@ -5,8 +5,8 @@
   "main": "generators/app/index.js",
   "scripts": {
     "build": "node_modules/.bin/webpack",
-    "test": "rimraf temp-templates/* && npm run build && mocha -r ts-node/register tests/**/*.spec.ts --grep \"unit tests -\" --timeout 15000",
-    "test-integration": "rimraf temp-templates/* && npm run build && mocha -r ts-node/register tests/**/*.spec.ts --grep \"integration tests -\" --timeout 600s"
+    "test": "export TEST_TYPE=UNIT || SET TEST_TYPE=UNIT && rimraf temp-templates/* && npm run build && mocha -r ts-node/register tests/**/*.spec.ts --timeout 15000",
+    "test-integration": "export TEST_TYPE=INTEGRATION || SET TEST_TYPE=INTEGRATION && rimraf temp-templates/* && npm run build && mocha -r ts-node/register tests/**/*.spec.ts --timeout 600s"
   },
   "files": [
     "generators"
