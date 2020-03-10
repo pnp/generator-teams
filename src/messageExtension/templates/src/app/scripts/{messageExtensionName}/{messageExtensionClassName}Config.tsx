@@ -25,7 +25,6 @@ export class <%=messageExtensionClassName%>Config extends TeamsBaseComponent<I<%
     public componentWillMount() {
         this.updateTheme(this.getQueryVariable("theme"));
         this.setState({
-            fontSize: this.pageFontSize(),
             onOrOff: true
         });
 

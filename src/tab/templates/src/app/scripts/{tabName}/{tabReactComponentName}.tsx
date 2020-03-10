@@ -1,13 +1,15 @@
 import * as React from "react";
 import { Provider, Flex, Text, Button, Header } from "@fluentui/react";
 import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from "msteams-react-base-component";
-import * as microsoftTeams from "@microsoft/teams-js";
-
+import * as microsoftTeams from "@microsoft/teams-js";<% if (tabSSO) { %>
+import * as jwt from "jsonwebtoken";<% } %>
 /**
  * State for the <%=tabName%>Tab React component
  */
 export interface I<%=tabReactComponentName%>State extends ITeamsBaseComponentState {
-    entityId?: string;
+    entityId?: string;<% if (tabSSO) { %>
+    name?: string;
+    error?: string;<% } %>
 }
 
 /**
@@ -24,10 +26,28 @@ export class <%=tabReactComponentName%> extends TeamsBaseComponent<I<%=tabReactC
 
     public componentWillMount() {
         this.updateTheme(this.getQueryVariable("theme"));
-        this.setState({
-            fontSize: this.pageFontSize()
-        });
 
+<% if (tabSSO) { %>
+        microsoftTeams.initialize(() => {
+            microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
+            microsoftTeams.getContext((context) => {
+                this.setState({
+                    entityId: context.entityId
+                });
+                this.updateTheme(context.theme);
+
+                microsoftTeams.authentication.getAuthToken({
+                    successCallback: (token: string) => {
+                        const decoded: { [key: string]: any; } = jwt.decode(token) as { [key: string]: any; };
+                        this.setState({ name: decoded!.name });
+                    },
+                    failureCallback: (reason: string) => {
+                        this.setState({ error: reason });
+                    },
+                    resources: [process.env.<%=tabUpperName%>_APP_URI as string]
+                });
+            });
+        });<% } else { %>
         if (this.inTeams()) {
             microsoftTeams.initialize();
             microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
@@ -41,7 +61,7 @@ export class <%=tabReactComponentName%> extends TeamsBaseComponent<I<%=tabReactC
             this.setState({
                 entityId: "This is not hosted in Microsoft Teams"
             });
-        }
+        }<% } %>
     }
 
     /**
@@ -58,9 +78,16 @@ export class <%=tabReactComponentName%> extends TeamsBaseComponent<I<%=tabReactC
                     </Flex.Item>
                     <Flex.Item>
                         <div>
+<% if (tabSSO) { %>
+                            <div>
+                                <Text content={`Hello ${this.state.name}`} />
+                            </div>
+                            {this.state.error && <div><Text content={`An SSO error occurred ${this.state.error}`} /></div>}
+<% } else { %>
                             <div>
                                 <Text content={this.state.entityId} />
                             </div>
+<% } %>
                             <div>
                                 <Button onClick={() => alert("It worked!")}>A sample button</Button>
                             </div>

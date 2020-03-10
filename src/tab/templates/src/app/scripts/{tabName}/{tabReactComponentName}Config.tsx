@@ -18,9 +18,6 @@ export class <%=tabReactComponentName%>Config  extends TeamsBaseComponent<I<%=ta
 
     public componentWillMount() {
         this.updateTheme(this.getQueryVariable("theme"));
-        this.setState({
-            fontSize: this.pageFontSize()
-        });
 
         if (this.inTeams()) {
             microsoftTeams.initialize();
@@ -38,6 +35,7 @@ export class <%=tabReactComponentName%>Config  extends TeamsBaseComponent<I<%=ta
                 const host = "https://" + window.location.host;
                 microsoftTeams.settings.setSettings({
                     contentUrl: host + "/<%=tabName%>/?data=",
+                    websiteUrl: host + "/<%=tabName%>/?data=",
                     suggestedDisplayName: "<%=tabTitle%>",
                     removeUrl: host + "/<%=tabName%>/remove.html",
                     entityId: this.state.value

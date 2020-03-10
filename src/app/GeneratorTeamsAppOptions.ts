@@ -36,11 +36,15 @@ export class GeneratorTeamsAppOptions {
     tab: boolean;
     tabTitle: string;
     tabName: string;
+    tabUpperName: string;
     tabReactComponentName: string;
     tabSharePoint: boolean;
     tabSharePointHosts: string[] = [];
     tabScopes: string[];
     tabType: "configurable" | "static";
+    tabSSO: boolean;
+    tabSSOAppId: string;
+    tabSSOAppUri: string;
 
     /* Bots */
     botid: string = '';

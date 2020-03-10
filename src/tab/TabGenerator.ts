@@ -7,6 +7,8 @@ import * as lodash from 'lodash';
 import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
 import { ManifestGeneratorFactory } from '../app/manifestGeneration/ManifestGeneratorFactory';
+import validate = require('uuid-validate');
+import EmptyGuid = require('../app/EmptyGuid');
 
 export class TabGenerator extends Generator {
     options: GeneratorTeamsAppOptions;
@@ -88,6 +90,42 @@ export class TabGenerator extends Generator {
                     },
                     {
                         type: 'confirm',
+                        name: 'tabSSO',
+                        message: 'Do you require Azure AD Single-Sign-On support for the tab?',
+                        default: true,
+                        when: (answers: any) => {
+                            return this.options.manifestVersion != "v1.3" &&
+                                this.options.manifestVersion != "v1.4" &&  // Only available in 1.5 or higher
+                                (this.options.existingManifest === undefined ||
+                                    this.options.existingManifest && this.options.existingManifest.webApplicationInfo == undefined);
+                        },
+                    },
+                    {
+                        type: 'input',
+                        name: 'tabSSOAppId',
+                        message: 'What is the Application ID to associate with the SSO Tab?',
+                        default: (answers: any) => {
+                            return EmptyGuid.empty;
+                        },
+                        validate: (input: string) => {
+                            return validate(input) || input == EmptyGuid.empty;
+                        },
+                        when: (answers: any) => answers.tabSSO,
+                    },
+                    {
+                        type: 'input',
+                        name: 'tabSSOAppUri',
+                        message: 'What is the Application ID URI to associate with the SSO Tab?',
+                        default: (answers: any) => {
+                            return `api://${this.options.hostname}/${answers.tabSSOAppId}`;
+                        },
+                        validate: (input: string) => {
+                            return input.length > 0;
+                        },
+                        when: (answers: any) => answers.tabSSO,
+                    },
+                    {
+                        type: 'confirm',
                         name: 'tabSharePoint',
                         message: 'Do you want this tab to be available in SharePoint Online?',
                         default: true,
@@ -120,6 +158,7 @@ export class TabGenerator extends Generator {
             ).then((answers: any) => {
                 this.options.tabTitle = answers.tabTitle;
                 this.options.tabName = lodash.camelCase(this.options.tabTitle);
+                this.options.tabUpperName = this.options.tabName.toLocaleUpperCase();
                 this.options.tabType = answers.tabType;
                 if (!this.options.tabName.endsWith('Tab')) {
                     this.options.tabName = this.options.tabName + 'Tab';
@@ -129,6 +168,9 @@ export class TabGenerator extends Generator {
                 this.options.tabSharePointHosts = answers.tabSharePointHosts;
                 this.options.tabSharePoint = answers.tabSharePoint;
                 this.options.tabScopes = answers.tabScopes;
+                this.options.tabSSO = answers.tabSSO;
+                this.options.tabSSOAppId = answers.tabSSOAppId;
+                this.options.tabSSOAppUri = answers.tabSSOAppUri;
             });
         }
     }
@@ -194,6 +236,16 @@ export class TabGenerator extends Generator {
                 ["react", "^16.8.6"],
                 ["react-dom", "^16.8.6"]
             ], this.fs);
+
+            if (this.options.tabSSO) {
+                Yotilities.addAdditionalDeps([
+                    ["jsonwebtoken", "^8.5.1"]
+                ], this.fs);
+
+                // update .env file
+                Yotilities.addOrUpdateEnv(".env", `${this.options.tabUpperName}_APP_ID`, this.options.tabSSOAppId, this.fs);
+                Yotilities.addOrUpdateEnv(".env", `${this.options.tabUpperName}_APP_URI`, this.options.tabSSOAppUri, this.fs);
+            }
 
             Yotilities.addAdditionalDevDeps([
                 ["@types/react", "16.8.10"],

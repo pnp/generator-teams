@@ -64,13 +64,18 @@ export class Yotilities {
 
     public static addOrUpdateEnv(fileName: string, key: string, value: string, fs: Generator.MemFsEditor): void {
         const envFile = fs.read(fileName);
-        const output = envFile.split(os.EOL).map(line => {
+        let added: boolean = false;
+        let output = envFile.split(os.EOL).map(line => {
             if (line.startsWith(key)) {
+                added = true;
                 return `${key}=${value}`;
             }
             return line;
-        }).join(os.EOL);
-        fs.write(fileName, output);
+        });
+        if (!added) {
+            output = output.concat(`${key}=${value}`);
+        }
+        fs.write(fileName, output.join(os.EOL));
     }
 
     public static insertTsExportDeclaration(fileName: string, literal: string, comment: string | undefined, fs: Generator.MemFsEditor): void {
