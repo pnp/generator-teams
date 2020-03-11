@@ -24,9 +24,6 @@ export class <%=staticTabClassName%>Tab extends TeamsBaseComponent<I<%=staticTab
 
     public componentWillMount() {
         this.updateTheme(this.getQueryVariable("theme"));
-        this.setState({
-            fontSize: this.pageFontSize()
-        });
 
         if (this.inTeams()) {
             microsoftTeams.initialize();

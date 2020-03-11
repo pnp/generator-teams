@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*] - <**>
+
+### Added
+
+* Added support for SSO Tabs (#59)
+
+### Changes
+
+* Updated links reflecting the move from github.com/OfficeDev to github.com/PnP
+* Tabs are also by default marked as available in the mobile app (`websiteUrl`)
+
+### Deleted
+
+* Removed font re-sizing code in tabs/pages (#106)
+
+
 ## [*2.12.0*] - <*2020-03-05*>
 
 ### Changes

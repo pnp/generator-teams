@@ -1,6 +1,6 @@
 {
   "name": "generator-teams",
-  "version": "2.12.0",
+  "version": "2.13.0-preview1",
   "description": "Yeoman generator for Microsoft Teams Apps",
   "main": "generators/app/index.js",
   "scripts": {
@@ -13,12 +13,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/OfficeDev/generator-teams.git"
+    "url": "https://github.com/pnp/generator-teams.git"
   },
   "bugs": {
-    "url": "https://github.com/OfficeDev/generator-teams/issues"
+    "url": "https://github.com/pnp/generator-teams/issues"
   },
-  "homepage": "https://github.com/OfficeDev/generator-teams",
+  "homepage": "https://github.com/pnp/generator-teams",
   "keywords": [
     "yeoman-generator",
     "Microsoft Teams",

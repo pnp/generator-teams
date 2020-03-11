@@ -38,9 +38,6 @@ export class <%=connectorComponentName%>Config extends TeamsBaseComponent<I<%=co
 
     public componentWillMount() {
         this.updateTheme(this.getQueryVariable("theme"));
-        this.setState({
-            fontSize: this.pageFontSize()
-        });
 
         if (this.inTeams()) {
             microsoftTeams.initialize();

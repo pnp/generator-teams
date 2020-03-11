@@ -480,7 +480,7 @@ export class GeneratorTeamsApp extends Generator {
                         AppInsights.defaultClient.trackEvent({ name: 'update-core-files', properties: { result: result ? "true" : "false" } });
                     }
                 } else {
-                    this.log(chalk.default.red("WARNING: Unable to update build system automatically. See https://github.com/OfficeDev/generator-teams/wiki/Upgrading-projects"));
+                    this.log(chalk.default.red("WARNING: Unable to update build system automatically. See https://github.com/PnP/generator-teams/wiki/Upgrading-projects"));
                     if (this.options.telemetry) {
                         AppInsights.defaultClient.trackEvent({ name: 'update-core-files-failed', properties: { currentVersion, generatorVersion: pkg.verison } });
                     }

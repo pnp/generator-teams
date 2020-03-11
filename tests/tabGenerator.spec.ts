@@ -564,6 +564,9 @@ describe("teams:tab", function() {
         }
       ]
     });
+    assert.noJsonFileContent("src/manifest/manifest.json", {
+      webApplicationInfo: {}
+    });
 
     assert.file(TAB_HTML_FILES);
     assert.file(TAB_FILES);
@@ -904,4 +907,53 @@ describe("teams:tab", function() {
       assert.equal(false, npmRunBuildResult);
     }
   });
+
+  it("should generate tab project with SSO support", async () => {
+    const TABSSOAPPID = "00000000-0000-0000-0000-000000000123";
+    const TABSSOAPPURI = "api://tabtest01.azurewebsites.net/00000000-0000-0000-0000-000000000123";
+    await helpers
+      .run(testHelper.GENERATOR_PATH)
+      .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + "/tab07")
+      .withArguments(["--no-telemetry"])
+      .withPrompts({
+        solutionName: "tab-test-01-sso",
+        whichFolder: "current",
+        name: "tabtest01",
+        developer: "generator teams developer",
+        manifestVersion: "v1.5",
+        parts: "tab",
+        unitTestsEnabled: false,
+        tabSharePoint: false,
+        tabSSO: true,
+        tabSSOAppId: TABSSOAPPID,
+        tabSSOAppUri: TABSSOAPPURI,
+        tabType: "configurable"
+      })
+      .withGenerators(testHelper.DEPENDENCIES);
+
+    assert.file(testHelper.ROOT_FILES);
+    assert.noFile(testHelper.TEST_FILES);
+    assert.file(testHelper.APP_FILES);
+    assert.file(testHelper.SCRIPT_FILES);
+    assert.file(testHelper.WEB_FILES);
+    assert.file(testHelper.MANIFEST_FILES);
+
+    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_15);
+    assert.jsonFileContent("src/manifest/manifest.json", {
+      webApplicationInfo:
+      {
+        id: "{{TABTEST01TAB_APP_ID}}",
+        resource: "{{TABTEST01TAB_APP_URI}}"
+      }
+
+    });
+    assert.fileContent(".env", `TABTEST01TAB_APP_ID=${TABSSOAPPID}`);
+    assert.fileContent(".env", `TABTEST01TAB_APP_URI=${TABSSOAPPURI}`);
+
+    assert.file(TAB_HTML_FILES);
+    assert.file(TAB_FILES);
+    assert.file(TAB_SCRIPT_FILES);
+    assert.noFile(TAB_SCRIPT_TEST_FILES);
+  });
+
 });

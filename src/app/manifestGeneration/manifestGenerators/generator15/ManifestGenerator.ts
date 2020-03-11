@@ -3,7 +3,7 @@
 // Licensed under the MIT license.
 
 import { BaseManifestGenerator } from "../../BaseManifestGenerator";
-import { TabManifestUpdater } from "../generator14/TabManifestUpdater";
+import { TabManifestUpdater } from "../generator15/TabManifestUpdater";
 import { BotManifestUpdater } from "../generator14/BotManifestUpdater";
 import { ConnectorManifestUpdater } from "../generator13/ConnectorManifestUpdater";
 import { MessageExtensionManifestUpdater } from "./MessageExtensionManifestUpdater";

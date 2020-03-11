@@ -2,16 +2,16 @@
 
 [![npm version](https://badge.fury.io/js/generator-teams.svg)](https://www.npmjs.com/package/generator-teams)
 [![npm](https://img.shields.io/npm/dt/generator-teams.svg)]((https://www.npmjs.com/package/generator-teams))
-[![MIT](https://img.shields.io/npm/l/generator-teams.svg)](https://github.com/OfficeDev/generator-teams/blob/master/LICENSE.md)
-[![GitHub issues](https://img.shields.io/github/issues/officedev/generator-teams.svg)](https://github.com/OfficeDev/generator-teams/issues)
-[![GitHub closed issues](https://img.shields.io/github/issues-closed/officedev/generator-teams.svg)](https://github.com/OfficeDev/generator-teams/issues?q=is%3Aissue+is%3Aclosed) 
-[![GitHub stars](https://img.shields.io/github/stars/officedev/generator-teams.svg)](https://github.com/OfficeDev/generator-teams/stargazers)
-[![Gitter](https://badges.gitter.im/OfficeDev/generator-teams.svg)](https://gitter.im/OfficeDev/generator-teams?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![MIT](https://img.shields.io/npm/l/generator-teams.svg)](https://github.com/PnP/generator-teams/blob/master/LICENSE.md)
+[![GitHub issues](https://img.shields.io/github/issues/PnP/generator-teams.svg)](https://github.com/PnP/generator-teams/issues)
+[![GitHub closed issues](https://img.shields.io/github/issues-closed/PnP/generator-teams.svg)](https://github.com/PnP/generator-teams/issues?q=is%3Aissue+is%3Aclosed) 
+[![GitHub stars](https://img.shields.io/github/stars/PnP/generator-teams.svg)](https://github.com/PnP/generator-teams/stargazers)
+[![Gitter](https://badges.gitter.im/PnP/generator-teams.svg)](https://gitter.im/PnP/generator-teams?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
  | @master | @preview |
  :--------:|:---------:
  [![npm (latest)](https://img.shields.io/npm/v/generator-teams/latest.svg)](https://www.npmjs.com/package/generator-teams)|[![npm (preview)](https://img.shields.io/npm/v/generator-teams/preview.svg)](https://www.npmjs.com/package/generator-teams)
- [![Travis (.org) branch](https://img.shields.io/travis/OfficeDev/generator-teams/master.svg)](https://travis-ci.org/OfficeDev/generator-teams)|[![Travis (.org) branch](https://img.shields.io/travis/OfficeDev/generator-teams/preview.svg)](https://travis-ci.org/OfficeDev/generator-teams)
+ [![Travis (.org) branch](https://img.shields.io/travis/PnP/generator-teams/master.svg)](https://travis-ci.org/PnP/generator-teams)|[![Travis (.org) branch](https://img.shields.io/travis/PnP/generator-teams/preview.svg)](https://travis-ci.org/PnP/generator-teams)
 
 A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) Apps projects. This generator is for developers who prefers to use TypeScript, React and node as their primary technologies.
 
@@ -31,7 +31,7 @@ When scaffolding the project you will also have the option of adding additional 
 
 ## Documentation
 
-The documentation for the generator and the generated project can be found at the [generator-teams Github Wiki](https://github.com/OfficeDev/generator-teams/wiki).
+The documentation for the generator and the generated project can be found at the [generator-teams Github Wiki](https://github.com/PnP/generator-teams/wiki).
 
 ## The generated project
 
@@ -141,7 +141,7 @@ For more information on how Tabs and Bots can be used with Teams see the [Teams 
 
 ## Be a part of the movement
 
-If you want to be a part of the #YoTeams movement then head on over to the discussion at the [generator-teams Gitter channel](https://gitter.im/OfficeDev/generator-teams) or follow us on [Twitter using the hashtag #yoteams](https://twitter.com/search?q=%23yoteams&src=typd).
+If you want to be a part of the #YoTeams movement then head on over to the discussion at the [generator-teams Gitter channel](https://gitter.im/PnP/generator-teams) or follow us on [Twitter using the hashtag #yoteams](https://twitter.com/search?q=%23yoteams&src=typd).
 
 
 ## Contributing
