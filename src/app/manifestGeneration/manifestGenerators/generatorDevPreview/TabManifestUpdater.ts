@@ -7,6 +7,7 @@ import { GeneratorTeamsAppOptions } from "../../../GeneratorTeamsAppOptions";
 
 export class TabManifestUpdater implements IManifestUpdater {
 
+    // Implementation notes - this is often just a copy of the latest released version
     public updateManifest(manifest: any, options: GeneratorTeamsAppOptions): void {
         if (options.tabType == "static") {
             (<any[]>manifest.staticTabs).push({
@@ -27,6 +28,13 @@ export class TabManifestUpdater implements IManifestUpdater {
                 tab.supportedSharePointHosts = options.tabSharePointHosts;
             }
             (<any[]>manifest.configurableTabs).push(tab);
+        }
+        if (options.tabSSO && manifest.webApplicationInfo === undefined) {
+            // only add SSO the first time
+            manifest.webApplicationInfo = {
+                id: `{{${options.tabUpperName}_APP_ID}}`,
+                resource: `{{${options.tabUpperName}_APP_URI}}`
+            }
         }
     }
 }
