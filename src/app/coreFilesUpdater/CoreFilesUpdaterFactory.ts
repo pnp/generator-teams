@@ -5,6 +5,7 @@
 import { BaseCoreFilesUpdater } from "./BaseCoreFilesUpdater";
 import * as semver from "semver";
 import { CoreFilesUpdater_2_11 } from "./coreFilesUpdaters/CoreFilesUpdater_2_11";
+import { CoreFilesUpdaterNop } from "./coreFilesUpdaters/CoreFilesUpdaterNop";
 
 export class CoreFilesUpdaterFactory {
     public static createCoreFilesUpdater(currentVersion: string): BaseCoreFilesUpdater | undefined {
@@ -14,7 +15,7 @@ export class CoreFilesUpdaterFactory {
         } else if (semver.lt(currentVersion, "2.12.0")) {
             return undefined;
         } else if (semver.eq(currentVersion, "2.12")) {
-            throw "Working on it";
+            return new CoreFilesUpdaterNop();
         }
         return undefined;
     }

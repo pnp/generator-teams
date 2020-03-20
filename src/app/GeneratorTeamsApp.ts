@@ -357,6 +357,7 @@ export class GeneratorTeamsApp extends Generator {
                 // when updating projects
                 this.options.developer = this.options.existingManifest.developer.name;
                 this.options.title = this.options.existingManifest.name.short;
+                this.options.hostname = "";
                 this.options.useAzureAppInsights = this.config.get("useAzureAppInsights") || false;
                 this.options.unitTestsEnabled = this.config.get("unitTestsEnabled") || false;
                 let libraryName = Yotilities.getLibraryNameFromWebpackConfig(); // let's see if we can find the name in webpack.config.jons (it might have been changed by the user)
