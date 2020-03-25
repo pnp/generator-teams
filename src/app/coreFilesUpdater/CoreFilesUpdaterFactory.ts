@@ -14,7 +14,7 @@ export class CoreFilesUpdaterFactory {
             return new CoreFilesUpdater_2_11();
         } else if (semver.lt(currentVersion, "2.12.0")) {
             return undefined;
-        } else if (semver.eq(currentVersion, "2.12")) {
+        } else if (semver.eq(currentVersion, "2.12.0")) {
             return new CoreFilesUpdaterNop();
         }
         return undefined;
