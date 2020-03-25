@@ -46,6 +46,7 @@ export class <%=connectorComponentName%>Config extends TeamsBaseComponent<I<%=co
                 this.setState({
                     color: availableColors.find(c => c.code === context.entityId),
                 });
+                this.updateTheme(context.theme);
                 this.setValidityState(this.state.color !== undefined);
             });
 

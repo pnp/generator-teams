@@ -11,30 +11,28 @@
   },
   "dependencies": {
     "@microsoft/teams-js": "1.6.0",
+    "axios": "^0.19.2",
     "botbuilder": "4.7.1",
     "botbuilder-dialogs": "4.7.1",
-    "browser-request": "0.3.3",
     "compression": "1.7.4",
     "debug": "4.1.1",
-    "dotenv": "8.0.0",
+    "dotenv": "8.2.0",
     "express": "4.16.4",
     "express-msteams-host": "1.6.0",
     "express-session": "1.15.6",
-    "morgan": "1.9.1",
-    "request": "2.88.0"
+    "morgan": "1.9.1"
   },
   "devDependencies": {
     "@types/debug": "4.1.2",
     "@types/express": "4.16.0",
     "@types/express-session": "1.15.10",
     "@types/morgan": "1.7.35",
-    "@types/request": "2.47.1",
     <% if (unitTestsEnabled) { %>"@types/enzyme": "^3.9.1",
     "@types/jest": "^24.0.11",
     "@types/enzyme-to-json": "^1.5.3",<%}%>
     "autoprefixer": "^9.5.1",
     "browser-sync": "^2.26.5",
-    "del": "^3.0.0",
+    "del": "^5.1.0",
     "dotenv-webpack": "^1.7.0",
     <% if (unitTestsEnabled) { %>"enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.11.2",
@@ -63,8 +61,8 @@
     "typescript": "3.3.4000",
     "vinyl": "2.2.0",
     "webpack": "4.26.0",
-    "yargs": "12.0.1",
-    "z-schema": "^3.19.1",
+    "yargs": "15.3.1",
+    "z-schema": "^4.2.2",
     "tslint-loader": "^3.6.0"
   },
   "browserslist": [

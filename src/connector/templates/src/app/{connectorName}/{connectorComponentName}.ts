@@ -1,4 +1,4 @@
-import * as request from "request";
+import Axios from "axios";
 import { Request } from "express";
 import { ConnectorDeclaration, IConnector, PreventIframe } from "express-msteams-host";
 import { CardFactory } from "botbuilder-core";
@@ -97,23 +97,20 @@ export class <%=connectorComponentName%> implements IConnector {
 
                 log(`Sending card to ${connector.webhookUrl}`);
 
-                request({
-                    method: "POST",
-                    uri: decodeURI(connector.webhookUrl),
-                    headers: {
-                        "content-type": "application/json",
-                    },
-                    body: JSON.stringify(card)
-                }, (error: any, response: any, body: any) => {
-                    log(`Response from Connector endpoint is: ${response.statusCode}`);
-                    if (error) {
-                        reject(error);
-                    } else {
-                        // 410 - the user has removed the connector
-                        if (response.statusCode === 410) {
-                            this.connectors.push(`/connectors[${index}]/existing`, false);
-                        }
+                Axios.post(
+                    decodeURI(connector.webhookUrl),
+                    JSON.stringify(card)
+                ).then(response => {
+                    log(`Response from Connector endpoint is: ${response.status}`);
+                    resolve();
+                }).catch(err => {
+                    if (err.response && err.response.status === 410) {
+                        this.connectors.push(`/connectors[${index}]/existing`, false);
+                        log(`Response from Connector endpoint is: ${err.response.status}, add Connector for removal`);
                         resolve();
+                    } else {
+                        log(`Error from Connector endpoint is: ${err}`);
+                        reject(err);
                     }
                 });
             });

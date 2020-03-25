@@ -93,7 +93,53 @@ describe("integration tests - teams:tab", function () {
     assert.equal(false, npmRunBuildResult)
   });
 
+  it("should generate tab project with devPreview wSith unit tests", async () => {
+    await helpers
+      .run(testHelper.GENERATOR_PATH)
+      .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + "/tab01")
+      .withArguments(["--no-telemetry"])
+      .withPrompts({
+        solutionName: "tab-test-01",
+        whichFolder: "current",
+        name: "tabtest01",
+        developer: "generator teams developer",
+        manifestVersion: "devPreview",
+        parts: "tab",
+        unitTestsEnabled: true,
+        tabType: "configurable"
+      })
+      .withGenerators(testHelper.DEPENDENCIES);
 
+    assert.file(testHelper.ROOT_FILES);
+    assert.file(testHelper.TEST_FILES);
+    assert.file(testHelper.APP_FILES);
+    assert.file(testHelper.SCRIPT_FILES);
+    assert.file(testHelper.WEB_FILES);
+    assert.file(testHelper.MANIFEST_FILES);
+
+    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_DEVPREVIEW);
+
+    assert.jsonFileContent("src/manifest/manifest.json", {
+      configurableTabs: [
+        {
+          canUpdateConfiguration: true
+        }
+      ]
+    });
+
+    assert.file(TAB_HTML_FILES);
+    assert.file(TAB_FILES);
+    assert.file(TAB_SCRIPT_FILES);
+    assert.file(TAB_SCRIPT_TEST_FILES);
+
+    const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab01";
+
+    const npmInstallResult = await testHelper.runNpmCommand('npm install', projectPath);
+    assert.equal(false, npmInstallResult)
+
+    const npmRunBuildResult = await testHelper.runNpmCommand('npm run build', projectPath);
+    assert.equal(false, npmRunBuildResult)
+  });
 
 });
 

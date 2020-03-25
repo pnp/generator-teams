@@ -11,15 +11,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Added support for SSO Tabs (#59)
 
+### Fixes
+
+* Fixed an issue where theme was not set for Conector configurations
+
 ### Changes
 
 * Updated links reflecting the move from github.com/OfficeDev to github.com/PnP
 * Tabs are also by default marked as available in the mobile app (`websiteUrl`)
+* Replaced use of the `request` package in favor of `axios` (#104)
+* Updated versions of some dependencies
+* Added `dist` folder to `.gitignore`
+* Added Travis CI parameters for npm publishing
 
 ### Deleted
 
 * Removed font re-sizing code in tabs/pages (#106)
-
 
 ## [*2.12.0*] - <*2020-03-05*>
 
