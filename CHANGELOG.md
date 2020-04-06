@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixes
 
-* Fixed an issue where theme was not set for Conector configurations
+* Fixed an issue where theme was not set for Connector configurations
 
 ### Changes
 

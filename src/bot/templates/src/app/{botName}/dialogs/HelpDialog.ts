@@ -1,4 +1,4 @@
-import { Dialog, DialogContext, DialogTurnResult } from 'botbuilder-dialogs';
+import { Dialog, DialogContext, DialogTurnResult } from "botbuilder-dialogs";
 
 export default class HelpDialog extends Dialog {
     constructor(dialogId: string) {
