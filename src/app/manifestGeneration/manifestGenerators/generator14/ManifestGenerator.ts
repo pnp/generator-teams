@@ -39,7 +39,7 @@ export class ManifestGenerator extends BaseManifestGenerator {
                 manifest.composeExtensions.forEach((composeExtension: { commands: { title: string; type: string; }[] }) => {
                     if(composeExtension.commands) {
                         composeExtension.commands.forEach( (command: { title: string; type: string; }) => {
-                            if(log) log(chalk.default.whiteBright(`Updating Message Extension "${command.title}" with the "type" property set to "query"`));
+                            if(log) log(chalk.whiteBright(`Updating Message Extension "${command.title}" with the "type" property set to "query"`));
                             command.type = "query";
                         });
                     }

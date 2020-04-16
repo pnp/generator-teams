@@ -278,7 +278,7 @@ export class MessageExtensionGenerator extends Generator {
                         this.options.messageExtensionId = answers.botId;
                         // if we already have a project, let's find the bot implementation class
                         const project = new Project();
-                        project.addExistingSourceFiles(`${this.destinationRoot()}/src/app/**/*.ts`);
+                        project.addSourceFilesAtPaths(`${this.destinationRoot()}/src/app/**/*.ts`);
                         // get all classes that has bots
                         const botClasses = project.getSourceFiles().map(s => {
                             return s.getClasses().map<{ c: ClassDeclaration, id: string } | undefined>(c => {
@@ -299,10 +299,10 @@ export class MessageExtensionGenerator extends Generator {
                                             return { c: c, id: `{{${idargval.substring(12)}}}` };
                                         }
                                         if (idargval.startsWith("{") && idargval.endsWith("}")) {
-                                            this.log(chalk.default.red("Please update your Bot ID references to use a Guids that are not encapsulated in { and }."))
+                                            this.log(chalk.red("Please update your Bot ID references to use a Guids that are not encapsulated in { and }."))
                                         }
-                                        this.log(chalk.default.red('Unable to continue, as I cannot correlate the Bot Id and the TypeScript class'));
-                                        this.log(chalk.default.red('Please verify that you have a valid Guid or a valid environment variable in your BotDeclaration.'));
+                                        this.log(chalk.red('Unable to continue, as I cannot correlate the Bot Id and the TypeScript class'));
+                                        this.log(chalk.red('Please verify that you have a valid Guid or a valid environment variable in your BotDeclaration.'));
                                         process.exit(1);
                                     }
                                 }
@@ -320,8 +320,8 @@ export class MessageExtensionGenerator extends Generator {
                             // we need the directory here and not the actual bot name
                             this.options.botName = botClass.c.getSourceFile().getDirectory().getBaseName() as string;
                         } else {
-                            this.log(chalk.default.red('Unable to continue, as I could not locate the Bot implementation'));
-                            this.log(chalk.default.red('Please verify that you have a valid Guid or a valid environment variable in your BotDeclaration.'));
+                            this.log(chalk.red('Unable to continue, as I could not locate the Bot implementation'));
+                            this.log(chalk.red('Please verify that you have a valid Guid or a valid environment variable in your BotDeclaration.'));
                             process.exit(1);
 
                         }

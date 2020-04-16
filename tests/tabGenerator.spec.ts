@@ -93,10 +93,10 @@ describe("integration tests - teams:tab", function () {
     assert.equal(false, npmRunBuildResult)
   });
 
-  it("should generate tab project with devPreview wSith unit tests", async () => {
+  it("should generate tab project with devPreview with unit tests", async () => {
     await helpers
       .run(testHelper.GENERATOR_PATH)
-      .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + "/tab01")
+      .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + "/tab02")
       .withArguments(["--no-telemetry"])
       .withPrompts({
         solutionName: "tab-test-01",
@@ -132,7 +132,7 @@ describe("integration tests - teams:tab", function () {
     assert.file(TAB_SCRIPT_FILES);
     assert.file(TAB_SCRIPT_TEST_FILES);
 
-    const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab01";
+    const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab02";
 
     const npmInstallResult = await testHelper.runNpmCommand('npm install', projectPath);
     assert.equal(false, npmInstallResult)

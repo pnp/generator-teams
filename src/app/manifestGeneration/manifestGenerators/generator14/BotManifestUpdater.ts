@@ -4,7 +4,7 @@
 
 import { IManifestUpdater } from "../../IManifestUpdater";
 import { GeneratorTeamsAppOptions } from "../../../GeneratorTeamsAppOptions";
-import uuid = require('uuid/v1');
+import { v1 as uuid } from 'uuid';
 
 export class BotManifestUpdater implements IManifestUpdater {
 

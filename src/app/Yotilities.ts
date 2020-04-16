@@ -130,7 +130,7 @@ export class Yotilities {
 
     public static getLibraryNameFromWebpackConfig(): string | undefined {
         const project = new Project();
-        project.addExistingSourceFile("webpack.config.js");
+        project.addSourceFilesAtPaths("webpack.config.js");
         const src = project.getSourceFileOrThrow("webpack.config.js");
         let retVal = undefined;
         // get the config variable

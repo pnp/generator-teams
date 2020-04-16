@@ -19,7 +19,7 @@ The generator allows you to simply create and scaffold projects that includes on
 
 * Bots
 * Messaging Extensions
-* Tabs
+* Tabs, with support for Single-Sign-On
 * Connectors
 * Outgoing Webhooks
 
@@ -126,7 +126,6 @@ npm unlink
 
 For more information on how Tabs and Bots can be used with Teams see the [Teams Developer Documentation](https://msdn.microsoft.com/en-us/microsoft-teams/ )
 
-
 ## Contributors
 
 * [Wictor Wilén](https://github.com/wictorwilen) - Original author and coordinator
@@ -142,7 +141,6 @@ For more information on how Tabs and Bots can be used with Teams see the [Teams 
 ## Be a part of the movement
 
 If you want to be a part of the #YoTeams movement then head on over to the discussion at the [generator-teams Gitter channel](https://gitter.im/PnP/generator-teams) or follow us on [Twitter using the hashtag #yoteams](https://twitter.com/search?q=%23yoteams&src=typd).
-
 
 ## Contributing
 

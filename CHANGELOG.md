@@ -23,6 +23,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Updated versions of some dependencies
 * Added `dist` folder to `.gitignore`
 * Added Travis CI parameters for npm publishing
+* Updates of package dependecies (`chalk`, `uuid`, `webpack-copy-plugin` and `ts-morph` had some minor syntax changes)
+* Updated the `yeoman-generator` to 4.8+
+* Updated `deploy.cmd` to not use the `--production` flag
 
 ### Deleted
 

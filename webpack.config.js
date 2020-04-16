@@ -2,13 +2,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
-var webpack = require('webpack');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var CleanWebpackPlugin = require('clean-webpack-plugin');
-var path = require('path');
-var fs = require('fs');
+const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const path = require('path');
+const fs = require('fs');
 
-var nodeModules = {};
+const nodeModules = {};
 fs.readdirSync('node_modules')
     .filter(function (x) {
         return ['.bin'].indexOf(x) === -1;
@@ -17,7 +17,7 @@ fs.readdirSync('node_modules')
         nodeModules[mod] = 'commonjs ' + mod;
     });
 
-var config = [{
+const config = [{
     entry: {
         app: [
             __dirname + '/src/app/index.ts'
@@ -40,7 +40,7 @@ var config = [{
         localization: [
             __dirname + '/src/localization/index.ts'
         ]
-        
+
     },
     output: {
         path: __dirname + '/generators/',

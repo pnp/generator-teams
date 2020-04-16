@@ -11,7 +11,7 @@ import * as AppInsights from 'applicationinsights';
 import { ManifestGeneratorFactory } from './manifestGeneration/ManifestGeneratorFactory';
 import inquirer = require('inquirer');
 import { ManifestVersions } from './manifestGeneration/ManifestVersions';
-import uuid = require('uuid/v1');
+import { v1 as uuid } from 'uuid';
 import validate = require('uuid-validate');
 import EmptyGuid = require('./EmptyGuid');
 import { CoreFilesUpdaterFactory } from './coreFilesUpdater/CoreFilesUpdaterFactory';
@@ -59,7 +59,7 @@ export class GeneratorTeamsApp extends Generator {
     }
 
     public initializing() {
-        this.log(yosay('Welcome to the ' + chalk.default.yellow(`Microsoft Teams App generator (${pkg.version})`)));
+        this.log(yosay('Welcome to the ' + chalk.yellow(`Microsoft Teams App generator (${pkg.version})`)));
         this.composeWith('teams:tab', { 'options': this.options });
         this.composeWith('teams:bot', { 'options': this.options });
         this.composeWith('teams:custombot', { 'options': this.options });
@@ -70,7 +70,7 @@ export class GeneratorTeamsApp extends Generator {
         // check schema version:
         const isSchemaVersionValid = ManifestGeneratorFactory.isSchemaVersionValid(this.options.existingManifest);
         if (!isSchemaVersionValid) {
-            this.log(chalk.default.red('You are running the generator on an already existing project, but on a non supported-schema.'));
+            this.log(chalk.red('You are running the generator on an already existing project, but on a non supported-schema.'));
             if (this.options.telemetry) {
                 AppInsights.defaultClient.trackEvent({ name: 'rerun-generator' });
                 AppInsights.defaultClient.trackException({ exception: { name: 'Invalid schema', message: this.options.existingManifest["$schema"] } });
@@ -371,7 +371,7 @@ export class GeneratorTeamsApp extends Generator {
                         this.options.libraryName = libraryName!;
                     } else {
                         const pkg = this.fs.readJSON(`./package.json`);
-                        this.log(chalk.default.yellow(`Unable to locate the library name in webpack.config.js, will use the package name instead (${pkg.name})`));
+                        this.log(chalk.yellow(`Unable to locate the library name in webpack.config.js, will use the package name instead (${pkg.name})`));
                         this.options.libraryName = pkg.name;
                     }
                 }
@@ -481,7 +481,7 @@ export class GeneratorTeamsApp extends Generator {
                         AppInsights.defaultClient.trackEvent({ name: 'update-core-files', properties: { result: result ? "true" : "false" } });
                     }
                 } else {
-                    this.log(chalk.default.red("WARNING: Unable to update build system automatically. See https://github.com/PnP/generator-teams/wiki/Upgrading-projects"));
+                    this.log(chalk.red("WARNING: Unable to update build system automatically. See https://github.com/PnP/generator-teams/wiki/Upgrading-projects"));
                     if (this.options.telemetry) {
                         AppInsights.defaultClient.trackEvent({ name: 'update-core-files-failed', properties: { currentVersion, generatorVersion: pkg.verison } });
                     }
@@ -596,14 +596,14 @@ export class GeneratorTeamsApp extends Generator {
         }
 
         if (this.options['skip-install']) {
-            this.log(chalk.default.yellow('Skipping installation of dependencies. You should run "npm install"'));
+            this.log(chalk.yellow('Skipping installation of dependencies. You should run "npm install"'));
         } else {
             this.npmInstall();
         }
     }
 
     public end() {
-        this.log(chalk.default.yellow('Thanks for using the generator!'));
-        this.log(chalk.default.yellow('Have fun and make great Microsoft Teams Apps...'));
+        this.log(chalk.yellow('Thanks for using the generator!'));
+        this.log(chalk.yellow('Have fun and make great Microsoft Teams Apps...'));
     }
 }
