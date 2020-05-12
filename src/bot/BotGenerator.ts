@@ -59,7 +59,7 @@ export class BotGenerator extends Generator {
                         type: 'input',
                         name: 'botid',
                         message: (answers) => {
-                            var message = 'I need the Microsoft App ID for the Bot. ';
+                            var message = 'What is the Microsoft App ID for the Bot? ';
                             if (answers.botTye == 'botframework') {
                                 message += 'If you don\'t specify a value now, you will need to manually edit it later. ';
                             }
