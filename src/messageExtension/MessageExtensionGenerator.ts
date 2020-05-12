@@ -301,7 +301,7 @@ export class MessageExtensionGenerator extends Generator {
                                         if (idargval.startsWith("{") && idargval.endsWith("}")) {
                                             this.log(chalk.red("Please update your Bot ID references to use a Guids that are not encapsulated in { and }."))
                                         }
-                                        this.log(chalk.red('Unable to continue, as I cannot correlate the Bot Id and the TypeScript class'));
+                                        this.log(chalk.red('Unable to continue, as I cannot correlate the bot ID and the TypeScript class'));
                                         this.log(chalk.red('Please verify that you have a valid Guid or a valid environment variable in your BotDeclaration.'));
                                         process.exit(1);
                                     }
