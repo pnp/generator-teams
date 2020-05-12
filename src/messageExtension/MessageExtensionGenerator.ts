@@ -30,7 +30,7 @@ export class MessageExtensionGenerator extends Generator {
                     {
                         type: 'list',
                         name: 'messageExtensionHost',
-                        message: 'Where is your message extension hosted ',
+                        message: 'Where is your message extension hosted?',
                         default: (answers: any) => {
                             if (this.options.botType == 'botframework') {
                                 return 'existing';
@@ -91,7 +91,7 @@ export class MessageExtensionGenerator extends Generator {
                         type: 'input',
                         name: 'messageExtensionId',
                         message: (answers: any) => {
-                            var message = 'I need the Microsoft App ID for the Bot used by the Message Extension. ';
+                            var message = 'What is the Microsoft App ID for the Bot used by the Message Extension? ';
                             return message;
                         },
                         default: (answers: any) => {
