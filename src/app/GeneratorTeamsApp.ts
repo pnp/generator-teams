@@ -234,7 +234,7 @@ export class GeneratorTeamsApp extends Generator {
                             },
                         },
                         {
-                            name: 'A Bot',
+                            name: 'A bot',
                             disabled: this.options.existingManifest,
                             value: 'bot'
                         },

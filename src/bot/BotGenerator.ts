@@ -18,7 +18,7 @@ export class BotGenerator extends Generator {
         opts.force = true;
         this.options = opts.options === undefined ? new GeneratorTeamsAppOptions() : opts.options;
 
-        this.desc('Adds a Bot to a Teams project.');
+        this.desc('Adds a bot to a Teams project.');
     }
 
     public prompting() {
@@ -29,7 +29,7 @@ export class BotGenerator extends Generator {
                     {
                         type: 'list',
                         name: 'bottype',
-                        message: 'What type of Bot would you like to use?',
+                        message: 'What type of bot would you like to use?',
                         default: 'botframework',
                         choices: [
                             {
@@ -37,7 +37,7 @@ export class BotGenerator extends Generator {
                                 value: 'existing'
                             },
                             {
-                                name: 'A new Bot Framework bot',
+                                name: 'A new bot Framework bot',
                                 value: 'botframework'
                             }
                         ]
@@ -59,7 +59,7 @@ export class BotGenerator extends Generator {
                         type: 'input',
                         name: 'botid',
                         message: (answers) => {
-                            var message = 'What is the Microsoft App ID for the Bot? ';
+                            var message = 'What is the Microsoft App ID for the bot? ';
                             if (answers.botTye == 'botframework') {
                                 message += 'If you don\'t specify a value now, you will need to manually edit it later. ';
                             }
@@ -110,7 +110,7 @@ export class BotGenerator extends Generator {
                     {
                         type: 'confirm',
                         name: 'botCallingEnabled',
-                        message: 'Do you want to include Bot Calling support?',
+                        message: 'Do you want to include bot calling support?',
                         when: (answers: any) => {
                             return this.options.manifestVersion == "devPreview"; // Only available in devPreview for now
                         },
