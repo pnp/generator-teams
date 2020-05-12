@@ -107,7 +107,7 @@ export class MessageExtensionGenerator extends Generator {
                     {
                         type: 'list',
                         name: 'messagingExtensionType',
-                        message: 'What type of messaging extension command',
+                        message: 'What type of messaging extension command?',
                         choices: [
                             {
                                 name: "Search based messaging extension",
@@ -125,7 +125,7 @@ export class MessageExtensionGenerator extends Generator {
                     {
                         type: 'checkbox',
                         name: 'messagingExtensionActionContext',
-                        message: "What context do you want your action to work from",
+                        message: "What context do you want your action to work from?",
                         choices: [
                             {
                                 name: "The compose box",
