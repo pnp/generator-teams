@@ -46,7 +46,7 @@ export class TabGenerator extends Generator {
                     {
                         type: 'list',
                         name: 'tabType',
-                        message: "Do you want to create a configurable or static tab?",
+                        message: "What kind of Tab would you like to create?",
                         choices: [
                             {
                                 name: "Configurable",
@@ -57,7 +57,7 @@ export class TabGenerator extends Generator {
                                 }
                             },
                             {
-                                name: "Static",
+                                name: "Personal (static)",
                                 value: "static",
                             }
                         ],
