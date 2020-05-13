@@ -31,6 +31,9 @@ export class <%=tabReactComponentName%> extends TeamsBaseComponent<I<%=tabReactC
         microsoftTeams.initialize(() => {
             microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
             microsoftTeams.getContext((context) => {
+                // Tell Teams to hide the loading indicator
+                microsoftTeams.appInitialization.notifyAppLoaded();
+
                 this.setState({
                     entityId: context.entityId
                 });
@@ -52,6 +55,9 @@ export class <%=tabReactComponentName%> extends TeamsBaseComponent<I<%=tabReactC
             microsoftTeams.initialize();
             microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
             microsoftTeams.getContext((context) => {
+                // Tell Teams to hide the loading indicator
+                microsoftTeams.appInitialization.notifyAppLoaded();
+ 
                 this.setState({
                     entityId: context.entityId
                 });

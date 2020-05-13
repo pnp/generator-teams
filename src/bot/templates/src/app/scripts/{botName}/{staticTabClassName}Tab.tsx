@@ -28,6 +28,7 @@ export class <%=staticTabClassName%>Tab extends TeamsBaseComponent<I<%=staticTab
         if (this.inTeams()) {
             microsoftTeams.initialize();
             microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
+            microsoftTeams.appInitialization.notifyAppLoaded();
         }
     }
 

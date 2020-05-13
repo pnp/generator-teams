@@ -97,6 +97,7 @@ export class GeneratorTeamsApp extends Generator {
             useAzureAppInsights: boolean;
             azureAppInsightsKey: string;
             updateBuildSystem: boolean;
+            showLoadingIndicator: boolean;
         };
         // find out what manifest versions we can use
         const manifestGeneratorFactory = new ManifestGeneratorFactory();
@@ -106,7 +107,7 @@ export class GeneratorTeamsApp extends Generator {
                 const manifestGenerator = manifestGeneratorFactory.createManifestGenerator(version.manifestVersion);
                 return manifestGenerator.supportsUpdateManifest(this.options.existingManifest.manifestVersion);
             } else {
-                return true; // always when not upgrading
+                return !version.hide; // always when not upgrading
             }
         }).map(version => {
             return {
@@ -290,6 +291,17 @@ export class GeneratorTeamsApp extends Generator {
                 },
                 {
                     type: 'confirm',
+                    name: 'showLoadingIndicator',
+                    message: 'Would you like show a loading indicator when your app/tab loads?',
+                    when: (answers) => {
+                        return !this.options.existingManifest &&
+                            answers.manifestVersion != ManifestVersions.v13 &&
+                            answers.manifestVersion != ManifestVersions.v14 &&
+                            answers.manifestVersion != ManifestVersions.v15
+                    }
+                },
+                {
+                    type: 'confirm',
                     name: 'unitTestsEnabled',
                     message: 'Would you like to include Test framework and initial tests?',
                     when: () => !this.options.existingManifest,
@@ -350,6 +362,7 @@ export class GeneratorTeamsApp extends Generator {
                 if (this.options.shouldUseSubDir) {
                     this.destinationRoot(this.destinationPath(this.options.solutionName));
                 }
+                this.options.showLoadingIndicator = answers.showLoadingIndicator;
                 this.options.unitTestsEnabled = answers.unitTestsEnabled;
                 this.options.useAzureAppInsights = answers.useAzureAppInsights;
                 this.options.azureAppInsightsKey = answers.azureAppInsightsKey;

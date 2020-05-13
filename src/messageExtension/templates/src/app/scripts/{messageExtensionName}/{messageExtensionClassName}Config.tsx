@@ -30,6 +30,7 @@ export class <%=messageExtensionClassName%>Config extends TeamsBaseComponent<I<%
 
         microsoftTeams.initialize();
         microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
+        microsoftTeams.appInitialization.notifyAppLoaded();
     }
 
     /**

@@ -23,6 +23,7 @@ export class GeneratorTeamsAppOptions {
     bot: boolean;
     mpnId?: string = undefined;
     updateBuildSystem: boolean = false;
+    showLoadingIndicator: boolean = false;
 
     reactComponents: boolean;
     websitePrefix: string;

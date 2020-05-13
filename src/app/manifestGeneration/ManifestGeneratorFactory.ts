@@ -6,6 +6,7 @@ import { ManifestVersions } from "./ManifestVersions";
 import { ManifestGenerator as ManifestGenerator13 } from "./manifestGenerators/generator13/ManifestGenerator";
 import { ManifestGenerator as ManifestGenerator14 } from "./manifestGenerators/generator14/ManifestGenerator";
 import { ManifestGenerator as ManifestGenerator15 } from "./manifestGenerators/generator15/ManifestGenerator";
+import { ManifestGenerator as ManifestGenerator16 } from "./manifestGenerators/generator16/ManifestGenerator";
 import { ManifestGenerator as ManifestGeneratorDevPreview } from "./manifestGenerators/generatorDevPreview/ManifestGenerator";
 import { BaseManifestGenerator } from "./BaseManifestGenerator";
 
@@ -16,25 +17,36 @@ export class ManifestGeneratorFactory {
             manifestVersion: ManifestVersions.v13,
             schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json",
             manifestValue: "1.3",
-            default: false
+            default: false,
+            hide: true
         },
         {
             manifestVersion: ManifestVersions.v14,
             schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.4/MicrosoftTeams.schema.json",
             manifestValue: "1.4",
-            default: false
+            default: false,
+            hide: true
         },
         {
             manifestVersion: ManifestVersions.v15,
             schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json",
             manifestValue: "1.5",
-            default: true
+            default: false,
+            hide: false
+        },
+        {
+            manifestVersion: ManifestVersions.v16,
+            schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.6/MicrosoftTeams.schema.json",
+            manifestValue: "1.6",
+            default: true,
+            hide: false
         },
         {
             manifestVersion: ManifestVersions.devPreview,
             schemaUrl: "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json",
             manifestValue: "devPreview",
-            default: false
+            default: false,
+            hide: false
         }
     ]
 
@@ -60,9 +72,11 @@ export class ManifestGeneratorFactory {
             return new ManifestGenerator14();
         } else if (manifestVersion == ManifestVersions.v15) {
             return new ManifestGenerator15();
+        } else if (manifestVersion == ManifestVersions.v16) {
+            return new ManifestGenerator16();
         } else if (manifestVersion == ManifestVersions.devPreview) {
             return new ManifestGeneratorDevPreview();
-        } else {
+        }else {
             throw new Error("Invalid manifest version.");
         }
     }

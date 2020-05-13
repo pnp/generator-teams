@@ -21,6 +21,7 @@ export class <%=tabReactComponentName%>Remove  extends TeamsBaseComponent<I<%=ta
 
         if (this.inTeams()) {
             microsoftTeams.initialize();
+            microsoftTeams.appInitialization.notifyAppLoaded();
         } else {
         }
     }

@@ -7,10 +7,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [*Unreleased*] - <**>
 
+### Added
+
+* Support for Teams manifest schema version 1.6
+* Added new question for the *loading indicator* (manifest schema 1.6+)
+
 ### Changes
 
 * Changed wording in Tabs questions: from *static* to *personal* tab
 * Updated some core build packages
+* Updated language to match Microsoft documentation principles (#120)
+
+### Deleted
+
+* Manifest version 1.3 and 1.4 are now hidden when scaffolding a new project
 
 ## [*2.13.0*] - <*2020-04-16*>
 
