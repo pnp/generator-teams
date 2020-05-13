@@ -23,7 +23,7 @@ export class CustomBotGenerator extends Generator {
                     {
                         type: 'input',
                         name: 'title',
-                        message: 'Name of your outgoing webhook?',
+                        message: 'What is the name of your outgoing webhook?',
                         default: this.options.title + ' Outgoing Webhook',
                         validate: (input) => {
                             if(! (/^[a-zA-Z].*/.test(input))) {

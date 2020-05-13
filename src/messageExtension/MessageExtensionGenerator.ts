@@ -30,7 +30,7 @@ export class MessageExtensionGenerator extends Generator {
                     {
                         type: 'list',
                         name: 'messageExtensionHost',
-                        message: 'Where is your message extension hosted ',
+                        message: 'Where is your message extension hosted?',
                         default: (answers: any) => {
                             if (this.options.botType == 'botframework') {
                                 return 'existing';
@@ -44,17 +44,17 @@ export class MessageExtensionGenerator extends Generator {
                                 this.options.existingManifest && this.options.existingManifest.bots && this.options.existingManifest.bots.length > 0 ||
                                 this.options.existingManifest && this.options.existingManifest.composeExtensions && this.options.existingManifest.composeExtensions.length > 0) {
                                 choices.push({
-                                    name: 'In a Bot or Messaging Extension already defined in this project',
+                                    name: 'In a bot or Messaging Extension already defined in this project',
                                     value: 'existing',
                                 });
                             } else {
                                 choices.push({
-                                    name: 'In a new Bot',
+                                    name: 'In a new bot',
                                     value: 'new'
                                 });
                             }
                             choices.push({
-                                name: 'In a Bot hosted somewhere else',
+                                name: 'In a bot hosted somewhere else',
                                 value: 'external'
                             });
                             return choices;
@@ -68,7 +68,7 @@ export class MessageExtensionGenerator extends Generator {
                         choices: (answers: any) => {
                             let choices: any[] = [];
                             if (this.options.existingManifest.bots) {
-                                // TODO: use AST to find the Bot classes as well
+                                // TODO: use AST to find the bot classes as well
                                 // Check existing bots
                                 choices = this.options.existingManifest.bots.map((b: any) => {
                                     return b.botId;
@@ -91,7 +91,7 @@ export class MessageExtensionGenerator extends Generator {
                         type: 'input',
                         name: 'messageExtensionId',
                         message: (answers: any) => {
-                            var message = 'I need the Microsoft App ID for the Bot used by the Message Extension. ';
+                            var message = 'What is the Microsoft App ID for the bot used by the Message Extension? ';
                             return message;
                         },
                         default: (answers: any) => {
@@ -107,7 +107,7 @@ export class MessageExtensionGenerator extends Generator {
                     {
                         type: 'list',
                         name: 'messagingExtensionType',
-                        message: 'What type of messaging extension command',
+                        message: 'What type of messaging extension command?',
                         choices: [
                             {
                                 name: "Search based messaging extension",
@@ -125,7 +125,7 @@ export class MessageExtensionGenerator extends Generator {
                     {
                         type: 'checkbox',
                         name: 'messagingExtensionActionContext',
-                        message: "What context do you want your action to work from",
+                        message: "What context do you want your action to work from?",
                         choices: [
                             {
                                 name: "The compose box",
@@ -257,7 +257,7 @@ export class MessageExtensionGenerator extends Generator {
                 this.options.messageExtensionClassName = this.options.messageExtensionName.charAt(0).toUpperCase() + this.options.messageExtensionName.slice(1);
 
                 if (answers.messageExtensionHost == 'new') {
-                    // we need to add the Bot, even though the users did not choose to create one
+                    // we need to add the bot, even though the users did not choose to create one
                     this.options.messagingExtensionBot = true;
                     this.options.botid = answers.messageExtensionId;
                     this.options.messageExtensionId = `{{${this.options.botidEnv}}}`;
@@ -299,9 +299,9 @@ export class MessageExtensionGenerator extends Generator {
                                             return { c: c, id: `{{${idargval.substring(12)}}}` };
                                         }
                                         if (idargval.startsWith("{") && idargval.endsWith("}")) {
-                                            this.log(chalk.red("Please update your Bot ID references to use a Guids that are not encapsulated in { and }."))
+                                            this.log(chalk.red("Please update your bot ID references to use a Guids that are not encapsulated in { and }."))
                                         }
-                                        this.log(chalk.red('Unable to continue, as I cannot correlate the Bot Id and the TypeScript class'));
+                                        this.log(chalk.red('Unable to continue, as I cannot correlate the bot ID and the TypeScript class'));
                                         this.log(chalk.red('Please verify that you have a valid Guid or a valid environment variable in your BotDeclaration.'));
                                         process.exit(1);
                                     }
@@ -320,7 +320,7 @@ export class MessageExtensionGenerator extends Generator {
                             // we need the directory here and not the actual bot name
                             this.options.botName = botClass.c.getSourceFile().getDirectory().getBaseName() as string;
                         } else {
-                            this.log(chalk.red('Unable to continue, as I could not locate the Bot implementation'));
+                            this.log(chalk.red('Unable to continue, as I could not locate the bot implementation'));
                             this.log(chalk.red('Please verify that you have a valid Guid or a valid environment variable in your BotDeclaration.'));
                             process.exit(1);
 
@@ -417,7 +417,7 @@ export class MessageExtensionGenerator extends Generator {
                     );
                 }
 
-                // Dynamically insert the reference and hook it up to the Bot
+                // Dynamically insert the reference and hook it up to the bot
                 const project = new Project();
                 const file = project.createSourceFile(
                     `src/app/${this.options.botName}/${this.options.botClassName}.ts`,

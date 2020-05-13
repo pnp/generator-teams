@@ -202,7 +202,7 @@ export class GeneratorTeamsApp extends Generator {
                 {
                     type: 'input',
                     name: 'mpnId',
-                    message: 'Enter your Microsoft Partner Id, if you have one? (Leave blank to skip)',
+                    message: 'Enter your Microsoft Partner ID, if you have one? (Leave blank to skip)',
                     default: undefined,
                     validate: (input: string) => {
                         return input.length <= 10;
@@ -234,7 +234,7 @@ export class GeneratorTeamsApp extends Generator {
                             },
                         },
                         {
-                            name: 'A Bot',
+                            name: 'A bot',
                             disabled: this.options.existingManifest,
                             value: 'bot'
                         },
