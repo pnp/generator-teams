@@ -375,7 +375,6 @@ export class GeneratorTeamsApp extends Generator {
                 this.options.useAzureAppInsights = this.config.get("useAzureAppInsights") || false;
                 this.options.unitTestsEnabled = this.config.get("unitTestsEnabled") || false;
                 let libraryName = Yotilities.getLibraryNameFromWebpackConfig(); // let's see if we can find the name in webpack.config.jons (it might have been changed by the user)
-                this.log(libraryName);
                 if (libraryName) {
                     this.options.libraryName = libraryName;
                 } else {
@@ -396,14 +395,14 @@ export class GeneratorTeamsApp extends Generator {
                 this.options.updateBuildSystem = answers.updateBuildSystem;
             }
 
-
-            this.options.bot = (<string[]>answers.parts).indexOf('bot') != -1;
-            this.options.tab = (<string[]>answers.parts).indexOf('tab') != -1;
-            this.options.connector = (<string[]>answers.parts).indexOf('connector') != -1;
-            this.options.customBot = (<string[]>answers.parts).indexOf('custombot') != -1;
-            this.options.messageExtension = (<string[]>answers.parts).indexOf('messageextension') != -1;
-            this.options.localization = (<string[]>answers.parts).indexOf('localization') != -1;
-
+            if (answers.parts) {
+                this.options.bot = (<string[]>answers.parts).indexOf('bot') != -1;
+                this.options.tab = (<string[]>answers.parts).indexOf('tab') != -1;
+                this.options.connector = (<string[]>answers.parts).indexOf('connector') != -1;
+                this.options.customBot = (<string[]>answers.parts).indexOf('custombot') != -1;
+                this.options.messageExtension = (<string[]>answers.parts).indexOf('messageextension') != -1;
+                this.options.localization = (<string[]>answers.parts).indexOf('localization') != -1;
+            }
             this.options.reactComponents = false; // set to false initially
         });
     }

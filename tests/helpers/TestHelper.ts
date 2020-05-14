@@ -11,7 +11,7 @@ export const DEPENDENCIES = [
 ];
 
 export const GENERATOR_PATH = path.join(__dirname, '../../generators/app');
-export const TEMP_GENERATOR_PATTERN = './temp-templates/**';
+export const TEMP_GENERATOR_PATTERN = './temp-templates/**/*.*';
 export const TEMP_TAB_GENERATOR_PATH = path.join(__dirname, '../../temp-templates/tab');
 export const TEMP_BOT_GENERATOR_PATH = path.join(__dirname, '../../temp-templates/bot');
 export const TEMP_MESSAGEEXTSION_GENERATOR_PATH = path.join(__dirname, '../../temp-templates/messageExtension');
@@ -76,4 +76,5 @@ export const SCRIPT_FILES = 'src/app/scripts/client.ts';
 export const SCHEMA_13 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json';
 export const SCHEMA_14 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.4/MicrosoftTeams.schema.json';
 export const SCHEMA_15 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json';
+export const SCHEMA_16 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.6/MicrosoftTeams.schema.json';
 export const SCHEMA_DEVPREVIEW = 'https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json';

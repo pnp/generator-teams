@@ -46,9 +46,11 @@ describe("integration tests - teams:tab", function () {
   });
 
   it("should generate tab project with v1.5 with unit tests", async () => {
+    const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab01-15";
+
     await helpers
       .run(testHelper.GENERATOR_PATH)
-      .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + "/tab01")
+      .inDir(projectPath)
       .withArguments(["--no-telemetry"])
       .withPrompts({
         solutionName: "tab-test-01",
@@ -84,7 +86,49 @@ describe("integration tests - teams:tab", function () {
     assert.file(TAB_SCRIPT_FILES);
     assert.file(TAB_SCRIPT_TEST_FILES);
 
-    const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab01";
+    const npmInstallResult = await testHelper.runNpmCommand('npm install', projectPath);
+    assert.equal(false, npmInstallResult)
+
+    const npmRunBuildResult = await testHelper.runNpmCommand('npm run build', projectPath);
+    assert.equal(false, npmRunBuildResult)
+  });
+
+  it("should generate tab project with v1.6 with unit tests", async () => {
+    const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab01-16";
+
+    await helpers
+      .run(testHelper.GENERATOR_PATH)
+      .inDir(projectPath)
+      .withArguments(["--no-telemetry"])
+      .withPrompts({
+        solutionName: "tab-test-01",
+        whichFolder: "current",
+        name: "tabtest01",
+        developer: "generator teams developer",
+        manifestVersion: "v1.6",
+        parts: "tab",
+        unitTestsEnabled: true,
+        tabType: "configurable",
+      })
+      .withGenerators(testHelper.DEPENDENCIES);
+
+    assert.file(testHelper.ROOT_FILES);
+    assert.file(testHelper.TEST_FILES);
+    assert.file(testHelper.APP_FILES);
+    assert.file(testHelper.SCRIPT_FILES);
+    assert.file(testHelper.WEB_FILES);
+    assert.file(testHelper.MANIFEST_FILES);
+
+    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_16);
+
+    assert.jsonFileContent("src/manifest/manifest.json", {
+      showLoadingIndicator: false
+    });
+
+    assert.file(TAB_HTML_FILES);
+    assert.file(TAB_FILES);
+    assert.file(TAB_SCRIPT_FILES);
+    assert.file(TAB_SCRIPT_TEST_FILES);
 
     const npmInstallResult = await testHelper.runNpmCommand('npm install', projectPath);
     assert.equal(false, npmInstallResult)
@@ -94,9 +138,11 @@ describe("integration tests - teams:tab", function () {
   });
 
   it("should generate tab project with devPreview with unit tests", async () => {
+    const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab01-devPreview";
+
     await helpers
       .run(testHelper.GENERATOR_PATH)
-      .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + "/tab02")
+      .inDir(projectPath)
       .withArguments(["--no-telemetry"])
       .withPrompts({
         solutionName: "tab-test-01",
@@ -131,8 +177,6 @@ describe("integration tests - teams:tab", function () {
     assert.file(TAB_FILES);
     assert.file(TAB_SCRIPT_FILES);
     assert.file(TAB_SCRIPT_TEST_FILES);
-
-    const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab02";
 
     const npmInstallResult = await testHelper.runNpmCommand('npm install', projectPath);
     assert.equal(false, npmInstallResult)
@@ -870,6 +914,54 @@ describe("unit tests - teams:tab", function () {
     assert.noFile(TAB_SCRIPT_TEST_FILES);
   });
 
+  it("should generate tab project with SSO support (schema 1.6)", async () => {
+    const TABSSOAPPID = "00000000-0000-0000-0000-000000000123";
+    const TABSSOAPPURI = "api://tabtest01.azurewebsites.net/00000000-0000-0000-0000-000000000123";
+    await helpers
+      .run(testHelper.GENERATOR_PATH)
+      .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + "/tab07")
+      .withArguments(["--no-telemetry"])
+      .withPrompts({
+        solutionName: "tab-test-01-sso",
+        whichFolder: "current",
+        name: "tabtest01",
+        developer: "generator teams developer",
+        manifestVersion: "v1.6",
+        parts: "tab",
+        unitTestsEnabled: false,
+        tabSharePoint: false,
+        tabSSO: true,
+        tabSSOAppId: TABSSOAPPID,
+        tabSSOAppUri: TABSSOAPPURI,
+        tabType: "configurable"
+      })
+      .withGenerators(testHelper.DEPENDENCIES);
+
+    assert.file(testHelper.ROOT_FILES);
+    assert.noFile(testHelper.TEST_FILES);
+    assert.file(testHelper.APP_FILES);
+    assert.file(testHelper.SCRIPT_FILES);
+    assert.file(testHelper.WEB_FILES);
+    assert.file(testHelper.MANIFEST_FILES);
+
+    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_16);
+    assert.jsonFileContent("src/manifest/manifest.json", {
+      webApplicationInfo:
+      {
+        id: "{{TABTEST01TAB_APP_ID}}",
+        resource: "{{TABTEST01TAB_APP_URI}}"
+      }
+
+    });
+    assert.fileContent(".env", `TABTEST01TAB_APP_ID=${TABSSOAPPID}`);
+    assert.fileContent(".env", `TABTEST01TAB_APP_URI=${TABSSOAPPURI}`);
+
+    assert.file(TAB_HTML_FILES);
+    assert.file(TAB_FILES);
+    assert.file(TAB_SCRIPT_FILES);
+    assert.noFile(TAB_SCRIPT_TEST_FILES);
+  });
+
   it("should generate tab project with SSO support (schema devPreview)", async () => {
     const TABSSOAPPID = "00000000-0000-0000-0000-000000000123";
     const TABSSOAPPURI = "api://tabtest01.azurewebsites.net/00000000-0000-0000-0000-000000000123";
@@ -918,4 +1010,125 @@ describe("unit tests - teams:tab", function () {
     assert.noFile(TAB_SCRIPT_TEST_FILES);
   });
 
+  it("should generate tab project with loading indicator set to false (default) (schema 1.6)", async () => {
+    const TABSSOAPPID = "00000000-0000-0000-0000-000000000123";
+    const TABSSOAPPURI = "api://tabtest01.azurewebsites.net/00000000-0000-0000-0000-000000000123";
+    await helpers
+      .run(testHelper.GENERATOR_PATH)
+      .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + "/tab07")
+      .withArguments(["--no-telemetry"])
+      .withPrompts({
+        solutionName: "tab-test-01-sso",
+        whichFolder: "current",
+        name: "tabtest01",
+        developer: "generator teams developer",
+        manifestVersion: "v1.6",
+        parts: "tab",
+        unitTestsEnabled: false,
+        tabSharePoint: false,
+        tabSSO: true,
+        tabSSOAppId: TABSSOAPPID,
+        tabSSOAppUri: TABSSOAPPURI,
+        tabType: "configurable"
+      })
+      .withGenerators(testHelper.DEPENDENCIES);
+
+    assert.file(testHelper.ROOT_FILES);
+    assert.noFile(testHelper.TEST_FILES);
+    assert.file(testHelper.APP_FILES);
+    assert.file(testHelper.SCRIPT_FILES);
+    assert.file(testHelper.WEB_FILES);
+    assert.file(testHelper.MANIFEST_FILES);
+
+    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_16);
+    assert.jsonFileContent("src/manifest/manifest.json", {
+      showLoadingIndicator: false
+    });
+    assert.fileContent(".env", `APPLICATION_ID=`);
+    assert.fileContent(".env", `PACKAGE_NAME=`);
+
+    assert.file(TAB_HTML_FILES);
+    assert.file(TAB_FILES);
+    assert.file(TAB_SCRIPT_FILES);
+    assert.noFile(TAB_SCRIPT_TEST_FILES);
+  });
+  it("should generate tab project with loading indicator set to true (schema 1.6)", async () => {
+    const TABSSOAPPID = "00000000-0000-0000-0000-000000000123";
+    const TABSSOAPPURI = "api://tabtest01.azurewebsites.net/00000000-0000-0000-0000-000000000123";
+    await helpers
+      .run(testHelper.GENERATOR_PATH)
+      .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + "/tab07")
+      .withArguments(["--no-telemetry"])
+      .withPrompts({
+        solutionName: "tab-test-01-sso",
+        whichFolder: "current",
+        name: "tabtest01",
+        developer: "generator teams developer",
+        manifestVersion: "v1.6",
+        parts: "tab",
+        unitTestsEnabled: false,
+        tabSharePoint: false,
+        tabSSO: true,
+        tabSSOAppId: TABSSOAPPID,
+        tabSSOAppUri: TABSSOAPPURI,
+        tabType: "configurable",
+        showLoadingIndicator: true
+      })
+      .withGenerators(testHelper.DEPENDENCIES);
+
+    assert.file(testHelper.ROOT_FILES);
+    assert.noFile(testHelper.TEST_FILES);
+    assert.file(testHelper.APP_FILES);
+    assert.file(testHelper.SCRIPT_FILES);
+    assert.file(testHelper.WEB_FILES);
+    assert.file(testHelper.MANIFEST_FILES);
+
+    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_16);
+    assert.jsonFileContent("src/manifest/manifest.json", {
+      showLoadingIndicator: true
+    });
+    assert.fileContent(".env", `APPLICATION_ID=`);
+    assert.fileContent(".env", `ACKAGE_NAME=`);
+
+    assert.file(TAB_HTML_FILES);
+    assert.file(TAB_FILES);
+    assert.file(TAB_SCRIPT_FILES);
+    assert.noFile(TAB_SCRIPT_TEST_FILES);
+  });
+
+  it("should generate tab project with schema 1.5 and upgrade to schema 1.6", async () => {
+    await helpers
+      .run(testHelper.GENERATOR_PATH)
+      .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + "/tab07")
+      .withArguments(["--no-telemetry"])
+      .withPrompts({
+        solutionName: "tab-test-01-sso",
+        whichFolder: "current",
+        name: "tabtest01",
+        developer: "generator teams developer",
+        manifestVersion: "v1.5",
+        parts: "tab",
+        unitTestsEnabled: false,
+        tabSharePoint: false,
+        tabType: "configurable"
+      })
+      .withGenerators(testHelper.DEPENDENCIES);
+    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_15);
+
+    await helpers
+      .run(testHelper.GENERATOR_PATH)
+      .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + "/tab07")
+      .withArguments(["--no-telemetry"])
+      .withPrompts({
+        manifestVersion: "v1.6",
+        confirmedAdd: true,
+        updateBuildSystem: false,
+        updateManifestVersion: true,
+        parts: ""
+      })
+      .withGenerators(testHelper.DEPENDENCIES);
+
+    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_16);
+
+  });
 });

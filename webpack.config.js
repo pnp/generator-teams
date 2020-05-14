@@ -49,7 +49,7 @@ const config = [{
     },
     externals: nodeModules,
     devtool: 'sourcemap',
-    mode: 'development',
+    mode: 'production',
     resolve: {
         extensions: [".ts", ".tsx", ".js"],
         alias: {}
