@@ -293,6 +293,7 @@ export class GeneratorTeamsApp extends Generator {
                     type: 'confirm',
                     name: 'showLoadingIndicator',
                     message: 'Would you like show a loading indicator when your app/tab loads?',
+                    default: false, // set to false until the 20 second timeout bug is fixed in Teams
                     when: (answers) => {
                         return !this.options.existingManifest &&
                             answers.manifestVersion != ManifestVersions.v13 &&
