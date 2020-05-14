@@ -176,7 +176,7 @@ export class BotGenerator extends Generator {
                     }
 
                     Yotilities.addAdditionalDeps([
-                        ["@fluentui/react", "~0.45.0"],
+                        ["@fluentui/react-northstar", "~0.49.0"],
                         ["react", "^16.8.6"],
                         ["react-dom", "^16.8.6"]
                     ], this.fs);

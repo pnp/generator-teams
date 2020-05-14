@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Provider, Flex, Text, Button, Header } from "@fluentui/react";
-import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from "msteams-react-base-component";
+import { Provider, Flex, Text, Button, Header } from "@fluentui/react-northstar";
+import TeamsBaseComponent, { ITeamsBaseComponentState } from "msteams-react-base-component";
 import * as microsoftTeams from "@microsoft/teams-js";
 
 /**
@@ -13,7 +13,7 @@ export interface I<%=staticTabClassName%>TabState extends ITeamsBaseComponentSta
 /**
  * Properties for the <%=staticTabName%>Tab React component
  */
-export interface I<%=staticTabClassName%>TabProps extends ITeamsBaseComponentProps {
+export interface I<%=staticTabClassName%>TabProps {
 
 }
 
@@ -22,10 +22,10 @@ export interface I<%=staticTabClassName%>TabProps extends ITeamsBaseComponentPro
  */
 export class <%=staticTabClassName%>Tab extends TeamsBaseComponent<I<%=staticTabClassName%>TabProps, I<%=staticTabClassName%>TabState> {
 
-    public componentWillMount() {
+    public async componentWillMount() {
         this.updateTheme(this.getQueryVariable("theme"));
 
-        if (this.inTeams()) {
+        if (await this.inTeams()) {
             microsoftTeams.initialize();
             microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
             microsoftTeams.appInitialization.notifyAppLoaded();

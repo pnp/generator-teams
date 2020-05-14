@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed wording in Tabs questions: from *static* to *personal* tab
 * Updated some core build packages
 * Updated language to match Microsoft documentation principles (#120)
+* Moved to `@fluentui/react-northstar` for user experience - TODO docs
+* (**Breaking changes when updating**) Updates to React pages due to changes in `msteams-react-base-component@2.1.0` - TODO docs
 
 ### Deleted
 

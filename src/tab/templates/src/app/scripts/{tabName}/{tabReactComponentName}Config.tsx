@@ -1,13 +1,13 @@
 import * as React from "react";
-import { Provider, Flex, Header, Input } from "@fluentui/react";
-import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from "msteams-react-base-component";
+import { Provider, Flex, Header, Input } from "@fluentui/react-northstar";
+import TeamsBaseComponent, { ITeamsBaseComponentState } from "msteams-react-base-component";
 import * as microsoftTeams from "@microsoft/teams-js";
 
 export interface I<%=tabReactComponentName%>ConfigState extends ITeamsBaseComponentState {
     value: string;
 }
 
-export interface I<%=tabReactComponentName%>ConfigProps extends ITeamsBaseComponentProps {
+export interface I<%=tabReactComponentName%>ConfigProps {
 
 }
 
@@ -16,10 +16,10 @@ export interface I<%=tabReactComponentName%>ConfigProps extends ITeamsBaseCompon
  */
 export class <%=tabReactComponentName%>Config  extends TeamsBaseComponent<I<%=tabReactComponentName%>ConfigProps, I<%=tabReactComponentName%>ConfigState> {
 
-    public componentWillMount() {
+    public async componentWillMount() {
         this.updateTheme(this.getQueryVariable("theme"));
 
-        if (this.inTeams()) {
+        if (await this.inTeams()) {
             microsoftTeams.initialize();
 
             microsoftTeams.getContext((context: microsoftTeams.Context) => {
@@ -27,7 +27,7 @@ export class <%=tabReactComponentName%>Config  extends TeamsBaseComponent<I<%=ta
                     value: context.entityId
                 });
                 this.updateTheme(context.theme);
-                this.setValidityState(true);
+                microsoftTeams.settings.setValidityState(true);
                 microsoftTeams.appInitialization.notifyAppLoaded();
             });
 

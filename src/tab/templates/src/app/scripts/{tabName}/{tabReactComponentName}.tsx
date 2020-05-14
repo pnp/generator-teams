@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Provider, Flex, Text, Button, Header } from "@fluentui/react";
-import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from "msteams-react-base-component";
+import { Provider, Flex, Text, Button, Header } from "@fluentui/react-northstar";
+import TeamsBaseComponent, { ITeamsBaseComponentState } from "msteams-react-base-component";
 import * as microsoftTeams from "@microsoft/teams-js";<% if (tabSSO) { %>
 import * as jwt from "jsonwebtoken";<% } %>
 /**
@@ -15,7 +15,7 @@ export interface I<%=tabReactComponentName%>State extends ITeamsBaseComponentSta
 /**
  * Properties for the <%=tabName%>Tab React component
  */
-export interface I<%=tabReactComponentName%>Props extends ITeamsBaseComponentProps {
+export interface I<%=tabReactComponentName%>Props {
 
 }
 
@@ -24,7 +24,7 @@ export interface I<%=tabReactComponentName%>Props extends ITeamsBaseComponentPro
  */
 export class <%=tabReactComponentName%> extends TeamsBaseComponent<I<%=tabReactComponentName%>Props, I<%=tabReactComponentName%>State> {
 
-    public componentWillMount() {
+    public async componentWillMount() {
         this.updateTheme(this.getQueryVariable("theme"));
 
 <% if (tabSSO) { %>
@@ -51,13 +51,13 @@ export class <%=tabReactComponentName%> extends TeamsBaseComponent<I<%=tabReactC
                 });
             });
         });<% } else { %>
-        if (this.inTeams()) {
+        if (await this.inTeams()) {
             microsoftTeams.initialize();
             microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
             microsoftTeams.getContext((context) => {
                 // Tell Teams to hide the loading indicator
                 microsoftTeams.appInitialization.notifyAppLoaded();
- 
+
                 this.setState({
                     entityId: context.entityId
                 });

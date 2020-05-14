@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Provider, Flex, Header, Dropdown } from "@fluentui/react";
-import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from "msteams-react-base-component";
+import { Provider, Flex, Header, Dropdown } from "@fluentui/react-northstar";
+import TeamsBaseComponent, { ITeamsBaseComponentState } from "msteams-react-base-component";
 import * as microsoftTeams from "@microsoft/teams-js";
 
 export interface I<%=connectorComponentName%>ConfigState extends ITeamsBaseComponentState {
@@ -12,7 +12,7 @@ export interface I<%=connectorComponentName%>ConfigState extends ITeamsBaseCompo
     groupName: string;
 }
 
-export interface I<%=connectorComponentName%>ConfigProps extends ITeamsBaseComponentProps {
+export interface I<%=connectorComponentName%>ConfigProps {
 }
 
 interface IColor {
@@ -36,10 +36,10 @@ const availableColors: IColor[] = [
  */
 export class <%=connectorComponentName%>Config extends TeamsBaseComponent<I<%=connectorComponentName%>ConfigProps, I<%=connectorComponentName%>ConfigState> {
 
-    public componentWillMount() {
+    public async componentWillMount() {
         this.updateTheme(this.getQueryVariable("theme"));
 
-        if (this.inTeams()) {
+        if (await this.inTeams()) {
             microsoftTeams.initialize();
 
             microsoftTeams.getContext((context: microsoftTeams.Context) => {
@@ -47,7 +47,7 @@ export class <%=connectorComponentName%>Config extends TeamsBaseComponent<I<%=co
                     color: availableColors.find(c => c.code === context.entityId),
                 });
                 this.updateTheme(context.theme);
-                this.setValidityState(this.state.color !== undefined);
+                microsoftTeams.settings.setValidityState(this.state.color !== undefined);
                 microsoftTeams.appInitialization.notifyAppLoaded();
             });
 
@@ -103,7 +103,7 @@ export class <%=connectorComponentName%>Config extends TeamsBaseComponent<I<%=co
                 header: color.title,
                 onClick: () => {
                     this.setState({ color });
-                    this.setValidityState(color !== undefined);
+                    microsoftTeams.settings.setValidityState(color !== undefined);
                 }
             };
         });

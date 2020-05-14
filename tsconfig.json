@@ -6,7 +6,8 @@
         "moduleResolution": "node",
         "noImplicitAny": true,
         "strictNullChecks": true,
-        "sourceMap": false
+        "sourceMap": false,
+        "skipLibCheck": true
     },
     "exclude": [
         "node_modules",

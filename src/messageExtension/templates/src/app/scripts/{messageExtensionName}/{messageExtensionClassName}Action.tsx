@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Provider, Flex, Header, Input, Button, Text } from "@fluentui/react";
-import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from "msteams-react-base-component";
+import { Provider, Flex, Header, Input, Button, Text } from "@fluentui/react-northstar";
+import TeamsBaseComponent, { ITeamsBaseComponentState } from "msteams-react-base-component";
 import * as microsoftTeams from "@microsoft/teams-js";
 
 /**
@@ -13,7 +13,7 @@ export interface I<%=messageExtensionClassName%>ActionState extends ITeamsBaseCo
 /**
  * Properties for the <%=messageExtensionClassName%>Action React component
  */
-export interface I<%=messageExtensionClassName%>ActionProps extends ITeamsBaseComponentProps {
+export interface I<%=messageExtensionClassName%>ActionProps {
 
 }
 
