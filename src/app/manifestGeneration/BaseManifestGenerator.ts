@@ -15,9 +15,9 @@ export abstract class BaseManifestGenerator {
         return {
             "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json",
             "manifestVersion": "1.3",
-            "id": options.id,
-            "version": "0.0.1",
-            "packageName": options.packageName,
+            "id": "{{APPLICATION_ID}}",
+            "version": "{{VERSION}}",
+            "packageName": "{{PACKAGE_NAME}}",
             "developer": {
                 "name": options.developer,
                 "websiteUrl": "https://{{HOSTNAME}}",
