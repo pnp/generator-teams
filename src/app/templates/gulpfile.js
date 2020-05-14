@@ -355,6 +355,39 @@ task('start-ngrok', (cb) => {
 });
 
 /**
+ * Task for Updating the Bot Channel Message API URL with NGROK's
+ * dynamically created URL
+ * See local .env file for configuration
+ */
+task('update-boturl', (cb) => {
+    
+    let messagesAPI = `https://${process.env.HOSTNAME}/api/messages`;
+    
+    log(`[UPDATE BOT CHANNEL] Messages API URL is: '${messagesAPI}'`);
+    log("[UPDATE BOT CHANNEL] starting update...");
+
+    let cmdBuilder = new sb();
+        cmdBuilder.append(`az.cmd login --service-principal -u ${process.env.AZ_CLI_SP} -p ${process.env.AZ_CLI_SECRET} --tenant ${process.env.AZ_CLI_TENANT_NAME_PREFIX}.onmicrosoft.com`);
+        cmdBuilder.append(" && ");
+        cmdBuilder.append(`az.cmd account set --subscription ${process.env.AZ_CLI_BOT_SUBSCRIPTION_NAME}`);
+        cmdBuilder.append(" && ");
+        cmdBuilder.append(`az.cmd bot update --name ${process.env.AZ_CLI_BOT_CHANNEL_NAME} --resource-group ${process.env.AZ_CLI_BOT_CHANNEL_RESOURCEGROUP} --endpoint ${messagesAPI}`);
+
+    let cmd = cmdBuilder.toString();
+    return cp.exec(cmd, (error, stdout, stderr) => {
+                if (error) {
+                    log(`error: ${error.message}`);
+                    return;
+                }
+                if (stderr) {
+                    log(`stderr: ${stderr}`);
+                    return;
+                }
+                log("[UPDATE BOT CHANNEL] update...Finished!");
+            });
+  });
+
+/**
  * Creates the tab manifest
  */
 task('zip', () => {
@@ -370,4 +403,9 @@ task('serve', series('nuke', 'build', 'nodemon', 'watch'));
 
 task('manifest', series('validate-manifest', 'zip'));
 
-task('ngrok-serve', series('start-ngrok', 'manifest', 'serve'));
+if (runBotMessageApiUpdate) {
+    task('ngrok-serve', series('start-ngrok','update-boturl', 'manifest', 'serve'));
+}
+else{
+    task('ngrok-serve', series('start-ngrok', 'manifest', 'serve'));
+}
