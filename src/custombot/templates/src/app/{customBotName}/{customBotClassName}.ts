@@ -36,7 +36,7 @@ export class <%= customBotClassName %> implements IOutgoingWebhook {
             const auth = req.headers.authorization;
             const msgBuf = Buffer.from((req as any).rawBody, "utf8");
             const msgHash = "HMAC " + crypto.
-                createHmac("sha256", new Buffer(securityToken as string, "base64")).
+                createHmac("sha256", Buffer.from(securityToken as string, "base64")).
                 update(msgBuf).
                 digest("base64");
 
