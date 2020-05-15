@@ -28,7 +28,7 @@ export class <%=tabReactComponentName%>Config  extends TeamsBaseComponent<I<%=ta
                 });
                 this.updateTheme(context.theme);
                 microsoftTeams.settings.setValidityState(true);
-                microsoftTeams.appInitialization.notifyAppLoaded();
+                microsoftTeams.appInitialization.notifySuccess();
             });
 
             microsoftTeams.settings.registerOnSaveHandler((saveEvent: microsoftTeams.settings.SaveEvent) => {

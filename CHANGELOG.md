@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Support for Teams manifest schema version 1.6
 * Added new question for the *loading indicator* (manifest schema 1.6+)
+* Added support for signalling app/tab load success or failure
 * New projects are generated with a `VERSION` environment variable used to sync version between the `package.json` file and the `manifest.json` file
 * New projects are generated with `APPLICATION_ID` and `PACKAGE_NAME` is replaceable parameters for `manifest.json` so packages can be built with multiple `.env` files
 * A new parameter to *Gulp* has been added to specify alternative `.env` files. Syntax: `--env <file>`

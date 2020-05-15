@@ -48,7 +48,7 @@ export class <%=connectorComponentName%>Config extends TeamsBaseComponent<I<%=co
                 });
                 this.updateTheme(context.theme);
                 microsoftTeams.settings.setValidityState(this.state.color !== undefined);
-                microsoftTeams.appInitialization.notifyAppLoaded();
+                microsoftTeams.appInitialization.notifySuccess();
             });
 
             microsoftTeams.settings.registerOnSaveHandler((saveEvent: microsoftTeams.settings.SaveEvent) => {

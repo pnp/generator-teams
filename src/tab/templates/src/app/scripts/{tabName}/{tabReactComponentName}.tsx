@@ -31,8 +31,7 @@ export class <%=tabReactComponentName%> extends TeamsBaseComponent<I<%=tabReactC
         microsoftTeams.initialize(() => {
             microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
             microsoftTeams.getContext((context) => {
-                // Tell Teams to hide the loading indicator
-                microsoftTeams.appInitialization.notifyAppLoaded();
+                
 
                 this.setState({
                     entityId: context.entityId
@@ -43,9 +42,14 @@ export class <%=tabReactComponentName%> extends TeamsBaseComponent<I<%=tabReactC
                     successCallback: (token: string) => {
                         const decoded: { [key: string]: any; } = jwt.decode(token) as { [key: string]: any; };
                         this.setState({ name: decoded!.name });
+                        microsoftTeams.appInitialization.notifySuccess();
                     },
-                    failureCallback: (reason: string) => {
-                        this.setState({ error: reason });
+                    failureCallback: (message: string) => {
+                        this.setState({ error: message });
+                        microsoftTeams.appInitialization.notifyFailure({
+                            reason: microsoftTeams.appInitialization.FailedReason.AuthFailed,
+                            message: message
+                        });
                     },
                     resources: [process.env.<%=tabUpperName%>_APP_URI as string]
                 });
@@ -55,8 +59,7 @@ export class <%=tabReactComponentName%> extends TeamsBaseComponent<I<%=tabReactC
             microsoftTeams.initialize();
             microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
             microsoftTeams.getContext((context) => {
-                // Tell Teams to hide the loading indicator
-                microsoftTeams.appInitialization.notifyAppLoaded();
+                microsoftTeams.appInitialization.notifySuccess();
 
                 this.setState({
                     entityId: context.entityId
