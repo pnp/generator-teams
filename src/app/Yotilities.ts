@@ -4,7 +4,7 @@
 
 import * as Generator from 'yeoman-generator';
 import * as ts from 'typescript';
-import { Project } from "ts-morph";
+import { Project, SyntaxKind } from "ts-morph";
 
 let path = require('path');
 const os = require("os");
@@ -135,20 +135,20 @@ export class Yotilities {
         let retVal = undefined;
         // get the config variable
         const config = src.getVariableDeclarationOrThrow("config");
-        const arr = config.getFirstChildByKind(ts.SyntaxKind.ArrayLiteralExpression);
+        const arr = config.getFirstChildByKind(SyntaxKind.ArrayLiteralExpression);
         if (arr) {
             // get the syntax list
-            arr.getChildrenOfKind(ts.SyntaxKind.SyntaxList).forEach(sl => {
+            arr.getChildrenOfKind(SyntaxKind.SyntaxList).forEach(sl => {
                 // get all literals
-                sl.getChildrenOfKind(ts.SyntaxKind.ObjectLiteralExpression).forEach(lit => {
+                sl.getChildrenOfKind(SyntaxKind.ObjectLiteralExpression).forEach(lit => {
                     // get the output property
                     const output = lit.getProperty("output");
                     if (output) {
                         // get all literals under output
-                        output.getChildrenOfKind(ts.SyntaxKind.ObjectLiteralExpression).forEach(x => {
+                        output.getChildrenOfKind(SyntaxKind.ObjectLiteralExpression).forEach(x => {
                             const lib = x.getProperty("library");
                             if (lib) {
-                                const prop = lib.getFirstChildByKind(ts.SyntaxKind.StringLiteral);
+                                const prop = lib.getFirstChildByKind(SyntaxKind.StringLiteral);
                                 if (prop) {
                                     retVal = prop.getLiteralValue();
                                 }

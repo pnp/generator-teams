@@ -5,8 +5,7 @@
 import { GeneratorTeamsAppOptions } from "../../GeneratorTeamsAppOptions";
 import { BaseCoreFilesUpdater } from "../BaseCoreFilesUpdater";
 import * as Generator from 'yeoman-generator';
-import { Project, PropertyAssignment } from 'ts-morph';
-import * as ts from 'typescript';
+import { Project, PropertyAssignment, SyntaxKind } from 'ts-morph';
 
 export class CoreFilesUpdater_2_11 extends BaseCoreFilesUpdater {
     public updateCoreFiles(options: GeneratorTeamsAppOptions, fs: Generator.MemFsEditor): boolean {
@@ -16,10 +15,10 @@ export class CoreFilesUpdater_2_11 extends BaseCoreFilesUpdater {
         const src = project.getSourceFileOrThrow("temp.ts");
         const config = src.getVariableDeclarationOrThrow("config");
 
-        const arr = config.getFirstChildByKind(ts.SyntaxKind.ObjectLiteralExpression);
+        const arr = config.getFirstChildByKind(SyntaxKind.ObjectLiteralExpression);
         if (arr) {
             const manifests = arr.getProperties().find(p => {
-                if (p.getKind() == ts.SyntaxKind.PropertyAssignment) {
+                if (p.getKind() == SyntaxKind.PropertyAssignment) {
                     const pa: PropertyAssignment = <any>p;
                     return pa.getName() == "manifests";
                 } else {
@@ -27,7 +26,7 @@ export class CoreFilesUpdater_2_11 extends BaseCoreFilesUpdater {
                 }
             });
             if (manifests) {
-                const manifestDecl = manifests.getFirstChildByKind(ts.SyntaxKind.ArrayLiteralExpression);
+                const manifestDecl = manifests.getFirstChildByKind(SyntaxKind.ArrayLiteralExpression);
                 if (manifestDecl) {
                     manifestDecl.replaceWithText('["./src/manifest/**/*.*", "!**/manifest.json"]');
                     fs.write("gulp.config.js", src.getFullText());
