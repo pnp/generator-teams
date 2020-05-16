@@ -587,6 +587,12 @@ export class GeneratorTeamsApp extends Generator {
             if (this.options.unitTestsEnabled) {
                 AppInsights.defaultClient.trackEvent({ name: 'unitTests' });
             }
+            if (this.options.showLoadingIndicator) {
+                AppInsights.defaultClient.trackEvent({ name: 'showLoadingIndicator' });
+            }
+            if (this.options.tabSSO) {
+                AppInsights.defaultClient.trackEvent({ name: 'tabSSO' });
+            }
             if (this.options.updateManifestVersion) {
                 AppInsights.defaultClient.trackEvent({
                     name: 'udpateManifest',
