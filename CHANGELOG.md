@@ -21,12 +21,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed wording in Tabs questions: from *static* to *personal* tab
 * Updated some core build packages
 * Updated language to match Microsoft documentation principles (#120)
-* Moved to `@fluentui/react-northstar` for user experience - TODO docs
-* (**Breaking changes when updating**) Updates to React pages due to changes in `msteams-react-base-component@2.1.0` - TODO docs
-
-### Deleted
-
-* Manifest version 1.3 and 1.4 are now hidden when scaffolding a new project
+* Moved to `@fluentui/react-northstar` for user experience - see https://github.com/pnp/generator-teams/wiki/Release-notes-2.14.0
+* (**Breaking changes when updating**) Updates to React pages due to changes in `msteams-react-base-component@2.1.0` - see https://github.com/pnp/generator-teams/wiki/Release-notes-2.14.0
 
 ## [*2.13.0*] - <*2020-04-16*>
 
