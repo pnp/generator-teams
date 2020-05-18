@@ -18,7 +18,7 @@
     "debug": "4.1.1",
     "dotenv": "8.2.0",
     "express": "4.16.4",
-    "express-msteams-host": "1.6.2-preview3",
+    "express-msteams-host": "1.6.2",
     "express-session": "1.15.6",
     "morgan": "1.9.1"
   },

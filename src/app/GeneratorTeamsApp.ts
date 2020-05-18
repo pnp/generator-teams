@@ -516,7 +516,7 @@ export class GeneratorTeamsApp extends Generator {
         // if we have added any react based components
         if (this.options.reactComponents) {
             Yotilities.addAdditionalDeps([
-                ["msteams-react-base-component", "^2.1.0-preview4"]
+                ["msteams-react-base-component", "^2.1.0"]
             ], this.fs);
         }
 
