@@ -31,13 +31,10 @@ export class <%=tabReactComponentName%> extends TeamsBaseComponent<I<%=tabReactC
         microsoftTeams.initialize(() => {
             microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
             microsoftTeams.getContext((context) => {
-                
-
                 this.setState({
                     entityId: context.entityId
                 });
                 this.updateTheme(context.theme);
-
                 microsoftTeams.authentication.getAuthToken({
                     successCallback: (token: string) => {
                         const decoded: { [key: string]: any; } = jwt.decode(token) as { [key: string]: any; };
@@ -48,7 +45,7 @@ export class <%=tabReactComponentName%> extends TeamsBaseComponent<I<%=tabReactC
                         this.setState({ error: message });
                         microsoftTeams.appInitialization.notifyFailure({
                             reason: microsoftTeams.appInitialization.FailedReason.AuthFailed,
-                            message: message
+                            message
                         });
                     },
                     resources: [process.env.<%=tabUpperName%>_APP_URI as string]
@@ -60,7 +57,6 @@ export class <%=tabReactComponentName%> extends TeamsBaseComponent<I<%=tabReactC
             microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
             microsoftTeams.getContext((context) => {
                 microsoftTeams.appInitialization.notifySuccess();
-
                 this.setState({
                     entityId: context.entityId
                 });
