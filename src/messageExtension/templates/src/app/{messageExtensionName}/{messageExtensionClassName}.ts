@@ -40,7 +40,7 @@ const log = debug("msteams");
                     }
                 ],
                 $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
-                version: "1.0"
+                version: "1.2"
             });
         const preview = {
             contentType: "application/vnd.microsoft.card.thumbnail",
@@ -136,7 +136,7 @@ const log = debug("msteams");
                 card: CardFactory.adaptiveCard({
                     $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
                     type: "AdaptiveCard",
-                    version: "1.0",
+                    version: "1.2",
                     body: [
                         {
                             type: "TextBlock",
@@ -189,7 +189,7 @@ const log = debug("msteams");
                     }
                 ],
                 $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
-                version: "1.0"
+                version: "1.2"
             });
         return Promise.resolve({
             type: "result",
