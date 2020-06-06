@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*]
+
+### Changes
+
+* Updated to use Adaptive Cards schema 1.2 as default (#101, #125)
+* Added *alt* text to images (#88, #123)
+
 ## [*2.14.0*] - <*2020-05-18*>
 
 ### Added
