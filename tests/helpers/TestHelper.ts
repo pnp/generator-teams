@@ -78,3 +78,8 @@ export const SCHEMA_14 = 'https://developer.microsoft.com/en-us/json-schemas/tea
 export const SCHEMA_15 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json';
 export const SCHEMA_16 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.6/MicrosoftTeams.schema.json';
 export const SCHEMA_DEVPREVIEW = 'https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json';
+
+export enum TestTypes {
+    UNIT = "UNIT",
+    INTEGRATION = "INTEGRATION"
+}
