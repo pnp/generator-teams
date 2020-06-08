@@ -20,10 +20,10 @@ describe('teams:messageExtension', function () {
     ];
 
     const MESSAGEEXTSION_FILES = [
-        'src/app/messageExtensiontest01MessageExtension/MessageExtensiontest01MessageExtension.ts'
+        'src/app/messageExtensiontest01MessageExtension/MessageExtensionTest01MessageExtension.ts'
     ];
     const MESSAGEEXTSION__TASKMODULE_FILES = [
-        'src/app/scripts/MessageExtensiontest01MessageExtension/MessageExtensiontest01MessageExtensionAction.tsx',
+        'src/app/scripts/MessageExtensiontest01MessageExtension/MessageExtensionTest01MessageExtensionAction.tsx',
         'src/app/web/MessageExtensiontest01MessageExtension/action.html'
     ];
 

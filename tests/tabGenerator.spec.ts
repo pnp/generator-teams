@@ -34,7 +34,7 @@ const TAB_SCRIPT_TEST_FILES_STATIC = [
   "src/app/scripts/tabtest01Tab/__tests__/Tabtest01Tab.spec.tsx"
 ];
 
-const TAB_FILES = "src/app/tabtest01Tab/tabtest01Tab.ts";
+const TAB_FILES = "src/app/tabtest01Tab/Tabtest01Tab.ts";
 describe("teams:tab", function () {
   beforeEach(async () => {
     await del([testHelper.TEMP_GENERATOR_PATTERN]);

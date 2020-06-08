@@ -20,7 +20,7 @@ describe('teams:connector', function () {
     ];
 
     const CONNECTOR_FILES = [
-        'src/app/connectortest01Connector/connectortest01Connector.ts'
+        'src/app/connectortest01Connector/Connectortest01Connector.ts'
     ];
 
     beforeEach(async () => {
