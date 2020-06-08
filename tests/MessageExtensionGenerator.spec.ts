@@ -23,7 +23,7 @@ describe('teams:messageExtension', function () {
         'src/app/messageExtensionTest01MessageExtension/MessageExtensionTest01MessageExtension.ts'
     ];
     const MESSAGEEXTSION__TASKMODULE_FILES = [
-        'src/app/scripts/MessageExtensionTest01MessageExtension/MessageExtensionTest01MessageExtensionAction.tsx',
+        'src/app/scripts/messageExtensionTest01MessageExtension/MessageExtensionTest01MessageExtensionAction.tsx',
         'src/app/web/MessageExtensionTest01MessageExtension/action.html'
     ];
 
