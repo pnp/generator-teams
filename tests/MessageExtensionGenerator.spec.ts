@@ -12,19 +12,19 @@ describe('teams:messageExtension', function () {
     ];
 
     const MESSAGEEXTSION_SCRIPT_FILES = [
-        'src/app/scripts/messageExtensiontest01MessageExtension/MessageExtensionTest01MessageExtensionConfig.tsx'
+        'src/app/scripts/messageExtensionTest01MessageExtension/MessageExtensionTest01MessageExtensionConfig.tsx'
     ];
 
     const MESSAGEEXTSION_SCRIPT_TEST_FILES = [
-        'src/app/scripts/messageExtensiontest01MessageExtension/__tests__/MessageExtensionTest01MessageExtensionConfig.spec.tsx'
+        'src/app/scripts/messageExtensionTest01MessageExtension/__tests__/MessageExtensionTest01MessageExtensionConfig.spec.tsx'
     ];
 
     const MESSAGEEXTSION_FILES = [
-        'src/app/messageExtensiontest01MessageExtension/MessageExtensionTest01MessageExtension.ts'
+        'src/app/messageExtensionTest01MessageExtension/MessageExtensionTest01MessageExtension.ts'
     ];
     const MESSAGEEXTSION__TASKMODULE_FILES = [
-        'src/app/scripts/MessageExtensiontest01MessageExtension/MessageExtensionTest01MessageExtensionAction.tsx',
-        'src/app/web/MessageExtensiontest01MessageExtension/action.html'
+        'src/app/scripts/MessageExtensionTest01MessageExtension/MessageExtensionTest01MessageExtensionAction.tsx',
+        'src/app/web/MessageExtensionTest01MessageExtension/action.html'
     ];
 
     beforeEach(async () => {
