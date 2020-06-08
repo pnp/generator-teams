@@ -59,7 +59,7 @@ describe("teams:bot", async () => {
     assert.file(BOT_HTML_FILES);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -102,7 +102,7 @@ describe("teams:bot", async () => {
     assert.file(BOT_HTML_FILES);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -142,7 +142,7 @@ describe("teams:bot", async () => {
     assert.file(BOT_HTML_FILES);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -188,7 +188,7 @@ describe("teams:bot", async () => {
     assert.file(BOT_HTML_FILES);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -232,7 +232,7 @@ describe("teams:bot", async () => {
     assert.file(BOT_HTML_FILES);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -272,7 +272,7 @@ describe("teams:bot", async () => {
     assert.file(BOT_HTML_FILES);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -318,7 +318,7 @@ describe("teams:bot", async () => {
     assert.file(BOT_HTML_FILES);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -362,7 +362,7 @@ describe("teams:bot", async () => {
     assert.file(BOT_HTML_FILES);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -405,7 +405,7 @@ describe("teams:bot", async () => {
     assert.file(BOT_HTML_FILES);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -451,7 +451,7 @@ describe("teams:bot", async () => {
     assert.file(BOT_HTML_FILES);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);

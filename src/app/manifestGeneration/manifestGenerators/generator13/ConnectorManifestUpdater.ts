@@ -10,7 +10,7 @@ export class ConnectorManifestUpdater implements IManifestUpdater {
     public updateManifest(manifest: any, options: GeneratorTeamsAppOptions): void {
         manifest.connectors.push({
             connectorId: "{{CONNECTOR_ID}}",
-            configurationUrl: `https://{{HOSTNAME}}/${options.connectorName}/config.html`, 
+            configurationUrl: `https://{{HOSTNAME}}/${options.connectorName}/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`, 
             scopes: ["team"],
         });
     }

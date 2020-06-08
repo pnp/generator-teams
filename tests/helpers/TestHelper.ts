@@ -73,6 +73,8 @@ export async function runNpmCommand(command: string, path: string): Promise<bool
 
 export const SCRIPT_FILES = 'src/app/scripts/client.ts';
 
+export const CONNECTOR_THEME_URL = "https://{{HOSTNAME}}/connectortest01Connector/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}";
+
 export const SCHEMA_13 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json';
 export const SCHEMA_14 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.4/MicrosoftTeams.schema.json';
 export const SCHEMA_15 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json';

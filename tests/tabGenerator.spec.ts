@@ -5,37 +5,37 @@ import { describe, it } from "mocha";
 
 import * as testHelper from "./helpers/TestHelper";
 
-describe("teams:tab", function() {
-  const TAB_HTML_FILES = [
-    "src/app/web/tabtest01Tab/index.html",
-    "src/app/web/tabtest01Tab/config.html",
-    "src/app/web/tabtest01Tab/remove.html"
-  ];
 
-  const TAB_SCRIPT_FILES = [
-    "src/app/scripts/tabtest01Tab/Tabtest01Tab.tsx",
-    "src/app/scripts/tabtest01Tab/Tabtest01TabConfig.tsx",
-    "src/app/scripts/tabtest01Tab/Tabtest01TabRemove.tsx"
-  ];
+const TAB_HTML_FILES = [
+  "src/app/web/tabtest01Tab/index.html",
+  "src/app/web/tabtest01Tab/config.html",
+  "src/app/web/tabtest01Tab/remove.html"
+];
 
-  const TAB_SCRIPT_TEST_FILES = [
-    "src/app/scripts/tabtest01Tab/__tests__/Tabtest01Tab.spec.tsx",
-    "src/app/scripts/tabtest01Tab/__tests__/Tabtest01TabConfig.spec.tsx",
-    "src/app/scripts/tabtest01Tab/__tests__/Tabtest01TabRemove.spec.tsx"
-  ];
+const TAB_SCRIPT_FILES = [
+  "src/app/scripts/tabtest01Tab/Tabtest01Tab.tsx",
+  "src/app/scripts/tabtest01Tab/Tabtest01TabConfig.tsx",
+  "src/app/scripts/tabtest01Tab/Tabtest01TabRemove.tsx"
+];
 
-  const TAB_HTML_FILES_STATIC = ["src/app/web/tabtest01Tab/index.html"];
+const TAB_SCRIPT_TEST_FILES = [
+  "src/app/scripts/tabtest01Tab/__tests__/Tabtest01Tab.spec.tsx",
+  "src/app/scripts/tabtest01Tab/__tests__/Tabtest01TabConfig.spec.tsx",
+  "src/app/scripts/tabtest01Tab/__tests__/Tabtest01TabRemove.spec.tsx"
+];
 
-  const TAB_SCRIPT_FILES_STATIC = [
-    "src/app/scripts/tabtest01Tab/Tabtest01Tab.tsx"
-  ];
+const TAB_HTML_FILES_STATIC = ["src/app/web/tabtest01Tab/index.html"];
 
-  const TAB_SCRIPT_TEST_FILES_STATIC = [
-    "src/app/scripts/tabtest01Tab/__tests__/Tabtest01Tab.spec.tsx"
-  ];
+const TAB_SCRIPT_FILES_STATIC = [
+  "src/app/scripts/tabtest01Tab/Tabtest01Tab.tsx"
+];
 
-  const TAB_FILES = "src/app/tabtest01Tab/tabtest01Tab.ts";
+const TAB_SCRIPT_TEST_FILES_STATIC = [
+  "src/app/scripts/tabtest01Tab/__tests__/Tabtest01Tab.spec.tsx"
+];
 
+const TAB_FILES = "src/app/tabtest01Tab/tabtest01Tab.ts";
+describe("teams:tab", function () {
   beforeEach(async () => {
     await del([testHelper.TEMP_GENERATOR_PATTERN]);
   });
@@ -81,11 +81,13 @@ describe("teams:tab", function() {
     assert.file(TAB_SCRIPT_FILES);
     assert.file(TAB_SCRIPT_TEST_FILES);
 
-    const npmInstallResult = await testHelper.runNpmCommand('npm install', projectPath);
-    assert.equal(false, npmInstallResult)
+    if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+      const npmInstallResult = await testHelper.runNpmCommand('npm install', projectPath);
+      assert.equal(false, npmInstallResult)
 
-    const npmRunBuildResult = await testHelper.runNpmCommand('npm run build', projectPath);
-    assert.equal(false, npmRunBuildResult)
+      const npmRunBuildResult = await testHelper.runNpmCommand('npm run build', projectPath);
+      assert.equal(false, npmRunBuildResult)
+    }
   });
 
   it("should generate tab project with v1.6 with unit tests", async () => {
@@ -125,11 +127,13 @@ describe("teams:tab", function() {
     assert.file(TAB_SCRIPT_FILES);
     assert.file(TAB_SCRIPT_TEST_FILES);
 
-    const npmInstallResult = await testHelper.runNpmCommand('npm install', projectPath);
-    assert.equal(false, npmInstallResult)
+    if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+      const npmInstallResult = await testHelper.runNpmCommand('npm install', projectPath);
+      assert.equal(false, npmInstallResult)
 
-    const npmRunBuildResult = await testHelper.runNpmCommand('npm run build', projectPath);
-    assert.equal(false, npmRunBuildResult)
+      const npmRunBuildResult = await testHelper.runNpmCommand('npm run build', projectPath);
+      assert.equal(false, npmRunBuildResult)
+    }
   });
 
   it("should generate tab project with devPreview with unit tests", async () => {
@@ -173,25 +177,23 @@ describe("teams:tab", function() {
     assert.file(TAB_SCRIPT_FILES);
     assert.file(TAB_SCRIPT_TEST_FILES);
 
-    const npmInstallResult = await testHelper.runNpmCommand('npm install', projectPath);
-    assert.equal(false, npmInstallResult)
+    if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+      const npmInstallResult = await testHelper.runNpmCommand('npm install', projectPath);
+      assert.equal(false, npmInstallResult)
 
-    const npmRunBuildResult = await testHelper.runNpmCommand('npm run build', projectPath);
-    assert.equal(false, npmRunBuildResult)
+      const npmRunBuildResult = await testHelper.runNpmCommand('npm run build', projectPath);
+      assert.equal(false, npmRunBuildResult)
+    }
   });
 
-});
 
-describe("unit tests - teams:tab", function () {
 
-  beforeEach(async () => {
-    await del([testHelper.TEMP_GENERATOR_PATTERN]);
-  });
 
   it("should generate tab project with v1.3 with unit tests", async () => {
+    const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab01-v13-withUnit";
     await helpers
       .run(testHelper.GENERATOR_PATH)
-      .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + "/tab01")
+      .inDir(projectPath)
       .withArguments(["--no-telemetry"])
       .withPrompts({
         solutionName: "tab-test-01",
@@ -214,7 +216,7 @@ describe("unit tests - teams:tab", function () {
 
     assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_13);
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -267,7 +269,7 @@ describe("unit tests - teams:tab", function () {
     assert.file(TAB_SCRIPT_TEST_FILES_STATIC);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -283,7 +285,7 @@ describe("unit tests - teams:tab", function () {
 
     await helpers
       .run(testHelper.GENERATOR_PATH)
-      .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + "/tab02")
+      .inDir(projectPath)
       .withArguments(["--no-telemetry"])
       .withPrompts({
         solutionName: "tab-test-01",
@@ -320,7 +322,7 @@ describe("unit tests - teams:tab", function () {
     assert.noFile(TAB_SCRIPT_TEST_FILES);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -370,7 +372,7 @@ describe("unit tests - teams:tab", function () {
     assert.noFile(TAB_SCRIPT_TEST_FILES_STATIC);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -410,7 +412,7 @@ describe("unit tests - teams:tab", function () {
     );
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -446,7 +448,7 @@ describe("unit tests - teams:tab", function () {
     );
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -497,7 +499,7 @@ describe("unit tests - teams:tab", function () {
     assert.file(TAB_SCRIPT_TEST_FILES);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -550,7 +552,7 @@ describe("unit tests - teams:tab", function () {
     assert.noFile(TAB_SCRIPT_TEST_FILES);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -600,7 +602,7 @@ describe("unit tests - teams:tab", function () {
     assert.noFile(TAB_SCRIPT_TEST_FILES_STATIC);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -653,7 +655,7 @@ describe("unit tests - teams:tab", function () {
     assert.noFile(TAB_SCRIPT_TEST_FILES);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -706,7 +708,7 @@ describe("unit tests - teams:tab", function () {
     assert.noFile(TAB_SCRIPT_TEST_FILES);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -759,7 +761,7 @@ describe("unit tests - teams:tab", function () {
     assert.noFile(TAB_SCRIPT_TEST_FILES);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -813,7 +815,7 @@ describe("unit tests - teams:tab", function () {
     assert.noFile(TAB_SCRIPT_TEST_FILES);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -849,7 +851,7 @@ describe("unit tests - teams:tab", function () {
     });
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -886,7 +888,7 @@ describe("unit tests - teams:tab", function () {
     });
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -923,7 +925,7 @@ describe("unit tests - teams:tab", function () {
     });
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -976,7 +978,7 @@ describe("unit tests - teams:tab", function () {
     assert.file(TAB_SCRIPT_TEST_FILES);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -1032,7 +1034,7 @@ describe("unit tests - teams:tab", function () {
     assert.noFile(TAB_SCRIPT_TEST_FILES);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-      const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -1043,9 +1045,10 @@ describe("unit tests - teams:tab", function () {
   it("should generate tab project with SSO support (schema 1.5)", async () => {
     const TABSSOAPPID = "00000000-0000-0000-0000-000000000123";
     const TABSSOAPPURI = "api://tabtest01.azurewebsites.net/00000000-0000-0000-0000-000000000123";
+    const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab-15-SSO";
     await helpers
       .run(testHelper.GENERATOR_PATH)
-      .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + "/tab07")
+      .inDir(projectPath)
       .withArguments(["--no-telemetry"])
       .withPrompts({
         solutionName: "tab-test-01-sso",
@@ -1086,14 +1089,23 @@ describe("unit tests - teams:tab", function () {
     assert.file(TAB_FILES);
     assert.file(TAB_SCRIPT_FILES);
     assert.noFile(TAB_SCRIPT_TEST_FILES);
+
+    if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
+      assert.equal(false, npmInstallResult);
+
+      const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+      assert.equal(false, npmRunBuildResult);
+    } 
   });
 
   it("should generate tab project with SSO support (schema 1.6)", async () => {
     const TABSSOAPPID = "00000000-0000-0000-0000-000000000123";
     const TABSSOAPPURI = "api://tabtest01.azurewebsites.net/00000000-0000-0000-0000-000000000123";
+    const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab-16-SSO"
     await helpers
       .run(testHelper.GENERATOR_PATH)
-      .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + "/tab07")
+      .inDir(projectPath)
       .withArguments(["--no-telemetry"])
       .withPrompts({
         solutionName: "tab-test-01-sso",
@@ -1134,14 +1146,23 @@ describe("unit tests - teams:tab", function () {
     assert.file(TAB_FILES);
     assert.file(TAB_SCRIPT_FILES);
     assert.noFile(TAB_SCRIPT_TEST_FILES);
+
+    if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
+      assert.equal(false, npmInstallResult);
+
+      const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+      assert.equal(false, npmRunBuildResult);
+    }    
   });
 
   it("should generate tab project with SSO support (schema devPreview)", async () => {
     const TABSSOAPPID = "00000000-0000-0000-0000-000000000123";
     const TABSSOAPPURI = "api://tabtest01.azurewebsites.net/00000000-0000-0000-0000-000000000123";
+    const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab-devPreview-SSO";
     await helpers
       .run(testHelper.GENERATOR_PATH)
-      .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + "/tab07")
+      .inDir(projectPath)
       .withArguments(["--no-telemetry"])
       .withPrompts({
         solutionName: "tab-test-01-sso",
@@ -1182,14 +1203,23 @@ describe("unit tests - teams:tab", function () {
     assert.file(TAB_FILES);
     assert.file(TAB_SCRIPT_FILES);
     assert.noFile(TAB_SCRIPT_TEST_FILES);
+
+    if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
+      assert.equal(false, npmInstallResult);
+
+      const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+      assert.equal(false, npmRunBuildResult);
+    }
   });
 
   it("should generate tab project with loading indicator set to false (default) (schema 1.6)", async () => {
     const TABSSOAPPID = "00000000-0000-0000-0000-000000000123";
     const TABSSOAPPURI = "api://tabtest01.azurewebsites.net/00000000-0000-0000-0000-000000000123";
+    const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab-16-loading-false";
     await helpers
       .run(testHelper.GENERATOR_PATH)
-      .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + "/tab07")
+      .inDir(projectPath)
       .withArguments(["--no-telemetry"])
       .withPrompts({
         solutionName: "tab-test-01-sso",
@@ -1225,13 +1255,24 @@ describe("unit tests - teams:tab", function () {
     assert.file(TAB_FILES);
     assert.file(TAB_SCRIPT_FILES);
     assert.noFile(TAB_SCRIPT_TEST_FILES);
+
+    if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
+      assert.equal(false, npmInstallResult);
+
+      const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+      assert.equal(false, npmRunBuildResult);
+
+    }
   });
+
   it("should generate tab project with loading indicator set to true (schema 1.6)", async () => {
     const TABSSOAPPID = "00000000-0000-0000-0000-000000000123";
     const TABSSOAPPURI = "api://tabtest01.azurewebsites.net/00000000-0000-0000-0000-000000000123";
+    const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab-16-loading-indicator"
     await helpers
       .run(testHelper.GENERATOR_PATH)
-      .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + "/tab07")
+      .inDir(projectPath)
       .withArguments(["--no-telemetry"])
       .withPrompts({
         solutionName: "tab-test-01-sso",
@@ -1262,18 +1303,28 @@ describe("unit tests - teams:tab", function () {
       showLoadingIndicator: true
     });
     assert.fileContent(".env", `APPLICATION_ID=`);
-    assert.fileContent(".env", `ACKAGE_NAME=`);
+    assert.fileContent(".env", `PACKAGE_NAME=`);
 
     assert.file(TAB_HTML_FILES);
     assert.file(TAB_FILES);
     assert.file(TAB_SCRIPT_FILES);
     assert.noFile(TAB_SCRIPT_TEST_FILES);
+
+    if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
+      assert.equal(false, npmInstallResult);
+
+      const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+      assert.equal(false, npmRunBuildResult);
+
+    }
   });
 
   it("should generate tab project with schema 1.5 and upgrade to schema 1.6", async () => {
+    const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab-15-to-16-upgrade";
     await helpers
       .run(testHelper.GENERATOR_PATH)
-      .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + "/tab07")
+      .inDir(projectPath)
       .withArguments(["--no-telemetry"])
       .withPrompts({
         solutionName: "tab-test-01-sso",
@@ -1289,9 +1340,17 @@ describe("unit tests - teams:tab", function () {
       .withGenerators(testHelper.DEPENDENCIES);
     assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_15);
 
+    if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
+      assert.equal(false, npmInstallResult);
+
+      const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+      assert.equal(false, npmRunBuildResult);
+    }
+
     await helpers
       .run(testHelper.GENERATOR_PATH)
-      .inDir(testHelper.TEMP_TAB_GENERATOR_PATH + "/tab07")
+      .inDir(projectPath)
       .withArguments(["--no-telemetry"])
       .withPrompts({
         manifestVersion: "v1.6",
@@ -1303,6 +1362,14 @@ describe("unit tests - teams:tab", function () {
       .withGenerators(testHelper.DEPENDENCIES);
 
     assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_16);
+
+    if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
+      assert.equal(false, npmInstallResult);
+
+      const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+      assert.equal(false, npmRunBuildResult);
+    }
 
   });
 });

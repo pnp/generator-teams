@@ -1,6 +1,7 @@
 import * as React from "react";
 import { shallow, mount } from "enzyme";
 import toJson from "enzyme-to-json";
+import { Header } from "@fluentui/react-northstar";
 
 import { <%=tabReactComponentName%> } from "../<%=tabReactComponentName%>";
 
@@ -14,7 +15,7 @@ describe("<%=tabReactComponentName%> Component", () => {
     // Component Test Sample
     it("should render the tab", () => {
         const component = shallow(<<%=tabReactComponentName%> />);
-        const divResult = component.containsMatchingElement(<div>This is your tab</div>);
+        const divResult = component.containsMatchingElement(<Header content="This is your tab" />);
 
         expect(divResult).toBeTruthy();
     });

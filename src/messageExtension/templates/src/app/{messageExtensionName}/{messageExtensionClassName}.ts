@@ -96,7 +96,7 @@ const log = debug("msteams");
                 actions: [
                     {
                         type: "openUrl",
-                        value: `https://${process.env.HOSTNAME}/<%= messageExtensionName %>/config.html`,
+                        value: `https://${process.env.HOSTNAME}/<%= messageExtensionName %>/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
                         title: "Configuration"
                     }
                 ]
@@ -111,7 +111,7 @@ const log = debug("msteams");
                     actions: [
                         {
                             type: "openUrl",
-                            value: `https://${process.env.HOSTNAME}/<%= messageExtensionName %>/config.html`,
+                            value: `https://${process.env.HOSTNAME}/<%= messageExtensionName %>/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
                             title: "Configuration"
                         }
                     ]
@@ -124,7 +124,8 @@ const log = debug("msteams");
             type: "continue",
             value: {
                 title: "Input form",
-                url: `https://${process.env.HOSTNAME}/<%= messageExtensionName %>/action.html`
+                url: `https://${process.env.HOSTNAME}/<%= messageExtensionName %>/action.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
+                height: "medium"
             }
         });
 <% } %>
@@ -204,7 +205,7 @@ const log = debug("msteams");
     public async onQuerySettingsUrl(context: TurnContext): Promise<{ title: string, value: string }> {
         return Promise.resolve({
             title: "<%=messageExtensionTitle%> Configuration",
-            value: `https://${process.env.HOSTNAME}/<%= messageExtensionName %>/config.html`
+            value: `https://${process.env.HOSTNAME}/<%= messageExtensionName %>/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`
         });
     }
 

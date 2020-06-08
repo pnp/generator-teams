@@ -1,6 +1,7 @@
 import * as React from "react";
 import { shallow } from "enzyme";
 import toJson from "enzyme-to-json";
+import { Header } from "@fluentui/react-northstar";
 
 import { <%=messageExtensionClassName%>Config } from "../<%=messageExtensionClassName%>Config";
 
@@ -14,7 +15,7 @@ describe("<%=messageExtensionClassName%>Config Component", () => {
     // Component Test Sample
     it("should render the tab", () => {
         const component = shallow(<<%=messageExtensionClassName%>Config />);
-        const divResult = component.containsMatchingElement(<div><%= messageExtensionTitle%> configuration</div>);
+        const divResult = component.containsMatchingElement(<Header content="<%= messageExtensionTitle%> configuration" />);
 
         expect(divResult).toBeTruthy();
     });

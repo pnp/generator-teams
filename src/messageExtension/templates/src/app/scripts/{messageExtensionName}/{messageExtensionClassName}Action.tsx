@@ -35,7 +35,7 @@ export class <%=messageExtensionClassName%>Action extends TeamsBaseComponent<I<%
      */
     public render() {
         return (
-            <Provider theme={this.state.theme}>
+            <Provider theme={this.state.theme} styles={{ height: "100vh", width: "100vw", padding: "1em" }}>
                 <Flex fill={true} column styles={{
                     padding: ".8rem 0 .8rem .5rem"
                 }}>

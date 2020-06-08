@@ -35,10 +35,10 @@ export class <%=tabReactComponentName%>Config  extends TeamsBaseComponent<I<%=ta
                 // Calculate host dynamically to enable local debugging
                 const host = "https://" + window.location.host;
                 microsoftTeams.settings.setSettings({
-                    contentUrl: host + "/<%=tabName%>/?data=",
-                    websiteUrl: host + "/<%=tabName%>/?data=",
+                    contentUrl: host + "/<%=tabName%>/?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}",
+                    websiteUrl: host + "/<%=tabName%>/?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}",
                     suggestedDisplayName: "<%=tabTitle%>",
-                    removeUrl: host + "/<%=tabName%>/remove.html",
+                    removeUrl: host + "/<%=tabName%>/remove.html?theme={theme}",
                     entityId: this.state.value
                 });
                 saveEvent.notifySuccess();

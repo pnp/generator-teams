@@ -35,7 +35,7 @@ describe('teams:localization', function () {
         assert.noJsonFileContent('src/manifest/manifest.json', { localizationInfo: {} });
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -62,7 +62,7 @@ describe('teams:localization', function () {
         assert.jsonFileContent('src/manifest/manifest.json', { localizationInfo: { defaultLanguageTag: "en-us" } });
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -92,7 +92,7 @@ describe('teams:localization', function () {
         assert.jsonFileContent('src/manifest/manifest.json', { localizationInfo: { defaultLanguageTag: "en-us" } });
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -141,7 +141,7 @@ describe('teams:localization', function () {
         });
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -182,7 +182,7 @@ describe('teams:localization', function () {
         assert.file('src/manifest/se-sv.json');
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -210,7 +210,7 @@ describe('teams:localization', function () {
         assert.noJsonFileContent('src/manifest/manifest.json', { localizationInfo: { } });
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);

@@ -55,7 +55,7 @@ export class <%=connectorComponentName%>Config extends TeamsBaseComponent<I<%=co
                     // INFO: Should really be of type microsoftTeams.settings.Settings, but configName does not exist in the Teams JS SDK
                 const settings: any = {
                     entityId: this.state.color ? this.state.color.code : availableColors[0].code,
-                    contentUrl: `https://${process.env.HOSTNAME}/<%=connectorName%>/config.html`,
+                    contentUrl: `https://${process.env.HOSTNAME}/<%=connectorName%>/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
                     configName: this.state.color ? this.state.color.title : availableColors[0].title
                 };
                 microsoftTeams.settings.setSettings(settings);

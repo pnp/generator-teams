@@ -22,7 +22,7 @@ export interface I<%=messageExtensionClassName%>ConfigProps {
  */
 export class <%=messageExtensionClassName%>Config extends TeamsBaseComponent<I<%=messageExtensionClassName%>ConfigProps, I<%=messageExtensionClassName%>ConfigState> {
 
-    public acomponentWillMount() {
+    public componentWillMount() {
         this.updateTheme(this.getQueryVariable("theme"));
         this.setState({
             onOrOff: true
@@ -38,7 +38,7 @@ export class <%=messageExtensionClassName%>Config extends TeamsBaseComponent<I<%
      */
     public render() {
         return (
-            <Provider theme={this.state.theme}>
+            <Provider theme={this.state.theme} styles={{ height: "100vh", width: "100vw", padding: "1em" }}>
                 <Flex fill={true}>
                     <Flex.Item>
                         <div>

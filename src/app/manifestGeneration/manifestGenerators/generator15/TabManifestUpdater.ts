@@ -18,7 +18,7 @@ export class TabManifestUpdater implements IManifestUpdater {
         }
         else {
             const tab: any = {
-                configurationUrl: `https://{{HOSTNAME}}/${options.tabName}/config.html`,
+                configurationUrl: `https://{{HOSTNAME}}/${options.tabName}/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
                 canUpdateConfiguration: true,
                 scopes: options.tabScopes
             };

@@ -9,11 +9,13 @@ cache:
   - node_modules
 node_js:
 - stable
-- 8.10.0
-- 8.15.0
-- 10.15.3
-- 12.14.1
-script: npm run build
+- lts/*
+- 10
+- 12
+- 14
+script: 
+  - npm run test
+  - npm run build
 
 jobs:
   include:

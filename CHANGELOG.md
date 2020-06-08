@@ -10,7 +10,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changes
 
 * Updated to use Adaptive Cards schema 1.2 as default (#101, #125)
+* Updated type declarations required during build
+* Node 8 no longer supported, reached EOL 2019-12-31
+
+### Added
+
 * Added *alt* text to images (#88, #123)
+* Added contextual parameters to all tabs/configuration pages
+* Full integration testing
+
+### Fixes
+
+* Fixed issues with flickering when using non-default themes in configuration dialogs
+* Fixed issues in tests related to `@fluentui/react-northstar` (#108, #48)
+* Fixed an issue where generated `componentWillMount` for Messaging Extensions configuration page was misspelled
 
 ## [*2.14.0*] - <*2020-05-18*>
 

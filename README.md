@@ -1,10 +1,10 @@
 # Microsoft Teams App Project Generator - #YoTeams
 
 [![npm version](https://badge.fury.io/js/generator-teams.svg)](https://www.npmjs.com/package/generator-teams)
-[![npm](https://img.shields.io/npm/dt/generator-teams.svg)]((https://www.npmjs.com/package/generator-teams))
+[![npm](https://img.shields.io/npm/dt/generator-teams.svg)](https://www.npmjs.com/package/generator-teams)
 [![MIT](https://img.shields.io/npm/l/generator-teams.svg)](https://github.com/PnP/generator-teams/blob/master/LICENSE.md)
 [![GitHub issues](https://img.shields.io/github/issues/PnP/generator-teams.svg)](https://github.com/PnP/generator-teams/issues)
-[![GitHub closed issues](https://img.shields.io/github/issues-closed/PnP/generator-teams.svg)](https://github.com/PnP/generator-teams/issues?q=is%3Aissue+is%3Aclosed) 
+[![GitHub closed issues](https://img.shields.io/github/issues-closed/PnP/generator-teams.svg)](https://github.com/PnP/generator-teams/issues?q=is%3Aissue+is%3Aclosed)
 [![GitHub stars](https://img.shields.io/github/stars/PnP/generator-teams.svg)](https://github.com/PnP/generator-teams/stargazers)
 [![Gitter](https://badges.gitter.im/PnP/generator-teams.svg)](https://gitter.im/PnP/generator-teams?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
@@ -13,12 +13,12 @@
  [![npm (latest)](https://img.shields.io/npm/v/generator-teams/latest.svg)](https://www.npmjs.com/package/generator-teams)|[![npm (preview)](https://img.shields.io/npm/v/generator-teams/preview.svg)](https://www.npmjs.com/package/generator-teams)
  [![Travis (.org) branch](https://img.shields.io/travis/PnP/generator-teams/master.svg)](https://travis-ci.org/PnP/generator-teams)|[![Travis (.org) branch](https://img.shields.io/travis/PnP/generator-teams/preview.svg)](https://travis-ci.org/PnP/generator-teams)
 
-A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) Apps projects. This generator is for developers who prefers to use TypeScript, React and node as their primary technologies.
+A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) Apps projects. **The most comprehensive and complete development toolkit for Microsoft Teams development**. This generator is for developers who prefers to use TypeScript, React and node as their primary technologies.
 
 The generator allows you to simply create and scaffold projects that includes one or more Microsoft Teams features such as:
 
-* Bots
-* Messaging Extensions
+* Bots - based on Bot Framework
+* Messaging Extensions - actions and query
 * Tabs, with support for Single-Sign-On
 * Connectors
 * Outgoing Webhooks
@@ -28,6 +28,7 @@ When scaffolding the project you will also have the option of adding additional 
 * Easy deploy to Microsoft Azure
 * Add unit testing framework and sample unit tests
 * Easily develop and debug using ngrok
+* Application Insights support
 
 ## Documentation
 
@@ -137,6 +138,7 @@ For more information on how Tabs and Bots can be used with Teams see the [Teams 
 * [Cagdas Davulcu](https://github.com/cagdasdavulcu)
 * [Stefan Bauer](https://github.com/StfBauer)
 * [Andrew Connell](https://github.com/andrewconnell)
+* [Ralf Brennscheidt](https://github.com/RalfBrennscheidt)
 
 ## Be a part of the movement
 

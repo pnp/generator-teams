@@ -66,7 +66,7 @@ describe('teams:messageExtension', function () {
         assert.file(MESSAGEEXTSION_HTML_FILES);
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -112,7 +112,7 @@ describe('teams:messageExtension', function () {
         assert.file(MESSAGEEXTSION_HTML_FILES);
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -159,14 +159,14 @@ describe('teams:messageExtension', function () {
         assert.noFile(MESSAGEEXTSION_HTML_FILES);
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
             assert.equal(false, npmRunBuildResult);
       
             const npmRunTestResult = await testHelper.runNpmCommand("npm run test", projectPath);
-            assert.equal(false, npmRunTestResult);
+            assert.equal(true, npmRunTestResult); // there's no test files in this so the test should fail
         }
     });
     it('should generate message extension project with v1.4 with unit tests, without configuration', async () => {
@@ -205,14 +205,14 @@ describe('teams:messageExtension', function () {
         assert.noFile(MESSAGEEXTSION_HTML_FILES);
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
             assert.equal(false, npmRunBuildResult);
       
             const npmRunTestResult = await testHelper.runNpmCommand("npm run test", projectPath);
-            assert.equal(false, npmRunTestResult);
+            assert.equal(true, npmRunTestResult); // there's no test files in this so the test should fail
         }
     });
 
@@ -251,7 +251,7 @@ describe('teams:messageExtension', function () {
         assert.file(MESSAGEEXTSION_HTML_FILES);
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -294,7 +294,7 @@ describe('teams:messageExtension', function () {
         assert.file(MESSAGEEXTSION_HTML_FILES);
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -341,14 +341,14 @@ describe('teams:messageExtension', function () {
         assert.noFile(MESSAGEEXTSION_HTML_FILES);
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
             assert.equal(false, npmRunBuildResult);
       
             const npmRunTestResult = await testHelper.runNpmCommand("npm run test", projectPath);
-            assert.equal(false, npmRunTestResult);
+            assert.equal(true, npmRunTestResult); // there's no test files in this so the test should fail
         }
     });
 
@@ -387,7 +387,7 @@ describe('teams:messageExtension', function () {
         assert.file(MESSAGEEXTSION_HTML_FILES);
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -422,7 +422,7 @@ describe('teams:messageExtension', function () {
         assert.fileContent(MESSAGEEXTSION_FILES[0], "public async onQuery(");
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -462,7 +462,7 @@ describe('teams:messageExtension', function () {
         assert.fileContent(MESSAGEEXTSION_FILES[0], "public async onSubmitAction(");
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -504,7 +504,7 @@ describe('teams:messageExtension', function () {
         assert.fileContent(MESSAGEEXTSION_FILES[0], "public async onSubmitAction(");
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -544,7 +544,7 @@ describe('teams:messageExtension', function () {
         assert.fileContent(MESSAGEEXTSION_FILES[0], "public async onSubmitAction(");
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
@@ -586,7 +586,7 @@ describe('teams:messageExtension', function () {
         assert.fileContent(MESSAGEEXTSION_FILES[0], "type: \"result\"");
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
-            const npmInstallResult = await testHelper.runNpmCommand("npm install", projectPath);
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);

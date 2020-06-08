@@ -1,6 +1,7 @@
 import * as React from "react";
 import { shallow } from "enzyme";
 import toJson from "enzyme-to-json";
+import { Header } from "@fluentui/react-northstar";
 
 import { <%=connectorComponentName%>Config } from "../<%=connectorComponentName%>Config";
 
@@ -15,7 +16,7 @@ describe("<%=connectorComponentName%>Config Component", () => {
     // Component Test Sample
     it("should render the tab", () => {
         const component = shallow(<<%=connectorComponentName%>Config />);
-        const divResult = component.containsMatchingElement(<div>Configure your Connector</div>);
+        const divResult = component.containsMatchingElement( <Header content="Configure your Connector" />);
 
         expect(divResult).toBeTruthy();
     });
