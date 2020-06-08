@@ -6,7 +6,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/PnP/generator-teams.svg)](https://github.com/PnP/generator-teams/issues)
 [![GitHub closed issues](https://img.shields.io/github/issues-closed/PnP/generator-teams.svg)](https://github.com/PnP/generator-teams/issues?q=is%3Aissue+is%3Aclosed)
 [![GitHub stars](https://img.shields.io/github/stars/PnP/generator-teams.svg)](https://github.com/PnP/generator-teams/stargazers)
-[![Gitter](https://badges.gitter.im/PnP/generator-teams.svg)](https://gitter.im/PnP/generator-teams?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Gitter](https://badges.gitter.im/PnP/generator-teams.svg)](https://gitter.im/OfficeDev/generator-teams?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
  | @master | @preview |
  :--------:|:---------:
