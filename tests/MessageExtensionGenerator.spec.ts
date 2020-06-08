@@ -24,7 +24,7 @@ describe('teams:messageExtension', function () {
     ];
     const MESSAGEEXTSION__TASKMODULE_FILES = [
         'src/app/scripts/messageExtensionTest01MessageExtension/MessageExtensionTest01MessageExtensionAction.tsx',
-        'src/app/web/MessageExtensionTest01MessageExtension/action.html'
+        'src/app/web/messageExtensionTest01MessageExtension/action.html'
     ];
 
     beforeEach(async () => {
