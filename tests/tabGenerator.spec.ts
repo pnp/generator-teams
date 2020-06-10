@@ -1096,7 +1096,7 @@ describe("teams:tab", function () {
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
       assert.equal(false, npmRunBuildResult);
-    } 
+    }
   });
 
   it("should generate tab project with SSO support (schema 1.6)", async () => {
@@ -1153,7 +1153,7 @@ describe("teams:tab", function () {
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
       assert.equal(false, npmRunBuildResult);
-    }    
+    }
   });
 
   it("should generate tab project with SSO support (schema devPreview)", async () => {
@@ -1350,7 +1350,7 @@ describe("teams:tab", function () {
 
     await helpers
       .run(testHelper.GENERATOR_PATH)
-      .inDir(projectPath)
+      .cd(projectPath)
       .withArguments(["--no-telemetry"])
       .withPrompts({
         manifestVersion: "v1.6",
@@ -1362,6 +1362,71 @@ describe("teams:tab", function () {
       .withGenerators(testHelper.DEPENDENCIES);
 
     assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_16);
+
+    if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
+      assert.equal(false, npmInstallResult);
+
+      const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+      assert.equal(false, npmRunBuildResult);
+    }
+
+  });
+
+  it("should generate tab project with schema 1.6 containing two static tabs", async () => {
+    const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab-16-additional-static-tab";
+    await helpers
+      .run(testHelper.GENERATOR_PATH)
+      .inDir(projectPath)
+      .withArguments(["--no-telemetry"])
+      .withPrompts({
+        solutionName: "tab-test-01",
+        whichFolder: "current",
+        name: "tabtest01",
+        developer: "generator teams developer",
+        manifestVersion: "v1.6",
+        parts: "tab",
+        unitTestsEnabled: false,
+        tabType: "static",
+        tabTitle: "tab 1"
+      })
+      .withGenerators(testHelper.DEPENDENCIES);
+    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_16);
+    assert.jsonFileContent("src/manifest/manifest.json", {
+      staticTabs: [
+        {
+          name: "tab 1"
+        }
+      ]
+    });
+
+    await helpers
+      .run(testHelper.GENERATOR_PATH)
+      .cd(projectPath)
+      .withArguments(["--no-telemetry"])
+      .withPrompts({
+        manifestVersion: "v1.6",
+        confirmedAdd: true,
+        parts: "tab",
+        tabType: "static",
+        tabTitle: "tab 2"
+      })
+      .withGenerators(testHelper.DEPENDENCIES);
+
+    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_16);
+    assert.jsonFileContent("src/manifest/manifest.json", {
+      staticTabs: [
+        {
+          name: "tab 1"
+        },
+        {
+          name: "tab 2"
+        }
+      ]
+    });
+
+    const manifest = require(projectPath + "/src/manifest/manifest.json");
+    assert.notEqual(manifest.staticTabs[0].entityId, manifest.staticTabs[1].entityId, "Static tab entities must be unique");
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);

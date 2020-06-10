@@ -4,15 +4,16 @@
 
 import { IManifestUpdater } from "../../IManifestUpdater";
 import { GeneratorTeamsAppOptions } from "../../../GeneratorTeamsAppOptions";
+import { v4 as uuid } from 'uuid';
 
 export class TabManifestUpdater implements IManifestUpdater {
 
     public updateManifest(manifest: any, options: GeneratorTeamsAppOptions): void {
         if (options.tabType == "static") {
             (<any[]>manifest.staticTabs).push({
-                entityId: "default-data",
+                entityId: uuid(),
                 name: options.tabTitle,
-                contentUrl: `https://{{HOSTNAME}}/${options.tabName}/`,
+                contentUrl: `https://{{HOSTNAME}}/${options.tabName}/?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
                 scopes: ["personal"]
             });
         }

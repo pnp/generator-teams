@@ -17,13 +17,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Added *alt* text to images (#88, #123)
 * Added contextual parameters to all tabs/configuration pages
-* Full integration testing
+* Full integration testing and additional tests
 
 ### Fixes
 
 * Fixed issues with flickering when using non-default themes in configuration dialogs
 * Fixed issues in tests related to `@fluentui/react-northstar` (#108, #48)
 * Fixed an issue where generated `componentWillMount` for Messaging Extensions configuration page was misspelled
+* Fixed an issue where an extra `style` element tag was generated in some web files
+* Fixed an issue where static tabs all got the same hardcoded entity id (#126)
 
 ## [*2.14.0*] - <*2020-05-18*>
 

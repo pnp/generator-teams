@@ -1,6 +1,6 @@
 {
   "name": "generator-teams",
-  "version": "2.15.0-preview",
+  "version": "2.15.0-preview2",
   "description": "Yeoman generator for Microsoft Teams Apps",
   "main": "generators/app/index.js",
   "scripts": {
@@ -33,7 +33,8 @@
     "microsoft-365",
     "vscode",
     "yo teams",
-    "pnp"
+    "pnp",
+    "teams toolkit"
   ],
   "author": "Wictor Wilén (wictor@wictorwilen.se)",
   "maintainers": [
