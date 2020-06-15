@@ -14,7 +14,7 @@ export class TabManifestUpdater implements IManifestUpdater {
             (<any[]>manifest.staticTabs).push({
                 entityId: uuid(),
                 name: options.tabTitle,
-                contentUrl: `https://{{HOSTNAME}}/${options.tabName}/?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
+                contentUrl: `https://{{HOSTNAME}}/${options.tabName}/?name={loginHint}&tenant={tid}&theme={theme}`,
                 scopes: ["personal"]
             });
         }
