@@ -85,7 +85,7 @@ You can use the following flags for the `serve`, `ngrok-serve` and build command
 
 If you want to deploy to Azure using Git follow these steps.
 
-This will automatically deploy your files to Azure, download the npm pacakges, build the solution and start the web server using Express.
+This will automatically deploy your files to Azure, download the npm packages, build the solution and start the web server using Express.
 
 1. Log into [the Azure Portal](https://portal.azure.com)
 2. Create a new *Resource Group* or use an existing one
