@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*]
+
+## Changes
+
+* Updated to `@microsoft/teams-js` version `1.7.0`
+* Updated core node packages of generator and generated solution, some related to security notifications
+* Schema `1.7` is the default option for new projects
+
+## Added
+
+* Added support for Microsoft Teams schema `1.7`
+* Added the `isFullScreen` option for personal apps (schema `1.7`+)
+
+## Deleted
+
+* Schema `1.5` is no longer available as an option when creating new projects
+
 ## [*2.15.0*] - <*2020-06-15*>
 
 ### Changes

@@ -7,6 +7,7 @@ import { ManifestGenerator as ManifestGenerator13 } from "./manifestGenerators/g
 import { ManifestGenerator as ManifestGenerator14 } from "./manifestGenerators/generator14/ManifestGenerator";
 import { ManifestGenerator as ManifestGenerator15 } from "./manifestGenerators/generator15/ManifestGenerator";
 import { ManifestGenerator as ManifestGenerator16 } from "./manifestGenerators/generator16/ManifestGenerator";
+import { ManifestGenerator as ManifestGenerator17 } from "./manifestGenerators/generator17/ManifestGenerator";
 import { ManifestGenerator as ManifestGeneratorDevPreview } from "./manifestGenerators/generatorDevPreview/ManifestGenerator";
 import { BaseManifestGenerator } from "./BaseManifestGenerator";
 
@@ -32,12 +33,19 @@ export class ManifestGeneratorFactory {
             schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json",
             manifestValue: "1.5",
             default: false,
-            hide: false
+            hide: true
         },
         {
             manifestVersion: ManifestVersions.v16,
             schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.6/MicrosoftTeams.schema.json",
             manifestValue: "1.6",
+            default: false,
+            hide: false
+        },
+        {
+            manifestVersion: ManifestVersions.v17,
+            schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.7/MicrosoftTeams.schema.json",
+            manifestValue: "1.7",
             default: true,
             hide: false
         },
@@ -74,6 +82,8 @@ export class ManifestGeneratorFactory {
             return new ManifestGenerator15();
         } else if (manifestVersion == ManifestVersions.v16) {
             return new ManifestGenerator16();
+        } else if (manifestVersion == ManifestVersions.v17) {
+            return new ManifestGenerator17();            
         } else if (manifestVersion == ManifestVersions.devPreview) {
             return new ManifestGeneratorDevPreview();
         }else {

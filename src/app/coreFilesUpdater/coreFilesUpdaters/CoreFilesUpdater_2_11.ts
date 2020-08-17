@@ -4,11 +4,12 @@
 
 import { GeneratorTeamsAppOptions } from "../../GeneratorTeamsAppOptions";
 import { BaseCoreFilesUpdater } from "../BaseCoreFilesUpdater";
+import { Editor } from 'mem-fs-editor';
 import * as Generator from 'yeoman-generator';
 import { Project, PropertyAssignment, SyntaxKind } from 'ts-morph';
 
 export class CoreFilesUpdater_2_11 extends BaseCoreFilesUpdater {
-    public updateCoreFiles(options: GeneratorTeamsAppOptions, fs: Generator.MemFsEditor): boolean {
+    public updateCoreFiles(options: GeneratorTeamsAppOptions, fs: Editor): boolean {
         // Update gulp.config.js, so manifests include json files for localization
         const project = new Project();
         project.createSourceFile("temp.ts", fs.read("gulp.config.js"));

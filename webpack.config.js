@@ -70,30 +70,34 @@ const config = [{
     },
     plugins: [
         new CleanWebpackPlugin(),
-        new CopyWebpackPlugin([{
-            from: 'src/app/templates',
-            to: 'app/templates'
-        }]),
-        new CopyWebpackPlugin([{
-            from: 'src/tab/templates',
-            to: 'tab/templates'
-        }]),
-        new CopyWebpackPlugin([{
-            from: 'src/bot/templates',
-            to: 'bot/templates'
-        }]),
-        new CopyWebpackPlugin([{
-            from: 'src/custombot/templates',
-            to: 'custombot/templates'
-        }]),
-        new CopyWebpackPlugin([{
-            from: 'src/connector/templates',
-            to: 'connector/templates'
-        }]),
-        new CopyWebpackPlugin([{
-            from: 'src/messageExtension/templates',
-            to: 'messageExtension/templates'
-        }])
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: 'src/app/templates',
+                    to: 'app/templates'
+                },
+                {
+                    from: 'src/tab/templates',
+                    to: 'tab/templates'
+                },
+                {
+                    from: 'src/bot/templates',
+                    to: 'bot/templates'
+                },
+                {
+                    from: 'src/custombot/templates',
+                    to: 'custombot/templates'
+                },
+                {
+                    from: 'src/connector/templates',
+                    to: 'connector/templates'
+                },
+                {
+                    from: 'src/messageExtension/templates',
+                    to: 'messageExtension/templates'
+                }
+            ]
+        })
     ]
 }];
 

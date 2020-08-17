@@ -218,4 +218,60 @@ describe('teams:localization', function () {
         }
     });
 
+    it('should generate a v1.6 project with a tab, and not add any localization info', async () => {
+        const projectPath = testHelper.TEMP_LOCALIZATION_GENERATOR_PATH + "/localization01-v16-withTab";
+
+        await helpers.run(testHelper.GENERATOR_PATH)
+            .inDir(projectPath)
+            .withArguments(['--no-telemetry'])
+            .withPrompts({
+                solutionName: 'localization-test-06',
+                whichFolder: 'current',
+                name: 'localizationtest06',
+                developer: 'generator teams developer',
+                manifestVersion: 'v1.6',
+                parts: 'tab',
+                tabType: "configurable"
+            })
+            .withGenerators(testHelper.DEPENDENCIES);
+
+        assert.noJsonFileContent('src/manifest/manifest.json', { localizationInfo: { } });
+
+        if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
+            assert.equal(false, npmInstallResult);
+      
+            const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+            assert.equal(false, npmRunBuildResult);
+        }
+    });
+
+    it('should generate a v1.7 project with a tab, and not add any localization info', async () => {
+        const projectPath = testHelper.TEMP_LOCALIZATION_GENERATOR_PATH + "/localization01-v17-withTab";
+
+        await helpers.run(testHelper.GENERATOR_PATH)
+            .inDir(projectPath)
+            .withArguments(['--no-telemetry'])
+            .withPrompts({
+                solutionName: 'localization-test-06',
+                whichFolder: 'current',
+                name: 'localizationtest06',
+                developer: 'generator teams developer',
+                manifestVersion: 'v1.7',
+                parts: 'tab',
+                tabType: "configurable"
+            })
+            .withGenerators(testHelper.DEPENDENCIES);
+
+        assert.noJsonFileContent('src/manifest/manifest.json', { localizationInfo: { } });
+
+        if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
+            assert.equal(false, npmInstallResult);
+      
+            const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+            assert.equal(false, npmRunBuildResult);
+        }
+    });
+
 });

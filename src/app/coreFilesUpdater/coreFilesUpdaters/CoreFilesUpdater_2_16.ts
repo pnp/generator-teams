@@ -6,9 +6,14 @@ import { GeneratorTeamsAppOptions } from "../../GeneratorTeamsAppOptions";
 import { BaseCoreFilesUpdater } from "../BaseCoreFilesUpdater";
 import { Editor } from 'mem-fs-editor';
 import * as Generator from 'yeoman-generator';
+import * as semver from "semver";
 import { Project, PropertyAssignment, SyntaxKind } from 'ts-morph';
 
-export class CoreFilesUpdater_2_14 extends BaseCoreFilesUpdater {
+export class CoreFilesUpdater_2_16 extends BaseCoreFilesUpdater {
+    public constructor(private currentVersion: string) {
+        super();
+    };
+
     public updateCoreFiles(options: GeneratorTeamsAppOptions, fs: Editor): boolean {
         // Update gulp.config.js, with new schema
         const project = new Project();
@@ -18,7 +23,7 @@ export class CoreFilesUpdater_2_14 extends BaseCoreFilesUpdater {
 
         const arr = config.getFirstChildByKind(SyntaxKind.ObjectLiteralExpression);
         if (arr) {
-            const manifests = arr.getProperties().find( p => {
+            const manifests = arr.getProperties().find(p => {
                 if (p.getKind() == SyntaxKind.PropertyAssignment) {
                     const pa: PropertyAssignment = <any>p;
                     return pa.getName() == "SCHEMAS";
@@ -29,9 +34,15 @@ export class CoreFilesUpdater_2_14 extends BaseCoreFilesUpdater {
             if (manifests) {
                 const manifestDecl = manifests.getFirstChildByKind(SyntaxKind.ArrayLiteralExpression);
                 if (manifestDecl) {
+                    if (semver.lt(this.currentVersion, "2.14.0")) {
+                        manifestDecl.addElement(`{
+                            version: "1.6",
+                            schema: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.6/MicrosoftTeams.schema.json"
+                        } `);
+                    }
                     manifestDecl.addElement(`{
-                        version: "1.6",
-                        schema: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.6/MicrosoftTeams.schema.json"
+                        version: "1.7",
+                        schema: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.7/MicrosoftTeams.schema.json"
                     } `);
                     fs.write("gulp.config.js", src.getFullText());
                     return true;

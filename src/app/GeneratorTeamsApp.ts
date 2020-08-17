@@ -18,7 +18,7 @@ import { CoreFilesUpdaterFactory } from './coreFilesUpdater/CoreFilesUpdaterFact
 
 
 let yosay = require('yosay');
-let pkg = require('../../package.json');
+let pkg: any = require('../../package.json');
 
 /**
  * The main implementation for the `teams` generator
@@ -98,6 +98,7 @@ export class GeneratorTeamsApp extends Generator {
             azureAppInsightsKey: string;
             updateBuildSystem: boolean;
             showLoadingIndicator: boolean;
+            isFullScreen: boolean;
         };
         // find out what manifest versions we can use
         const manifestGeneratorFactory = new ManifestGeneratorFactory();
@@ -303,6 +304,19 @@ export class GeneratorTeamsApp extends Generator {
                 },
                 {
                     type: 'confirm',
+                    name: 'isFullScreen',
+                    message: 'Would you like personal apps to be rendered without a tab header-bar?',
+                    default: false,
+                    when: (answers) => {
+                        return !this.options.existingManifest &&
+                            answers.manifestVersion != ManifestVersions.v13 &&
+                            answers.manifestVersion != ManifestVersions.v14 &&
+                            answers.manifestVersion != ManifestVersions.v15 &&
+                            answers.manifestVersion != ManifestVersions.v16
+                    }
+                },
+                {
+                    type: 'confirm',
                     name: 'unitTestsEnabled',
                     message: 'Would you like to include Test framework and initial tests?',
                     when: () => !this.options.existingManifest,
@@ -364,6 +378,7 @@ export class GeneratorTeamsApp extends Generator {
                     this.destinationRoot(this.destinationPath(this.options.solutionName));
                 }
                 this.options.showLoadingIndicator = answers.showLoadingIndicator;
+                this.options.isFullScreen = answers.isFullScreen;
                 this.options.unitTestsEnabled = answers.unitTestsEnabled;
                 this.options.useAzureAppInsights = answers.useAzureAppInsights;
                 this.options.azureAppInsightsKey = answers.azureAppInsightsKey;
@@ -383,7 +398,7 @@ export class GeneratorTeamsApp extends Generator {
                     if (libraryName) {
                         this.options.libraryName = libraryName!;
                     } else {
-                        const pkg = this.fs.readJSON(`./package.json`);
+                        const pkg: any = this.fs.readJSON(`./package.json`);
                         this.log(chalk.yellow(`Unable to locate the library name in webpack.config.js, will use the package name instead (${pkg.name})`));
                         this.options.libraryName = pkg.name;
                     }
@@ -589,6 +604,9 @@ export class GeneratorTeamsApp extends Generator {
             }
             if (this.options.showLoadingIndicator) {
                 AppInsights.defaultClient.trackEvent({ name: 'showLoadingIndicator' });
+            }
+            if (this.options.isFullScreen) {
+                AppInsights.defaultClient.trackEvent({ name: 'isFullScreen' });
             }
             if (this.options.tabSSO) {
                 AppInsights.defaultClient.trackEvent({ name: 'tabSSO' });

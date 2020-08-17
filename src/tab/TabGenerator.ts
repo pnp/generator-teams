@@ -217,6 +217,7 @@ export class TabGenerator extends Generator {
                 this.fs.copy(
                     this.templatePath(from),
                     Yotilities.fixFileNames(to, this.options),
+                    {},
                     this.options);
             }
 

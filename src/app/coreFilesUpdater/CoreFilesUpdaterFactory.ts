@@ -6,6 +6,7 @@ import { BaseCoreFilesUpdater } from "./BaseCoreFilesUpdater";
 import * as semver from "semver";
 import { CoreFilesUpdater_2_11 } from "./coreFilesUpdaters/CoreFilesUpdater_2_11";
 import { CoreFilesUpdater_2_14 } from "./coreFilesUpdaters/CoreFilesUpdater_2_14";
+import { CoreFilesUpdater_2_16 } from "./coreFilesUpdaters/CoreFilesUpdater_2_16";
 import { CoreFilesUpdaterNop } from "./coreFilesUpdaters/CoreFilesUpdaterNop";
 
 export class CoreFilesUpdaterFactory {
@@ -19,6 +20,8 @@ export class CoreFilesUpdaterFactory {
             return new CoreFilesUpdaterNop();
         } else if(semver.lt(currentVersion, "2.14.0")) {
             return new CoreFilesUpdater_2_14();
+        } else if(semver.lt(currentVersion, "2.16.0")) {
+            return new CoreFilesUpdater_2_16(currentVersion);
         }
         return undefined;
     }

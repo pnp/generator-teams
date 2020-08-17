@@ -5,7 +5,7 @@
 import * as Generator from 'yeoman-generator';
 import * as ts from 'typescript';
 import { Project, SyntaxKind } from "ts-morph";
-
+import { Editor } from 'mem-fs-editor';
 let path = require('path');
 const os = require("os");
 
@@ -46,7 +46,7 @@ export class Yotilities {
         return filename;
     }
 
-    public static addAdditionalDeps(dependencies: [string, string][], fs: Generator.MemFsEditor) {
+    public static addAdditionalDeps(dependencies: [string, string][], fs: Editor) {
         var pkg: any = fs.readJSON(packagePath);
         dependencies.forEach(dep => {
             (<any>pkg.dependencies)[dep[0]] = dep[1];
@@ -54,7 +54,7 @@ export class Yotilities {
         fs.writeJSON(packagePath, pkg);
     }
 
-    public static addAdditionalDevDeps(devDependencies: [string, string][], fs: Generator.MemFsEditor) {
+    public static addAdditionalDevDeps(devDependencies: [string, string][], fs: Editor) {
         var pkg: any = fs.readJSON(packagePath);
         devDependencies.forEach(dep => {
             (<any>pkg.devDependencies)[dep[0]] = dep[1];
@@ -62,7 +62,7 @@ export class Yotilities {
         fs.writeJSON(packagePath, pkg);
     }
 
-    public static addOrUpdateEnv(fileName: string, key: string, value: string, fs: Generator.MemFsEditor): void {
+    public static addOrUpdateEnv(fileName: string, key: string, value: string, fs: Editor): void {
         const envFile = fs.read(fileName);
         let added: boolean = false;
         let output = envFile.split(os.EOL).map(line => {
@@ -78,7 +78,7 @@ export class Yotilities {
         fs.write(fileName, output.join(os.EOL));
     }
 
-    public static insertTsExportDeclaration(fileName: string, literal: string, comment: string | undefined, fs: Generator.MemFsEditor): void {
+    public static insertTsExportDeclaration(fileName: string, literal: string, comment: string | undefined, fs: Editor): void {
         let clientTs = fs.read(fileName);
         const src = ts.createSourceFile(fileName, clientTs, ts.ScriptTarget.ES5, true, ts.ScriptKind.TS);
         const exp = ts.createExportDeclaration(
@@ -103,7 +103,7 @@ export class Yotilities {
         fs.write(fileName, printer.printFile(update));
     }
 
-    public static insertImportDeclaration(fileName: string, identifier: string, literal: string, comment: string | undefined, fs: Generator.MemFsEditor): void {
+    public static insertImportDeclaration(fileName: string, identifier: string, literal: string, comment: string | undefined, fs: Editor): void {
         let clientTs = fs.read(fileName);
         const src = ts.createSourceFile(fileName, clientTs, ts.ScriptTarget.ES5, true, ts.ScriptKind.TS);
         const imp = ts.createImportDeclaration(

@@ -24,6 +24,7 @@ export class GeneratorTeamsAppOptions {
     mpnId?: string = undefined;
     updateBuildSystem: boolean = false;
     showLoadingIndicator: boolean = false;
+    isFullScreen: boolean = false;
 
     reactComponents: boolean;
     websitePrefix: string;

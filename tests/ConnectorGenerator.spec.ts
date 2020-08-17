@@ -154,6 +154,52 @@ describe('teams:connector', function () {
         }
     });
 
+    it('should generate connector project with v1.7 without unit tests', async () => {
+        const projectPath = testHelper.TEMP_CONNECTOR_GENERATOR_PATH + "/connector-v13-withoutUnitT";
+
+        await helpers.run(testHelper.GENERATOR_PATH)
+            .inDir(projectPath)
+            .withArguments(['--no-telemetry'])
+            .withPrompts({
+                solutionName: 'connector-test-01',
+                whichFolder: 'current',
+                name: 'connectortest01',
+                developer: 'generator teams developer',
+                manifestVersion: 'v1.7',
+                parts: 'connector',
+                unitTestsEnabled: false
+            })
+            .withGenerators(testHelper.DEPENDENCIES);
+
+        assert.file(testHelper.ROOT_FILES);
+        assert.noFile(testHelper.TEST_FILES);
+        assert.file(testHelper.APP_FILES);
+        assert.file(testHelper.SCRIPT_FILES);
+        assert.file(testHelper.WEB_FILES);
+        assert.file(testHelper.MANIFEST_FILES);
+        assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_17);
+
+        assert.jsonFileContent('src/manifest/manifest.json', {
+            "connectors": [{
+                "configurationUrl": testHelper.CONNECTOR_THEME_URL
+            }
+            ]
+        });
+
+        assert.file(CONNECTOR_SCRIPT_FILES);
+        assert.noFile(CONNECTOR_SCRIPT_TEST_FILES);
+        assert.file(CONNECTOR_FILES);
+        assert.file(CONNECTOR_HTML_FILES);
+
+        if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+            const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
+            assert.equal(false, npmInstallResult);
+
+            const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+            assert.equal(false, npmRunBuildResult);
+        }
+    });
+
     it('should generate connector project with devPreview with unit tests', async () => {
         const projectPath = testHelper.TEMP_CONNECTOR_GENERATOR_PATH + "/connector-dev-withUnitT";
 
