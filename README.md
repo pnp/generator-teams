@@ -107,7 +107,7 @@ If you want to run the generator tests, you can run the following command.
 npm test
 ```
 
-Yeoman-test packge is being used for the generator tests. (NOTE: Node JS version 8.10.0 is recommended for executing generator tests.)
+Yeoman-test package is being used for the generator tests. (NOTE: Node JS version 8.10.0 is recommended for executing generator tests.)
 
 ### Use it in dev mode
 
