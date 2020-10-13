@@ -49,7 +49,7 @@ export class <%= botClassName %> extends TeamsActivityHandler {
                         const dc = await this.dialogs.createContext(context);
                         await dc.beginDialog("help");
                     } else {
-                        await context.sendActivity("I'm terribly sorry, but my I'm not trained to do anything yet...");
+                        await context.sendActivity(`I\'m terribly sorry, but my developer hasn\'t trained me to do anything yet...`);
                     }
                     break;
                 default:
