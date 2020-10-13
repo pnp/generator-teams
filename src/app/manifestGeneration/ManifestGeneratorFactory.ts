@@ -8,6 +8,7 @@ import { ManifestGenerator as ManifestGenerator14 } from "./manifestGenerators/g
 import { ManifestGenerator as ManifestGenerator15 } from "./manifestGenerators/generator15/ManifestGenerator";
 import { ManifestGenerator as ManifestGenerator16 } from "./manifestGenerators/generator16/ManifestGenerator";
 import { ManifestGenerator as ManifestGenerator17 } from "./manifestGenerators/generator17/ManifestGenerator";
+import { ManifestGenerator as ManifestGenerator18 } from "./manifestGenerators/generator18/ManifestGenerator";
 import { ManifestGenerator as ManifestGeneratorDevPreview } from "./manifestGenerators/generatorDevPreview/ManifestGenerator";
 import { BaseManifestGenerator } from "./BaseManifestGenerator";
 
@@ -50,6 +51,13 @@ export class ManifestGeneratorFactory {
             hide: false
         },
         {
+            manifestVersion: ManifestVersions.v18,
+            schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.8/MicrosoftTeams.schema.json",
+            manifestValue: "1.8",
+            default: true,
+            hide: false
+        },
+        {
             manifestVersion: ManifestVersions.devPreview,
             schemaUrl: "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json",
             manifestValue: "devPreview",
@@ -84,6 +92,8 @@ export class ManifestGeneratorFactory {
             return new ManifestGenerator16();
         } else if (manifestVersion == ManifestVersions.v17) {
             return new ManifestGenerator17();            
+        } else if (manifestVersion == ManifestVersions.v18) {
+            return new ManifestGenerator18();            
         } else if (manifestVersion == ManifestVersions.devPreview) {
             return new ManifestGeneratorDevPreview();
         }else {

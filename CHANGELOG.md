@@ -7,20 +7,32 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [*Unreleased*]
 
-## Changes
+### Changes
 
-* Updated to `@microsoft/teams-js` version `1.7.0`
+* Updated to `@microsoft/teams-js` version `1.8.0`
 * Updated core node packages of generator and generated solution, some related to security notifications
-* Schema `1.7` is the default option for new projects
+* Schema `1.8` is the default option for new projects
+* Default app icons changed to PnP Parker
+* Switched to `jwt-decode`, from `jsonwebtoken` to reduce bundle size
+* Updated to use Typescript 4+
+* Updated Webpack to 5.0.0
+* Updated misc dependencies
 
-## Added
+### Added
 
 * Added support for Microsoft Teams schema `1.7`
+* Added support for Microsoft Teams schema `1.8`
 * Added the `isFullScreen` option for personal apps (schema `1.7`+)
+* Added a default `Dockerfile` for deployment with containers
 
-## Deleted
+### Deleted
 
 * Schema `1.5` is no longer available as an option when creating new projects
+
+### Fixes
+
+* Fixed an issue where nodemon exits during a build failure
+* Removed the bot referencing a *master* (#152)
 
 ## [*2.15.0*] - <*2020-06-15*>
 

@@ -8,13 +8,21 @@ import { Editor } from 'mem-fs-editor';
 import * as Generator from 'yeoman-generator';
 import * as semver from "semver";
 import { Project, PropertyAssignment, SyntaxKind } from 'ts-morph';
+import { Logger } from "yeoman-environment";
+import chalk = require("chalk");
 
 export class CoreFilesUpdater_2_16 extends BaseCoreFilesUpdater {
     public constructor(private currentVersion: string) {
         super();
     };
 
-    public updateCoreFiles(options: GeneratorTeamsAppOptions, fs: Editor): boolean {
+    public updateCoreFiles(options: GeneratorTeamsAppOptions, fs: Editor, log?: Logger): boolean {
+
+        // overwrite webpack.config.js and gulpfile.js (requires updates due to Webpack 5)
+        if (log) {
+            log(chalk.red("You MUST upgrade your gulpfile.js and webpack.config.js file, see https://github.com/pnp/generator-teams/wiki/TODO"));
+        }
+
         // Update gulp.config.js, with new schema
         const project = new Project();
         project.createSourceFile("temp.ts", fs.read("gulp.config.js"));
@@ -43,6 +51,10 @@ export class CoreFilesUpdater_2_16 extends BaseCoreFilesUpdater {
                     manifestDecl.addElement(`{
                         version: "1.7",
                         schema: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.7/MicrosoftTeams.schema.json"
+                    } `);
+                    manifestDecl.addElement(`{
+                        version: "1.8",
+                        schema: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.8/MicrosoftTeams.schema.json"
                     } `);
                     fs.write("gulp.config.js", src.getFullText());
                     return true;

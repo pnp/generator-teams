@@ -48,7 +48,7 @@ const config = [{
         libraryTarget: 'commonjs-module'
     },
     externals: nodeModules,
-    devtool: 'sourcemap',
+    devtool: 'source-map',
     mode: 'production',
     resolve: {
         extensions: [".ts", ".tsx", ".js"],

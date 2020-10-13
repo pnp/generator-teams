@@ -233,14 +233,14 @@ export class TabGenerator extends Generator {
             this.fs.writeJSON(manifestPath, manifest);
 
             Yotilities.addAdditionalDeps([
-                ["@fluentui/react-northstar", "~0.49.0"],
+                ["@fluentui/react-northstar", "~0.51.0"],
                 ["react", "^16.8.6"],
                 ["react-dom", "^16.8.6"]
             ], this.fs);
 
             if (this.options.tabSSO) {
                 Yotilities.addAdditionalDeps([
-                    ["jsonwebtoken", "^8.5.1"]
+                    ["jwt-decode", "^3.0.0-beta.2"]
                 ], this.fs);
 
                 // update .env file
@@ -250,7 +250,7 @@ export class TabGenerator extends Generator {
 
             Yotilities.addAdditionalDevDeps([
                 ["@types/react", "16.8.10"],
-                ["file-loader", "1.1.11"],
+                ["file-loader", "6.1.1"],
                 ["typestyle", "2.0.1"]
             ], this.fs);
 

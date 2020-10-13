@@ -30,7 +30,8 @@ export const ROOT_FILES = [
     'tsconfig-client.json',
     'tsconfig.json',
     'tslint.json',
-    'webpack.config.js'
+    'webpack.config.js',
+    'Dockerfile'
 ];
 
 export const TEST_FILES = [
@@ -80,6 +81,7 @@ export const SCHEMA_14 = 'https://developer.microsoft.com/en-us/json-schemas/tea
 export const SCHEMA_15 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json';
 export const SCHEMA_16 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.6/MicrosoftTeams.schema.json';
 export const SCHEMA_17 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.7/MicrosoftTeams.schema.json';
+export const SCHEMA_18 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.8/MicrosoftTeams.schema.json';
 export const SCHEMA_DEVPREVIEW = 'https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json';
 
 export enum TestTypes {

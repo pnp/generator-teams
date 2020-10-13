@@ -122,7 +122,7 @@ export class ConnectorGenerator extends Generator {
 
             Yotilities.addAdditionalDeps([
                 ['node-json-db', '0.7.5'],
-                ["@fluentui/react-northstar", "~0.49.0"],
+                ["@fluentui/react-northstar", "~0.51.0"],
                 ["react", "^16.8.6"],
                 ["react-dom", "^16.8.6"]
             ], this.fs);
@@ -130,7 +130,7 @@ export class ConnectorGenerator extends Generator {
             Yotilities.addAdditionalDevDeps([
                 ['@types/node-json-db', '0.0.1'],
                 ["@types/react", "16.8.10"],
-                ["file-loader", "1.1.11"],
+                ["file-loader", "6.1.1"],
                 ["typestyle", "2.0.1"]
             ], this.fs);
 

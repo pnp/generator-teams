@@ -2,7 +2,7 @@ import * as React from "react";
 import { Provider, Flex, Text, Button, Header } from "@fluentui/react-northstar";
 import TeamsBaseComponent, { ITeamsBaseComponentState } from "msteams-react-base-component";
 import * as microsoftTeams from "@microsoft/teams-js";<% if (tabSSO) { %>
-import * as jwt from "jsonwebtoken";<% } %>
+import jwt_decode from "jwt-decode";<% } %>
 /**
  * State for the <%=tabName%>Tab React component
  */
@@ -37,7 +37,7 @@ export class <%=tabReactComponentName%> extends TeamsBaseComponent<I<%=tabReactC
                 this.updateTheme(context.theme);
                 microsoftTeams.authentication.getAuthToken({
                     successCallback: (token: string) => {
-                        const decoded: { [key: string]: any; } = jwt.decode(token) as { [key: string]: any; };
+                        const decoded: { [key: string]: any; } = jwt_decode(token) as { [key: string]: any; };
                         this.setState({ name: decoded!.name });
                         microsoftTeams.appInitialization.notifySuccess();
                     },

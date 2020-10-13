@@ -8,5 +8,6 @@ export enum ManifestVersions {
     v15 = "v1.5",
     v16 = "v1.6",
     v17 = "v1.7",
+    v18 = "v1.8",
     devPreview = "devPreview"
 }

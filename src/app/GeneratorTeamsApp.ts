@@ -447,7 +447,8 @@ export class GeneratorTeamsApp extends Generator {
                 "src/app/web/styles/main.scss",
                 'deploy.cmd',
                 '_deployment',
-                "src/app/TeamsAppsComponents.ts"
+                "src/app/TeamsAppsComponents.ts",
+                "Dockerfile"
             ]
 
             let templateFiles = [
@@ -504,7 +505,7 @@ export class GeneratorTeamsApp extends Generator {
 
                 const coreFilesUpdater = CoreFilesUpdaterFactory.createCoreFilesUpdater(currentVersion);
                 if (coreFilesUpdater) {
-                    const result = coreFilesUpdater.updateCoreFiles(this.options, this.fs);
+                    const result = coreFilesUpdater.updateCoreFiles(this.options, this.fs, this.log);
                     if (this.options.telemetry) {
                         AppInsights.defaultClient.trackEvent({ name: 'update-core-files', properties: { result: result ? "true" : "false" } });
                     }
@@ -531,7 +532,7 @@ export class GeneratorTeamsApp extends Generator {
         // if we have added any react based components
         if (this.options.reactComponents) {
             Yotilities.addAdditionalDeps([
-                ["msteams-react-base-component", "^2.1.0"]
+                ["msteams-react-base-component", "^2.2.0-preview2"]
             ], this.fs);
         }
 

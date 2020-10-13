@@ -13,8 +13,8 @@ export abstract class BaseManifestGenerator {
 
     public generateManifest(options: GeneratorTeamsAppOptions): any {
         return {
-            "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json",
-            "manifestVersion": "1.3",
+            "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.8/MicrosoftTeams.schema.json",
+            "manifestVersion": "1.8",
             "id": "{{APPLICATION_ID}}",
             "version": "{{VERSION}}",
             "packageName": "{{PACKAGE_NAME}}",

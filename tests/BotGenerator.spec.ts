@@ -458,6 +458,95 @@ describe("teams:bot", async () => {
     }
   });
 
+  it("should generate bot project with v1.8 without unit tests, and files support", async () => {
+    const projectPath = testHelper.TEMP_BOT_GENERATOR_PATH + "/bot01-v18-withoutUnitTAndFiles";
+
+    await helpers
+      .run(testHelper.GENERATOR_PATH)
+      .inDir(projectPath)
+      .withArguments(["--no-telemetry"])
+      .withPrompts({
+        solutionName: "bot-test-01",
+        whichFolder: "current",
+        name: "bottest01",
+        developer: "generator teams developer",
+        manifestVersion: "v1.8",
+        parts: "bot",
+        unitTestsEnabled: false,
+        botFilesEnabled: true
+      })
+      .withGenerators(testHelper.DEPENDENCIES);
+
+    assert.file(testHelper.ROOT_FILES);
+    assert.noFile(testHelper.TEST_FILES);
+    assert.file(testHelper.APP_FILES);
+    assert.file(testHelper.SCRIPT_FILES);
+    assert.file(testHelper.WEB_FILES);
+    assert.file(testHelper.MANIFEST_FILES);
+    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_18);
+    assert.jsonFileContent("src/manifest/manifest.json", {
+      bots: [{ supportsFiles: true }]
+    });
+
+    assert.file(BOT_SCRIPT_FILES);
+    assert.noFile(BOT_SCRIPT_TEST_FILES);
+    assert.file(BOT_FILES);
+    assert.file(BOT_HTML_FILES);
+
+    if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
+      assert.equal(false, npmInstallResult);
+
+      const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+      assert.equal(false, npmRunBuildResult);
+    }
+  });
+
+  it("should generate bot project with v1.8 with calling support", async () => {
+    const projectPath = testHelper.TEMP_BOT_GENERATOR_PATH + "/bot01-v18-withoutUnitTAndFiles";
+
+    await helpers
+      .run(testHelper.GENERATOR_PATH)
+      .inDir(projectPath)
+      .withArguments(["--no-telemetry"])
+      .withPrompts({
+        solutionName: "bot-test-01",
+        whichFolder: "current",
+        name: "bottest01",
+        developer: "generator teams developer",
+        manifestVersion: "v1.8",
+        parts: "bot",
+        unitTestsEnabled: false,
+        botCallingEnabled: true,
+        botFilesEnabled: false
+      })
+      .withGenerators(testHelper.DEPENDENCIES);
+
+    assert.file(testHelper.ROOT_FILES);
+    assert.noFile(testHelper.TEST_FILES);
+    assert.file(testHelper.APP_FILES);
+    assert.file(testHelper.SCRIPT_FILES);
+    assert.file(testHelper.WEB_FILES);
+    assert.file(testHelper.MANIFEST_FILES);
+    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_18);
+    assert.jsonFileContent("src/manifest/manifest.json", {
+      bots: [{ supportsCalling: true, supportsVideo: true }]
+    });
+
+    assert.file(BOT_SCRIPT_FILES);
+    assert.noFile(BOT_SCRIPT_TEST_FILES);
+    assert.file(BOT_FILES);
+    assert.file(BOT_HTML_FILES);
+
+    if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
+      assert.equal(false, npmInstallResult);
+
+      const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+      assert.equal(false, npmRunBuildResult);
+    }
+  });
+
   it("should generate bot project with devPreview with unit tests", async () => {
     const projectPath = testHelper.TEMP_BOT_GENERATOR_PATH + "/bot01-devPrev-withUnitT";
 

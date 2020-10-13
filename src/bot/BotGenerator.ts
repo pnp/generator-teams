@@ -9,6 +9,8 @@ import { Yotilities } from './../app/Yotilities';
 import { ManifestGeneratorFactory } from '../app/manifestGeneration/ManifestGeneratorFactory';
 import EmptyGuid = require('../app/EmptyGuid');
 import validate = require('uuid-validate');
+import * as semver from "semver";
+import { ManifestVersions } from '../app/manifestGeneration/ManifestVersions';
 
 export class BotGenerator extends Generator {
     options: GeneratorTeamsAppOptions;
@@ -112,7 +114,7 @@ export class BotGenerator extends Generator {
                         name: 'botCallingEnabled',
                         message: 'Do you want to include bot calling support?',
                         when: (answers: any) => {
-                            return this.options.manifestVersion == "devPreview"; // Only available in devPreview for now
+                            return this.options.manifestVersion == "devPreview" || this.options.manifestVersion === ManifestVersions.v18;
                         },
                         default: false
                     }
@@ -176,14 +178,14 @@ export class BotGenerator extends Generator {
                     }
 
                     Yotilities.addAdditionalDeps([
-                        ["@fluentui/react-northstar", "~0.49.0"],
+                        ["@fluentui/react-northstar", "~0.51.0"],
                         ["react", "^16.8.6"],
                         ["react-dom", "^16.8.6"]
                     ], this.fs);
 
                     Yotilities.addAdditionalDevDeps([
                         ["@types/react", "16.8.10"],
-                        ["file-loader", "1.1.11"],
+                        ["file-loader", "6.1.1"],
                         ["typestyle", "2.0.1"]
                     ], this.fs);
                 }
