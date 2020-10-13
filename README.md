@@ -127,7 +127,7 @@ npm unlink
 
 For more information on how Tabs and Bots can be used with Teams see the [Teams Developer Documentation](https://msdn.microsoft.com/en-us/microsoft-teams/ )
 
-## Contributors
+## Contributors & Hall of fame
 
 * [Wictor Wilén](https://github.com/wictorwilen) - Original author and coordinator
 * [Bill Bliss](https://github.com/billbliss)
@@ -139,6 +139,10 @@ For more information on how Tabs and Bots can be used with Teams see the [Teams 
 * [Stefan Bauer](https://github.com/StfBauer)
 * [Andrew Connell](https://github.com/andrewconnell)
 * [Ralf Brennscheidt](https://github.com/RalfBrennscheidt)
+* [Felipe Plets](https://github.com/felipeplets)
+* [Brendan Andrade](https://github.com/BrendanAndrade)
+* [Jason Merino](https://github.com/jasonmerino)
+* [Orta Therox](https://github.com/orta)
 
 ## Be a part of the movement
 

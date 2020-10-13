@@ -33,6 +33,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Fixed an issue where nodemon exits during a build failure
 * Removed the bot referencing a *master* (#152)
+* Updated grammar and types (#138, #144, #145)
+* Fixed issue #145
 
 ## [*2.15.0*] - <*2020-06-15*>
 
