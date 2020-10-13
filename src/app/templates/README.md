@@ -15,7 +15,7 @@ All required source code are located in the `./src` folder - split into two part
 * `app` for the application
 * `manifest` for the Microsoft Teams app manifest
 
-For further details se the [Yo Teams wiki for the project structure](https://github.com/PnP/generator-teams/wiki/Project-Structure)
+For further details see the [Yo Teams wiki for the project structure](https://github.com/PnP/generator-teams/wiki/Project-Structure)
 
 ## Building the app
 
