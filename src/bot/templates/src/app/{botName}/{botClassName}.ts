@@ -1,4 +1,4 @@
-import { BotDeclaration, MessageExtensionDeclaration, PreventIframe<% if (botCallingEnabled) { %>, BotCallingWebhook<% } %> } from "express-msteams-host";
+import { BotDeclaration<% if (staticTab) { %>, PreventIframe<% } %><% if (botCallingEnabled) { %>, BotCallingWebhook<% } %> } from "express-msteams-host";
 import * as debug from "debug";
 import { DialogSet, DialogState } from "botbuilder-dialogs";
 import { StatePropertyAccessor, CardFactory, TurnContext, MemoryStorage, ConversationState, ActivityTypes, TeamsActivityHandler } from "botbuilder";
@@ -28,7 +28,7 @@ export class <%= botClassName %> extends TeamsActivityHandler {
      */
     public constructor(conversationState: ConversationState) {
         super();
-        
+
         this.conversationState = conversationState;
         this.dialogState = conversationState.createProperty("dialogState");
         this.dialogs = new DialogSet(this.dialogState);
@@ -78,7 +78,7 @@ export class <%= botClassName %> extends TeamsActivityHandler {
                     text: `That was an interesting reaction (<b>${added[0].type}</b>)`
                 });
             }
-        });;<% } %>
+        });<% } %>
    }
 
 <% if (botCallingEnabled) { %>
