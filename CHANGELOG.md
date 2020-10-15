@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added support for Microsoft Teams schema `1.8`
 * Added the `isFullScreen` option for personal apps (schema `1.7`+)
 * Added a default `Dockerfile` for deployment with containers
+* Added support for `--help` (#127)
 
 ### Deleted
 

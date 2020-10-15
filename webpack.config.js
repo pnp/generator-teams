@@ -77,6 +77,10 @@ const config = [{
                     to: 'app/templates'
                 },
                 {
+                    from: 'src/app/USAGE',
+                    to: 'app'
+                },
+                {
                     from: 'src/tab/templates',
                     to: 'tab/templates'
                 },
