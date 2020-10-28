@@ -397,7 +397,7 @@ export class MessageExtensionGenerator extends Generator {
                     ], this.fs);
                 }
                 Yotilities.addAdditionalDeps([
-                    ["botbuilder-teams-messagingextensions", "1.7.0-preview2"]
+                    ["botbuilder-teams-messagingextensions", "1.7.0"]
                 ], this.fs);
 
                 if (this.options.messagingExtensionCanUpdateConfiguration || this.options.messagingExtensionActionResponseTypeConfig) {
@@ -425,7 +425,7 @@ export class MessageExtensionGenerator extends Generator {
                         overwrite: true
                     });
 
-                const classes = file.getClasses()
+                const classes = file.getClasses();
                 const cl = classes.find(x => {
                     return x.getDecorator('BotDeclaration') != undefined;
                 });

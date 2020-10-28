@@ -143,6 +143,7 @@ For more information on how Tabs and Bots can be used with Teams see the [Teams 
 * [Brendan Andrade](https://github.com/BrendanAndrade)
 * [Jason Merino](https://github.com/jasonmerino)
 * [Orta Therox](https://github.com/orta)
+* [Oleksandr Fediashov](https://github.com/layershifter)
 
 ## Be a part of the movement
 

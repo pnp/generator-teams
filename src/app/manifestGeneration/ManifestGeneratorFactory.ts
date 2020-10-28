@@ -47,7 +47,7 @@ export class ManifestGeneratorFactory {
             manifestVersion: ManifestVersions.v17,
             schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.7/MicrosoftTeams.schema.json",
             manifestValue: "1.7",
-            default: true,
+            default: false,
             hide: false
         },
         {

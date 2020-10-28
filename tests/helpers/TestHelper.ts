@@ -35,7 +35,6 @@ export const ROOT_FILES = [
 ];
 
 export const TEST_FILES = [
-    'test-preprocessor.js',
     'test-setup.js',
     'test-shim.js'
 ];

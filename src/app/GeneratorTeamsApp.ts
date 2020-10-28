@@ -104,7 +104,7 @@ export class GeneratorTeamsApp extends Generator {
         // find out what manifest versions we can use
         const manifestGeneratorFactory = new ManifestGeneratorFactory();
         const versions: inquirer.ChoiceOptions<IAnswers>[] = ManifestGeneratorFactory.supportedManifestVersions.filter(version => {
-            // filter out non supprted upgrades
+            // filter out non supported upgrades
             if (this.options.existingManifest) {
                 const manifestGenerator = manifestGeneratorFactory.createManifestGenerator(version.manifestVersion);
                 return manifestGenerator.supportsUpdateManifest(this.options.existingManifest.manifestVersion);
@@ -162,7 +162,7 @@ export class GeneratorTeamsApp extends Generator {
                             value: 'current'
                         },
                         {
-                            name: 'Create a subfolder with solution name',
+                            name: 'Create a sub folder with solution name',
                             value: 'subdir'
                         }
                     ]
@@ -348,7 +348,7 @@ export class GeneratorTeamsApp extends Generator {
                 process.exit(0)
             }
             if (!this.options.existingManifest) {
-                // for new projecs
+                // for new projects
                 answers.host = answers.host.endsWith('/') ? answers.host.substr(0, answers.host.length - 1) : answers.host;
                 this.options.title = answers.name;
                 this.options.description = this.description;
@@ -390,7 +390,7 @@ export class GeneratorTeamsApp extends Generator {
                 this.options.hostname = "";
                 this.options.useAzureAppInsights = this.config.get("useAzureAppInsights") || false;
                 this.options.unitTestsEnabled = this.config.get("unitTestsEnabled") || false;
-                let libraryName = Yotilities.getLibraryNameFromWebpackConfig(); // let's see if we can find the name in webpack.config.jons (it might have been changed by the user)
+                let libraryName = Yotilities.getLibraryNameFromWebpackConfig(); // let's see if we can find the name in webpack.config.json (it might have been changed by the user)
                 if (libraryName) {
                     this.options.libraryName = libraryName;
                 } else {
@@ -478,7 +478,6 @@ export class GeneratorTeamsApp extends Generator {
             // Add unit tests
             if (this.options.unitTestsEnabled) {
                 templateFiles.push(
-                    "test-preprocessor.js",
                     "test-setup.js",
                     "test-shim.js"
                 );
@@ -513,7 +512,7 @@ export class GeneratorTeamsApp extends Generator {
                 } else {
                     this.log(chalk.red("WARNING: Unable to update build system automatically. See https://github.com/PnP/generator-teams/wiki/Upgrading-projects"));
                     if (this.options.telemetry) {
-                        AppInsights.defaultClient.trackEvent({ name: 'update-core-files-failed', properties: { currentVersion, generatorVersion: pkg.verison } });
+                        AppInsights.defaultClient.trackEvent({ name: 'update-core-files-failed', properties: { currentVersion, generatorVersion: pkg.version } });
                     }
                     process.exit(2);
                 }
@@ -533,7 +532,7 @@ export class GeneratorTeamsApp extends Generator {
         // if we have added any react based components
         if (this.options.reactComponents) {
             Yotilities.addAdditionalDeps([
-                ["msteams-react-base-component", "^2.2.0-preview3"]
+                ["msteams-react-base-component", "^2.2.0"]
             ], this.fs);
         }
 
@@ -543,7 +542,7 @@ export class GeneratorTeamsApp extends Generator {
             ], this.fs);
         }
 
-        // Store the package version so that we can use it as a refernce when upgrading
+        // Store the package version so that we can use it as a reference when upgrading
         this.config.set("generator-version", pkg.version);
     }
 
@@ -615,7 +614,7 @@ export class GeneratorTeamsApp extends Generator {
             }
             if (this.options.updateManifestVersion) {
                 AppInsights.defaultClient.trackEvent({
-                    name: 'udpateManifest',
+                    name: 'updateManifest',
                     properties: {
                         from: this.options.existingManifest.manifestVersion,
                         to: this.options.manifestVersion

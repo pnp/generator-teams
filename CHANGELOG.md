@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [*Unreleased*]
+## [*2.16.0*] - <*2020-10-28*>
 
 ### Changes
 
@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Updated to use Typescript 4+
 * Updated Webpack to 5.0.0
 * Updated misc dependencies
+* Using `module=es6` for client side TypeScript to improve tree shaking (#156)
+* For testing upgraded `jest` and moved from custom TypeScript preprocessor to `ts-jest`
 
 ### Added
 
