@@ -1,68 +1,49 @@
 import * as React from "react";
 import { Provider, Flex, Header, Input, Button, Text } from "@fluentui/react-northstar";
-import TeamsBaseComponent, { ITeamsBaseComponentState } from "msteams-react-base-component";
+import { useState, useEffect } from "react";
+import { useTeams } from "msteams-react-base-component";
 import * as microsoftTeams from "@microsoft/teams-js";
-
-/**
- * State for the <%=messageExtensionClassName%>Action React component
- */
-export interface I<%=messageExtensionClassName%>ActionState extends ITeamsBaseComponentState {
-    email: string;
-}
-
-/**
- * Properties for the <%=messageExtensionClassName%>Action React component
- */
-export interface I<%=messageExtensionClassName%>ActionProps {
-
-}
 
 /**
  * Implementation of the <%= messageExtensionTitle %> Task Module page
  */
-export class <%=messageExtensionClassName%>Action extends TeamsBaseComponent<I<%=messageExtensionClassName%>ActionProps, I<%=messageExtensionClassName%>ActionState> {
+export const <%=messageExtensionClassName %>Action = () => {
 
-    public componentWillMount() {
-        this.updateTheme(this.getQueryVariable("theme"));
+    const [{ inTeams, theme }] = useTeams();
+    const [email, setEmail] = useState<string>();
 
-        microsoftTeams.initialize();
-        microsoftTeams.registerOnThemeChangeHandler(this.updateTheme);
-        microsoftTeams.appInitialization.notifySuccess();
-    }
+    useEffect(() => {
+        if (inTeams === true) {
+            microsoftTeams.appInitialization.notifySuccess();
+        }
+    }, [inTeams]);
 
-    /**
-     * The render() method to create the UI of the tab
-     */
-    public render() {
-        return (
-            <Provider theme={this.state.theme} styles={{ height: "100vh", width: "100vw", padding: "1em" }}>
-                <Flex fill={true} column styles={{
-                    padding: ".8rem 0 .8rem .5rem"
-                }}>
-                    <Flex.Item>
-                        <div>
-                            <Header content="<%= messageExtensionTitle%> configuration" />
-                            <Text content="Enter an e-mail address" />
-                            <Input
-                                placeholder="email@email.com"
-                                fluid
-                                clearable
-                                value={this.state.email}
-                                onChange={(e, data) => {
-                                    if (data) {
-                                        this.setState({
-                                            email: data.value
-                                        });
-                                    }
-                                }}
-                                required />
-                            <Button onClick={() => microsoftTeams.tasks.submitTask({
-                                    email: this.state.email
-                                })} primary>OK</Button>
-                        </div>
-                    </Flex.Item>
-                </Flex>
-            </Provider>
-        );
-    }
-}
+    return (
+        <Provider theme={theme} styles={{ height: "100vh", width: "100vw", padding: "1em" }}>
+            <Flex fill={true} column styles={{
+                padding: ".8rem 0 .8rem .5rem"
+            }}>
+                <Flex.Item>
+                    <div>
+                        <Header content="<%= messageExtensionTitle%> configuration" />
+                        <Text content="Enter an e-mail address" />
+                        <Input
+                            placeholder="email@email.com"
+                            fluid
+                            clearable
+                            value={email}
+                            onChange={(e, data) => {
+                                if (data) {
+                                    setEmail(data.value);
+                                }
+                            }}
+                            required />
+                        <Button onClick={() => microsoftTeams.tasks.submitTask({
+                            email
+                        })} primary>OK</Button>
+                    </div>
+                </Flex.Item>
+            </Flex>
+        </Provider>
+    );
+};

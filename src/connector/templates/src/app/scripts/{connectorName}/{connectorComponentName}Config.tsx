@@ -1,19 +1,8 @@
 import * as React from "react";
 import { Provider, Flex, Header, Dropdown } from "@fluentui/react-northstar";
-import TeamsBaseComponent, { ITeamsBaseComponentState } from "msteams-react-base-component";
+import { useState, useEffect } from "react";
+import { useTeams } from "msteams-react-base-component";
 import * as microsoftTeams from "@microsoft/teams-js";
-
-export interface I<%=connectorComponentName%>ConfigState extends ITeamsBaseComponentState {
-    color: IColor | undefined;
-    submit: boolean;
-    webhookUrl: string;
-    user: string;
-    appType: string;
-    groupName: string;
-}
-
-export interface I<%=connectorComponentName%>ConfigProps {
-}
 
 interface IColor {
     title: string;
@@ -34,94 +23,76 @@ const availableColors: IColor[] = [
 /**
  * Implementation of the <%=connectorName%> Connector connect page
  */
-export class <%=connectorComponentName%>Config extends TeamsBaseComponent<I<%=connectorComponentName%>ConfigProps, I<%=connectorComponentName%>ConfigState> {
+export const <%=connectorComponentName%>Config = () => {
 
-    public async componentWillMount() {
-        this.updateTheme(this.getQueryVariable("theme"));
+    const [{ theme, context }] = useTeams();
+    const [color, setColor] = useState<IColor>();
 
-        if (await this.inTeams()) {
-            microsoftTeams.initialize();
-
-            microsoftTeams.getContext((context: microsoftTeams.Context) => {
-                this.setState({
-                    color: availableColors.find(c => c.code === context.entityId),
-                });
-                this.updateTheme(context.theme);
-                microsoftTeams.settings.setValidityState(this.state.color !== undefined);
-                microsoftTeams.appInitialization.notifySuccess();
-            });
-
+    useEffect(() => {
+        if (context) {
             microsoftTeams.settings.registerOnSaveHandler((saveEvent: microsoftTeams.settings.SaveEvent) => {
-                    // INFO: Should really be of type microsoftTeams.settings.Settings, but configName does not exist in the Teams JS SDK
+                // INFO: Should really be of type microsoftTeams.settings.Settings, but configName does not exist in the Teams JS SDK
                 const settings: any = {
-                    entityId: this.state.color ? this.state.color.code : availableColors[0].code,
+                    entityId: color ? color.code : availableColors[0].code,
                     contentUrl: `https://${process.env.HOSTNAME}/<%=connectorName%>/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
-                    configName: this.state.color ? this.state.color.title : availableColors[0].title
+                    configName: color ? color.title : availableColors[0].title
                 };
                 microsoftTeams.settings.setSettings(settings);
 
-                microsoftTeams.settings.getSettings((s: any) => {
-                    this.setState({
-                        webhookUrl: s.webhookUrl,
-                        user: s.userObjectId,
-                        appType: s.appType,
-                    });
-
+                microsoftTeams.settings.getSettings((setting: any) => {
                     fetch("/api/connector/connect", {
                         method: "POST",
                         headers: [
                             ["Content-Type", "application/json"]
                         ],
                         body: JSON.stringify({
-                            webhookUrl: this.state.webhookUrl,
-                            user: this.state.user,
-                            appType: this.state.appType,
-                            groupName: this.state.groupName,
-                            color: this.state.color ? this.state.color.code : availableColors[0].code,
+                            webhookUrl: setting.webhookUrl,
+                            user: setting.userObjectId,
+                            appType: setting.appType,
+                            groupName: context.groupId,
+                            color: color ? color.code : availableColors[0].code,
                             state: "myAppsState"
                         })
-                    }).then(x => {
-                        if (x.status === 200 || x.status === 302) {
+                    }).then(response => {
+                        if (response.status === 200 || response.status === 302) {
                             saveEvent.notifySuccess();
                         } else {
-                            saveEvent.notifyFailure(x.statusText);
+                            saveEvent.notifyFailure(response.statusText);
                         }
                     }).catch(e => {
                         saveEvent.notifyFailure(e);
                     });
                 });
             });
-        } else {
-            // Not in Microsoft Teams
-            alert("Operation not supported outside of Microsoft Teams");
+            setColor(availableColors.find(c => c.code === context.entityId));
+            microsoftTeams.settings.setValidityState(color !== undefined);
         }
-    }
+    }, [context]);
 
-    public render() {
-        const colors = availableColors.map(color => {
-            return {
-                header: color.title,
-                onClick: () => {
-                    this.setState({ color });
-                    microsoftTeams.settings.setValidityState(color !== undefined);
-                }
-            };
-        });
-        return (
-            <Provider theme={this.state.theme}>
-                <Flex fill={true}>
-                    <Flex.Item>
-                        <div>
-                            <Header content="Configure your Connector" />
-                            <Dropdown
-                                items={colors}
-                                placeholder="Select card color"
-                                checkable
-                            />
-                        </div>
-                    </Flex.Item>
-                </Flex>
-            </Provider>
-        );
-    }
-}
+    const colors = availableColors.map(clr => {
+        return {
+            header: clr.title,
+            onClick: () => {
+                setColor(clr);
+                microsoftTeams.settings.setValidityState(clr !== undefined);
+            }
+        };
+    });
+
+    return (
+        <Provider theme={theme}>
+            <Flex fill={true}>
+                <Flex.Item>
+                    <div>
+                        <Header content="Configure your Connector" />
+                        <Dropdown
+                            items={colors}
+                            placeholder="Select card color"
+                            checkable
+                        />
+                    </div>
+                </Flex.Item>
+            </Flex>
+        </Provider>
+    );
+};

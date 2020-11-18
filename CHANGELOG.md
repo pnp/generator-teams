@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*]
+
+### Changes
+
+* Changed to use React Hooks for UX instead of class based React components
+* This version does not support upgrading projects generated with prior generator versions
+
 ## [*2.16.0*] - <*2020-10-28*>
 
 ### Changes
