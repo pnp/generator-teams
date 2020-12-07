@@ -11,7 +11,7 @@
  | @master | @preview |
  :--------:|:---------:
  [![npm (latest)](https://img.shields.io/npm/v/generator-teams/latest.svg)](https://www.npmjs.com/package/generator-teams)|[![npm (preview)](https://img.shields.io/npm/v/generator-teams/preview.svg)](https://www.npmjs.com/package/generator-teams)
- [![Travis (.org) branch](https://img.shields.io/travis/PnP/generator-teams/master.svg)](https://travis-ci.org/PnP/generator-teams)|[![Travis (.org) branch](https://img.shields.io/travis/PnP/generator-teams/preview.svg)](https://travis-ci.org/PnP/generator-teams)
+ ![Build generator-teams](https://github.com/pnp/generator-teams/workflows/Build%20generator-teams/badge.svg?branch=master)|![Build generator-teams](https://github.com/pnp/generator-teams/workflows/Build%20generator-teams/badge.svg?branch=preview)
 
 A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) Apps projects. **The most comprehensive and complete development toolkit for Microsoft Teams development**. This generator is for developers who prefers to use TypeScript, React and node as their primary technologies.
 
