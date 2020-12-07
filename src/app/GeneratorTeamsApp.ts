@@ -446,8 +446,6 @@ export class GeneratorTeamsApp extends Generator {
                 "src/manifest/icon-color.png",
                 "src/app/web/assets/icon.png",
                 "src/app/web/styles/main.scss",
-                'deploy.cmd',
-                '_deployment',
                 "src/app/TeamsAppsComponents.ts",
                 "Dockerfile"
             ]

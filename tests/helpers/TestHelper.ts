@@ -20,9 +20,7 @@ export const TEMP_CUSTOMBOT_GENERATOR_PATH = path.join(__dirname, '../../temp-te
 export const TEMP_LOCALIZATION_GENERATOR_PATH = path.join(__dirname, '../../temp-templates/localization');
 
 export const ROOT_FILES = [
-    '.deployment',
     '.gitignore',
-    'deploy.cmd',
     'gulpfile.js',
     "gulp.config.js",
     'package.json',
