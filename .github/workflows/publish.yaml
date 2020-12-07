@@ -1,0 +1,25 @@
+name: Publish generator-teams
+on:
+  release:
+    types: [created]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '14.x'
+        registry-url: 'https://registry.npmjs.org'
+    - run: npm install
+    - run: npm run build
+    - name: Publish release
+      if: "!contains(github.ref, 'preview')"
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    - name: Publish preview
+      if: contains(github.ref, 'preview')
+      run: npm publish --tag preview
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

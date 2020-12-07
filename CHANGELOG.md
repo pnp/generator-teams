@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed to use React Hooks for UX instead of class based React components
 * This version does not support upgrading projects generated with prior generator versions
 
+### Added
+ * Github workflows for build and publish
+
 ## [*2.16.0*] - <*2020-10-28*>
 
 ### Changes
