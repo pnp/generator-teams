@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*2.17.0*] - <*2020-12-07*>
+
+### Changes
+
+* Changed to use React Hooks for UX instead of class based React components (#87)
+* Client side scripts are now functional components (#112)
+* This version does not support upgrading projects generated with prior generator versions
+
+### Added
+
+* Github workflows for build and publish
+
+### Deleted
+
+* Removed native support for direct Git deployment to Azure
+
 ## [*2.16.0*] - <*2020-10-28*>
 
 ### Changes

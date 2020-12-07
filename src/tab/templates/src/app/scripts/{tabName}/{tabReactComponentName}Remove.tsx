@@ -1,43 +1,32 @@
 import * as React from "react";
 import { Provider, Flex, Text, Header } from "@fluentui/react-northstar";
-import TeamsBaseComponent, { ITeamsBaseComponentState } from "msteams-react-base-component";
+import { useState, useEffect } from "react";
+import { useTeams } from "msteams-react-base-component";
 import * as microsoftTeams from "@microsoft/teams-js";
-
-
-export interface I<%=tabReactComponentName%>RemoveState extends ITeamsBaseComponentState {
-    value: string;
-}
-export interface I<%=tabReactComponentName%>RemoveProps {
-
-}
 
 /**
  * Implementation of <%= tabTitle %> remove page
  */
-export class <%=tabReactComponentName%>Remove  extends TeamsBaseComponent<I<%=tabReactComponentName%>RemoveProps, I<%=tabReactComponentName%>RemoveState> {
+export const <%=tabReactComponentName%>Remove = () => {
 
-    public async componentWillMount() {
-        this.updateTheme(this.getQueryVariable("theme"));
+    const [{ inTeams, theme }] = useTeams();
 
-        if (await this.inTeams()) {
-            microsoftTeams.initialize();
+    useEffect(() => {
+        if (inTeams === true) {
             microsoftTeams.appInitialization.notifySuccess();
-        } else {
         }
-    }
+    }, [inTeams]);
 
-    public render() {
-        return (
-            <Provider theme={this.state.theme}>
-                <Flex fill={true}>
-                    <Flex.Item>
-                        <div>
-                            <Header content="You're about to remove your tab..." />
-                            <Text content="You can just add stuff here if you want to clean up when removing the tab. For instance, if you have stored data in an external repository, you can delete or archive it here. If you don't need this remove page you can remove it." />
-                        </div>
-                    </Flex.Item>
-                </Flex>
-            </Provider>
-        );
-    }
-}
+    return (
+        <Provider theme={theme}>
+            <Flex fill={true}>
+                <Flex.Item>
+                    <div>
+                        <Header content="You're about to remove your tab..." />
+                        <Text content="You can just add stuff here if you want to clean up when removing the tab. For instance, if you have stored data in an external repository, you can delete or archive it here. If you don't need this remove page you can remove it." />
+                    </div>
+                </Flex.Item>
+            </Flex>
+        </Provider>
+    );
+};

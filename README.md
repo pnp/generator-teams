@@ -25,7 +25,7 @@ The generator allows you to simply create and scaffold projects that includes on
 
 When scaffolding the project you will also have the option of adding additional features to your project such as:
 
-* Easy deploy to Microsoft Azure
+* Simple deployment (including a pre-configured Docker file)
 * Add unit testing framework and sample unit tests
 * Easily develop and debug using ngrok
 * Application Insights support

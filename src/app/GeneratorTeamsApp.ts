@@ -446,8 +446,6 @@ export class GeneratorTeamsApp extends Generator {
                 "src/manifest/icon-color.png",
                 "src/app/web/assets/icon.png",
                 "src/app/web/styles/main.scss",
-                'deploy.cmd',
-                '_deployment',
                 "src/app/TeamsAppsComponents.ts",
                 "Dockerfile"
             ]
@@ -532,7 +530,7 @@ export class GeneratorTeamsApp extends Generator {
         // if we have added any react based components
         if (this.options.reactComponents) {
             Yotilities.addAdditionalDeps([
-                ["msteams-react-base-component", "^2.2.0"]
+                ["msteams-react-base-component", "^3.0.0"]
             ], this.fs);
         }
 
