@@ -117,10 +117,7 @@ export class MessageExtensionGenerator extends Generator {
                                 name: "Action based messaging extension",
                                 value: "action"
                             }
-                        ],
-                        when: (answers: any) => {
-                            return this.options.manifestVersion != "v1.3"; // Only available in 1.4 or higher
-                        },
+                        ]
                     },
                     {
                         type: 'checkbox',
@@ -143,8 +140,7 @@ export class MessageExtensionGenerator extends Generator {
                             }
                         ],
                         when: (answers: any) => {
-                            return answers.messagingExtensionType == "action" &&
-                                this.options.manifestVersion != "v1.3" && this.options.manifestVersion != "v1.4";
+                            return answers.messagingExtensionType == "action"
                         }
                     },
                     {

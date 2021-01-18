@@ -94,9 +94,7 @@ export class TabGenerator extends Generator {
                         message: 'Do you require Azure AD Single-Sign-On support for the tab?',
                         default: true,
                         when: (answers: any) => {
-                            return this.options.manifestVersion != "v1.3" &&
-                                this.options.manifestVersion != "v1.4" &&  // Only available in 1.5 or higher
-                                (this.options.existingManifest === undefined ||
+                            return (this.options.existingManifest === undefined ||
                                     this.options.existingManifest && this.options.existingManifest.webApplicationInfo == undefined);
                         },
                     },
@@ -130,7 +128,7 @@ export class TabGenerator extends Generator {
                         message: 'Do you want this tab to be available in SharePoint Online?',
                         default: true,
                         when: (answers: any) => {
-                            return answers.tabType == "configurable" && this.options.manifestVersion != "v1.3"; // Only available in 1.4 or higher
+                            return answers.tabType == "configurable"
                         },
                     },
                     {

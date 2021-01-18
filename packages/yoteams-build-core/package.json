@@ -24,7 +24,7 @@
   "bugs": {
     "url": "https://github.com/pnp/generator-teams/issues"
   },
-  "homepage": "https://github.com/pnp/generator-teams/packages/yo-teams-build-core",
+  "homepage": "https://github.com/pnp/generator-teams/packages/yoteams-build-core",
   "license": "MIT",
   "dependencies": {
     "autoprefixer": "^10.1.0",

@@ -22,11 +22,8 @@ export const TEMP_LOCALIZATION_GENERATOR_PATH = path.join(__dirname, '../../temp
 export const ROOT_FILES = [
     '.gitignore',
     'gulpfile.js',
-    "gulp.config.js",
     'package.json',
     'README.md',
-    'tsconfig-client.json',
-    'tsconfig.json',
     'tslint.json',
     'webpack.config.js',
     'Dockerfile'
@@ -44,17 +41,25 @@ export const MANIFEST_FILES = [
 ];
 
 export const WEB_FILES = [
-    'src/app/web/assets/icon.png',
-    'src/app/web/index.html',
-    'src/app/web/privacy.html',
-    'src/app/web/tou.html',
-    "src/app/web/styles/main.scss"
+    'src/public/assets/icon.png',
+    'src/public/index.html',
+    'src/public/privacy.html',
+    'src/public/tou.html',
+    "src/public/styles/main.scss"
 ];
 
 export const APP_FILES = [
-    'src/app/server.ts',
-    'src/app/TeamsAppsComponents.ts'
+    'src/server/server.ts',
+    'src/server/TeamsAppsComponents.ts',
+    "src/server/tsconfig.json"
 ];
+
+export const SCRIPT_FILES = [
+    'src/client/client.ts',
+    "src/client/tsconfig.json"
+];
+
+
 
 export async function runNpmCommand(command: string, path: string): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
@@ -69,15 +74,8 @@ export async function runNpmCommand(command: string, path: string): Promise<bool
     });
 }
 
-export const SCRIPT_FILES = 'src/app/scripts/client.ts';
-
 export const CONNECTOR_THEME_URL = "https://{{HOSTNAME}}/connectortest01Connector/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}";
 
-export const SCHEMA_13 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json';
-export const SCHEMA_14 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.4/MicrosoftTeams.schema.json';
-export const SCHEMA_15 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json';
-export const SCHEMA_16 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.6/MicrosoftTeams.schema.json';
-export const SCHEMA_17 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.7/MicrosoftTeams.schema.json';
 export const SCHEMA_18 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.8/MicrosoftTeams.schema.json';
 export const SCHEMA_DEVPREVIEW = 'https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json';
 

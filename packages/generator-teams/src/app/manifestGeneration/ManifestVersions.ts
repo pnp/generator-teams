@@ -3,11 +3,11 @@
 // Licensed under the MIT license.
 
 export enum ManifestVersions {
-    v13 = "v1.3",
-    v14 = "v1.4",
-    v15 = "v1.5",
-    v16 = "v1.6",
-    v17 = "v1.7",
+    // v13 = "v1.3",
+    // v14 = "v1.4",
+    // v15 = "v1.5",
+    // v16 = "v1.6",
+    // v17 = "v1.7",
     v18 = "v1.8",
     devPreview = "devPreview"
 }

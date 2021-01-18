@@ -11,41 +11,41 @@ import { BaseManifestGenerator } from "./BaseManifestGenerator";
 export class ManifestGeneratorFactory {
 
     public static supportedManifestVersions = [
-        {
-            manifestVersion: ManifestVersions.v13,
-            schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json",
-            manifestValue: "1.3",
-            default: false,
-            hide: true
-        },
-        {
-            manifestVersion: ManifestVersions.v14,
-            schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.4/MicrosoftTeams.schema.json",
-            manifestValue: "1.4",
-            default: false,
-            hide: true
-        },
-        {
-            manifestVersion: ManifestVersions.v15,
-            schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json",
-            manifestValue: "1.5",
-            default: false,
-            hide: true
-        },
-        {
-            manifestVersion: ManifestVersions.v16,
-            schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.6/MicrosoftTeams.schema.json",
-            manifestValue: "1.6",
-            default: false,
-            hide: true
-        },
-        {
-            manifestVersion: ManifestVersions.v17,
-            schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.7/MicrosoftTeams.schema.json",
-            manifestValue: "1.7",
-            default: false,
-            hide: true
-        },
+        // {
+        //     manifestVersion: ManifestVersions.v13,
+        //     schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json",
+        //     manifestValue: "1.3",
+        //     default: false,
+        //     hide: true
+        // },
+        // {
+        //     manifestVersion: ManifestVersions.v14,
+        //     schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.4/MicrosoftTeams.schema.json",
+        //     manifestValue: "1.4",
+        //     default: false,
+        //     hide: true
+        // },
+        // {
+        //     manifestVersion: ManifestVersions.v15,
+        //     schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json",
+        //     manifestValue: "1.5",
+        //     default: false,
+        //     hide: true
+        // },
+        // {
+        //     manifestVersion: ManifestVersions.v16,
+        //     schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.6/MicrosoftTeams.schema.json",
+        //     manifestValue: "1.6",
+        //     default: false,
+        //     hide: true
+        // },
+        // {
+        //     manifestVersion: ManifestVersions.v17,
+        //     schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.7/MicrosoftTeams.schema.json",
+        //     manifestValue: "1.7",
+        //     default: false,
+        //     hide: true
+        // },
         {
             manifestVersion: ManifestVersions.v18,
             schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.8/MicrosoftTeams.schema.json",
@@ -83,7 +83,7 @@ export class ManifestGeneratorFactory {
         } else if (manifestVersion == ManifestVersions.devPreview) {
             return new ManifestGeneratorDevPreview();
         }else {
-            throw new Error("Invalid manifest version.");
+            throw new Error(`Invalid manifest version: ${manifestVersion}.`);
         }
     }
 
