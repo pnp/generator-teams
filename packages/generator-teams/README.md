@@ -2,16 +2,16 @@
 
 [![npm version](https://badge.fury.io/js/generator-teams.svg)](https://www.npmjs.com/package/generator-teams)
 [![npm](https://img.shields.io/npm/dt/generator-teams.svg)](https://www.npmjs.com/package/generator-teams)
-[![MIT](https://img.shields.io/npm/l/generator-teams.svg)](https://github.com/PnP/generator-teams/blob/master/LICENSE.md)
+[![MIT](https://img.shields.io/npm/l/generator-teams.svg)](https://github.com/pnp/generator-teams/blob/preview/LICENSE.md)
 [![GitHub issues](https://img.shields.io/github/issues/PnP/generator-teams.svg)](https://github.com/PnP/generator-teams/issues)
 [![GitHub closed issues](https://img.shields.io/github/issues-closed/PnP/generator-teams.svg)](https://github.com/PnP/generator-teams/issues?q=is%3Aissue+is%3Aclosed)
 [![GitHub stars](https://img.shields.io/github/stars/PnP/generator-teams.svg)](https://github.com/PnP/generator-teams/stargazers)
-[![Gitter](https://badges.gitter.im/PnP/generator-teams.svg)](https://gitter.im/OfficeDev/generator-teams?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Discussions](https://img.shields.io/badge/discuss-on%20Github-green)](https://github.com/pnp/generator-teams/discussions)
 
  | @master | @preview |
  :--------:|:---------:
  [![npm (latest)](https://img.shields.io/npm/v/generator-teams/latest.svg)](https://www.npmjs.com/package/generator-teams)|[![npm (preview)](https://img.shields.io/npm/v/generator-teams/preview.svg)](https://www.npmjs.com/package/generator-teams)
- ![Build generator-teams](https://github.com/pnp/generator-teams/workflows/Build%20generator-teams/badge.svg?branch=master)|![Build generator-teams](https://github.com/pnp/generator-teams/workflows/Build%20generator-teams/badge.svg?branch=preview)
+ ![Build generator-teams](https://github.com/pnp/generator-teams/workflows/Build%20generator-teams/badge.svg)|![Build generator-teams](https://github.com/pnp/generator-teams/workflows/Build%20generator-teams/badge.svg?branch=preview)
 
 A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) Apps projects. **The most comprehensive and complete development toolkit for Microsoft Teams development**. This generator is for developers who prefers to use TypeScript, React and node as their primary technologies.
 
