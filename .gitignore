@@ -3,3 +3,4 @@ node_modules
 generators
 temp-templates
 *.tgz
+dist
