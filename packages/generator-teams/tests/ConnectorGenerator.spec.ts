@@ -65,6 +65,8 @@ describe('teams:connector', function () {
         assert.file(CONNECTOR_FILES);
         assert.file(CONNECTOR_HTML_FILES);
 
+        assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
             const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
@@ -111,6 +113,8 @@ describe('teams:connector', function () {
         assert.file(CONNECTOR_FILES);
         assert.file(CONNECTOR_HTML_FILES);
 
+        assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
             const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
@@ -149,6 +153,8 @@ describe('teams:connector', function () {
         assert.file(CONNECTOR_SCRIPT_TEST_FILES);
         assert.file(CONNECTOR_FILES);
         assert.file(CONNECTOR_HTML_FILES);
+
+        assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
             const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
@@ -191,6 +197,8 @@ describe('teams:connector', function () {
         assert.noFile(CONNECTOR_SCRIPT_TEST_FILES);
         assert.file(CONNECTOR_FILES);
         assert.file(CONNECTOR_HTML_FILES);
+
+        assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
             const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);

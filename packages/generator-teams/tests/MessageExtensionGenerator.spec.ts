@@ -65,6 +65,8 @@ describe('teams:messageExtension', function () {
         assert.file(MESSAGEEXTSION_FILES);
         assert.file(MESSAGEEXTSION_HTML_FILES);
 
+        assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
             const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
@@ -112,6 +114,8 @@ describe('teams:messageExtension', function () {
         assert.file(MESSAGEEXTSION_FILES);
         assert.noFile(MESSAGEEXTSION_HTML_FILES);
 
+        assert.noJSONFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
             const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
@@ -158,6 +162,8 @@ describe('teams:messageExtension', function () {
         assert.file(MESSAGEEXTSION_FILES);
         assert.file(MESSAGEEXTSION_HTML_FILES);
 
+        assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
             const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
@@ -200,6 +206,8 @@ describe('teams:messageExtension', function () {
         assert.file(MESSAGEEXTSION_SCRIPT_TEST_FILES);
         assert.file(MESSAGEEXTSION_FILES);
         assert.file(MESSAGEEXTSION_HTML_FILES);
+
+        assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
             const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
@@ -248,6 +256,8 @@ describe('teams:messageExtension', function () {
         assert.file(MESSAGEEXTSION_FILES);
         assert.noFile(MESSAGEEXTSION_HTML_FILES);
 
+        assert.noJsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
             const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
@@ -294,6 +304,8 @@ describe('teams:messageExtension', function () {
         assert.file(MESSAGEEXTSION_FILES);
         assert.file(MESSAGEEXTSION_HTML_FILES);
 
+        assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
             const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
@@ -328,6 +340,8 @@ describe('teams:messageExtension', function () {
 
         assert.fileContent('src/manifest/manifest.json', `"type": "query"`);
         assert.fileContent(MESSAGEEXTSION_FILES[0], "public async onQuery(");
+
+        assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
             const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
@@ -368,6 +382,8 @@ describe('teams:messageExtension', function () {
         assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ commands: [{ parameters: {} }] }] });
         assert.noFileContent(MESSAGEEXTSION_FILES[0], "public async onFetchTask(");
         assert.fileContent(MESSAGEEXTSION_FILES[0], "public async onSubmitAction(");
+
+        assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
             const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
@@ -411,6 +427,8 @@ describe('teams:messageExtension', function () {
         assert.noFileContent(MESSAGEEXTSION_FILES[0], "public async onFetchTask(");
         assert.fileContent(MESSAGEEXTSION_FILES[0], "public async onSubmitAction(");
 
+        assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
             const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
             assert.equal(false, npmInstallResult);
@@ -450,6 +468,8 @@ describe('teams:messageExtension', function () {
         assert.noJsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ commands: [{ parameters: {} }] }] });
         assert.fileContent(MESSAGEEXTSION_FILES[0], "public async onFetchTask(");
         assert.fileContent(MESSAGEEXTSION_FILES[0], "public async onSubmitAction(");
+
+        assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
             const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
@@ -492,6 +512,8 @@ describe('teams:messageExtension', function () {
         assert.fileContent(MESSAGEEXTSION_FILES[0], "public async onFetchTask(");
         assert.fileContent(MESSAGEEXTSION_FILES[0], "public async onSubmitAction(");
         assert.fileContent(MESSAGEEXTSION_FILES[0], "type: \"result\"");
+
+        assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
             const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);

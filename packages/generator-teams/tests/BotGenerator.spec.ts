@@ -64,6 +64,8 @@ describe("teams:bot", async () => {
     assert.file(BOT_FILES);
     assert.file(BOT_HTML_FILES);
 
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
@@ -109,6 +111,8 @@ describe("teams:bot", async () => {
     assert.file(BOT_FILES);
     assert.file(BOT_HTML_FILES);
 
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
@@ -151,6 +155,8 @@ describe("teams:bot", async () => {
     assert.file(BOT_SCRIPT_TEST_FILES);
     assert.file(BOT_FILES);
     assert.file(BOT_HTML_FILES);
+
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
@@ -197,6 +203,8 @@ describe("teams:bot", async () => {
     assert.noFile(BOT_SCRIPT_TEST_FILES);
     assert.file(BOT_FILES);
     assert.file(BOT_HTML_FILES);
+
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);

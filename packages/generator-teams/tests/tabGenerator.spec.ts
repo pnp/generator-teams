@@ -81,6 +81,8 @@ describe("teams:tab", function () {
     assert.file(TAB_SCRIPT_FILES_STATIC);
     assert.file(TAB_SCRIPT_TEST_FILES_STATIC);
 
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
@@ -124,6 +126,8 @@ describe("teams:tab", function () {
       `var appInsights = window.appInsights`
     );
 
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
@@ -159,6 +163,8 @@ describe("teams:tab", function () {
       "src/public/index.html",
       `var appInsights = window.appInsights`
     );
+
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
@@ -212,6 +218,8 @@ describe("teams:tab", function () {
     assert.file(TAB_FILES);
     assert.file(TAB_SCRIPT_FILES);
     assert.noFile(TAB_SCRIPT_TEST_FILES);
+
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
@@ -267,6 +275,8 @@ describe("teams:tab", function () {
     assert.file(TAB_SCRIPT_FILES);
     assert.noFile(TAB_SCRIPT_TEST_FILES);
 
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
@@ -302,6 +312,8 @@ describe("teams:tab", function () {
         }
       ]
     });
+
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
@@ -340,6 +352,8 @@ describe("teams:tab", function () {
       ]
     });
 
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
@@ -376,6 +390,8 @@ describe("teams:tab", function () {
         }
       ]
     });
+
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
@@ -424,6 +440,8 @@ describe("teams:tab", function () {
         }
       ]
     });
+
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
 
     assert.file(TAB_HTML_FILES);
     assert.file(TAB_FILES);
@@ -486,6 +504,8 @@ describe("teams:tab", function () {
     assert.file(TAB_SCRIPT_FILES);
     assert.noFile(TAB_SCRIPT_TEST_FILES);
 
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
@@ -538,6 +558,8 @@ describe("teams:tab", function () {
     assert.file(TAB_FILES);
     assert.file(TAB_SCRIPT_FILES);
     assert.file(TAB_SCRIPT_TEST_FILES);
+
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
@@ -594,6 +616,8 @@ describe("teams:tab", function () {
     assert.file(TAB_FILES);
     assert.file(TAB_SCRIPT_FILES);
     assert.noFile(TAB_SCRIPT_TEST_FILES);
+
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
@@ -664,7 +688,7 @@ describe("teams:tab", function () {
     it("Should not have tab script test files", async () => {
       assert.noFile(TAB_SCRIPT_TEST_FILES);
     });
-    it("Should have schema 1.7", async () => {
+    it("Should have schema 1.8", async () => {
       assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_18);
     });
     it("Should have web application info", async () => {
@@ -811,6 +835,8 @@ describe("teams:tab", function () {
     assert.file(TAB_SCRIPT_FILES);
     assert.noFile(TAB_SCRIPT_TEST_FILES);
 
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
@@ -864,6 +890,8 @@ describe("teams:tab", function () {
     assert.file(TAB_FILES);
     assert.file(TAB_SCRIPT_FILES);
     assert.noFile(TAB_SCRIPT_TEST_FILES);
+
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
@@ -919,6 +947,8 @@ describe("teams:tab", function () {
     assert.file(TAB_SCRIPT_FILES);
     assert.noFile(TAB_SCRIPT_TEST_FILES);
 
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
@@ -973,6 +1003,8 @@ describe("teams:tab", function () {
     assert.file(TAB_SCRIPT_FILES);
     assert.noFile(TAB_SCRIPT_TEST_FILES);
 
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
       assert.equal(false, npmInstallResult);
@@ -1025,6 +1057,8 @@ describe("teams:tab", function () {
       .withGenerators(testHelper.DEPENDENCIES);
 
     assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_DEVPREVIEW);
+
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
@@ -1089,6 +1123,8 @@ describe("teams:tab", function () {
 
     const manifest = require(projectPath + "/src/manifest/manifest.json");
     assert.notEqual(manifest.staticTabs[0].entityId, manifest.staticTabs[1].entityId, "Static tab entities must be unique");
+
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
