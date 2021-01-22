@@ -456,7 +456,7 @@ export class MessageExtensionGenerator extends Generator {
                         scope: Scope.Private,
                         name: `_${this.options.messageExtensionName}`,
                         type: this.options.messageExtensionClassName,
-                        docs: [`Local property for ${this.options.messageExtensionClassName}`],
+                        docs: [`Local property for ${this.options.messageExtensionClassName}`]
                     });
 
                     // add the decorator
@@ -464,11 +464,14 @@ export class MessageExtensionGenerator extends Generator {
                         name: 'MessageExtensionDeclaration',
                         arguments: [`"${this.options.messageExtensionName}"`]
                     });
+                    // add a new line after the property to avoid eslint issue
+                    prop.appendWhitespace("\n");
+
                     const children = prop.getChildren();
                     if (children && children.length > 0) {
                         const declaration = children.find(c => { return c.getKind() == ts.SyntaxKind.PropertyDeclaration; });
                         if (declaration) {
-                            cl.insertText(declaration.getPos(), "// tslint:disable-next-line: variable-name\n");
+                            cl.insertText(declaration.getPos(), "// eslint:disable-next-line: variable-name\n");
                         }
                     }
 
@@ -479,8 +482,7 @@ export class MessageExtensionGenerator extends Generator {
                         const c = constructors[0];
                         // use index 1, as we need to insert it after the super();
                         c.insertStatements(1, `// Message extension ${this.options.messageExtensionClassName}
-                        this._${this.options.messageExtensionName} = new ${this.options.messageExtensionClassName}();
-                        `);
+                        this._${this.options.messageExtensionName} = new ${this.options.messageExtensionClassName}();`);
 
                     } else {
                         // TODO: log

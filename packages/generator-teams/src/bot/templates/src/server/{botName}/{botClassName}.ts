@@ -14,7 +14,9 @@ const log = debug("msteams");
 @BotDeclaration(
     "/api/messages",
     new MemoryStorage(),
+    // eslint-disable-next-line no-undef
     process.env.<%= botidEnv %>,
+    // eslint-disable-next-line no-undef
     process.env.<%= botidEnvSecret %>)
 <% if (staticTab) { %>@PreventIframe("/<%=botName%>/<%=staticTabName%>.html")<% } %>
 export class <%= botClassName %> extends TeamsActivityHandler {
@@ -32,24 +34,24 @@ export class <%= botClassName %> extends TeamsActivityHandler {
         this.conversationState = conversationState;
         this.dialogState = conversationState.createProperty("dialogState");
         this.dialogs = new DialogSet(this.dialogState);
-        <% if (bot) { %>this.dialogs.add(new HelpDialog("help"));<% } %>
-<% if (bot) { %>
+        <% if (bot) { %>this.dialogs.add(new HelpDialog("help"));<% } %><% if (bot) { %>
         // Set up the Activity processing
-
         this.onMessage(async (context: TurnContext): Promise<void> => {
             // TODO: add your own bot logic in here
             switch (context.activity.type) {
                 case ActivityTypes.Message:
-                    let text = TurnContext.removeRecipientMention(context.activity);
-                    text = text.toLowerCase();
-                    if (text.startsWith("hello")) {
-                        await context.sendActivity("Oh, hello to you as well!");
-                        return;
-                    } else if (text.startsWith("help")) {
-                        const dc = await this.dialogs.createContext(context);
-                        await dc.beginDialog("help");
-                    } else {
-                        await context.sendActivity(`I\'m terribly sorry, but my developer hasn\'t trained me to do anything yet...`);
+                    {
+                        let text = TurnContext.removeRecipientMention(context.activity);
+                        text = text.toLowerCase();
+                        if (text.startsWith("hello")) {
+                            await context.sendActivity("Oh, hello to you as well!");
+                            return;
+                        } else if (text.startsWith("help")) {
+                            const dc = await this.dialogs.createContext(context);
+                            await dc.beginDialog("help");
+                        } else {
+                            await context.sendActivity("I'm terribly sorry, but my developer hasn't trained me to do anything yet...");
+                        }
                     }
                     break;
                 default:
@@ -80,7 +82,6 @@ export class <%= botClassName %> extends TeamsActivityHandler {
             }
         });<% } %>
    }
-
 <% if (botCallingEnabled) { %>
     /**
      * Webhook for incoming calls

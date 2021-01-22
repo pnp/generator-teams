@@ -4,7 +4,6 @@ import * as microsoftTeams from "@microsoft/teams-js";
 import { useState, useEffect } from "react";
 import { useTeams } from "msteams-react-base-component";
 
-
 /**
  * Implementation of the <%= messageExtensionTitle %> configuration page
  */

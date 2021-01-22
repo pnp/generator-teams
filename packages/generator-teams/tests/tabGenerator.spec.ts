@@ -65,6 +65,8 @@ describe("teams:tab", function () {
     assert.file(testHelper.SCRIPT_FILES);
     assert.file(testHelper.WEB_FILES);
     assert.file(testHelper.MANIFEST_FILES);
+    assert.file(testHelper.LINT_FILES);
+
 
     assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_18);
 
@@ -202,6 +204,8 @@ describe("teams:tab", function () {
     assert.file(testHelper.SCRIPT_FILES);
     assert.file(testHelper.WEB_FILES);
     assert.file(testHelper.MANIFEST_FILES);
+    assert.file(testHelper.LINT_FILES);
+
 
     assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_18);
     assert.jsonFileContent("src/manifest/manifest.json", {
@@ -256,6 +260,8 @@ describe("teams:tab", function () {
     assert.file(testHelper.SCRIPT_FILES);
     assert.file(testHelper.WEB_FILES);
     assert.file(testHelper.MANIFEST_FILES);
+    assert.file(testHelper.LINT_FILES);
+
 
     assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_18);
     assert.jsonFileContent("src/manifest/manifest.json", {
@@ -427,6 +433,8 @@ describe("teams:tab", function () {
     assert.file(testHelper.SCRIPT_FILES);
     assert.file(testHelper.WEB_FILES);
     assert.file(testHelper.MANIFEST_FILES);
+    assert.file(testHelper.LINT_FILES);
+
 
     assert.fileContent(
       "src/manifest/manifest.json",
@@ -485,6 +493,8 @@ describe("teams:tab", function () {
     assert.file(testHelper.SCRIPT_FILES);
     assert.file(testHelper.WEB_FILES);
     assert.file(testHelper.MANIFEST_FILES);
+    assert.file(testHelper.LINT_FILES);
+
 
     assert.fileContent(
       "src/manifest/manifest.json",
@@ -540,6 +550,8 @@ describe("teams:tab", function () {
     assert.file(testHelper.SCRIPT_FILES);
     assert.file(testHelper.WEB_FILES);
     assert.file(testHelper.MANIFEST_FILES);
+    assert.file(testHelper.LINT_FILES);
+
 
     assert.fileContent(
       "src/manifest/manifest.json",
@@ -598,6 +610,8 @@ describe("teams:tab", function () {
     assert.file(testHelper.SCRIPT_FILES);
     assert.file(testHelper.WEB_FILES);
     assert.file(testHelper.MANIFEST_FILES);
+    assert.file(testHelper.LINT_FILES);
+
 
     assert.fileContent(
       "src/manifest/manifest.json",
@@ -688,6 +702,9 @@ describe("teams:tab", function () {
     it("Should not have tab script test files", async () => {
       assert.noFile(TAB_SCRIPT_TEST_FILES);
     });
+    it("Should have linting files", async () => {
+      assert.file(testHelper.LINT_FILES);
+    });
     it("Should have schema 1.8", async () => {
       assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_18);
     });
@@ -765,7 +782,9 @@ describe("teams:tab", function () {
     assert.file(testHelper.SCRIPT_FILES);
     assert.file(testHelper.WEB_FILES);
     assert.file(testHelper.MANIFEST_FILES);
-
+    it("Should have linting files", async () => {
+      assert.file(testHelper.LINT_FILES);
+    });
     assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_DEVPREVIEW);
     assert.jsonFileContent("src/manifest/manifest.json", {
       webApplicationInfo:
@@ -822,7 +841,9 @@ describe("teams:tab", function () {
     assert.file(testHelper.SCRIPT_FILES);
     assert.file(testHelper.WEB_FILES);
     assert.file(testHelper.MANIFEST_FILES);
-
+    it("Should have linting files", async () => {
+      assert.file(testHelper.LINT_FILES);
+    });
     assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_18);
     assert.jsonFileContent("src/manifest/manifest.json", {
       showLoadingIndicator: false
@@ -878,7 +899,9 @@ describe("teams:tab", function () {
     assert.file(testHelper.SCRIPT_FILES);
     assert.file(testHelper.WEB_FILES);
     assert.file(testHelper.MANIFEST_FILES);
-
+    it("Should have linting files", async () => {
+      assert.file(testHelper.LINT_FILES);
+    });
     assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_18);
     assert.jsonFileContent("src/manifest/manifest.json", {
       showLoadingIndicator: true
@@ -934,7 +957,9 @@ describe("teams:tab", function () {
     assert.file(testHelper.SCRIPT_FILES);
     assert.file(testHelper.WEB_FILES);
     assert.file(testHelper.MANIFEST_FILES);
-
+    it("Should have linting files", async () => {
+      assert.file(testHelper.LINT_FILES);
+    });
     assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_18);
     assert.jsonFileContent("src/manifest/manifest.json", {
       isFullScreen: true
@@ -990,7 +1015,9 @@ describe("teams:tab", function () {
     assert.file(testHelper.SCRIPT_FILES);
     assert.file(testHelper.WEB_FILES);
     assert.file(testHelper.MANIFEST_FILES);
-
+    it("Should have linting files", async () => {
+      assert.file(testHelper.LINT_FILES);
+    });
     assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_18);
     assert.jsonFileContent("src/manifest/manifest.json", {
       isFullScreen: false

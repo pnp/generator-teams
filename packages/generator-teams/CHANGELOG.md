@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Repository reorganized. `generator-teams` is moved into `packages/generator-teams`
 * New projects can only be scaffolded using manifest version 1.8 or later
 * Projects scaffolded with previous versions can not be updated
+* Migrated from TSLint to ESLint
 
 ### Added
 

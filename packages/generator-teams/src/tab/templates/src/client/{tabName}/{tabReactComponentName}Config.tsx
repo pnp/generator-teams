@@ -32,6 +32,7 @@ export const <%=tabReactComponentName%>Config = () => {
             microsoftTeams.settings.setValidityState(true);
             microsoftTeams.appInitialization.notifySuccess();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [context]);
 
     return (

@@ -54,6 +54,8 @@ describe("teams:bot", async () => {
     assert.file(testHelper.SCRIPT_FILES);
     assert.file(testHelper.WEB_FILES);
     assert.file(testHelper.MANIFEST_FILES);
+    assert.file(testHelper.LINT_FILES);
+
     assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_18);
     assert.jsonFileContent("src/manifest/manifest.json", {
       bots: [{ supportsFiles: true }]
@@ -101,6 +103,8 @@ describe("teams:bot", async () => {
     assert.file(testHelper.SCRIPT_FILES);
     assert.file(testHelper.WEB_FILES);
     assert.file(testHelper.MANIFEST_FILES);
+    assert.file(testHelper.LINT_FILES);
+
     assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_18);
     assert.jsonFileContent("src/manifest/manifest.json", {
       bots: [{ supportsCalling: true, supportsVideo: true }]
@@ -146,6 +150,8 @@ describe("teams:bot", async () => {
     assert.file(testHelper.SCRIPT_FILES);
     assert.file(testHelper.WEB_FILES);
     assert.file(testHelper.MANIFEST_FILES);
+    assert.file(testHelper.LINT_FILES);
+
     assert.fileContent(
       "src/manifest/manifest.json",
       testHelper.SCHEMA_DEVPREVIEW
@@ -194,6 +200,7 @@ describe("teams:bot", async () => {
     assert.file(testHelper.SCRIPT_FILES);
     assert.file(testHelper.WEB_FILES);
     assert.file(testHelper.MANIFEST_FILES);
+    assert.file(testHelper.LINT_FILES);
     assert.fileContent(
       "src/manifest/manifest.json",
       testHelper.SCHEMA_DEVPREVIEW

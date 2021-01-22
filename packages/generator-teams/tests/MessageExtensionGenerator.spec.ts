@@ -58,6 +58,8 @@ describe('teams:messageExtension', function () {
         assert.file(testHelper.SCRIPT_FILES);
         assert.file(testHelper.WEB_FILES);
         assert.file(testHelper.MANIFEST_FILES);
+        assert.file(testHelper.LINT_FILES);
+
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_18);
         assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ canUpdateConfiguration: true }] })
         assert.file(MESSAGEEXTSION_SCRIPT_FILES);
@@ -107,6 +109,8 @@ describe('teams:messageExtension', function () {
         assert.file(testHelper.SCRIPT_FILES);
         assert.file(testHelper.WEB_FILES);
         assert.file(testHelper.MANIFEST_FILES);
+        assert.file(testHelper.LINT_FILES);
+
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_18);
         assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ canUpdateConfiguration: false }] })
         assert.noFile(MESSAGEEXTSION_SCRIPT_FILES);
@@ -155,6 +159,8 @@ describe('teams:messageExtension', function () {
         assert.file(testHelper.SCRIPT_FILES);
         assert.file(testHelper.WEB_FILES);
         assert.file(testHelper.MANIFEST_FILES);
+        assert.file(testHelper.LINT_FILES);
+
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_18);
         assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ canUpdateConfiguration: true }] })
         assert.file(MESSAGEEXTSION_SCRIPT_FILES);
@@ -200,6 +206,8 @@ describe('teams:messageExtension', function () {
         assert.file(testHelper.SCRIPT_FILES);
         assert.file(testHelper.WEB_FILES);
         assert.file(testHelper.MANIFEST_FILES);
+        assert.file(testHelper.LINT_FILES);
+
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_DEVPREVIEW);
         assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ canUpdateConfiguration: true }] })
         assert.file(MESSAGEEXTSION_SCRIPT_FILES);
@@ -249,6 +257,8 @@ describe('teams:messageExtension', function () {
         assert.file(testHelper.SCRIPT_FILES);
         assert.file(testHelper.WEB_FILES);
         assert.file(testHelper.MANIFEST_FILES);
+        assert.file(testHelper.LINT_FILES);
+
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_DEVPREVIEW);
         assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ canUpdateConfiguration: false }] })
         assert.noFile(MESSAGEEXTSION_SCRIPT_FILES);
@@ -297,6 +307,8 @@ describe('teams:messageExtension', function () {
         assert.file(testHelper.SCRIPT_FILES);
         assert.file(testHelper.WEB_FILES);
         assert.file(testHelper.MANIFEST_FILES);
+        assert.file(testHelper.LINT_FILES);
+
         assert.fileContent('src/manifest/manifest.json', testHelper.SCHEMA_DEVPREVIEW);
         assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ canUpdateConfiguration: true }] })
         assert.file(MESSAGEEXTSION_SCRIPT_FILES);

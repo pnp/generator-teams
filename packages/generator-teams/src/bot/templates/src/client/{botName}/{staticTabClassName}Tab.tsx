@@ -7,7 +7,7 @@ import * as microsoftTeams from "@microsoft/teams-js";
 /**
  * Implementation of the <%= staticTabName %> content page
  */
-export const <%=staticTabClassName%>Tab  = () => {
+export const <%=staticTabClassName%>Tab = () => {
     const [{ inTeams, theme }] = useTeams();
 
     useEffect(() => {

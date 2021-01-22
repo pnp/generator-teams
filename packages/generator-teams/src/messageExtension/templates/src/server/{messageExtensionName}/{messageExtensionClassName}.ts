@@ -84,10 +84,7 @@ const log = debug("msteams");
         }
         return Promise.resolve();
     }
-
-<% } %>
-
-<% if (messagingExtensionType =="action" && messagingExtensionActionInputType != "static" || (messagingExtensionActionInputType == "static" && messagingExtensionActionResponseTypeConfig)) { %>
+<% } %><% if (messagingExtensionType =="action" && messagingExtensionActionInputType != "static" || (messagingExtensionActionInputType == "static" && messagingExtensionActionResponseTypeConfig)) { %>
     public async onFetchTask(context: TurnContext, value: MessagingExtensionQuery): Promise<MessagingExtensionResult | TaskModuleContinueResponse> {
 <% if(messagingExtensionActionResponseTypeConfig && messagingExtensionActionInputType == "static") { %>
         return Promise.resolve<MessagingExtensionResult>({
@@ -102,8 +99,7 @@ const log = debug("msteams");
                 ]
             }
         });
-<% } %>
-<% if(messagingExtensionActionResponseTypeConfig && messagingExtensionActionInputType != "static") { %>
+<% } %><% if(messagingExtensionActionResponseTypeConfig && messagingExtensionActionInputType != "static") { %>
         if (!value.state) { // TODO: implement logic when config is persisted
             return Promise.resolve<MessagingExtensionResult>({
                 type: "config", // use "config" or "auth" here
@@ -118,8 +114,7 @@ const log = debug("msteams");
                 }
             });
         }
-<% } %>
-<% if(messagingExtensionActionInputType == "taskModule" ) { %>
+<% } %><% if(messagingExtensionActionInputType == "taskModule" ) { %>
         return Promise.resolve<TaskModuleContinueResponse>({
             type: "continue",
             value: {
@@ -128,8 +123,7 @@ const log = debug("msteams");
                 height: "medium"
             }
         });
-<% } %>
-<% if(messagingExtensionActionInputType == "adaptiveCard" ) { %>
+<% } %><% if(messagingExtensionActionInputType == "adaptiveCard" ) { %>
         return Promise.resolve<TaskModuleContinueResponse>({
             type: "continue",
             value: {
@@ -159,11 +153,9 @@ const log = debug("msteams");
                     ]
                 })
             }
-        });
-<% } %>
+        });<% } %>
     }
-<% } %>
-<% if (messagingExtensionType =="action" ) { %>
+<% } %><% if (messagingExtensionType =="action" ) { %>
     // handle action response in here
     // See documentation for `MessagingExtensionResult` for details
     public async onSubmitAction(context: TurnContext, value: TaskModuleRequest): Promise<MessagingExtensionResult> {
@@ -173,8 +165,7 @@ const log = debug("msteams");
             text: "You entered " + value.data.email
         } as MessagingExtensionResult);
     }
-<% } %>
-<% if (messagingExtensionActionResponseType =="adaptiveCard") { %>
+<% } %><% if (messagingExtensionActionResponseType =="adaptiveCard") { %>
         const card = CardFactory.adaptiveCard(
             {
                 type: "AdaptiveCard",
@@ -198,9 +189,7 @@ const log = debug("msteams");
             attachments: [card]
         } as MessagingExtensionResult);
     }
-<% } %>
-<% } %>
-<% if (messagingExtensionCanUpdateConfiguration) { %>
+<% } %><% } %><% if (messagingExtensionCanUpdateConfiguration) { %>
     // this is used when canUpdateConfiguration is set to true
     public async onQuerySettingsUrl(context: TurnContext): Promise<{ title: string, value: string }> {
         return Promise.resolve({

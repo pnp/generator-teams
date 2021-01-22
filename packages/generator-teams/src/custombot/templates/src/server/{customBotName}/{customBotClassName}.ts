@@ -10,12 +10,6 @@ import { OutgoingWebhookDeclaration, IOutgoingWebhook } from "express-msteams-ho
 export class <%= customBotClassName %> implements IOutgoingWebhook {
 
     /**
-     * The constructor
-     */
-    public constructor() {
-    }
-
-    /**
      * Implement your outgoing webhook logic here
      * @param req the Request
      * @param res the Response
@@ -35,21 +29,21 @@ export class <%= customBotClassName %> implements IOutgoingWebhook {
             // There is a configured security token
             const auth = req.headers.authorization;
             const msgBuf = Buffer.from((req as any).rawBody, "utf8");
-            const msgHash = "HMAC " + crypto.
-                createHmac("sha256", Buffer.from(securityToken as string, "base64")).
-                update(msgBuf).
-                digest("base64");
+            const msgHash = "HMAC " + crypto
+                .createHmac("sha256", Buffer.from(securityToken as string, "base64"))
+                .update(msgBuf)
+                .digest("base64");
 
             if (msgHash === auth) {
                 // Message was ok and verified
                 message.text = `Echo ${incoming.text}`;
             } else {
                 // Message could not be verified
-                message.text = `Error: message sender cannot be verified`;
+                message.text = "Error: message sender cannot be verified";
             }
         } else {
             // There is no configured security token
-            message.text = `Error: outgoing webhook is not configured with a security token`;
+            message.text = "Error: outgoing webhook is not configured with a security token";
         }
 
         // send the message

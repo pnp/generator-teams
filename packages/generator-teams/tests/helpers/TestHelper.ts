@@ -24,10 +24,16 @@ export const ROOT_FILES = [
     'gulpfile.js',
     'package.json',
     'README.md',
-    'tslint.json',
     'webpack.config.js',
     'Dockerfile'
 ];
+
+export const LINT_FILES = [
+    ".eslintrc.json",
+    ".eslintignore",
+    "src/server/.eslintrc.json",
+    "src/client/.eslintrc.json"
+]
 
 export const TEST_FILES = [
     'test-setup.js',

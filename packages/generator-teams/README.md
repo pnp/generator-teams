@@ -86,7 +86,7 @@ yo teams [arguments]
  The following arguments can be used:
 
 * `--skip-install` - when used no packages will be installed at the end of the generator and you have to run `npm install` or similar manually.
-* `--no-telemetry` - opt out of sending telemetry data (NOTE: no personal data or names of artefacts are being sent, only information of successful executions and what options are being used).
+* `--no-telemetry` - opt out of sending telemetry data (NOTE: no personal data or names of artifacts are being sent, only information of successful executions and what options are being used).
 
 ## Build the generator
 
@@ -107,7 +107,7 @@ If you want to run the generator tests, you can run the following command.
 npm test
 ```
 
-Yeoman-test package is being used for the generator tests. (NOTE: Node JS version 8.10.0 is recommended for executing generator tests.)
+Yeoman-test package is being used for the generator tests.
 
 ### Use it in dev mode
 

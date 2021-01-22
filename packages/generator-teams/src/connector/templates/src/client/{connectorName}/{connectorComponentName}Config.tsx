@@ -67,6 +67,7 @@ export const <%=connectorComponentName%>Config = () => {
             setColor(availableColors.find(c => c.code === context.entityId));
             microsoftTeams.settings.setValidityState(color !== undefined);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [context]);
 
     const colors = availableColors.map(clr => {

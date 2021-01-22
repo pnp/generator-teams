@@ -3,7 +3,7 @@ import { Provider, Flex, Text, Button, Header } from "@fluentui/react-northstar"
 import { useState, useEffect } from "react";
 import { useTeams } from "msteams-react-base-component";
 import * as microsoftTeams from "@microsoft/teams-js";<% if (tabSSO) { %>
-import jwt_decode from "jwt-decode";<% } %>
+import jwtDecode from "jwt-decode";<% } %>
 
 /**
  * Implementation of the <%= tabTitle %> content page
@@ -20,7 +20,7 @@ export const <%=tabReactComponentName%> = () => {
 <% if (tabSSO) { %>
             microsoftTeams.authentication.getAuthToken({
                 successCallback: (token: string) => {
-                    const decoded: { [key: string]: any; } = jwt_decode(token) as { [key: string]: any; };
+                    const decoded: { [key: string]: any; } = jwtDecode(token) as { [key: string]: any; };
                     setName(decoded!.name);
                     microsoftTeams.appInitialization.notifySuccess();
                 },
