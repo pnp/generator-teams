@@ -7,11 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [*Unreleased*] - <**>
 
-
 ### Added
 
 * Initial release
-
 
 # Template
 ## [*MAJOR.MINOR.PATCH*] - <*DATE*>

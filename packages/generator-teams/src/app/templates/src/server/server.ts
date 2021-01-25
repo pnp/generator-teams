@@ -6,7 +6,6 @@ import { MsTeamsApiRouter, MsTeamsPageRouter } from "express-msteams-host";
 import * as debug from "debug";
 import * as compression from "compression";
 <% if (useAzureAppInsights) { %>import * as appInsights from "applicationinsights";<% } %>
-
 // Initialize debug logging module
 const log = debug("msteams");
 

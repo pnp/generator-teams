@@ -10,6 +10,8 @@ import { ManifestGeneratorFactory } from '../app/manifestGeneration/ManifestGene
 import validate = require('uuid-validate');
 import EmptyGuid = require('../app/EmptyGuid');
 
+const OFFICE_GUID = "00000003-0000-0ff1-ce00-000000000000";
+
 export class TabGenerator extends Generator {
     options: GeneratorTeamsAppOptions;
 
@@ -106,7 +108,7 @@ export class TabGenerator extends Generator {
                             return EmptyGuid.empty;
                         },
                         validate: (input: string) => {
-                            return validate(input) || input == EmptyGuid.empty;
+                            return validate(input) || input.toLocaleLowerCase() == OFFICE_GUID || input == EmptyGuid.empty;
                         },
                         when: (answers: any) => answers.tabSSO,
                     },
@@ -128,7 +130,7 @@ export class TabGenerator extends Generator {
                         message: 'Do you want this tab to be available in SharePoint Online?',
                         default: true,
                         when: (answers: any) => {
-                            return answers.tabType == "configurable"
+                            return answers.tabType == "configurable" && !answers.quickScaffolding
                         },
                     },
                     {
@@ -230,12 +232,6 @@ export class TabGenerator extends Generator {
 
             this.fs.writeJSON(manifestPath, manifest);
 
-            Yotilities.addAdditionalDeps([
-                ["@fluentui/react-northstar", "~0.51.0"],
-                ["react", "^16.8.6"],
-                ["react-dom", "^16.8.6"]
-            ], this.fs);
-
             if (this.options.tabSSO) {
                 Yotilities.addAdditionalDeps([
                     ["jwt-decode", "^3.0.0-beta.2"]
@@ -245,12 +241,6 @@ export class TabGenerator extends Generator {
                 Yotilities.addOrUpdateEnv(".env", `${this.options.tabUpperName}_APP_ID`, this.options.tabSSOAppId, this.fs);
                 Yotilities.addOrUpdateEnv(".env", `${this.options.tabUpperName}_APP_URI`, this.options.tabSSOAppUri, this.fs);
             }
-
-            Yotilities.addAdditionalDevDeps([
-                ["@types/react", "16.8.10"],
-                ["file-loader", "6.1.1"],
-                ["typestyle", "2.0.1"]
-            ], this.fs);
 
             // update client.ts
             Yotilities.insertTsExportDeclaration(

@@ -7,6 +7,7 @@ import path from "path";
 import PluginError from "plugin-error";
 import log from "fancy-log";
 import GulpClient from "gulp";
+import { dependenciesP } from ".";
 
 export const webpackTasks = (gulp: GulpClient.Gulp, config: any) => {
 
@@ -47,6 +48,6 @@ export const webpackTasks = (gulp: GulpClient.Gulp, config: any) => {
         webpackTask(0, callback);
     });
 
-    gulp.task("webpack", gulp.parallel("webpack:client", "webpack:server"));
+    gulp.task("webpack", dependenciesP(gulp, "webpack:client", "webpack:server"));
 
 };

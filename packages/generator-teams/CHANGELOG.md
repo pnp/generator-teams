@@ -13,10 +13,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * New projects can only be scaffolded using manifest version 1.8 or later
 * Projects scaffolded with previous versions can not be updated
 * Migrated from TSLint to ESLint
+* Upgraded to use `axios@0.21.1` due to security issue
+* Upgraded to use `botbuilder@4.11.1` or later due to security issue in `axios`
 
 ### Added
 
 * Added new dedicated build package for Gulp tasks (`packages/yoteams-build-core`)
+* Added a "Quick scaffolding" option
+
+### Fixed
+
+* Allowed the usage of the Office Guid (`00000003-0000-0ff1-ce00-000000000000`) in Guid validation of SSO Tabs (#171)
+* Fixed an issue where the React npm packages was not correctly added to `package.json` (#168)
 
 ## [*2.17.0*] - <*2020-12-07*>
 

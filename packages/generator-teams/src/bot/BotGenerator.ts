@@ -176,18 +176,6 @@ export class BotGenerator extends Generator {
                             "src/client/{botName}/__tests__/{staticTabClassName}Tab.spec.tsx"
                         );
                     }
-
-                    Yotilities.addAdditionalDeps([
-                        ["@fluentui/react-northstar", "~0.51.0"],
-                        ["react", "^16.8.6"],
-                        ["react-dom", "^16.8.6"]
-                    ], this.fs);
-
-                    Yotilities.addAdditionalDevDeps([
-                        ["@types/react", "16.8.10"],
-                        ["file-loader", "6.1.1"],
-                        ["typestyle", "2.0.1"]
-                    ], this.fs);
                 }
             }
 

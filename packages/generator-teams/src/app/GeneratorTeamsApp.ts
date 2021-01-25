@@ -100,6 +100,7 @@ export class GeneratorTeamsApp extends Generator {
             updateBuildSystem: boolean;
             showLoadingIndicator: boolean;
             isFullScreen: boolean;
+            quickScaffolding: boolean;
         };
         // find out what manifest versions we can use
         const manifestGeneratorFactory = new ManifestGeneratorFactory();
@@ -203,10 +204,17 @@ export class GeneratorTeamsApp extends Generator {
                     when: (answers: IAnswers) => (this.options.existingManifest && answers.updateManifestVersion && versions.length > 0) || (!this.options.existingManifest)
                 },
                 {
+                    type: "confirm",
+                    name: "quickScaffolding",
+                    message: `Quick scaffolding`,
+                    default: true
+                },
+                {
                     type: 'input',
                     name: 'mpnId',
                     message: 'Enter your Microsoft Partner ID, if you have one? (Leave blank to skip)',
                     default: undefined,
+                    when: (answers: IAnswers) => !answers.quickScaffolding,
                     validate: (input: string) => {
                         return input.length <= 10;
                     }
@@ -291,20 +299,23 @@ export class GeneratorTeamsApp extends Generator {
                     name: 'isFullScreen',
                     message: 'Would you like personal apps to be rendered without a tab header-bar?',
                     default: false,
+                    when: (answers: IAnswers) => !answers.quickScaffolding,
                 },
                 {
                     type: 'confirm',
                     name: 'unitTestsEnabled',
                     message: 'Would you like to include Test framework and initial tests?',
-                    when: () => !this.options.existingManifest,
-                    store: true
+                    when: (answers: IAnswers) => !this.options.existingManifest && !answers.quickScaffolding,
+                    store: true,
+                    default: false
                 },
                 {
                     type: 'confirm',
                     name: 'useAzureAppInsights',
                     message: 'Would you like to use Azure Applications Insights for telemetry?',
-                    when: () => !this.options.existingManifest,
-                    store: true
+                    when: (answers: IAnswers) => !this.options.existingManifest && !answers.quickScaffolding,
+                    store: true,
+                    default: false
                 },
                 {
                     type: 'input',

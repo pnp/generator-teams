@@ -5,6 +5,7 @@
 import GulpClient from "gulp";
 import log from "fancy-log";
 import ngrok from "ngrok";
+import { dependencies } from ".";
 
 export const ngrokTasks = (gulp: GulpClient.Gulp, config: any) => {
 
@@ -35,6 +36,6 @@ export const ngrokTasks = (gulp: GulpClient.Gulp, config: any) => {
             cb(err.msg);
         });
     });
-    gulp.task("ngrok-serve", gulp.series("start-ngrok", "manifest", "serve"));
+    gulp.task("ngrok-serve", dependencies(gulp, "start-ngrok", "manifest", "serve"));
 
 };

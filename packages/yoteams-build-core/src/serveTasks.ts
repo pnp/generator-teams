@@ -8,6 +8,7 @@ import nodemon from "nodemon";
 import path from "path";
 import fs from "fs";
 import { injectSources } from "./webTasks";
+import { dependencies } from ".";
 const argv = require("yargs").argv;
 
 export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
@@ -93,5 +94,5 @@ export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
         });
     });
 
-    gulp.task("serve", gulp.series("nuke", "build", "nodemon", "watch"));
+    gulp.task("serve", dependencies(gulp, "nuke", "build", "nodemon", "watch"));
 };

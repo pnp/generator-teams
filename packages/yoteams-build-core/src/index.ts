@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import GulpClient from "gulp";
+import Undertaker from "undertaker";
 import { buildTasks } from "./buildTasks";
 import { manifest } from "./manifest";
 import { ngrokTasks } from "./ngrokTasks";
@@ -11,6 +12,14 @@ import { serveTasks } from "./serveTasks";
 import { styleTasks } from "./styleTasks";
 import { webpackTasks } from "./webpackTasks";
 import { webTasks } from "./webTasks";
+
+export const dependencies = (gulp: GulpClient.Gulp, ...tasks: Undertaker.Task[]) => {
+    return (done:any) => gulp.series(...tasks)(done);
+};
+
+export const dependenciesP = (gulp: GulpClient.Gulp, ...tasks: Undertaker.Task[]) => {
+    return (done:any) => gulp.parallel(...tasks)(done);
+};
 
 /**
  * Initializes all Gulp tasks

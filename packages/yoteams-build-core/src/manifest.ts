@@ -8,6 +8,7 @@ import PluginError from "plugin-error";
 import GulpClient from "gulp";
 
 import SCHEMAS from "./schemas.json";
+import { dependencies } from ".";
 const zip = require("gulp-zip");
 
 const fs = require("fs");
@@ -99,6 +100,6 @@ export const manifest = (gulp: GulpClient.Gulp, config: any) => {
             .pipe(gulp.dest("package"));
     };
 
-    gulp.task("validate-manifest", gulp.series(generateManifest, validateSchema));
-    gulp.task("manifest", gulp.series("validate-manifest", zipTask));
+    gulp.task("validate-manifest", dependencies(gulp, generateManifest, validateSchema));
+    gulp.task("manifest", dependencies(gulp, "validate-manifest", zipTask));
 };

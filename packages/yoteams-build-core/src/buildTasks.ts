@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import GulpClient from "gulp";
+import { dependencies } from ".";
 
 /**
  * Registers the "build" Gulp task
@@ -10,5 +11,5 @@ import GulpClient from "gulp";
  * @param config
  */
 export const buildTasks = (gulp: GulpClient.Gulp, config: any) => {
-    gulp.task("build", gulp.series("webpack", "styles", "static:copy", "static:inject"));
+    gulp.task("build", dependencies(gulp, "webpack", "styles", "static:copy", "static:inject"));
 };

@@ -378,20 +378,6 @@ export class MessageExtensionGenerator extends Generator {
                         this.options);
                 });
 
-                if (this.options.messagingExtensionCanUpdateConfiguration ||
-                    this.options.messagingExtensionType == "action" && this.options.messagingExtensionActionInputType === "taskModule") {
-                    Yotilities.addAdditionalDeps([
-                        ["@fluentui/react-northstar", "~0.51.0"],
-                        ["react", "^16.8.6"],
-                        ["react-dom", "^16.8.6"]
-                    ], this.fs);
-
-                    Yotilities.addAdditionalDevDeps([
-                        ["@types/react", "16.8.10"],
-                        ["file-loader", "6.1.1"],
-                        ["typestyle", "2.0.1"]
-                    ], this.fs);
-                }
                 Yotilities.addAdditionalDeps([
                     ["botbuilder-teams-messagingextensions", "1.7.0"]
                 ], this.fs);
