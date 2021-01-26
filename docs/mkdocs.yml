@@ -1,0 +1,13 @@
+site_name: Yo Teams - Microsoft Teams Apps generator
+nav:
+  - Home: 'index.md'
+theme:
+  name: 'material'
+markdown_extensions:
+  - admonition
+  - codehilite:
+     guess_lang: false
+  - toc:
+      permalink: true
+repo_url: http://github.com/pnp/generator-teams
+edit_uri: blob/master/docs/docs
