@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Migrated from TSLint to ESLint
 * Upgraded to use `axios@0.21.1` due to security issue
 * Upgraded to use `botbuilder@4.11.1` or later due to security issue in `axios`
+* `generator-teams` tests rebuilt
+* Changed default answers of some questions to opt-out (false) of features (SharePoint Web Part, Application Insights support, Unit Testing and more) to make default solution simpler
 
 ### Added
 

@@ -104,18 +104,12 @@ export class BotGenerator extends Generator {
                         type: 'confirm',
                         name: 'botFilesEnabled',
                         message: 'Do you want to support file upload to the bot?',
-                        when: (answers: any) => {
-                            return this.options.manifestVersion != "1.3"; // Only available in 1.4+
-                        },
                         default: false
                     },
                     {
                         type: 'confirm',
                         name: 'botCallingEnabled',
                         message: 'Do you want to include bot calling support?',
-                        when: (answers: any) => {
-                            return this.options.manifestVersion == "devPreview" || this.options.manifestVersion === ManifestVersions.v18;
-                        },
                         default: false
                     }
                 ]

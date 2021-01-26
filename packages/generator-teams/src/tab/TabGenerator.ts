@@ -128,7 +128,7 @@ export class TabGenerator extends Generator {
                         type: 'confirm',
                         name: 'tabSharePoint',
                         message: 'Do you want this tab to be available in SharePoint Online?',
-                        default: true,
+                        default: false,
                         when: (answers: any) => {
                             return answers.tabType == "configurable" && !answers.quickScaffolding
                         },
