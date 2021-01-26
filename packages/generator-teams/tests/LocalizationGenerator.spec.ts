@@ -78,7 +78,8 @@ describe('teams:localization', function () {
                 developer: 'generator teams developer',
                 manifestVersion: 'v1.8',
                 parts: 'tab',
-                tabType: "configurable"
+                tabType: "configurable",
+                tabScopes: ["team"]
             })
             .withGenerators(testHelper.DEPENDENCIES);
 

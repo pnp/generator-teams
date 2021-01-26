@@ -189,7 +189,8 @@ describe("teams:tab", function () {
         parts: "tab",
         unitTestsEnabled: false,
         tabSharePoint: false,
-        tabType: "configurable"
+        tabType: "configurable",
+        tabScopes: ["team"]
       })
       .withGenerators(testHelper.DEPENDENCIES);
     assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_18);

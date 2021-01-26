@@ -143,7 +143,10 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
 
       let prompts = { manifestVersion, ...basePrompts, ...test.prompts };
       if (unitTesting) {
-        prompts = { ...prompts, "quickScaffolding": false, "unitTestsEnabled": true };
+        prompts = {
+          mpnId: "",
+          ...prompts, "quickScaffolding": false, "unitTestsEnabled": true
+        };
         projectPath += "-withUnitTests"
       }
 

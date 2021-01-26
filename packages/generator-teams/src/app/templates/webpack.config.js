@@ -35,7 +35,7 @@ const config = [{
     target: "node",
     node: {
         __dirname: false,
-        __filename: false,
+        __filename: false
     },
     module: {
         rules: [{
@@ -101,6 +101,5 @@ if (lint !== false) {
     config[0].plugins.push(new ESLintPlugin({ extensions: ["ts", "tsx"] }));
     config[1].plugins.push(new ESLintPlugin({ extensions: ["ts", "tsx"] }));
 }
-
 
 module.exports = config;

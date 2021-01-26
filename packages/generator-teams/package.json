@@ -87,7 +87,7 @@
     "webpack": "^4.44.2",
     "webpack-cli": "^4.0.0",
     "yeoman-assert": "^3.1.1",
-    "yeoman-test": "^2.7.0"
+    "yeoman-test": "^4.0.0"
   },
   "dependencies": {
     "applicationinsights": "^1.8.7",

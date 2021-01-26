@@ -11,8 +11,8 @@ import jwtDecode from "jwt-decode";<% } %>
 export const <%=tabReactComponentName%> = () => {
 
     const [{ inTeams, theme, context }] = useTeams();
-    const [entityId, setEntityId] = useState<string | undefined>();
-<% if (tabSSO) { %>    const [name, setName] = useState<string>();
+    const [entityId, setEntityId] = useState<string | undefined>();<% if (tabSSO) { %>    
+    const [name, setName] = useState<string>();
     const [error, setError] = useState<string>();<% } %>
 
     useEffect(() => {

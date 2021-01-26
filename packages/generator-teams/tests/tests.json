@@ -7,7 +7,19 @@
                 "devPreview"
             ],
             "prompts": {
-                "parts": "bot"
+                "parts": "bot",
+                "staticTab": true
+            }
+        },
+        {
+            "description": "Bot project without static tab",
+            "manifestVersions": [
+                "v1.8",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "bot",
+                "staticTab": false
             }
         },
         {
@@ -18,7 +30,8 @@
             ],
             "prompts": {
                 "parts": "bot",
-                "botFilesEnabled": true
+                "botFilesEnabled": true,
+                "staticTab": true
             }
         },
         {
@@ -29,7 +42,8 @@
             ],
             "prompts": {
                 "parts": "bot",
-                "botCallingEnabled": true
+                "botCallingEnabled": true,
+                "staticTab": true
             }
         }
     ],
@@ -56,7 +70,12 @@
                 "parts": "messageextension",
                 "messageExtensionHost": "new",
                 "bottype": "botframework",
-                "messageExtensionDescription": "description"
+                "messagingExtensionType": "query",
+                "messageExtensionDescription": "description",
+                "messagingExtensionActionContext": [
+                    "compose",
+                    "commandBox"
+                ]
             }
         },
         {
@@ -69,8 +88,13 @@
                 "parts": "messageextension",
                 "messageExtensionHost": "new",
                 "bottype": "botframework",
+                "messagingExtensionType": "query",
                 "messageExtensionDescription": "description",
-                "messagingExtensionCanUpdateConfiguration": false
+                "messagingExtensionCanUpdateConfiguration": false,
+                "messagingExtensionActionContext": [
+                    "compose",
+                    "commandBox"
+                ]
             }
         },
         {
@@ -84,7 +108,11 @@
                 "messageExtensionHost": "new",
                 "bottype": "botframework",
                 "messageExtensionDescription": "description",
-                "messagingExtensionType": "query"
+                "messagingExtensionType": "query",
+                "messagingExtensionActionContext": [
+                    "compose",
+                    "commandBox"
+                ]
             }
         },
         {
@@ -100,7 +128,11 @@
                 "messageExtensionDescription": "description",
                 "messagingExtensionType": "action",
                 "messagingExtensionActionInputType": "static",
-                "messagingExtensionActionResponseType": "adaptiveCard"
+                "messagingExtensionActionResponseType": "adaptiveCard",
+                "messagingExtensionActionContext": [
+                    "compose",
+                    "commandBox"
+                ]
             }
         },
         {
@@ -116,7 +148,11 @@
                 "messageExtensionDescription": "description",
                 "messagingExtensionType": "action",
                 "messagingExtensionActionInputType": "adaptiveCard",
-                "messagingExtensionActionResponseType": "adaptiveCard"
+                "messagingExtensionActionResponseType": "adaptiveCard",
+                "messagingExtensionActionContext": [
+                    "compose",
+                    "commandBox"
+                ]
             }
         }
     ],
@@ -128,7 +164,10 @@
                 "devPreview"
             ],
             "prompts": {
-                "parts": "tab"
+                "parts": "tab",
+                "tabScopes": [
+                    "team"
+                ]
             }
         },
         {
@@ -150,6 +189,9 @@
             ],
             "prompts": {
                 "parts": "tab",
+                "tabScopes": [
+                    "team"
+                ],
                 "tabSharePoint": true,
                 "tabSharePointHosts": [
                     "sharePointFullPage",
@@ -205,6 +247,9 @@
             ],
             "prompts": {
                 "parts": "tab",
+                "tabScopes": [
+                    "team"
+                ],
                 "tabSSO": true,
                 "tabSSOAppId": "00000000-0000-0000-0000-000000000123",
                 "tabSSOAppUri": "api://tabtest01.azurewebsites.net/00000000-0000-0000-0000-000000000123"
@@ -220,8 +265,12 @@
             ],
             "prompts": {
                 "parts": "tab",
+                "tabScopes": [
+                    "team"
+                ],
                 "quickScaffolding": false,
                 "useAzureAppInsights": true,
+                "mpnId": "",
                 "azureAppInsightsKey": "12341234-1234-1234-1234-123412341234"
             }
         },
@@ -233,6 +282,9 @@
             ],
             "prompts": {
                 "parts": "tab",
+                "tabScopes": [
+                    "team"
+                ],
                 "quickScaffolding": false,
                 "mpnId": "1234567890"
             }
@@ -245,19 +297,27 @@
             ],
             "prompts": {
                 "parts": "tab",
+                "tabScopes": [
+                    "team"
+                ],
                 "quickScaffolding": false,
+                "mpnId": "",
                 "isFullScreen": true
             }
         },
         {
-            "description": "Full screen",
+            "description": "Show loading indicator",
             "manifestVersions": [
                 "v1.8",
                 "devPreview"
             ],
             "prompts": {
                 "parts": "tab",
+                "tabScopes": [
+                    "team"
+                ],
                 "quickScaffolding": false,
+                "mpnId": "",
                 "showLoadingIndicator": true
             }
         }

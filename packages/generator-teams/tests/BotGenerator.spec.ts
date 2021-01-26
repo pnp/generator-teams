@@ -61,7 +61,7 @@ describe("teams:bot", async () => {
       });
     }
 
-    if (prompts.unitTestsEnabled) {
+    if (prompts.unitTestsEnabled && prompts.staticTab) {
       it("Should have bot unit test files", async () => {
         assert.file(BOT_SCRIPT_TEST_FILES);
       });
@@ -75,9 +75,25 @@ describe("teams:bot", async () => {
       assert.file(BOT_FILES);
     });
 
-    it("Should have bot html files", async () => {
-      assert.file(BOT_HTML_FILES);
-    });
+    if (prompts.staticTab) {
+      it("Should have bot html files", async () => {
+        assert.file(BOT_HTML_FILES);
+      });
+    } else {
+      it("Should not have bot html files", async () => {
+        assert.noFile(BOT_HTML_FILES);
+      });
+    }
+
+    if (prompts.staticTab) {
+      it("Should have bot script files", async () => {
+        assert.file(BOT_SCRIPT_FILES);
+      });
+    } else {
+      it("Should not have bot script files", async () => {
+        assert.noFile(BOT_SCRIPT_FILES);
+      });
+    }
   }
 
 
