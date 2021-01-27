@@ -97,16 +97,18 @@ export const SCHEMAS: { [key: string]: string } = {
   "v1.8": SCHEMA_18,
   "devPreview": SCHEMA_DEVPREVIEW
 }
+const UPGRADE_PATHS: { [key: string]: string } = {
+  "v1.8": "devPreview"
+}
 
 export enum TestTypes {
   UNIT = "UNIT",
   INTEGRATION = "INTEGRATION"
 }
-export function testCoreFiles() {
+export function coreTests(manifestVersion: string, prompts: any) {
   it("Should have root files", async () => {
     assert.file(ROOT_FILES);
   });
-
   it("Should have app files", async () => {
     assert.file(APP_FILES);
   });
@@ -119,10 +121,107 @@ export function testCoreFiles() {
   it("Should have manifest files", async () => {
     assert.file(MANIFEST_FILES);
   });
-
+  it("Should have correct schema", async () => {
+    assert.fileContent("src/manifest/manifest.json", SCHEMAS[manifestVersion]);
+  });
+  it("Should have correct React version", async () => {
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+  });
+  it("Should have a reference to Fluentui", async () => {
+    assert.jsonFileContent("package.json", { dependencies: { "@fluentui/react-northstar": {} } });
+  });
   it("Should have linting files", async () => {
     assert.file(LINT_FILES);
   });
+  if (prompts.unitTestsEnabled) {
+    it("Should have unit test files", async () => {
+      assert.file(TEST_FILES);
+    });
+  } else {
+    it("Should not have unit test files", async () => {
+      assert.noFile(TEST_FILES);
+    });
+  }
+
+  if (prompts.isFullScreen) {
+    it("Should be full screen", async () => {
+      assert.jsonFileContent("src/manifest/manifest.json", {
+        isFullScreen: true
+      });
+    });
+  } else {
+    it("Should not be full screen", async () => {
+      assert.noJsonFileContent("src/manifest/manifest.json", {
+        isFullScreen: true
+      });
+    });
+  }
+
+  if (prompts.showLoadingIndicator) {
+    it("Should show loading indicator", async () => {
+      assert.jsonFileContent("src/manifest/manifest.json", {
+        showLoadingIndicator: true
+      });
+    });
+  } else {
+    it("Should not show loading indicator", async () => {
+      assert.jsonFileContent("src/manifest/manifest.json", {
+        showLoadingIndicator: false
+      });
+    });
+  }
+
+  if (prompts.useAzureAppInsights) {
+    it("Should define an environmental app insights key in .env", async () => {
+      assert.fileContent(
+        ".env",
+        "APPINSIGHTS_INSTRUMENTATIONKEY=12341234-1234-1234-1234-123412341234"
+      );
+    })
+    it("Should include applicationinsights package", async () => {
+      assert.fileContent("package.json", `"applicationinsights": "^1.3.1"`);
+    })
+    it("Should reference app insights in html files", async () => {
+      assert.fileContent(
+        "src/public/index.html",
+        `var appInsights = window.appInsights`
+      );
+    })
+  } else {
+    it("Should define an environmental app insights key in .env", async () => {
+      assert.fileContent(
+        ".env",
+        "APPINSIGHTS_INSTRUMENTATIONKEY="
+      );
+    })
+    it("Should not include applicationinsights package", async () => {
+      assert.noFileContent("package.json", `"applicationinsights": "^1.3.1"`);
+    })
+    it("Should not reference app insights in html files", async () => {
+      assert.noFileContent(
+        "src/public/index.html",
+        `var appInsights = window.appInsights`
+      );
+    })
+  }
+
+  if (prompts.mpnId) {
+    it("Should have MPN information", () => {
+      assert.jsonFileContent("src/manifest/manifest.json", {
+        developer: {
+          mpnId: "1234567890"
+        }
+      });
+    })
+  } else {
+    it("Should not have MPN information", () => {
+      assert.noJsonFileContent("src/manifest/manifest.json", {
+        developer: {
+          mpnId: "1234567890"
+        }
+      });
+    })
+  }
 }
 
 
@@ -130,9 +229,14 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
   for (const test of tests) {
     describe(test.description, async () => {
       for (const manifestVersion of test.manifestVersions as string[]) {
+        // run without unit tests
         runTest(manifestVersion, test, false);
+        // run with tests
         runTest(manifestVersion, test, true);
-
+        // upgrade if possible
+        if (UPGRADE_PATHS[manifestVersion]) {
+          runUpgradeTest(manifestVersion, UPGRADE_PATHS[manifestVersion], test, false);
+        }
       }
     });
   }
@@ -159,122 +263,7 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
           .withGenerators(DEPENDENCIES);
       });
 
-      it("Should have root files", async () => {
-        assert.file(ROOT_FILES);
-      });
-      it("Should have app files", async () => {
-        assert.file(APP_FILES);
-      });
-      it("Should have script files", async () => {
-        assert.file(SCRIPT_FILES);
-      });
-      it("Should have web files", async () => {
-        assert.file(WEB_FILES);
-      });
-      it("Should have manifest files", async () => {
-        assert.file(MANIFEST_FILES);
-      });
-      it("Should have correct schema", async () => {
-        assert.fileContent("src/manifest/manifest.json", SCHEMAS[manifestVersion]);
-      });
-      it("Should have correct React version", async () => {
-        assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
-      });
-      it("Should have a reference to Fluentui", async () => {
-        assert.jsonFileContent("package.json", { dependencies: { "@fluentui/react-northstar": {} } });
-      });
-      it("Should have linting files", async () => {
-        assert.file(LINT_FILES);
-      });
-      if (prompts.unitTestsEnabled) {
-        it("Should have unit test files", async () => {
-          assert.file(TEST_FILES);
-        });
-      } else {
-        it("Should not have unit test files", async () => {
-          assert.noFile(TEST_FILES);
-        });
-      }
-
-      if (prompts.isFullScreen) {
-        it("Should be full screen", async () => {
-          assert.jsonFileContent("src/manifest/manifest.json", {
-            isFullScreen: true
-          });
-        });
-      } else {
-        it("Should not be full screen", async () => {
-          assert.noJsonFileContent("src/manifest/manifest.json", {
-            isFullScreen: true
-          });
-        });
-      }
-
-      if (prompts.showLoadingIndicator) {
-        it("Should show loading indicator", async () => {
-          assert.jsonFileContent("src/manifest/manifest.json", {
-            showLoadingIndicator: true
-          });
-        });
-      } else {
-        it("Should not show loading indicator", async () => {
-          assert.jsonFileContent("src/manifest/manifest.json", {
-            showLoadingIndicator: false
-          });
-        });
-      }
-
-      if (prompts.useAzureAppInsights) {
-        it("Should define an environmental app insights key in .env", async () => {
-          assert.fileContent(
-            ".env",
-            "APPINSIGHTS_INSTRUMENTATIONKEY=12341234-1234-1234-1234-123412341234"
-          );
-        })
-        it("Should include applicationinsights package", async () => {
-          assert.fileContent("package.json", `"applicationinsights": "^1.3.1"`);
-        })
-        it("Should reference app insights in html files", async () => {
-          assert.fileContent(
-            "src/public/index.html",
-            `var appInsights = window.appInsights`
-          );
-        })
-      } else {
-        it("Should define an environmental app insights key in .env", async () => {
-          assert.fileContent(
-            ".env",
-            "APPINSIGHTS_INSTRUMENTATIONKEY="
-          );
-        })
-        it("Should not include applicationinsights package", async () => {
-          assert.noFileContent("package.json", `"applicationinsights": "^1.3.1"`);
-        })
-        it("Should not reference app insights in html files", async () => {
-          assert.noFileContent(
-            "src/public/index.html",
-            `var appInsights = window.appInsights`
-          );
-        })
-      }
-
-      if (prompts.mpnId) {
-        it("Should have MPN information", () => {
-          assert.jsonFileContent("src/manifest/manifest.json", {
-            developer: {
-              mpnId: "1234567890"
-            }
-          });
-        })
-      } else {
-        it("Should not have MPN information", () => {
-          assert.noJsonFileContent("src/manifest/manifest.json", {
-            developer: {
-              mpnId: "1234567890"
-            }
-          });
-        })
-      }
+      coreTests(manifestVersion, prompts);
 
 
       if (additionalTests) {
@@ -282,6 +271,56 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
       }
 
 
+
+      if (process.env.TEST_TYPE == TestTypes.INTEGRATION) {
+        const npmInstallResult = await runNpmCommand("npm install --prefer-offline", projectPath);
+        assert.equal(false, npmInstallResult);
+
+        const npmRunBuildResult = await runNpmCommand("npm run build", projectPath);
+        assert.equal(false, npmRunBuildResult);
+      }
+    });
+  }
+
+  async function runUpgradeTest(from: string, to: string, test: any, unitTesting: boolean) {
+    describe(`Schema ${from} upgrading to ${to}${unitTesting ? ", with Unit tests" : ""}`, async () => {
+      let projectPath = TEMP_TEST_PATH + `/${prefix}/${from}-${to}-${lodash.snakeCase(test.description)}`;
+
+      let prompts = { manifestVersion: from, ...basePrompts, ...test.prompts };
+      if (unitTesting) {
+        prompts = {
+          mpnId: "",
+          ...prompts, "quickScaffolding": false, "unitTestsEnabled": true
+        };
+        projectPath += "-withUnitTests"
+      }
+
+      before(async () => {
+        await helpers
+          .run(GENERATOR_PATH)
+          .inDir(projectPath)
+          .withArguments(["--no-telemetry"])
+          .withPrompts(prompts)
+          .withGenerators(DEPENDENCIES);
+
+        prompts = {
+          manifestVersion: to,
+          confirmedAdd: true,
+          updateBuildSystem: true,
+          updateManifestVersion: true,
+          parts: ""
+        };
+
+        await helpers
+          .run(GENERATOR_PATH)
+          .cd(projectPath)
+          .withArguments(["--no-telemetry"])
+          .withPrompts(prompts)
+          .withGenerators(DEPENDENCIES);
+      });
+
+
+      coreTests(to, prompts);
 
       if (process.env.TEST_TYPE == TestTypes.INTEGRATION) {
         const npmInstallResult = await runNpmCommand("npm install --prefer-offline", projectPath);
