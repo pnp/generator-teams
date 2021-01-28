@@ -31,7 +31,7 @@ export const webpackTasks = (gulp: GulpClient.Gulp, config: any) => {
                 }
                 if (jsonStats.warnings.length > 0) {
                     // eslint-disable-next-line array-callback-return
-                    jsonStats.warnings.map(function (e: { message: string; }) {
+                    jsonStats.warnings.map((e: { message: string; }) => {
                         log("[Webpack warning] " + e.message);
                     });
                 }
