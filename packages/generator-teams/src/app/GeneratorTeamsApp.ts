@@ -214,7 +214,7 @@ export class GeneratorTeamsApp extends Generator {
                     name: 'mpnId',
                     message: 'Enter your Microsoft Partner ID, if you have one? (Leave blank to skip)',
                     default: undefined,
-                    when: (answers: IAnswers) => !answers.quickScaffolding,
+                    when: (answers: IAnswers) => !answers.quickScaffolding && !this.options.existingManifest,
                     validate: (input: string) => {
                         return input.length <= 10;
                     }
@@ -293,13 +293,14 @@ export class GeneratorTeamsApp extends Generator {
                     name: 'showLoadingIndicator',
                     message: 'Would you like show a loading indicator when your app/tab loads?',
                     default: false, // set to false until the 20 second timeout bug is fixed in Teams
+                    when: () => !this.options.existingManifest
                 },
                 {
                     type: 'confirm',
                     name: 'isFullScreen',
                     message: 'Would you like personal apps to be rendered without a tab header-bar?',
                     default: false,
-                    when: (answers: IAnswers) => !answers.quickScaffolding,
+                    when: (answers: IAnswers) => !answers.quickScaffolding && !this.options.existingManifest,
                 },
                 {
                     type: 'confirm',
@@ -466,8 +467,10 @@ export class GeneratorTeamsApp extends Generator {
             // Add unit tests
             if (this.options.unitTestsEnabled) {
                 templateFiles.push(
-                    "test-setup.js",
-                    "test-shim.js"
+                    "src/test/test-setup.js",
+                    "src/test/test-shim.js",
+                    "src/client/jest.config.js",
+                    "src/server/jest.config.js"
                 );
             }
 
@@ -523,7 +526,7 @@ export class GeneratorTeamsApp extends Generator {
         // if we have added any react based components
         if (this.options.reactComponents) {
             Yotilities.addAdditionalDeps([
-                ["msteams-react-base-component", "^3.0.0"]
+                ["msteams-react-base-component", "^3.0.2"]
             ], this.fs);
         }
 

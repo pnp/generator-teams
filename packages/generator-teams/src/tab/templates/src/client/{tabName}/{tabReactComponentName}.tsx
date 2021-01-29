@@ -11,13 +11,12 @@ import jwtDecode from "jwt-decode";<% } %>
 export const <%=tabReactComponentName%> = () => {
 
     const [{ inTeams, theme, context }] = useTeams();
-    const [entityId, setEntityId] = useState<string | undefined>();<% if (tabSSO) { %>    
+    const [entityId, setEntityId] = useState<string | undefined>();<% if (tabSSO) { %>
     const [name, setName] = useState<string>();
     const [error, setError] = useState<string>();<% } %>
 
     useEffect(() => {
-        if (inTeams === true) {
-<% if (tabSSO) { %>
+        if (inTeams === true) {<% if (tabSSO) { %>
             microsoftTeams.authentication.getAuthToken({
                 successCallback: (token: string) => {
                     const decoded: { [key: string]: any; } = jwtDecode(token) as { [key: string]: any; };
@@ -57,8 +56,7 @@ export const <%=tabReactComponentName%> = () => {
                     <Header content="This is your tab" />
                 </Flex.Item>
                 <Flex.Item>
-                    <div>
-<% if (tabSSO) { %>
+                    <div><% if (tabSSO) { %>
                         <div>
                             <Text content={`Hello ${name}`} />
                         </div>

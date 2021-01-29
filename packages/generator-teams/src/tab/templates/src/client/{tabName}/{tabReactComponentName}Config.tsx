@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Provider, Flex, Header, Input } from "@fluentui/react-northstar";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTeams } from "msteams-react-base-component";
 import * as microsoftTeams from "@microsoft/teams-js";
 
@@ -10,25 +10,26 @@ import * as microsoftTeams from "@microsoft/teams-js";
 export const <%=tabReactComponentName%>Config = () => {
 
     const [{ inTeams, theme, context }] = useTeams({});
-    const [customSetting, setCustomSetting] = useState<string>("");
+    const [text, setText] = useState<string>();
+    const entityId = useRef("");
+
+    const onSaveHandler = (saveEvent: microsoftTeams.settings.SaveEvent) => {
+        const host = "https://" + window.location.host;
+        microsoftTeams.settings.setSettings({
+            contentUrl: host + "/<%=tabName%>/?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}",
+            websiteUrl: host + "/<%=tabName%>/?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}",
+            suggestedDisplayName: "<%=tabTitle%>",
+            removeUrl: host + "/<%=tabName%>/remove.html?theme={theme}",
+            entityId: entityId.current
+        });
+        saveEvent.notifySuccess();
+    };
 
     useEffect(() => {
         if (context) {
-
-            setCustomSetting(context.entityId);
-
-            microsoftTeams.settings.registerOnSaveHandler((saveEvent: microsoftTeams.settings.SaveEvent) => {
-                const host = "https://" + window.location.host;
-                microsoftTeams.settings.setSettings({
-                    contentUrl: host + "/<%=tabName%>/?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}",
-                    websiteUrl: host + "/<%=tabName%>/?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}",
-                    suggestedDisplayName: "<%=tabTitle%>",
-                    removeUrl: host + "/<%=tabName%>/remove.html?theme={theme}",
-                    entityId: customSetting
-                });
-                saveEvent.notifySuccess();
-            });
-
+            setText(context.entityId);
+            entityId.current = context.entityId;
+            microsoftTeams.settings.registerOnSaveHandler(onSaveHandler);
             microsoftTeams.settings.setValidityState(true);
             microsoftTeams.appInitialization.notifySuccess();
         }
@@ -45,10 +46,11 @@ export const <%=tabReactComponentName%>Config = () => {
                             placeholder="Enter a value here"
                             fluid
                             clearable
-                            value={customSetting}
+                            value={text}
                             onChange={(e, data) => {
                                 if (data) {
-                                    setCustomSetting(data.value);
+                                    setText(data.value);
+                                    entityId.current = data.value;
                                 }
                             }}
                             required />

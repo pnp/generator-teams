@@ -41,8 +41,10 @@ export const LINT_FILES = [
 ]
 
 export const TEST_FILES = [
-  'test-setup.js',
-  'test-shim.js'
+  'src/test/test-setup.js',
+  'src/test/test-shim.js',
+  'src/client/jest.config.js',
+  'src/server/jest.config.js'
 ];
 
 export const MANIFEST_FILES = [
@@ -91,14 +93,17 @@ export async function runNpmCommand(command: string, path: string): Promise<bool
 }
 
 export const SCHEMA_18 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.8/MicrosoftTeams.schema.json';
+export const SCHEMA_19 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.9/MicrosoftTeams.schema.json';
 export const SCHEMA_DEVPREVIEW = 'https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json';
 
 export const SCHEMAS: { [key: string]: string } = {
   "v1.8": SCHEMA_18,
+  "v1.9": SCHEMA_19,
   "devPreview": SCHEMA_DEVPREVIEW
 }
-const UPGRADE_PATHS: { [key: string]: string } = {
-  "v1.8": "devPreview"
+const UPGRADE_PATHS: { [key: string]: string[] } = {
+  "v1.8": ["v1.9", "devPreview"],
+  "v1.9": ["devPreview"]
 }
 
 export enum TestTypes {
@@ -235,7 +240,8 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
         runTest(manifestVersion, test, true);
         // upgrade if possible
         if (UPGRADE_PATHS[manifestVersion]) {
-          runUpgradeTest(manifestVersion, UPGRADE_PATHS[manifestVersion], test, false);
+          for (const upgradeTo of UPGRADE_PATHS[manifestVersion])
+            runUpgradeTest(manifestVersion, upgradeTo, test, false);
         }
       }
     });

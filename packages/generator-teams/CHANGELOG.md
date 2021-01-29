@@ -17,16 +17,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Upgraded to use `botbuilder@4.11.1` or later due to security issue in `axios`
 * `generator-teams` tests rebuilt
 * Changed default answers of some questions to opt-out (false) of features (SharePoint Web Part, Application Insights support, Unit Testing and more) to make default solution simpler
+* Upgraded to Teams JavaScript SDK v1.9
+* Refactored unit testing with Jest
 
 ### Added
 
 * Added new dedicated build package for Gulp tasks (`packages/yoteams-build-core`)
 * Added a "Quick scaffolding" option
+* Added support for Teams schema v1.9 (1.8 still default, as 1.9 not yet supported by clients)
 
 ### Fixed
 
 * Allowed the usage of the Office Guid (`00000003-0000-0ff1-ce00-000000000000`) in Guid validation of SSO Tabs (#171)
 * Fixed an issue where the React npm packages was not correctly added to `package.json` (#168)
+* Fixed issue where React state was not available in Teams JS SDK callbacks
+* Fixed an issue in the sample Connector implementation
 
 ## [*2.17.0*] - <*2020-12-07*>
 

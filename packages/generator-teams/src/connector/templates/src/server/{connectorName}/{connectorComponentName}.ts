@@ -52,10 +52,10 @@ export class <%=connectorComponentName%> implements IConnector {
         // clean up connectors marked to be deleted
         try {
             this.connectors.push("/connectors",
-                this.connectors.getData("/connectors") as I<%=connectorComponentName%>Data[])
-                .filter(c => {
-                    return c.existing;
-                });
+                (this.connectors.getData("/connectors") as I<%=connectorComponentName%>Data[])
+                    .filter(c => {
+                        return c.existing;
+                    }));
         } catch (error) {
             if (error.name && error.name === "DataError") {
                 // there"s no registered connectors

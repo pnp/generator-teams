@@ -13,11 +13,10 @@ const argv = require("yargs").argv;
 
 export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
     const watches = [
-        "./src/public/**/*.*",
-        "!./src/public/**/*.scss"
+        "./src/server/**/*.*"
     ];
     const clientWatches = [
-        "./src/scripts/**/*.*",
+        "./src/client/**/*.*",
         "!./src/**/*.scss"
     ];
     const staticFilesWatches = [
