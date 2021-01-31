@@ -1,5 +1,7 @@
 FROM node:14 AS BUILD_IMAGE
 
+ARG HOSTNAME
+
 RUN curl -sfL https://install.goreleaser.com/github.com/tj/node-prune.sh | bash -s -- -b /usr/local/bin
 
 WORKDIR /app
