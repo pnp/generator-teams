@@ -1,0 +1,346 @@
+{
+    "bot": [
+        {
+            "description": "Bot project",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "bot",
+                "staticTab": true
+            }
+        },
+        {
+            "description": "Bot project without static tab",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "bot",
+                "staticTab": false
+            }
+        },
+        {
+            "description": "Bot project without unit tests and file support",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "bot",
+                "botFilesEnabled": true,
+                "staticTab": true
+            }
+        },
+        {
+            "description": "Bot project with calling support",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "bot",
+                "botCallingEnabled": true,
+                "staticTab": true
+            }
+        }
+    ],
+    "connector": [
+        {
+            "description": "Connector project",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "connector"
+            }
+        }
+    ],
+    "messagingExtension": [
+        {
+            "description": "Messaging Extension project",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "messageextension",
+                "messageExtensionHost": "new",
+                "bottype": "botframework",
+                "messagingExtensionType": "query",
+                "messageExtensionDescription": "description",
+                "messagingExtensionActionContext": [
+                    "compose",
+                    "commandBox"
+                ]
+            }
+        },
+        {
+            "description": "Messaging Extension project, without configuration",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "messageextension",
+                "messageExtensionHost": "new",
+                "bottype": "botframework",
+                "messagingExtensionType": "query",
+                "messageExtensionDescription": "description",
+                "messagingExtensionCanUpdateConfiguration": false,
+                "messagingExtensionActionContext": [
+                    "compose",
+                    "commandBox"
+                ]
+            }
+        },
+        {
+            "description": "Query Messaging Extension project",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "messageextension",
+                "messageExtensionHost": "new",
+                "bottype": "botframework",
+                "messageExtensionDescription": "description",
+                "messagingExtensionType": "query",
+                "messagingExtensionActionContext": [
+                    "compose",
+                    "commandBox"
+                ]
+            }
+        },
+        {
+            "description": "Action Messaging Extension project with static with Adaptive Card response",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "messageextension",
+                "messageExtensionHost": "new",
+                "bottype": "botframework",
+                "messageExtensionDescription": "description",
+                "messagingExtensionType": "action",
+                "messagingExtensionActionInputType": "static",
+                "messagingExtensionActionResponseType": "adaptiveCard",
+                "messagingExtensionActionContext": [
+                    "compose",
+                    "commandBox"
+                ]
+            }
+        },
+        {
+            "description": "Action Messaging Extension project with Adaptive Card with Adaptive Card response",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "messageextension",
+                "messageExtensionHost": "new",
+                "bottype": "botframework",
+                "messageExtensionDescription": "description",
+                "messagingExtensionType": "action",
+                "messagingExtensionActionInputType": "adaptiveCard",
+                "messagingExtensionActionResponseType": "adaptiveCard",
+                "messagingExtensionActionContext": [
+                    "compose",
+                    "commandBox"
+                ]
+            }
+        }
+    ],
+    "tab": [
+        {
+            "description": "Tab project",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "tab",
+                "tabScopes": [
+                    "team"
+                ]
+            }
+        },
+        {
+            "description": "Static Tab project",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "tab",
+                "tabType": "static"
+            }
+        },
+        {
+            "description": "Tab project, with SharePoint config",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "tab",
+                "tabScopes": [
+                    "team"
+                ],
+                "tabSharePoint": true,
+                "tabSharePointHosts": [
+                    "sharePointFullPage",
+                    "sharePointWebPart"
+                ]
+            }
+        },
+        {
+            "description": "Tab project scoped to group chat",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "tab",
+                "tabScopes": [
+                    "groupchat"
+                ]
+            }
+        },
+        {
+            "description": "Tab project scoped to team only",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "tab",
+                "tabScopes": [
+                    "team"
+                ]
+            }
+        },
+        {
+            "description": "Tab project scoped to group chat and team",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "tab",
+                "tabScopes": [
+                    "team",
+                    "groupchat"
+                ]
+            }
+        },
+        {
+            "description": "Tab project with SSO",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "tab",
+                "tabScopes": [
+                    "team"
+                ],
+                "tabSSO": true,
+                "tabSSOAppId": "00000000-0000-0000-0000-000000000123",
+                "tabSSOAppUri": "api://tabtest01.azurewebsites.net/00000000-0000-0000-0000-000000000123"
+            }
+        }
+    ],
+    "generic": [
+        {
+            "description": "With Application Insights",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "tab",
+                "tabScopes": [
+                    "team"
+                ],
+                "quickScaffolding": false,
+                "useAzureAppInsights": true,
+                "mpnId": "",
+                "azureAppInsightsKey": "12341234-1234-1234-1234-123412341234"
+            }
+        },
+        {
+            "description": "With MPN Id",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "tab",
+                "tabScopes": [
+                    "team"
+                ],
+                "quickScaffolding": false,
+                "mpnId": "1234567890"
+            }
+        },
+        {
+            "description": "Full screen",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "tab",
+                "tabScopes": [
+                    "team"
+                ],
+                "quickScaffolding": false,
+                "mpnId": "",
+                "isFullScreen": true
+            }
+        },
+        {
+            "description": "Show loading indicator",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "tab",
+                "tabScopes": [
+                    "team"
+                ],
+                "quickScaffolding": false,
+                "mpnId": "",
+                "showLoadingIndicator": true
+            }
+        }
+    ]
+}

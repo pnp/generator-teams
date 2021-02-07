@@ -24,9 +24,10 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Detailed information**
- - Generator version: [eg 2.5.0]
+ - Generator version (`generator-teams`): [eg 3.0.0]
+ - Build tools version (`yoteams-build-core`): [eg: 1.0.0]
  - OS: [eg, Windows, MacOS]
- - Node version: [eg 8.10.0]
+ - Node version: [eg 12.0.0]
  - Npm version: [eg. 6.9.0]
 
 **Additional information**
