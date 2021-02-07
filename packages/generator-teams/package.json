@@ -1,6 +1,6 @@
 {
   "name": "generator-teams",
-  "version": "3.0.0-preview3",
+  "version": "3.0.0",
   "description": "Yeoman generator for Microsoft Teams Apps",
   "main": "generators/app/index.js",
   "scripts": {
@@ -42,11 +42,6 @@
       "name": "Wictor Wilén",
       "email": "wictor@wictorwilen.se",
       "url": "http://www.wictorwilen.se"
-    },
-    {
-      "name": "Bill Bliss",
-      "email": "billbl@microsoft.com",
-      "url": "https://github.com/billbliss"
     }
   ],
   "contributors": [
@@ -57,7 +52,8 @@
     "Davulcu, Cagdas <https://github.com/cagdasdavulcu>",
     "Bauer, Stefan <https://github.com/StfBauer>",
     "Connell, Andrew <https://github.com/andrewconnell>",
-    "Brennscheidt, Ralf <https://github.com/RalfBrennscheidt>"
+    "Brennscheidt, Ralf <https://github.com/RalfBrennscheidt>",
+    "Bliss, Bill, <https://github.com/billbliss>"
   ],
   "license": "MIT",
   "devDependencies": {

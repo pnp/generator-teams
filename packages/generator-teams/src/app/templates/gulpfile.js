@@ -4,18 +4,19 @@
 
 const gulp = require("gulp");
 const package = require("./package.json");
-const argv = require('yargs').argv;
-const config = require('./gulp.config');
-const log = require('fancy-log');
+const argv = require("yargs").argv;
+const log = require("fancy-log");
 const path = require("path");
 
+const config = {};
+
 // Set environment variables
-const env = argv["env"];
+const env = argv.env;
 if (env === undefined) {
-    require('dotenv').config();
+    require("dotenv").config();
 } else {
     log(`Using custom .env: ${env}`);
-    require('dotenv').config({ path: path.resolve(process.cwd(), env) });
+    require("dotenv").config({ path: path.resolve(process.cwd(), env) });
 }
 process.env.VERSION = package.version;
 

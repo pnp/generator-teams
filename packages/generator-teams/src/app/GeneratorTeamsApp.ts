@@ -444,7 +444,6 @@ export class GeneratorTeamsApp extends Generator {
             let templateFiles = [
                 "README.md",
                 "gulpfile.js",
-                "gulp.config.js",
                 "package.json",
                 ".env",
                 'src/server/server.ts',

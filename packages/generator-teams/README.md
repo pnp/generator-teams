@@ -147,7 +147,7 @@ For more information on how Tabs and Bots can be used with Teams see the [Teams 
 
 ## Be a part of the movement
 
-If you want to be a part of the #YoTeams movement then head on over to the discussion at the [generator-teams Gitter channel](https://gitter.im/PnP/generator-teams) or follow us on [Twitter using the hashtag #yoteams](https://twitter.com/search?q=%23yoteams&src=typd).
+If you want to be a part of the #YoTeams movement then head on over to the discussion at the [generator-teams Github discussions](https://github.com/pnp/generator-teams/discussions) or follow us on [Twitter using the hashtag #yoteams](https://twitter.com/search?q=%23yoteams&src=typd).
 
 ## Contributing
 

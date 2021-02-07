@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [*Unreleased*] - <**>
+## [*3.0.0*] - <*2020-02-07*>
 
 ### Changes
 
@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed default answers of some questions to opt-out (false) of features (SharePoint Web Part, Application Insights support, Unit Testing and more) to make default solution simpler
 * Upgraded to Teams JavaScript SDK v1.9
 * Refactored unit testing with Jest
+* Cleaned up `webpack.config.js` to not enforce specific patterns
 
 ### Added
 

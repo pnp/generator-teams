@@ -72,28 +72,13 @@ const config = [{
             test: /\.tsx?$/,
             exclude: /node_modules/,
             use: ["ts-loader"]
-        },
-        {
-            test: /\.(eot|svg|ttf|woff|woff2)$/,
-            loader: "file-loader",
-            options: {
-                name: "public/fonts/[name].[ext]"
-            }
-        }
-        ]
+        }]
     },
     plugins: [
         new Dotenv({
             systemvars: true
         })
-    ],
-    performance: {
-        maxEntrypointSize: 400000,
-        maxAssetSize: 400000,
-        assetFilter(assetFilename) {
-            return assetFilename.endsWith(".js");
-        }
-    }
+    ]
 }
 ];
 

@@ -6,16 +6,18 @@ TODO: Add your documentation here
 
 ## Getting started with Microsoft Teams Apps development
 
-Head on over to [Microsoft Teams official documentation](https://developer.microsoft.com/en-us/microsoft-teams) to learn how to build Microsoft Teams Tabs or the [Microsoft Teams Yeoman generator Wiki](https://github.com/PnP/generator-teams/wiki) for details on how this solution is set up.
+Head on over to [Microsoft Teams official documentation](https://developer.microsoft.com/en-us/microsoft-teams) to learn how to build Microsoft Teams Tabs or the [Microsoft Teams Yeoman generator docs](https://github.com/PnP/generator-teams/docs) for details on how this solution is set up.
 
 ## Project setup
 
-All required source code are located in the `./src` folder - split into two parts
+All required source code are located in the `./src` folder:
 
-* `app` for the application
+* `client` client side code
+* `server` server side code
+* `public` static files for the web site
 * `manifest` for the Microsoft Teams app manifest
 
-For further details see the [Yo Teams wiki for the project structure](https://github.com/PnP/generator-teams/wiki/Project-Structure)
+For further details see the [Yo Teams documentation](https://github.com/PnP/generator-teams/docs)
 
 ## Building the app
 
@@ -36,7 +38,7 @@ gulp manifest
 
 ## Configuration
 
-Configuration is stored in the `.env` file. 
+Configuration is stored in the `.env` file.
 
 ## Debug and test locally
 
@@ -52,20 +54,18 @@ To debug the code you can append the argument `debug` to the `serve` command as 
 gulp serve --debug
 ```
 
-To step through code in Visual Studio Code you need to add the following snippet in the `./.vscode/launch.json` file. Once done, you can easily attach to the node process after running the `gulp server --debug` command.
+To step through code in Visual Studio Code you need to add the following snippet in the `./.vscode/launch.json` file. Once done, you can easily attach to the node process after running the `gulp serve --debug` command.
 
 ``` json
-{
-    "type": "node",
-    "request": "attach",
+ {
     "name": "Attach",
-    "port": 5858,
-    "sourceMaps": true,
-    "outFiles": [
-        "${workspaceRoot}/dist/**/*.js"
+    "port": 9229,
+    "request": "attach",
+    "skipFiles": [
+        "<node_internals>/**"
     ],
-    "remoteRoot": "${workspaceRoot}/src/"
-},
+    "type": "pwa-node"
+}
 ```
 
 ### Using ngrok for local development and hosting
@@ -80,6 +80,7 @@ You can use the following flags for the `serve`, `ngrok-serve` and build command
 
 * `--no-linting` - skips the linting of Typescript during build to improve build times
 * `--debug` - builds in debug mode
+* `--env <filename>.env` - use an alternate set of environment files
 
 ## Deployment
 
