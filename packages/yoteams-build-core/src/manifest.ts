@@ -92,11 +92,25 @@ export const manifest = (gulp: GulpClient.Gulp, config: any) => {
     };
 
     const zipTask = (cb: any) => {
+        const filePath = "./temp/manifest.json";
+        const manifest = fs.readFileSync(filePath, {
+            encoding: "UTF-8"
+        });
+        let manifestJson: any;
+        try {
+            manifestJson = JSON.parse(manifest);
+        } catch (error) {
+            cb(
+                new PluginError(error.message)
+            );
+            return;
+        }
+
         // Get all png files (icons), json files (resources) but not the manifest.json from /src/manifest
         return gulp.src(["./src/manifest/*.png", "./src/manifest/*.json", "!**/manifest.json"])
             // get the manifest from the temp folder
-            .pipe(gulp.src("./temp/manifest.json"))
-            .pipe(zip(config.manifestFileName))
+            .pipe(gulp.src(filePath))
+            .pipe(zip(manifestJson.packageName + ".zip"))
             .pipe(gulp.dest("package"));
     };
 

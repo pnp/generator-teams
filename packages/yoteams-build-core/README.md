@@ -8,9 +8,50 @@ Library with Gulp task for the Microsoft Teams Apps generator [**yo teams**](htt
 
 ## Documentation
 
-TODO
+The `yoteams-build-core` package is set of Gulp tasks that is used by projects scaffolded using the  [**yo teams**](https://aka.ms/yoteams) Microsoft Teams Apps generator.
+
+### Using the package
+
+To use the Gulp tasks, add the following to your `gulpfile.js` file:
+
+``` JavaScript
+const gulp = require("gulp");
+const core = require("yoteams-build-core");
+const config = {};
+// Initialize core build
+core.setup(gulp, config);
+```
+
+> **Note**: the `config` parameter is not used but only referenced for future scenarios.
 
 ### Default Gulp tasks
+
+The following Gulp tasks are defined by the package:
+
+* **`build`** - build the solution. Runs the following tasks in series: `webpack`, `styles`, `static:copy` and  `static:inject`
+* **`manifest`** - packages the manifest. The `validate-manifest` task is run as a part of this task
+* **`serve`** - builds and runs the solution on the local machine, background re-compilation when files are changed
+* **`serve-ngrok`** - builds and runs the solution on the local machine with ngrok support, see belo
+* **`webpack`** - runs webpack on the solution by running `webpack:client` and `webpack:server` in parallel
+* **`nuke`** - clears all build and temp files
+* **`static:copy`** - copies all static files to the dist folder
+* **`static:inject`** - injects generated JavaScript and CSS files into the static files
+* **`styles`** - compiles SASS to CSS
+
+#### Internally used tasks
+
+* **`watch`** - internal watcher task
+* **`nodemon`** - internal task for running nodemon
+* **`start-ngrok`** - internal task to start ngrok
+
+#### Using ngrok
+
+The `ngrok-serve` command starts the ngrok client and by default assigns a random URL. By using `process.env` properties the ngrok client can be configured:
+
+* `NGROK_SUBDOMAIN` use a predefined ngrok subdomain
+* `NGROK_REGION` use a specific ngrok region
+* `NGROK_AUTH` user ngrok authentication token
+* `PORT` use a specific port for the local server (default 3007)
 
 ### Custom tasks
 
