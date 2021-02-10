@@ -20,7 +20,7 @@ The `generator-teams` documentation and source code is found under [packages/gen
 [![npm version](https://badge.fury.io/js/yoteams-build-core.svg)](https://www.npmjs.com/package/yoteams-build-core)
 [![npm](https://img.shields.io/npm/dt/yoteams-build-core.svg)](https://www.npmjs.com/package/yoteams-build-core)
 
-The `generator-teams` documentation and source code is found under [packages/generator-teams](https://github.com/pnp/generator-teams/tree/master/packages/generator-teams)
+The `yoteams-build-core` documentation and source code is found under [packages/yoteams-build-core](https://github.com/pnp/generator-teams/tree/master/packages/yoteams-build-core)
 
 ## Documentation
 
