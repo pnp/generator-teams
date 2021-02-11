@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/yoteams-build-core.svg)](https://www.npmjs.com/package/yoteams-build-core)
 [![npm](https://img.shields.io/npm/dt/yoteams-build-core.svg)](https://www.npmjs.com/package/yoteams-build-core)
-[![MIT](https://img.shields.io/npm/yoteams-build-core.svg)](https://github.com/PnP/generator-teams/blob/master/LICENSE.md)
+[![MIT](https://img.shields.io/npm/l/generator-teams.svg)](https://github.com/PnP/generator-teams/blob/master/LICENSE.md)
 
 Library with Gulp task for the Microsoft Teams Apps generator [**yo teams**](https://aka.ms/yoteams)
 
