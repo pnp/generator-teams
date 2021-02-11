@@ -83,8 +83,8 @@ const config = [{
 ];
 
 if (lint !== false) {
-    config[0].plugins.push(new ESLintPlugin({ extensions: ["ts", "tsx"] }));
-    config[1].plugins.push(new ESLintPlugin({ extensions: ["ts", "tsx"] }));
+    config[0].plugins.push(new ESLintPlugin({ extensions: ["ts", "tsx"], failOnError: false }));
+    config[1].plugins.push(new ESLintPlugin({ extensions: ["ts", "tsx"], failOnError: false }));
 }
 
 module.exports = config;

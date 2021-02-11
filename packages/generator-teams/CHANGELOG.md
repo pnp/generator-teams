@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*3.0.1*] - <*2020-02-11*>
+
+### Fixed
+
+* Unable to build when choosing just a Messaging extension (#168)
+* Fixed a linting issue when creating a Messaging extension, and not specifically adding a bot
+* Build should no longer fail when linting is enabled and a linting error is discovered
+
+> *Tests passing: 4.010*
+
 ## [*3.0.0*] - <*2020-02-07*>
 
 ### Changes

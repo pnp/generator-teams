@@ -32,6 +32,7 @@
     "@types/express-session": "1.15.10",
     "@types/morgan": "1.7.35",
     "@types/react": "16.8.10", 
+    "@types/react-dom": "16.8.3", 
     <% if (unitTestsEnabled) { %>"@types/enzyme": "^3.9.1",
     "@types/jest": "^26.0.15",
     "@types/enzyme-to-json": "^1.5.3",<%}%>
