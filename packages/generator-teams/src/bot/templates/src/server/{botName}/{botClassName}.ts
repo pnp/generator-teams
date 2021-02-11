@@ -1,10 +1,10 @@
 import { BotDeclaration<% if (staticTab) { %>, PreventIframe<% } %><% if (botCallingEnabled) { %>, BotCallingWebhook<% } %> } from "express-msteams-host";
 import * as debug from "debug";
 import { DialogSet, DialogState } from "botbuilder-dialogs";
-import { StatePropertyAccessor, CardFactory, TurnContext, MemoryStorage, ConversationState, ActivityTypes, TeamsActivityHandler } from "botbuilder";
-<% if (bot) { %>import HelpDialog from "./dialogs/HelpDialog";<% } %>
-<% if (bot) { %>import WelcomeCard from "./dialogs/WelcomeDialog";<% } %>
-<% if (botCallingEnabled) { %>import express = require("express");<% } %>
+import { StatePropertyAccessor, CardFactory, TurnContext, MemoryStorage, ConversationState, ActivityTypes, TeamsActivityHandler } from "botbuilder";<% if (bot) { %>
+import HelpDialog from "./dialogs/HelpDialog";<% } %><% if (bot) { %>
+import WelcomeCard from "./dialogs/WelcomeDialog";<% } %><% if (botCallingEnabled) { %>
+import express = require("express");<% } %>
 // Initialize debug logging module
 const log = debug("msteams");
 

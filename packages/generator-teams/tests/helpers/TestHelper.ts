@@ -132,6 +132,9 @@ export function coreTests(manifestVersion: string, prompts: any) {
   it("Should have correct React version", async () => {
     assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
   });
+  it("Should have correct React typings version", async () => {
+    assert.jsonFileContent("package.json", { devDependencies: { "@types/react": "16.8.10", "@types/react-dom": "16.8.3" } });
+  });
   it("Should have a reference to Fluentui", async () => {
     assert.jsonFileContent("package.json", { dependencies: { "@fluentui/react-northstar": {} } });
   });
