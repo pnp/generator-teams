@@ -31,7 +31,7 @@ The following Gulp tasks are defined by the package:
 * **`build`** - build the solution. Runs the following tasks in series: `webpack`, `styles`, `static:copy` and  `static:inject`
 * **`manifest`** - packages the manifest. The `validate-manifest` task is run as a part of this task
 * **`serve`** - builds and runs the solution on the local machine, background re-compilation when files are changed
-* **`serve-ngrok`** - builds and runs the solution on the local machine with ngrok support, see belo
+* **`ngrok-serve`** - builds and runs the solution on the local machine with ngrok support, see belo
 * **`webpack`** - runs webpack on the solution by running `webpack:client` and `webpack:server` in parallel
 * **`nuke`** - clears all build and temp files
 * **`static:copy`** - copies all static files to the dist folder
