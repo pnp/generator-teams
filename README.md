@@ -24,11 +24,11 @@ The `yoteams-build-core` documentation and source code is found under [packages/
 
 ## Documentation
 
-The documentation for the generator and the generated project can be found in the [generator-teams Github repository](https://github.com/PnP/generator-teams/docs).
+The documentation for the generator and the generated project can be found in the [generator-teams Github repository](https://github.com/pnp/generator-teams/tree/master/docs/docs).
 
 ## More information
 
-For more information on how Tabs and Bots can be used with Teams see the [Teams Developer Documentation](https://msdn.microsoft.com/en-us/microsoft-teams/ )
+For more information on how Tabs and Bots can be used with Teams see the [Teams Developer Documentation](https://developer.microsoft.com/en-us/microsoft-teams?utm_source=yoteams)
 
 ## Contributors & Hall of fame
 
@@ -47,10 +47,11 @@ For more information on how Tabs and Bots can be used with Teams see the [Teams 
 * [Jason Merino](https://github.com/jasonmerino)
 * [Orta Therox](https://github.com/orta)
 * [Oleksandr Fediashov](https://github.com/layershifter)
+* [Paolo Pialorsi](https://github.com/PaoloPia)
 
 ## Be a part of the movement
 
-If you want to be a part of the #YoTeams movement then head on over to the discussion at the [generator-teams Gitter channel](https://gitter.im/PnP/generator-teams) or follow us on [Twitter using the hashtag #yoteams](https://twitter.com/search?q=%23yoteams&src=typd).
+If you want to be a part of the #YoTeams movement then head on over to the discussion at the [generator-teams Github Discussions forum](https://github.com/pnp/generator-teams/discussions) or follow us on [Twitter using the hashtag #yoteams](https://twitter.com/search?q=%23yoteams&src=typd).
 
 ## Contributing
 
