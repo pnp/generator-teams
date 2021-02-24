@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## [*Unreleased*] - <**>
+
+### Changes
+
+* New scaffolded projects also supports the `-l` flag for the gulp commands to disable linting
+
 ## [*3.0.1*] - <*2021-02-11*>
 
 ### Fixed
