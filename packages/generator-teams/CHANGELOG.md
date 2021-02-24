@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*3.0.2*]- <*2021-02-11*>
+
+### Fixed
+
+* Reverted back to Teams JS SDK 1.8.0, since version 1.9.0 was removed from npm
+* Temporarily hid the option for schema version 1.9
+
+> *Tests passing: 4.010*
+
 ## [*3.0.1*] - <*2021-02-11*>
 
 ### Fixed

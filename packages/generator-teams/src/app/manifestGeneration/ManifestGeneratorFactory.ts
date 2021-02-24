@@ -24,7 +24,7 @@ export class ManifestGeneratorFactory {
             schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.9/MicrosoftTeams.schema.json",
             manifestValue: "1.9",
             default: false,
-            hide: false
+            hide: true
         },
         {
             manifestVersion: ManifestVersions.devPreview,
