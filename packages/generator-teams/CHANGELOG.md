@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changes
 
 * Upgraded to Teams JavaScript SDK v1.9
+* New scaffolded projects also supports the `-l` flag for the gulp commands to disable linting
 
 ### Fixed
 
@@ -20,11 +21,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [*3.0.2*]- <*2021-02-24*>
 
-## [*Unreleased*] - <**>
+### Fixed
 
-### Changes
+* Reverted back to Teams JS SDK 1.8.0, since version 1.9.0 was removed from npm
+* Temporarily hid the option for schema version 1.9
 
-* New scaffolded projects also supports the `-l` flag for the gulp commands to disable linting
+> *Tests passing: 4.010*
 
 ## [*3.0.1*] - <*2021-02-11*>
 
