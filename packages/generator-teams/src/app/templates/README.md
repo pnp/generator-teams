@@ -78,7 +78,7 @@ To use ngrok, it is recommended to use the `gulp ngrok-serve` command, which wil
 
 You can use the following flags for the `serve`, `ngrok-serve` and build commands:
 
-* `--no-linting` - skips the linting of Typescript during build to improve build times
+* `--no-linting` or `-l` - skips the linting of Typescript during build to improve build times
 * `--debug` - builds in debug mode
 * `--env <filename>.env` - use an alternate set of environment files
 
