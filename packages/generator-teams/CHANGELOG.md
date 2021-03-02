@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*3.0.3*]- <*2021-03-02*>
+
+### Changes
+
+* Upgraded to Teams JavaScript SDK v1.9
+* New scaffolded projects also supports the `-l` flag for the gulp commands to disable linting
+
+### Fixed
+
+* Updated documentation and links around upgrading projects
+* Fixed issues related to upgrading and re-running the generator on an existing v3 project
+
+> *Tests passing: 4.010*
+
 ## [*3.0.2*]- <*2021-02-24*>
 
 ### Fixed

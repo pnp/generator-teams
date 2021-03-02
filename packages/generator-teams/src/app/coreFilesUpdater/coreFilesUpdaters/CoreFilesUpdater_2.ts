@@ -5,21 +5,20 @@
 import { GeneratorTeamsAppOptions } from "../../GeneratorTeamsAppOptions";
 import { BaseCoreFilesUpdater } from "../BaseCoreFilesUpdater";
 import { Editor } from 'mem-fs-editor';
-import * as Generator from 'yeoman-generator';
-import * as semver from "semver";
-import { Project, PropertyAssignment, SyntaxKind } from 'ts-morph';
 import { Logger } from "yeoman-environment";
 import chalk = require("chalk");
 
-export class CoreFilesUpdater_3_0 extends BaseCoreFilesUpdater {
+export class CoreFilesUpdater_2 extends BaseCoreFilesUpdater {
     public constructor(private currentVersion: string) {
         super();
     };
 
     public updateCoreFiles(options: GeneratorTeamsAppOptions, fs: Editor, log?: Logger): boolean {
 
-        // nop for now
+        if (log) {
+            log(chalk.red("Projects generated with earlier versions than 3.0.0 cannot be updated."));
+        }
 
-        return true;
+        return false;
     }
 }

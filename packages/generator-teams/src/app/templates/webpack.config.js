@@ -12,7 +12,7 @@ const fs = require("fs");
 const argv = require("yargs").argv;
 
 const debug = argv.debug !== undefined;
-const lint = argv["linting"];
+const lint = !(argv["no-linting"] || argv.l === true);
 
 const config = [{
     entry: {
@@ -27,7 +27,7 @@ const config = [{
         devtoolModuleFilenameTemplate: debug ? "[absolute-resource-path]" : "[]"
     },
     externals: [nodeExternals()],
-    devtool: "source-map",
+    devtool: debug ? "source-map" : "source-map",
     resolve: {
         extensions: [".ts", ".tsx", ".js"],
         alias: {}
@@ -61,7 +61,7 @@ const config = [{
         publicPath: "/scripts/"
     },
     externals: {},
-    devtool: "source-map",
+    devtool: debug ? "source-map" : "source-map",
     resolve: {
         extensions: [".ts", ".tsx", ".js"],
         alias: {}
