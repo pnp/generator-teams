@@ -8,7 +8,11 @@ import PluginError from "plugin-error";
 import log from "fancy-log";
 import GulpClient from "gulp";
 import { dependenciesP } from ".";
+import chalk from "chalk";
 
+/**
+ * Defines the two webpack tasks
+ */
 export const webpackTasks = (gulp: GulpClient.Gulp, config: any) => {
 
     const webpackTask = (idx: number, callback: Function) => {
@@ -18,22 +22,27 @@ export const webpackTasks = (gulp: GulpClient.Gulp, config: any) => {
 
         webpack(webpackConfig[idx], (err, stats) => {
 
-            if (err) throw new PluginError("webpack", err);
+            if (err) {
+                return callback(new PluginError("webpack", err));
+            }
             if (stats) {
                 const jsonStats = stats.toJson();
-
-                if (jsonStats.errors.length > 0) {
-
-                    // eslint-disable-next-line array-callback-return
-                    jsonStats.errors.map((e: { message: string; }) => {
-                        log("[Webpack error] " + e.message);
-                    });
-                }
-                if (jsonStats.warnings.length > 0) {
-                    // eslint-disable-next-line array-callback-return
-                    jsonStats.warnings.map((e: { message: string; }) => {
-                        log("[Webpack warning] " + e.message);
-                    });
+                if (jsonStats) {
+                    if (jsonStats.warnings && jsonStats.warnings.length > 0) {
+                        chalk.yellow("[Webpack warnings]:" + chalk.reset());
+                        // eslint-disable-next-line array-callback-return
+                        jsonStats.warnings.map((e) => {
+                            log(e.message);
+                        });
+                    }
+                    if (jsonStats.errors && jsonStats.errors.length > 0) {
+                        log(chalk.red("[Webpack errors]:") + chalk.reset());
+                        // eslint-disable-next-line array-callback-return
+                        jsonStats.errors.map((e) => {
+                            log(e.message);
+                        });
+                        return callback(new PluginError("webpack", `${jsonStats.errorsCount} webpack error(s) found.`));
+                    }
                 }
             }
             callback();

@@ -9,22 +9,25 @@ import gulpif from "gulp-if";
 import sourcemaps from "gulp-sourcemaps";
 import sass from "gulp-sass";
 import postcss from "gulp-postcss";
+import { argv } from "yargs";
+
 
 export const styleTasks = (gulp: GulpClient.Gulp, config: any) => {
-    const isProd = process.env.NODE_ENV === "production";
+    const debug = argv.debug !== undefined;
     const styles = () => {
         return gulp.src("src/public/**/*.scss")
             .pipe(Plumber())
-            .pipe(gulpif(!isProd, sourcemaps.init()))
+            .pipe(gulpif(debug, sourcemaps.init()))
             .pipe(sass.sync({
-                outputStyle: "expanded",
+                outputStyle: debug ? "expanded" : "compressed",
                 precision: 10,
-                includePaths: ["."]
+                includePaths: ["."],
+                sourceComments: debug
             }).on("error", sass.logError))
             .pipe(postcss([
                 autoprefixer()
             ]))
-            .pipe(gulpif(!isProd, sourcemaps.write()))
+            .pipe(gulpif(debug, sourcemaps.write()))
             .pipe(gulp.dest("dist/web"));
     };
 

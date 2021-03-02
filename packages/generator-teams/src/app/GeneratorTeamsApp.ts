@@ -141,7 +141,7 @@ export class GeneratorTeamsApp extends Generator {
                     type: 'confirm',
                     name: 'updateBuildSystem',
                     default: false,
-                    message: 'Update build system core files? WARNING: Ensure your source code is under version control so you can merge any customizations of the core files!',
+                    message: 'Update yo teams core files? WARNING: Ensure your source code is under version control so you can merge any customizations of the core files!',
                     when: (answers: IAnswers) => this.options.existingManifest && generatorVersion && generatorVersion != pkg.version && answers.confirmedAdd == true
                 },
                 {
@@ -502,8 +502,11 @@ export class GeneratorTeamsApp extends Generator {
                     if (this.options.telemetry) {
                         AppInsights.defaultClient.trackEvent({ name: 'update-core-files', properties: { result: result ? "true" : "false" } });
                     }
+                    if(result === false) {
+                        process.exit(4);
+                    }
                 } else {
-                    this.log(chalk.red("WARNING: Unable to update build system automatically. See https://github.com/PnP/generator-teams/wiki/Upgrading-projects"));
+                    this.log(chalk.red("WARNING: Unable to update build system automatically. See https://github.com/pnp/generator-teams/blob/master/docs/docs/upgrading-projects.md"));
                     if (this.options.telemetry) {
                         AppInsights.defaultClient.trackEvent({ name: 'update-core-files-failed', properties: { currentVersion, generatorVersion: pkg.version } });
                     }
@@ -525,7 +528,7 @@ export class GeneratorTeamsApp extends Generator {
         // if we have added any react based components
         if (this.options.reactComponents) {
             Yotilities.addAdditionalDeps([
-                ["msteams-react-base-component", "^3.0.2"]
+                ["msteams-react-base-component", "^3.1.0"]
             ], this.fs);
         }
 

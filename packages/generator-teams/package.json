@@ -1,10 +1,10 @@
 {
   "name": "generator-teams",
-  "version": "3.0.1",
+  "version": "3.0.3-preview",
   "description": "Yeoman generator for Microsoft Teams Apps",
   "main": "generators/app/index.js",
   "scripts": {
-    "build": "node_modules/.bin/webpack",
+    "build": "webpack",
     "test": "rimraf temp-templates/* && npm run build && cross-env TEST_TYPE=UNIT mocha -r ts-node/register tests/**/*.spec.ts --timeout 15000",
     "test-integration": "rimraf temp-templates/* && npm run build && cross-env TEST_TYPE=INTEGRATION mocha -r ts-node/register tests/**/*.spec.ts --timeout 800s"
   },
