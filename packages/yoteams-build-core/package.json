@@ -59,6 +59,7 @@
     "@types/autoprefixer": "^9.7.2",
     "@types/fancy-log": "^1.3.1",
     "@types/gulp": "^4.0.8",
+    "@types/gulp-filter": "^3.0.33",
     "@types/gulp-if": "0.0.33",
     "@types/gulp-inject": "0.0.33",
     "@types/gulp-plumber": "0.0.32",
