@@ -11,7 +11,6 @@ import sass from "gulp-sass";
 import postcss from "gulp-postcss";
 import { argv } from "yargs";
 
-
 export const styleTasks = (gulp: GulpClient.Gulp, config: any) => {
     const debug = argv.debug !== undefined;
     const styles = () => {

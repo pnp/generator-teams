@@ -6,54 +6,97 @@ import replace from "gulp-token-replace";
 import axios from "axios";
 import PluginError from "plugin-error";
 import GulpClient from "gulp";
-
+import filter from "gulp-filter";
+import File from "vinyl";
+import through from "through2";
+import ZSchema from "z-schema";
+import rename from "gulp-rename";
 import SCHEMAS from "./schemas.json";
-import { dependencies } from ".";
-const zip = require("gulp-zip");
+import fs from "fs";
 
-const fs = require("fs");
+import { dependencies } from ".";
+
+const flatmap = require("gulp-flatmap");
+const zip = require("gulp-zip");
 const log = require("fancy-log");
-const ZSchema = require("z-schema");
 
 export const manifest = (gulp: GulpClient.Gulp, config: any) => {
 
-    const generateManifest = (cb: any) => {
-        return gulp.src("src/manifest/manifest.json")
+    /**
+     * Reads a file and returns JSON
+     * @param file the file
+     */
+    const fileToJson = (file: File): any => {
+        if (!file.contents) {
+            throw new Error("Invalid file");
+        }
+        const data = file.contents.toString("utf-8");
+        const json = JSON.parse(data);
+        return json;
+    };
+
+    /**
+     * Returns only Teams manifests with a supported version
+     */
+    const manifestFilter = () => {
+        return filter(file => {
+            try {
+                const json = fileToJson(file);
+                const definition = SCHEMAS.find((s: any) => {
+                    return s.version === json.manifestVersion;
+                });
+                if (definition === undefined) {
+                    return false;
+                }
+                return true;
+            } catch (err) {
+                return false;
+            }
+        }, { restore: true });
+    };
+
+    /**
+     * Returns all manifests in the src/manifest folder
+     */
+    const getManifests = (path: string) => {
+        return gulp.src(path)
+            .pipe(manifestFilter());
+    };
+
+    /**
+     * The manifest generation task - replaces parameters
+     */
+    const generateManifests = () => {
+        return getManifests("src/manifest/*.json")
             .pipe(replace({
                 tokens: {
                     ...process.env
                 }
             })).pipe(gulp.dest("./temp"));
-
     };
 
-    const validateSchema = (cb: any) => {
-        const filePath = "./temp/manifest.json";
-        if (fs.existsSync(filePath)) {
-            const manifest = fs.readFileSync(filePath, {
-                encoding: "UTF-8"
-            });
-            let manifestJson: any;
-            try {
-                manifestJson = JSON.parse(manifest);
-            } catch (error) {
-                cb(
-                    new PluginError(error.message)
-                );
-                return;
+    /**
+     * validates teams manifest schemas
+     */
+    function schema() {
+        function validate(file: File, enc: string, callback: Function) {
+            if (!file.contents) {
+                throw new Error("Invalid file");
             }
+            const data = file.contents.toString("utf-8");
+            const json = JSON.parse(data);
 
-            log("Using manifest schema " + manifestJson.manifestVersion);
+            log(`${file.basename} is using manifest schema ${json.manifestVersion}`);
             const definition = SCHEMAS.find((s: any) => {
-                return s.version === manifestJson.manifestVersion;
+                return s.version === json.manifestVersion;
             });
             if (definition === undefined) {
-                cb(new PluginError("validate-manifest", "Unable to locate schema"));
+                callback(new PluginError("validate-manifest", "Unable to locate schema"));
                 return;
             }
 
             // eslint-disable-next-line dot-notation
-            if (manifestJson["$schema"] !== definition.schema) {
+            if (json["$schema"] !== definition.schema) {
                 log("Note: the defined schema in your manifest does not correspond to the manifestVersion");
             }
 
@@ -70,50 +113,108 @@ export const manifest = (gulp: GulpClient.Gulp, config: any) => {
                 },
                 responseType: "json"
             }).then(response => {
-                validator.setRemoteReference(requiredUrl, response.data);
-                const valid = validator.validate(manifestJson, schema);
+                (validator as any).setRemoteReference(requiredUrl, response.data);
+                const valid = validator.validate(json, schema);
                 const errors = validator.getLastErrors();
                 if (!valid) {
-                    cb(new PluginError("validate-manifest", errors.map((e: any) => {
-                        return e.message;
+                    callback(new PluginError("validateSchemas", errors.map((e) => {
+                        return `${file.basename}: ${e.message}`;
                     }).join("\n")));
                 } else {
-                    cb();
+                    callback(null, file);
                 }
             }).catch(err => {
                 log.warn("WARNING: unable to download and validate schema: " + err);
-                cb();
+                callback(null, file);
             });
-
-        } else {
-            // tslint:disable-next-line: no-console
-            log("Manifest doesn't exist");
         }
+        return through.obj(validate, (callback) => { callback(); });
     };
 
-    const zipTask = (cb: any) => {
-        const filePath = "./temp/manifest.json";
-        const manifest = fs.readFileSync(filePath, {
-            encoding: "UTF-8"
-        });
-        let manifestJson: any;
-        try {
-            manifestJson = JSON.parse(manifest);
-        } catch (error) {
-            cb(
-                new PluginError(error.message)
-            );
-            return;
-        }
+    /**
+     * The validate schema task
+     */
+    const validateSchemas = () => {
+        return getManifests("temp/*.json")
+            .pipe(schema());
+    };
 
-        // Get all png files (icons), json files (resources) but not the manifest.json from /src/manifest
-        return gulp.src(["./src/manifest/*.png", "./src/manifest/*.json", "!**/manifest.json"])
-            // get the manifest from the temp folder
-            .pipe(gulp.src(filePath))
-            .pipe(zip(manifestJson.packageName + ".zip"))
+    /**
+     * Creates an array of all files to include in the packaged manifest
+     * @param file the file
+     */
+    const getPackageFiles = (file: File): string[] => {
+        const arr: string[] = [];
+        if (!file.contents) {
+            throw new Error("Invalid file");
+        }
+        arr.push(file.path);
+
+        const data = file.contents.toString("utf-8");
+        const json = JSON.parse(data);
+
+        // get the icons
+        if (json.icons.outline) {
+            if (!fs.existsSync("src/manifest/" + json.icons.outline)) {
+                throw new PluginError("validate-manifest", `Cannot locate file: ${"src/manifest/" + json.icons.outline}`);
+            }
+            arr.push("src/manifest/" + json.icons.outline);
+            // TODO: check if file exists
+        }
+        if (json.icons.color) {
+            if (!fs.existsSync("src/manifest/" + json.icons.color)) {
+                throw new PluginError("validate-manifest", `Cannot locate file: ${"src/manifest/" + json.icons.color}`);
+            }
+            arr.push("src/manifest/" + json.icons.color);
+            // TODO: check if file exists
+        }
+        if (json.localizationInfo && json.localizationInfo.additionalLanguages) {
+            for (const additionalLanguage of json.localizationInfo.additionalLanguages) {
+                if (!fs.existsSync("src/manifest/" + additionalLanguage.file)) {
+                    throw new PluginError("validate-manifest", `Cannot locate file: ${"src/manifest/" + additionalLanguage.file}`);
+                }
+                arr.push("src/manifest/" + additionalLanguage.file);
+                // TODO: check if file exists
+            }
+        }
+        return arr;
+
+    };
+
+    /**
+     * zip together the files and create the package
+     */
+    const zipTask = (cb: any) => {
+        return getManifests("temp/*.json")
+            .pipe(flatmap((stream: any, file: File) => {
+                if (!file.contents) {
+                    throw new Error("Invalid file");
+                }
+
+                const data = file.contents.toString("utf-8");
+                const json = JSON.parse(data);
+
+                const zipName = json.packageName + ".zip";
+
+                log(`Creating package ${zipName}`);
+
+                return gulp.src(getPackageFiles(file))
+                    .pipe(rename((path) => {
+                        // for some reason rename uses a different definition fo basename
+                        if (path.basename + path.extname === file.basename) {
+                            return {
+                                ...path,
+                                basename: "manifest"
+                            };
+                        }
+                        return path;
+                    }))
+                    .pipe(zip(zipName));
+            }))
             .pipe(gulp.dest("package"));
     };
 
-    gulp.task("validate-manifest", dependencies(gulp, generateManifest, validateSchema));
+    // export the tasks
+    gulp.task("validate-manifest", dependencies(gulp, generateManifests, validateSchemas));
     gulp.task("manifest", dependencies(gulp, "validate-manifest", zipTask));
 };
