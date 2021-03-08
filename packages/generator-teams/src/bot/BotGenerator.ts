@@ -39,7 +39,7 @@ export class BotGenerator extends Generator {
                                 value: 'existing'
                             },
                             {
-                                name: 'A new bot Framework bot',
+                                name: 'A new Bot Framework bot',
                                 value: 'botframework'
                             }
                         ]
@@ -62,7 +62,7 @@ export class BotGenerator extends Generator {
                         name: 'botid',
                         message: (answers) => {
                             var message = 'What is the Microsoft App ID for the bot? ';
-                            if (answers.botTye == 'botframework') {
+                            if (answers.bottype == 'botframework') {
                                 message += 'If you don\'t specify a value now, you will need to manually edit it later. ';
                             }
                             message += 'It\'s found in the Bot Framework portal (https://dev.botframework.com).';
