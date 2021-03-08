@@ -15,7 +15,7 @@ export class MessageExtensionManifestUpdater implements IManifestUpdater {
         let command: any = {
             id: options.messageExtensionName,
             title: options.messageExtensionTitle,
-            description: 'Add a clever description here',
+            description: options.messageExtensionDescription,
             initialRun: true,
             parameters: [
                 {
