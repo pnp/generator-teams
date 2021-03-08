@@ -39,7 +39,7 @@ export class BotGenerator extends Generator {
                                 value: 'existing'
                             },
                             {
-                                name: 'A new bot Framework bot',
+                                name: 'A new Bot Framework bot',
                                 value: 'botframework'
                             }
                         ]
