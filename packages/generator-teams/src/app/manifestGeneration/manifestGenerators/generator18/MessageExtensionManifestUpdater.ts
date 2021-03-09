@@ -12,7 +12,8 @@ export class MessageExtensionManifestUpdater implements IManifestUpdater {
             manifest.composeExtensions = [];
         }
 
-        let command: any = {
+        // In case of queryLink extension, we need an empty command, otherwise a real one
+        let command: any = options.messagingExtensionType !== "queryLink" ? {
             id: options.messageExtensionName,
             title: options.messageExtensionTitle,
             description: 'Add a clever description here',
@@ -25,7 +26,7 @@ export class MessageExtensionManifestUpdater implements IManifestUpdater {
                 }
             ],
             type: options.messagingExtensionType // required parameter in devPreview
-        };
+        } : { };
 
         if (options.messagingExtensionType === "action") {
             if (options.messagingExtensionActionContext) {
@@ -50,13 +51,12 @@ export class MessageExtensionManifestUpdater implements IManifestUpdater {
             }
         }
 
-
         let composeExtension = manifest.composeExtensions.find((ce: { botId: string; }) => ce.botId == options.messageExtensionId);
         if (options.existingManifest && composeExtension) {
             if (options.messagingExtensionCanUpdateConfiguration) {
                 // if we have config for this one, it has to be positioned as the first one
                 composeExtension.commands.unshift(command);
-                composeExtension.canUpdateConfiguration =  options.messagingExtensionCanUpdateConfiguration;
+                composeExtension.canUpdateConfiguration = options.messagingExtensionCanUpdateConfiguration;
             } else {
                 composeExtension.commands.push(command);
             }
@@ -66,6 +66,22 @@ export class MessageExtensionManifestUpdater implements IManifestUpdater {
                 botId: options.messageExtensionId,
                 canUpdateConfiguration: options.messagingExtensionCanUpdateConfiguration,
                 commands: [command]
+            });
+        }
+
+        if (!options.existingManifest && options.messagingExtensionType === "queryLink")
+        {
+            // no existing manifest
+            manifest.composeExtensions.push({
+                botId: options.messageExtensionId,
+                canUpdateConfiguration: options.messagingExtensionCanUpdateConfiguration,
+                commands: [command],
+                messageHandlers: [{
+                    type: "link",
+                    value: {
+                        domains: options.messageExtensionLinkDomains
+                    }
+                }]
             });
         }
     }
