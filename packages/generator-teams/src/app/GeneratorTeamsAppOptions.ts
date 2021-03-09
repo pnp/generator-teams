@@ -26,6 +26,7 @@ export class GeneratorTeamsAppOptions {
     showLoadingIndicator: boolean = false;
     isFullScreen: boolean = false;
     quickScaffolding: boolean = true;
+    useHttps: boolean = false;
 
     reactComponents: boolean;
     websitePrefix: string;

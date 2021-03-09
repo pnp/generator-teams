@@ -1,11 +1,16 @@
 import * as Express from "express";
 import * as http from "http";
+import * as https from "https";
 import * as path from "path";
 import * as morgan from "morgan";
 import { MsTeamsApiRouter, MsTeamsPageRouter } from "express-msteams-host";
 import * as debug from "debug";
 import * as compression from "compression";
 <% if (useAzureAppInsights) { %>import * as appInsights from "applicationinsights";<% } %>
+
+// Require file system access
+const fs = require('fs');
+
 // Initialize debug logging module
 const log = debug("msteams");
 
@@ -66,7 +71,20 @@ express.use("/", Express.static(path.join(__dirname, "web/"), {
 // Set the port
 express.set("port", port);
 
-// Start the webserver
-http.createServer(express).listen(port, () => {
-    log(`Server running on ${port}`);
-});
+// This line is from the Node.js HTTPS documentation.
+if (process.env.SSL_PFX_PATH && process.env.SSL_PFX_PASSWORD) {
+    const sslOptions = {
+        pfx: fs.readFileSync(process.env.SSL_PFX_PATH),
+        passphrase: process.env.SSL_PFX_PASSWORD
+      };
+
+    // Start the webserver over HTTPS
+    https.createServer(sslOptions, express).listen(port, () => {
+        log(`Server running on ${port}`);
+    });
+} else {
+    // Start the webserver over HTTP
+    http.createServer(express).listen(port, () => {
+        log(`Server running on ${port}`);
+    });
+}

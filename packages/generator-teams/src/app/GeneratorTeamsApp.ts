@@ -101,6 +101,7 @@ export class GeneratorTeamsApp extends Generator {
             showLoadingIndicator: boolean;
             isFullScreen: boolean;
             quickScaffolding: boolean;
+            useHttps: boolean;
         };
         // find out what manifest versions we can use
         const manifestGeneratorFactory = new ManifestGeneratorFactory();
@@ -297,6 +298,13 @@ export class GeneratorTeamsApp extends Generator {
                 },
                 {
                     type: 'confirm',
+                    name: 'useHttps',
+                    message: 'Would you like to host your local server on HTTPS?',
+                    default: false,
+                    when: (answers: IAnswers) => !answers.quickScaffolding && !this.options.existingManifest
+                },
+                {
+                    type: 'confirm',
                     name: 'isFullScreen',
                     message: 'Would you like personal apps to be rendered without a tab header-bar?',
                     default: false,
@@ -485,6 +493,10 @@ export class GeneratorTeamsApp extends Generator {
                     this.templatePath(t),
                     Yotilities.fixFileNames(t, this.options));
             });
+
+            if (this.options.useHttps) {
+                // TODO: Here we should generate the PFX file ...
+            }
         } else {
             if (this.options.updateBuildSystem) {
                 let currentVersion = this.config.get("generator-version");
