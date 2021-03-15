@@ -245,6 +245,9 @@ export class MessageExtensionGenerator extends Generator {
                             }
                             return input.length > 0;
                         },
+                        when: (answers: any) => {
+                            return answers.messagingExtensionType == "queryLink"
+                        }
                     },
                 ]
             ).then((answers: any) => {

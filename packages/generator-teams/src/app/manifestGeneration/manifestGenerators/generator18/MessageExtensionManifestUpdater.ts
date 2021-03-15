@@ -26,7 +26,7 @@ export class MessageExtensionManifestUpdater implements IManifestUpdater {
                 }
             ],
             type: options.messagingExtensionType // required parameter in devPreview
-        } : { };
+        } : undefined;
 
         if (options.messagingExtensionType === "action") {
             if (options.messagingExtensionActionContext) {
@@ -51,38 +51,44 @@ export class MessageExtensionManifestUpdater implements IManifestUpdater {
             }
         }
 
-        let composeExtension = manifest.composeExtensions.find((ce: { botId: string; }) => ce.botId == options.messageExtensionId);
-        if (options.existingManifest && composeExtension) {
-            if (options.messagingExtensionCanUpdateConfiguration) {
-                // if we have config for this one, it has to be positioned as the first one
-                composeExtension.commands.unshift(command);
-                composeExtension.canUpdateConfiguration = options.messagingExtensionCanUpdateConfiguration;
-            } else {
-                composeExtension.commands.push(command);
-            }
-        } else {
-            // no existing manifest
-            manifest.composeExtensions.push({
-                botId: options.messageExtensionId,
-                canUpdateConfiguration: options.messagingExtensionCanUpdateConfiguration,
-                commands: [command]
-            });
-        }
+        if (options.messagingExtensionType !== "queryLink") {
 
-        if (!options.existingManifest && options.messagingExtensionType === "queryLink")
-        {
-            // no existing manifest
-            manifest.composeExtensions.push({
-                botId: options.messageExtensionId,
-                canUpdateConfiguration: options.messagingExtensionCanUpdateConfiguration,
-                commands: [command],
-                messageHandlers: [{
-                    type: "link",
-                    value: {
-                        domains: options.messageExtensionLinkDomains
-                    }
-                }]
-            });
+            let composeExtension = manifest.composeExtensions.find((ce: { botId: string; }) => ce.botId == options.messageExtensionId);
+            if (options.existingManifest && composeExtension) {
+                if (options.messagingExtensionCanUpdateConfiguration) {
+                    // if we have config for this one, it has to be positioned as the first one
+                    composeExtension.commands.unshift(command);
+                    composeExtension.canUpdateConfiguration = options.messagingExtensionCanUpdateConfiguration;
+                } else {
+                    composeExtension.commands.push(command);
+                }
+            } else {
+                // no existing manifest
+                manifest.composeExtensions.push({
+                    botId: options.messageExtensionId,
+                    canUpdateConfiguration: options.messagingExtensionCanUpdateConfiguration,
+                    commands: [command]
+                });
+            }
+    
+        } else {
+
+            if (!options.existingManifest)
+            {
+                // no existing manifest
+                manifest.composeExtensions.push({
+                    botId: options.messageExtensionId,
+                    canUpdateConfiguration: options.messagingExtensionCanUpdateConfiguration,
+                    commands: [],
+                    messageHandlers: [{
+                        type: "link",
+                        value: {
+                            domains: options.messageExtensionLinkDomains
+                        }
+                    }]
+                });
+            }    
+
         }
     }
 }
