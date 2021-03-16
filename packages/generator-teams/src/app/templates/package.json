@@ -66,7 +66,8 @@
     "webpack": "5.0.0",
     "yargs": "^16.0.3",
     "yoteams-build-core": "^1.0.0",
-    "webpack-node-externals": "^2.5.2"
+    "webpack-node-externals": "^2.5.2",
+    "selfsigned": "^1.10.8"
   },
   "browserslist": [
     "> 1%",
