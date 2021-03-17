@@ -341,6 +341,42 @@
                 "mpnId": "",
                 "showLoadingIndicator": true
             }
+        },
+        {
+            "description": "HTTPS self-signed",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "tab",
+                "tabScopes": [
+                    "team"
+                ],
+                "quickScaffolding": false,
+                "useHttps": true,
+                "useSelfSignedSSL": true
+            }
+        },
+        {
+            "description": "HTTPS with PFX",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "tab",
+                "tabScopes": [
+                    "team"
+                ],
+                "quickScaffolding": false,
+                "useHttps": true,
+                "useSelfSignedSSL": false,
+                "pfxFilePath": "c:\\certificate.pfx",
+                "pfxFilePassword": "P@ssw0rd!"
+            }
         }
     ]
 }
