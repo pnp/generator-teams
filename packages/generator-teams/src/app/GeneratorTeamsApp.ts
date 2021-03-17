@@ -301,7 +301,7 @@ export class GeneratorTeamsApp extends Generator {
                 {
                     type: 'confirm',
                     name: 'useHttps',
-                    message: 'Would you like to host your local server on HTTPS?',
+                    message: 'Would you like to host your local server on HTTPS (notice that end-to-end TLS tunnel with ngrok is available only with Pro & Business plans)?',
                     default: false,
                     when: (answers: IAnswers) => !answers.quickScaffolding && !this.options.existingManifest
                 },

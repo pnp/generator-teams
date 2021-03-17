@@ -11,7 +11,7 @@ export const ngrokTasks = (gulp: GulpClient.Gulp, config: any) => {
 
     gulp.task("start-ngrok", (cb) => {
         log("[NGROK] starting ngrok...");
-        const conf = {
+        const conf: ngrok.INgrokOptions = {
             proto: process.env.HTTPS == "true" ? "tls" : "http",
             subdomain: process.env.NGROK_SUBDOMAIN as string,
             region: process.env.NGROK_REGION as "us" | "eu" | "au" | "ap" | "sa" | "jp" | "in",
