@@ -20,12 +20,13 @@ export const ngrokTasks = (gulp: GulpClient.Gulp, config: any) => {
         };
 
         ngrok.connect(conf).then((url) => {
-            log("[NGROK] Url: " + url);
+            log("[NGROK] Url: " + url.replace("tls://", "https://"));
             if (!conf.authtoken) {
                 log("[NGROK] You have been assigned a random ngrok URL that will only be available for this session. You wil need to re-upload the Teams manifest next time you run this command.");
             }
             let hostName = url.replace("http://", "");
             hostName = hostName.replace("https://", "");
+            hostName = hostName.replace("tls://", "");
 
             log("[NGROK] HOSTNAME: " + hostName);
             process.env.HOSTNAME = hostName;
