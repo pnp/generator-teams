@@ -16,7 +16,6 @@ import validate = require('uuid-validate');
 import EmptyGuid = require('./EmptyGuid');
 import { CoreFilesUpdaterFactory } from './coreFilesUpdater/CoreFilesUpdaterFactory';
 
-
 let yosay = require('yosay');
 let pkg: any = require('../../package.json');
 
@@ -101,6 +100,10 @@ export class GeneratorTeamsApp extends Generator {
             showLoadingIndicator: boolean;
             isFullScreen: boolean;
             quickScaffolding: boolean;
+            useHttps: boolean;
+            useSelfSignedSSL: boolean;
+            pfxFilePath: string;
+            pfxFilePassword: string;
         };
         // find out what manifest versions we can use
         const manifestGeneratorFactory = new ManifestGeneratorFactory();
@@ -297,6 +300,32 @@ export class GeneratorTeamsApp extends Generator {
                 },
                 {
                     type: 'confirm',
+                    name: 'useHttps',
+                    message: 'Would you like to host your local server on HTTPS (notice that end-to-end TLS tunnel with ngrok is available only with Pro & Business plans)?',
+                    default: false,
+                    when: (answers: IAnswers) => !answers.quickScaffolding && !this.options.existingManifest
+                },
+                {
+                    type: 'confirm',
+                    name: 'useSelfSignedSSL',
+                    message: 'Would you like to generate a self-signed SSL certificate?',
+                    default: true,
+                    when: (answers: IAnswers) => !answers.quickScaffolding && answers.useHttps
+                },
+                {
+                    type: 'input',
+                    name: 'pfxFilePath',
+                    message: 'Provide the path of a valid PFX file:',
+                    when: (answers: IAnswers) => !answers.quickScaffolding && answers.useHttps && !answers.useSelfSignedSSL
+                },                
+                {
+                    type: 'password',
+                    name: 'pfxFilePassword',
+                    message: 'Provide the password for the PFX file:',
+                    when: (answers: IAnswers) => !answers.quickScaffolding && answers.useHttps && !answers.useSelfSignedSSL
+                },                
+                {
+                    type: 'confirm',
                     name: 'isFullScreen',
                     message: 'Would you like personal apps to be rendered without a tab header-bar?',
                     default: false,
@@ -371,6 +400,10 @@ export class GeneratorTeamsApp extends Generator {
                 this.options.unitTestsEnabled = answers.unitTestsEnabled;
                 this.options.useAzureAppInsights = answers.useAzureAppInsights;
                 this.options.azureAppInsightsKey = answers.azureAppInsightsKey;
+                this.options.useHttps = answers.useHttps;
+                this.options.useSelfSignedSSL = answers.useSelfSignedSSL;
+                this.options.pfxFilePath = answers.pfxFilePath;
+                this.options.pfxFilePassword = answers.pfxFilePassword;
             } else {
                 // when updating projects
                 this.options.developer = this.options.existingManifest.developer.name;
@@ -438,6 +471,7 @@ export class GeneratorTeamsApp extends Generator {
                 "src/public/assets/icon.png",
                 "src/public/styles/main.scss",
                 "src/server/TeamsAppsComponents.ts",
+                "src/server/selfSignedLogic.ts",
                 "Dockerfile"
             ]
 
@@ -485,6 +519,23 @@ export class GeneratorTeamsApp extends Generator {
                     this.templatePath(t),
                     Yotilities.fixFileNames(t, this.options));
             });
+
+            if (this.options.useHttps) {
+
+                if (this.options.telemetry) {
+                    // Track the choice about HTTPS
+                    AppInsights.defaultClient.trackEvent({ name: 'enable-https', properties: { selfSigned: this.options.useSelfSignedSSL } });
+                }
+
+                // Here we simply enable HTTPS in the .env file
+                Yotilities.addOrUpdateEnv(".env", "HTTPS", "true", this.fs);
+
+                // Here we configure the PFX file path and password in the .env file, if they were provided
+                if (!this.options.useSelfSignedSSL && this.options.pfxFilePath && this.options.pfxFilePassword) {
+                    Yotilities.addOrUpdateEnv(".env", "HTTPS_PFX_PATH", this.options.pfxFilePath, this.fs);
+                    Yotilities.addOrUpdateEnv(".env", "HTTPS_PFX_PASSWORD", this.options.pfxFilePassword, this.fs);
+                }
+            }
         } else {
             if (this.options.updateBuildSystem) {
                 let currentVersion = this.config.get("generator-version");

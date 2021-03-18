@@ -66,7 +66,7 @@ export class Yotilities {
         const envFile = fs.read(fileName);
         let added: boolean = false;
         let output = envFile.split(os.EOL).map(line => {
-            if (line.startsWith(key)) {
+            if (line.startsWith(`${key}=`)) {
                 added = true;
                 return `${key}=${value}`;
             }

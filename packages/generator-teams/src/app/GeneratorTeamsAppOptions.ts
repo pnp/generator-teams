@@ -26,6 +26,10 @@ export class GeneratorTeamsAppOptions {
     showLoadingIndicator: boolean = false;
     isFullScreen: boolean = false;
     quickScaffolding: boolean = true;
+    useHttps: boolean = false;
+    useSelfSignedSSL: boolean = true;
+    pfxFilePath: string;
+    pfxFilePassword: string;
 
     reactComponents: boolean;
     websitePrefix: string;

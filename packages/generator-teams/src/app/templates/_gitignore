@@ -12,3 +12,6 @@ connectors.json
 
 # do not include dist files
 dist
+
+# do not include the self-signed certificate, if any
+server.pem
