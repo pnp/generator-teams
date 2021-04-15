@@ -34,7 +34,9 @@
     "vscode",
     "yo teams",
     "pnp",
-    "teams toolkit"
+    "teams toolkit",
+    "microsoft viva",
+    "viva connections"
   ],
   "author": "Wictor Wilén (wictor@wictorwilen.se)",
   "maintainers": [
@@ -63,6 +65,7 @@
     "@types/mocha": "^8.0.2",
     "@types/npm-run": "^5.0.0",
     "@types/semver": "^7.3.3",
+    "@types/tldjs": "^2.3.0",
     "@types/uuid": "^8.3.0",
     "@types/uuid-validate": "0.0.1",
     "@types/yeoman-assert": "^3.1.1",
@@ -91,6 +94,7 @@
     "dotenv": "^8.0.0",
     "lodash": "^4.17.20",
     "semver": "^7.3.2",
+    "tldjs": "^2.3.1",
     "ts-morph": "^8.1.2",
     "typescript": "^4.0.3",
     "uuid": "^8.3.1",

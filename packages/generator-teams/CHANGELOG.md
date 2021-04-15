@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 * Support for link unfurling (#200) - @PaoloPia
+* Dedicated option for creating a static tab for Viva Connections (manifest schema 1.9 or later)
 
 ### Changes
 
@@ -20,6 +21,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Typo in question for bot (#191)
 * Invalid messaging extension description (#192)
 * Invalid condition in prompt for Bot Id (#193)
+
+> *Tests passing: 4.211*
 
 ## [*3.0.3*]- <*2021-03-02*>
 
