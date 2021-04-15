@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [*Unreleased*]- <**>
 
+### Added
+
+* Support for link unfurling (#200) - @PaoloPia
+
+### Changes
+
+* Microsoft Teams Schema 1.9 set as default schema
+
 ### Fixed
 
 * Typo in question for bot (#191)
