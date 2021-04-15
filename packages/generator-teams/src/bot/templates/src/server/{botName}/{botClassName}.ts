@@ -81,7 +81,7 @@ export class <%= botClassName %> extends TeamsActivityHandler {
                 });
             }
         });<% } %>
-   }
+    }
 <% if (botCallingEnabled) { %>
     /**
      * Webhook for incoming calls

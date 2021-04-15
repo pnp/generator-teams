@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*]- <**>
+
+### Fixed
+
+* Typo in question for bot (#191)
+* Invalid messaging extension description (#192)
+* Invalid condition in prompt for Bot Id (#193)
+
 ## [*3.0.3*]- <*2021-03-02*>
 
 ### Changes

@@ -13,18 +13,28 @@ import { styleTasks } from "./styleTasks";
 import { webpackTasks } from "./webpackTasks";
 import { webTasks } from "./webTasks";
 
+/**
+ * Run the dependencies in series
+ * @param gulp the gulp client
+ * @param tasks the tasks
+ */
 export const dependencies = (gulp: GulpClient.Gulp, ...tasks: Undertaker.Task[]) => {
     return (done:any) => gulp.series(...tasks)(done);
 };
 
+/**
+ * Run the dependencies in parallel
+ * @param gulp the gulp client
+ * @param tasks the tasks
+ */
 export const dependenciesP = (gulp: GulpClient.Gulp, ...tasks: Undertaker.Task[]) => {
     return (done:any) => gulp.parallel(...tasks)(done);
 };
 
 /**
  * Initializes all Gulp tasks
- * @param gulp
- * @param config
+ * @param gulp the gulp client
+ * @param config optional config
  */
 export const setup = (gulp: GulpClient.Gulp, config: any): void => {
     manifest(gulp, config);
