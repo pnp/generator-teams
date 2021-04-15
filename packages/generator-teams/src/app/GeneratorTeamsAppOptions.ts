@@ -90,6 +90,7 @@ export class GeneratorTeamsAppOptions {
     messagingExtensionActionResponseType?: string;
     messagingExtensionCanUpdateConfiguration: boolean = false;
     messagingExtensionActionResponseTypeConfig: boolean = false;
+    messageExtensionLinkDomains?: string[] = undefined;
     /* manifest */
     existingManifest: any;
     /* Localization */
