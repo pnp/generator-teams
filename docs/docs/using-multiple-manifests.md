@@ -1,7 +1,6 @@
 # Using multiple manifest files
 
 > **NOTE**: requires `yoteams-build-core` 1.1.0 or later
-. This feature is currently in preview (`1.1.0-preview`)
 
 Yo Teams supports having multiple manifests files. There are many scenarios where you would like to have multiple manifest files and Teams App packages generated, for instance:
 
