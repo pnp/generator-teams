@@ -164,6 +164,22 @@
                     "commandBox"
                 ]
             }
+        },
+        {
+            "description": "Link Unfurling Messaging Extension",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "messageextension",
+                "messageExtensionHost": "new",
+                "bottype": "botframework",
+                "messageExtensionDescription": "description",
+                "messagingExtensionType": "queryLink",
+                "messageExtensionLinkDomains": "*.contoso.com,*.litware.com"
+            }
         }
     ],
     "tab": [
