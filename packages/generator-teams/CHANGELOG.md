@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Typo in question for bot (#191)
 * Invalid messaging extension description (#192)
 * Invalid condition in prompt for Bot Id (#193)
+* Fixed state/closure issue on Connector configuration
 
 > *Tests passing: 4.211*
 
