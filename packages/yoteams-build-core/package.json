@@ -1,6 +1,6 @@
 {
   "name": "yoteams-build-core",
-  "version": "1.1.0",
+  "version": "1.2.0-preview",
   "description": "Core build Gulp tasks for Yo Teams, Microsoft Teams Apps Generator (https://aka.ms/yoteams)",
   "main": "dist/index.js",
   "scripts": {
@@ -34,7 +34,7 @@
     "fancy-log": "^1.3.3",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
-    "gulp-filter": "^6.0.0",
+    "gulp-filter": "^7.0.0",
     "gulp-flatmap": "^1.0.2",
     "gulp-if": "^3.0.0",
     "gulp-inject": "^5.0.5",
@@ -45,18 +45,18 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-token-replace": "^1.1.5",
     "gulp-zip": "^5.0.2",
-    "ngrok": "^3.4.0",
+    "ngrok": "^4.0.1",
     "nodemon": "^2.0.6",
     "plugin-error": "^1.0.1",
     "postcss": "^8.2.2",
-    "through2": "^3.0.2",
+    "through2": "^4.0.2",
     "vinyl": "^2.2.1",
     "webpack": "^5.0.0",
-    "yargs": "^16.2.0",
+    "yargs": "^17.0.1",
     "z-schema": "^5.0.0"
   },
   "devDependencies": {
-    "@types/autoprefixer": "^9.7.2",
+    "@types/autoprefixer": "^10.2.0",
     "@types/fancy-log": "^1.3.1",
     "@types/gulp": "^4.0.8",
     "@types/gulp-filter": "^3.0.33",
@@ -78,7 +78,7 @@
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-promise": "^5.1.0",
     "rimraf": "^3.0.2",
     "typescript": "^4.0.3"
   }
