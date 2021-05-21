@@ -22,7 +22,17 @@ const config = {};
 core.setup(gulp, config);
 ```
 
-> **Note**: the `config` parameter is not used but only referenced for future scenarios.
+#### Configuration
+
+The configuration object can be used to include additional/optional configuration to the Gulp tasks
+
+| Configuration | Description |
+|-|-|
+| `watches`| An array of additional file paths to monitor for server side webpack configuration |
+| `clientWatches`| An array of additional file paths to monitor for client side webpack configuration |
+| `staticFiles`| An array of additional file paths to monitor static file copy |
+| `injectSources`| An array of additional file paths to monitor for static file injections of JavaScript and CSS |
+| `htmlFiles`| An array of additional file paths to monitor for static file injections of environment variables |
 
 ### Default Gulp tasks
 
@@ -69,9 +79,6 @@ gulp.task("webpack", () => {
     return Promise.resolve();
 });
 ```
-
-
-
 
 ## Contributing
 

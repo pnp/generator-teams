@@ -44,10 +44,11 @@ export class GeneratorTeamsAppOptions {
     tabSharePoint: boolean;
     tabSharePointHosts: string[] = [];
     tabScopes: string[];
-    tabType: "configurable" | "static";
+    tabType: "configurable" | "static" | "viva";
     tabSSO: boolean;
     tabSSOAppId: string;
     tabSSOAppUri: string;
+    vivaUrl: string | undefined;
 
     /* Bots */
     botid: string = '';
@@ -90,6 +91,7 @@ export class GeneratorTeamsAppOptions {
     messagingExtensionActionResponseType?: string;
     messagingExtensionCanUpdateConfiguration: boolean = false;
     messagingExtensionActionResponseTypeConfig: boolean = false;
+    messageExtensionLinkDomains?: string[] = undefined;
     /* manifest */
     existingManifest: any;
     /* Localization */
