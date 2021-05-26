@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * [BREAKING] Changed the environment variable `HOSTNAME` to `PUBLIC_HOSTNAME` to not reuse the system set HOSTNAME.
 * Updated referenced packages
 * Switched to `gulp-dart-sass` due to deprecated `node-sass`
+* Node 10.x no longer supported
 
 ## [*1.1.0*] - <*2021-04-15*>
 
