@@ -36,7 +36,7 @@ export const <%=connectorComponentName%>Config = () => {
                 // INFO: Should really be of type microsoftTeams.settings.Settings, but configName does not exist in the Teams JS SDK
                 const settings: any = {
                     entityId: colorRef.current ? colorRef.current.code : availableColors[0].code,
-                    contentUrl: `https://${process.env.HOSTNAME}/<%=connectorName%>/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
+                    contentUrl: `https://${process.env.PUBLIC_HOSTNAME}/<%=connectorName%>/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
                     configName: colorRef.current ? colorRef.current.title : availableColors[0].title
                 };
                 microsoftTeams.settings.setSettings(settings);

@@ -131,7 +131,7 @@ describe("teams:tab", function () {
           configurableTabs: [
             {
               sharePointPreviewImage:
-                "https://{{HOSTNAME}}/assets/teamsSolutionTab-preview.png",
+                "https://{{PUBLIC_HOSTNAME}}/assets/teamsSolutionTab-preview.png",
               supportedSharePointHosts: prompts.tabSharePointHosts
             }
           ]

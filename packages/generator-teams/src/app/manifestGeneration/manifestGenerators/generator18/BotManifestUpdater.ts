@@ -34,7 +34,7 @@ export class BotManifestUpdater implements IManifestUpdater {
             manifest.staticTabs.push({
                 entityId: uuid(),
                 name: options.staticTabTitle,
-                contentUrl: `https://{{HOSTNAME}}/${options.botName}/${options.staticTabName}.html`,
+                contentUrl: `https://{{PUBLIC_HOSTNAME}}/${options.botName}/${options.staticTabName}.html`,
                 scopes: ["personal"]
             });
         }

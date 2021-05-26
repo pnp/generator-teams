@@ -5,11 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [*Unreleased*] 
+## [*Unreleased*]- <**>
+
+### Added
+
+* Added `codespaces-serve` task, only available inside a Github Codespaces container, for automatic host name generation when using Github Codespaces
+* Watches for changes in `.env` files and rebuilds and restarts the solution, as well as scaffolds an updated manifest package
 
 ### Changes
 
+* [BREAKING] Changed the environment variable `HOSTNAME` to `PUBLIC_HOSTNAME` to not reuse the system set HOSTNAME.
 * Updated referenced packages
+* Switched to `gulp-dart-sass` due to deprecated `node-sass`
 
 ## [*1.1.0*] - <*2021-04-15*>
 

@@ -14,7 +14,6 @@ export class GeneratorTeamsAppOptions {
     name: string;
     shouldUseSubDir: boolean;
     libraryName: string;
-    'skip-install': string;
     telemetry: boolean;
     namespace: string;
     developer: string;

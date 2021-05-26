@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*]- <**>
+
+### Added
+
+* Specify package manager by adding `--node-package-manager` to the command line. Ex `yo --node-package-manager yarn`
+* Improved conflict resolution when re-running the generator
+* Support for Microsoft Teams manifest schema 1.10
+
+### Changes
+
+* [BREAKING] Changed the environment variable `HOSTNAME` to `PUBLIC_HOSTNAME` to not reuse the system set HOSTNAME environment variable. Required for Github Codespaces integration and when multiple web apps are load balanced.
+* [BREAKING] Node 10.x no longer supported
+* Updated build packages
+* Moved custom `skip-install` implementation to native Yeoman version
+* Updated to Microsoft Teams JS SDK 1.10
+
+### Deleted
+
+* Deleted non used reference to ngrok in scaffolded project (as it is referenced by the build package since v3)
+
+> *Tests passing: 6.631*
+
 ## [*3.1.0*]- <*2021-05-21*>
 
 ### Added

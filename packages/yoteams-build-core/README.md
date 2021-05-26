@@ -42,6 +42,7 @@ The following Gulp tasks are defined by the package:
 * **`manifest`** - packages the manifests. The `validate-manifest` task is run as a part of this task
 * **`serve`** - builds and runs the solution on the local machine, background re-compilation when files are changed
 * **`ngrok-serve`** - builds and runs the solution on the local machine with ngrok support, see below
+* **`codespaces-serve`** - builds, packages and runs the solution when using inside Github Codespaces
 * **`webpack`** - runs webpack on the solution by running `webpack:client` and `webpack:server` in parallel
 * **`nuke`** - clears all build and temp files
 * **`static:copy`** - copies all static files to the dist folder
@@ -63,6 +64,10 @@ The `ngrok-serve` command starts the ngrok client and by default assigns a rando
 * `NGROK_AUTH` user ngrok authentication token
 * `PORT` use a specific port for the local server (default 3007)
 
+#### Using Github Codespaces
+
+No additional configuration is required for Github Codespaces.
+
 ### Custom tasks
 
 Custom tasks can be added to the `gulpfile.js` to support any additional build or deploy steps you need.
@@ -78,6 +83,17 @@ gulp.task("webpack", () => {
     console.log("My custom webpack task");
     return Promise.resolve();
 });
+```
+
+Or adding an additional task for the `serve`command:
+
+``` JavaScript
+// Add your custom tasks below
+
+gulp.task("serve", gulp.series("nuke", "build", "nodemon", () => {
+    console.log("Hello world!");
+    return Promise.resolve();
+}, "watch"));
 ```
 
 ## Contributing

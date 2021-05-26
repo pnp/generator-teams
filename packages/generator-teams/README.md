@@ -87,6 +87,7 @@ yo teams [arguments]
 
 * `--skip-install` - when used no packages will be installed at the end of the generator and you have to run `npm install` or similar manually.
 * `--no-telemetry` - opt out of sending telemetry data (NOTE: no personal data or names of artifacts are being sent, only information of successful executions and what options are being used).
+* `--node-package-manager npm|yarn` - specify package manager to use. Default `npm`
 
 ## Build the generator
 

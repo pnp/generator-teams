@@ -92,18 +92,24 @@ export async function runNpmCommand(command: string, path: string): Promise<bool
   });
 }
 
+// Define the available schemas
 export const SCHEMA_18 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.8/MicrosoftTeams.schema.json';
 export const SCHEMA_19 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.9/MicrosoftTeams.schema.json';
+export const SCHEMA_110 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.10/MicrosoftTeams.schema.json';
 export const SCHEMA_DEVPREVIEW = 'https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json';
 
 export const SCHEMAS: { [key: string]: string } = {
   "v1.8": SCHEMA_18,
   "v1.9": SCHEMA_19,
+  "v1.10": SCHEMA_110,
   "devPreview": SCHEMA_DEVPREVIEW
 }
+
+// All the paths for upgrading
 const UPGRADE_PATHS: { [key: string]: string[] } = {
-  "v1.8": ["v1.9", "devPreview"],
-  "v1.9": ["devPreview"]
+  "v1.8": ["v1.9", "v1.10", "devPreview"],
+  "v1.9": ["v1.10", "devPreview"],
+  "v1.10": ["devPreview"]
 }
 
 export enum TestTypes {
@@ -283,10 +289,10 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
 
       if (process.env.TEST_TYPE == TestTypes.INTEGRATION) {
         const npmInstallResult = await runNpmCommand("npm install --prefer-offline", projectPath);
-        assert.equal(false, npmInstallResult);
+        assert.strictEqual(false, npmInstallResult);
 
         const npmRunBuildResult = await runNpmCommand("npm run build", projectPath);
-        assert.equal(false, npmRunBuildResult);
+        assert.strictEqual(false, npmRunBuildResult);
       }
     });
   }
@@ -333,10 +339,10 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
 
       if (process.env.TEST_TYPE == TestTypes.INTEGRATION) {
         const npmInstallResult = await runNpmCommand("npm install --prefer-offline", projectPath);
-        assert.equal(false, npmInstallResult);
+        assert.strictEqual(false, npmInstallResult);
 
         const npmRunBuildResult = await runNpmCommand("npm run build", projectPath);
-        assert.equal(false, npmRunBuildResult);
+        assert.strictEqual(false, npmRunBuildResult);
       }
     });
   }

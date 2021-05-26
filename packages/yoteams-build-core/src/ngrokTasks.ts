@@ -26,8 +26,8 @@ export const ngrokTasks = (gulp: GulpClient.Gulp, config: any) => {
             let hostName = url.replace("http://", "");
             hostName = hostName.replace("https://", "");
 
-            log("[NGROK] HOSTNAME: " + hostName);
-            process.env.HOSTNAME = hostName;
+            log("[NGROK] Public url: " + hostName);
+            process.env.PUBLIC_HOSTNAME = hostName;
 
             cb();
 

@@ -35,11 +35,6 @@ export class GeneratorTeamsApp extends Generator {
             description: 'Solution name, as well as folder name',
             required: false
         });
-        this.option('skip-install', {
-            type: Boolean,
-            default: false,
-            description: 'Skips running npm install'
-        });
         this.option('telemetry', {
             type: Boolean,
             default: true,
@@ -627,12 +622,6 @@ export class GeneratorTeamsApp extends Generator {
                 });
             }
             AppInsights.defaultClient.flush();
-        }
-
-        if (this.options['skip-install']) {
-            this.log(chalk.yellow('Skipping installation of dependencies. You should run "npm install"'));
-        } else {
-            this.npmInstall();
         }
     }
 
