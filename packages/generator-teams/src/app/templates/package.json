@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node dist/server.js",
     "build": "gulp build",
+    "manifest": "gulp manifest",
     "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx",
     "debug": "gulp serve --debug"<% if (unitTestsEnabled) { %>,
     "test": "jest",
@@ -64,7 +65,7 @@
     "vinyl": "2.2.0",
     "webpack": "5.0.0",
     "yargs": "^16.0.3",
-    "yoteams-build-core": "^1.1.0",
+    "yoteams-build-core": "^1.2.0-preview",
     "webpack-node-externals": "^2.5.2"
   },
   "browserslist": [

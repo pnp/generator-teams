@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Moved custom `skip-install` implementation to native Yeoman version
 * Updated to Microsoft Teams JS SDK 1.10
 * Node 10.x no longer supported
+* Improved integration testing for generator
 
 ### Deleted
 

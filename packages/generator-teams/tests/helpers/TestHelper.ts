@@ -72,6 +72,16 @@ export const SCRIPT_FILES = [
   "src/client/tsconfig.json"
 ];
 
+export const DIST_FILES = [
+  'dist/server.js',
+  'dist/web/index.html',
+  'dist/web/privacy.html',
+  'dist/web/tou.html',
+  'dist/web/assets/icon.png',
+  'dist/web/scripts/client.js',
+  'dist/web/styles/main.css',
+];
+
 export const basePrompts = {
   "solutionName": "teams-solution",
   "whichFolder": "current",
@@ -116,7 +126,7 @@ export enum TestTypes {
   UNIT = "UNIT",
   INTEGRATION = "INTEGRATION"
 }
-export function coreTests(manifestVersion: string, prompts: any) {
+export async function coreTests(manifestVersion: string, prompts: any, projectPath: string) {
   it("Should have root files", async () => {
     assert.file(ROOT_FILES);
   });
@@ -236,6 +246,28 @@ export function coreTests(manifestVersion: string, prompts: any) {
       });
     })
   }
+
+  // Integration tests
+  if (process.env.TEST_TYPE == TestTypes.INTEGRATION) {
+    it("Should run npm install successfully", async () => {
+      const npmInstallResult = await runNpmCommand("npm install --prefer-offline", projectPath);
+      assert.strictEqual(false, npmInstallResult);
+    });
+
+    it("Should run npm build successfully", async () => {
+      const npmRunBuildResult = await runNpmCommand("npm run build", projectPath);
+      assert.strictEqual(false, npmRunBuildResult);
+    });
+
+    it("Should validate manifest successfully", async () => {
+      const npmResult = await runNpmCommand("npm run manifest", projectPath);
+      assert.strictEqual(false, npmResult);
+    });
+
+    it("Should have ./dist files", async () => {
+      assert.file(DIST_FILES);
+    });
+  }
 }
 
 
@@ -244,13 +276,13 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
     describe(test.description, async () => {
       for (const manifestVersion of test.manifestVersions as string[]) {
         // run without unit tests
-        runTest(manifestVersion, test, false);
+        await runTest(manifestVersion, test, false);
         // run with tests
-        runTest(manifestVersion, test, true);
+        await runTest(manifestVersion, test, true);
         // upgrade if possible
         if (UPGRADE_PATHS[manifestVersion]) {
           for (const upgradeTo of UPGRADE_PATHS[manifestVersion])
-            runUpgradeTest(manifestVersion, upgradeTo, test, false);
+            await runUpgradeTest(manifestVersion, upgradeTo, test, false);
         }
       }
     });
@@ -278,22 +310,13 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
           .withGenerators(DEPENDENCIES);
       });
 
-      coreTests(manifestVersion, prompts);
+      coreTests(manifestVersion, prompts, projectPath);
 
 
       if (additionalTests) {
         await additionalTests(prompts);
       }
 
-
-
-      if (process.env.TEST_TYPE == TestTypes.INTEGRATION) {
-        const npmInstallResult = await runNpmCommand("npm install --prefer-offline", projectPath);
-        assert.strictEqual(false, npmInstallResult);
-
-        const npmRunBuildResult = await runNpmCommand("npm run build", projectPath);
-        assert.strictEqual(false, npmRunBuildResult);
-      }
     });
   }
 
@@ -334,16 +357,8 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
           .withGenerators(DEPENDENCIES);
       });
 
+      coreTests(to, prompts, projectPath);
 
-      coreTests(to, prompts);
-
-      if (process.env.TEST_TYPE == TestTypes.INTEGRATION) {
-        const npmInstallResult = await runNpmCommand("npm install --prefer-offline", projectPath);
-        assert.strictEqual(false, npmInstallResult);
-
-        const npmRunBuildResult = await runNpmCommand("npm run build", projectPath);
-        assert.strictEqual(false, npmRunBuildResult);
-      }
     });
   }
 }
