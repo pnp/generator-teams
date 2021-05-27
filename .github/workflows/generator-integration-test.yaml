@@ -1,7 +1,5 @@
 name: Integration test for generator-teams
 
-on: [push]
-
 jobs:
   build:
 
