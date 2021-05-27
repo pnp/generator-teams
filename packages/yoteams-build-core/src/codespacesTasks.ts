@@ -24,7 +24,7 @@ export const codespacesTasks = (gulp: GulpClient.Gulp, config: any) => {
             const codespaceEnv = fs.readJSONSync(codespaceEnvConfig);
             const codespaceName = codespaceEnv.CODESPACE_NAME;
 
-            process.env.PUBLIC_HOSTNAME = `${codespaceName}-${process.env.PORT}${process.env.RAILS_DEVELOPMENT_HOSTS}`;
+            process.env.PUBLIC_HOSTNAME = `${codespaceName}-${process.env.PORT}.githubpreview.dev`;
             log("[Codespace] Public url: " + process.env.PUBLIC_HOSTNAME);
             gulp.task("codespaces-serve", dependencies(gulp, "manifest", "serve"));
         } catch (ex) {
