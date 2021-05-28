@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Added `codespaces-serve` task, only available inside a Github Codespaces container, for automatic host name generation when using Github Codespaces
 * Watches for changes in `.env` files and rebuilds and restarts the solution, as well as scaffolds an updated manifest package
+* Support for plugins
 
 ### Changes
 

@@ -1,0 +1,13 @@
+# Folders
+.vscode
+node_modules
+src
+.github
+tests
+
+# Files
+.git*
+.yo-rc.json
+tsconfig.json
+*.tgz 
+.eslintrc.json

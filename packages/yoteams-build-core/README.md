@@ -96,6 +96,15 @@ gulp.task("serve", gulp.series("nuke", "build", "nodemon", () => {
 }, "watch"));
 ```
 
+## Plugins
+
+This package supports plugins. Plugins has to be added as `devDependencies` to the Teams application project and their name must start with `yoteams-`. When a plugin is found it is expected to export a `setup` function that takes two arguments - the Gulp object and the configuration object.
+
+### Available plugins
+
+* [`yoteams-deploy`](https://github.com/pnp/generator-teams/packages/yoteams-deploy) - contains additional tasks for automatic deployment to a Microsoft Teams environment 
+
+
 ## Contributing
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.

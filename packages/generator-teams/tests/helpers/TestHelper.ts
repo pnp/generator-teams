@@ -126,7 +126,8 @@ export enum TestTypes {
   UNIT = "UNIT",
   INTEGRATION = "INTEGRATION"
 }
-export async function coreTests(manifestVersion: string, prompts: any, projectPath: string) {
+
+export function coreTests(manifestVersion: string, prompts: any, projectPath: string) {
   it("Should have root files", async () => {
     assert.file(ROOT_FILES);
   });
@@ -246,50 +247,53 @@ export async function coreTests(manifestVersion: string, prompts: any, projectPa
       });
     })
   }
+}
 
+export function integrationTests(manifestVersion: string, prompts: any, projectPath: string) {
   // Integration tests
   if (process.env.TEST_TYPE == TestTypes.INTEGRATION) {
-    it("Should run npm install successfully", async () => {
-      const npmInstallResult = await runNpmCommand("npm install --prefer-offline", projectPath);
-      assert.strictEqual(false, npmInstallResult);
-    });
+    describe("Integration tests", () => {
+      it("Should run npm install successfully", async () => {
+        const npmInstallResult = await runNpmCommand("yarn install --prefer-offline", projectPath);
+        assert.strictEqual(false, npmInstallResult);
+      });
 
-    it("Should run npm build successfully", async () => {
-      const npmRunBuildResult = await runNpmCommand("npm run build", projectPath);
-      assert.strictEqual(false, npmRunBuildResult);
-    });
+      it("Should run npm build successfully", async () => {
+        const npmRunBuildResult = await runNpmCommand("npm run build", projectPath);
+        assert.strictEqual(false, npmRunBuildResult);
+      });
 
-    it("Should validate manifest successfully", async () => {
-      const npmResult = await runNpmCommand("npm run manifest", projectPath);
-      assert.strictEqual(false, npmResult);
-    });
+      it("Should validate manifest successfully", async () => {
+        const npmResult = await runNpmCommand("npm run manifest", projectPath);
+        assert.strictEqual(false, npmResult);
+      });
 
-    it("Should have ./dist files", async () => {
-      assert.file(DIST_FILES);
+      it("Should have ./dist files", async () => {
+        assert.file(DIST_FILES);
+      });
     });
   }
 }
 
-
 export async function runTests(prefix: string, tests: any[], additionalTests: Function) {
   for (const test of tests) {
-    describe(test.description, async () => {
+    describe(test.description, () => {
       for (const manifestVersion of test.manifestVersions as string[]) {
         // run without unit tests
-        await runTest(manifestVersion, test, false);
+        runTest(manifestVersion, test, false);
         // run with tests
-        await runTest(manifestVersion, test, true);
+        runTest(manifestVersion, test, true);
         // upgrade if possible
         if (UPGRADE_PATHS[manifestVersion]) {
           for (const upgradeTo of UPGRADE_PATHS[manifestVersion])
-            await runUpgradeTest(manifestVersion, upgradeTo, test, false);
+            runUpgradeTest(manifestVersion, upgradeTo, test, false);
         }
       }
     });
   }
 
   async function runTest(manifestVersion: string, test: any, unitTesting: boolean) {
-    describe(`Schema ${manifestVersion}${unitTesting ? ", with Unit tests" : ""}`, async () => {
+    describe(`Schema ${manifestVersion}${unitTesting ? ", with Unit tests" : ""}`, () => {
       let projectPath = TEMP_TEST_PATH + `/${prefix}/${manifestVersion}-${lodash.snakeCase(test.description)}`;
 
       let prompts = { manifestVersion, ...basePrompts, ...test.prompts };
@@ -312,9 +316,10 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
 
       coreTests(manifestVersion, prompts, projectPath);
 
+      integrationTests(manifestVersion, prompts, projectPath);
 
       if (additionalTests) {
-        await additionalTests(prompts);
+        additionalTests(prompts);
       }
 
     });
@@ -358,6 +363,8 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
       });
 
       coreTests(to, prompts, projectPath);
+
+      integrationTests(to, prompts, projectPath);
 
     });
   }

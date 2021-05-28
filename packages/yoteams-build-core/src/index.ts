@@ -6,6 +6,7 @@ import GulpClient from "gulp";
 import Undertaker from "undertaker";
 import { buildTasks } from "./buildTasks";
 import { codespacesTasks } from "./codespacesTasks";
+import { loadPlugins } from "./loadPlugins";
 import { manifest } from "./manifest";
 import { ngrokTasks } from "./ngrokTasks";
 import { nukeTasks } from "./nukeTasks";
@@ -47,4 +48,7 @@ export const setup = (gulp: GulpClient.Gulp, config: any): void => {
     serveTasks(gulp, config);
     ngrokTasks(gulp, config);
     codespacesTasks(gulp, config);
+
+    // load additional tasks
+    loadPlugins(gulp, config);
 };
