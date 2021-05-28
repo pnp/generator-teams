@@ -8,7 +8,6 @@ import { execute } from "./execute";
 import File from "vinyl";
 import through from "through2";
 import jszip from "jszip";
-import tap from "gulp-tap";
 import PluginError from "plugin-error";
 import { readFileSync } from "fs-extra";
 import { dependencies } from ".";
@@ -25,7 +24,7 @@ export const deployTask = (gulp: GulpClient.Gulp, config: any) => {
                 log("Application updated!");
                 cb();
             } else {
-                cb(new Error("Application deployment failed"));
+                cb(new PluginError("yoteams-deploy", "Application deployment failed"));
             }
         }
     );
@@ -40,10 +39,10 @@ export const deployTask = (gulp: GulpClient.Gulp, config: any) => {
             if (app) {
                 update(cb, app.id, filename);
             } else {
-                cb(new Error("Application not found in Teams App store"));
+                cb(new PluginError("yoteams-deploy", "Application not found in Teams App store"));
             }
         },
-        chunk => cb(new Error(chunk))
+        chunk => cb(new PluginError("yoteams-deploy", chunk))
     );
 
     // publishes the application
@@ -55,7 +54,7 @@ export const deployTask = (gulp: GulpClient.Gulp, config: any) => {
             if (err.indexOf("App with same id already exists in the tenant.") >= 0) {
                 list(cb, filename);
             } else {
-                cb(new Error(err));
+                cb(new PluginError("yoteams-deploy", err));
             }
         },
         code => {
@@ -71,14 +70,14 @@ export const deployTask = (gulp: GulpClient.Gulp, config: any) => {
         ["login"],
         chunk => log(`${chunk}`),
         chunk => log(`${chunk}`),
-        code => code === 0 ? cb() : cb(new Error("Error logging in!"))
+        code => code === 0 ? cb() : cb(new PluginError("yoteams-deploy", "Error logging in!"))
     );
 
     const logout = (cb: TaskFunctionCallback): void => execute(
         ["logout"],
         chunk => log(`${chunk}`),
         chunk => log(`${chunk}`),
-        code => code === 0 ? cb() : cb(new Error("Error logging out!"))
+        code => code === 0 ? cb() : cb(new PluginError("yoteams-deploy", "Error logging out!"))
     );
 
     const status = (cb: TaskFunctionCallback): void => execute(
@@ -92,10 +91,10 @@ export const deployTask = (gulp: GulpClient.Gulp, config: any) => {
                 cb();
             }
         },
-        chunk => cb(new Error(chunk)),
+        chunk => cb(new PluginError("yoteams-deploy", chunk)),
         code => {
             if (code !== 0) {
-                cb(new Error("Error checking m365 status"));
+                cb(new PluginError("yoteams-deploy", "Error checking m365 status"));
             }
         }
     );
