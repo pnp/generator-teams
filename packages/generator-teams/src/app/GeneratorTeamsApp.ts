@@ -432,7 +432,7 @@ export class GeneratorTeamsApp extends Generator {
 
             let staticFiles = [
                 "_gitignore",
-                ".vscode/launch.json",
+                "_vscode/launch.json",
                 "src/server/tsconfig.json",
                 "src/client/tsconfig.json",
                 "src/manifest/icon-outline.png",
