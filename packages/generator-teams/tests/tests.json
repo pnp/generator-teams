@@ -379,6 +379,39 @@
                 "mpnId": "",
                 "showLoadingIndicator": true
             }
+        },
+        {
+            "description": "Without linting support",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "v1.10",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "tab",
+                "tabScopes": [
+                    "team"
+                ],
+                "quickScaffolding": false,
+                "lintingSupport": false
+            }
+        },
+        {
+            "description": "Quick scaffolding should give linting support",
+            "manifestVersions": [
+                "v1.8",
+                "v1.9",
+                "v1.10",
+                "devPreview"
+            ],
+            "prompts": {
+                "parts": "tab",
+                "tabScopes": [
+                    "team"
+                ],
+                "quickScaffolding": true
+            }
         }
     ]
 }

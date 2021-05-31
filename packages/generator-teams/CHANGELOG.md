@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Specify package manager by adding `--node-package-manager` to the command line. Ex `yo --node-package-manager yarn`
 * Improved conflict resolution when re-running the generator
 * Support for Microsoft Teams manifest schema 1.10
+* Added default debugging tasks for Visual Studio Code
 
 ### Changes
 
@@ -21,12 +22,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Moved custom `skip-install` implementation to native Yeoman version
 * Updated to Microsoft Teams JS SDK 1.10
 * Improved integration testing for generator
+* Changed default setting for SSO Tab from Yes to No
+* Linting files and support is now an additional advanced option (default to true)
 
 ### Deleted
 
 * Deleted non used reference to ngrok in scaffolded project (as it is referenced by the build package since v3)
 
-> *Tests passing: 6.631*
+> *Tests passing: 8.181*
 
 ## [*3.1.0*]- <*2021-05-21*>
 

@@ -33,6 +33,10 @@ export const ROOT_FILES = [
   'Dockerfile'
 ];
 
+export const VSCODE_FILES = [
+  '.vscode/launch.json'
+];
+
 export const LINT_FILES = [
   ".eslintrc.json",
   ".eslintignore",
@@ -82,11 +86,13 @@ export const DIST_FILES = [
   'dist/web/styles/main.css',
 ];
 
+
 export const basePrompts = {
   "solutionName": "teams-solution",
   "whichFolder": "current",
   "name": "teamsSolution",
   "developer": "generator teams developer",
+  "lintingSupport": true
 };
 
 export async function runNpmCommand(command: string, path: string): Promise<boolean> {
@@ -140,6 +146,9 @@ export function coreTests(manifestVersion: string, prompts: any, projectPath: st
   it("Should have web files", async () => {
     assert.file(WEB_FILES);
   });
+  it("Should have vscode files", async () => {
+    assert.file(VSCODE_FILES);
+  });
   it("Should have manifest files", async () => {
     assert.file(MANIFEST_FILES);
   });
@@ -155,17 +164,41 @@ export function coreTests(manifestVersion: string, prompts: any, projectPath: st
   it("Should have a reference to Fluentui", async () => {
     assert.jsonFileContent("package.json", { dependencies: { "@fluentui/react-northstar": {} } });
   });
-  it("Should have linting files", async () => {
-    assert.file(LINT_FILES);
-  });
+  if (prompts.lintingSupport) {
+    it("Should have linting files", async () => {
+      assert.file(LINT_FILES);
+    });
+    it("Should have a lint script", async () => {
+      assert.jsonFileContent("package.json", { scripts: { "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx" } });
+    })
+  } else {
+    it("Should not have linting files", async () => {
+      assert.noFile(LINT_FILES);
+    });
+    it("Should not have a lint script", async () => {
+      assert.noJsonFileContent("package.json", { scripts: { "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx" } });
+    })
+  }
   if (prompts.unitTestsEnabled) {
     it("Should have unit test files", async () => {
       assert.file(TEST_FILES);
     });
+    it("Should have a test script", async () => {
+      assert.jsonFileContent("package.json", { scripts: { "test": "jest" } });
+    })
+    it("Should have a coverage script", async () => {
+      assert.jsonFileContent("package.json", { scripts: { "coverage": "jest --coverage" } });
+    })
   } else {
     it("Should not have unit test files", async () => {
       assert.noFile(TEST_FILES);
     });
+    it("Should not have a test script", async () => {
+      assert.noJsonFileContent("package.json", { scripts: { "test": "jest" } });
+    })
+    it("Should not have a coverage script", async () => {
+      assert.noJsonFileContent("package.json", { scripts: { "coverage": "jest --coverage" } });
+    })
   }
 
   if (prompts.isFullScreen) {
@@ -300,7 +333,9 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
       if (unitTesting) {
         prompts = {
           mpnId: "",
-          ...prompts, "quickScaffolding": false, "unitTestsEnabled": true
+          ...prompts, 
+          "quickScaffolding": false, 
+          "unitTestsEnabled": true
         };
         projectPath += "-withUnitTests"
       }

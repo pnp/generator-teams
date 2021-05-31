@@ -62,6 +62,18 @@ export class Yotilities {
         fs.writeJSON(packagePath, pkg);
     }
 
+    public static addScript(name: string, script: string, fs: Editor) {
+        var pkg: any = fs.readJSON(packagePath);
+        pkg.scripts[name] = script;
+        fs.writeJSON(packagePath, pkg);
+    }
+
+    public static addNode(name: string, node: any, fs: Editor) {
+        var pkg: any = fs.readJSON(packagePath);
+        pkg[name] = node;
+        fs.writeJSON(packagePath, pkg);
+    }
+
     public static addOrUpdateEnv(fileName: string, key: string, value: string, fs: Editor): void {
         const envFile = fs.read(fileName);
         let added: boolean = false;

@@ -90,6 +90,7 @@ export class GeneratorTeamsApp extends Generator {
             parts: string[];
             host: string;
             unitTestsEnabled: boolean;
+            lintingSupport: boolean;
             useAzureAppInsights: boolean;
             azureAppInsightsKey: string;
             updateBuildSystem: boolean;
@@ -307,6 +308,14 @@ export class GeneratorTeamsApp extends Generator {
                 },
                 {
                     type: 'confirm',
+                    name: 'lintingSupport',
+                    message: 'Would you like to include ESLint support',
+                    when: (answers: IAnswers) => !this.options.existingManifest && !answers.quickScaffolding,
+                    store: true,
+                    default: true
+                },
+                {
+                    type: 'confirm',
                     name: 'useAzureAppInsights',
                     message: 'Would you like to use Azure Applications Insights for telemetry?',
                     when: (answers: IAnswers) => !this.options.existingManifest && !answers.quickScaffolding,
@@ -364,6 +373,7 @@ export class GeneratorTeamsApp extends Generator {
                 this.options.showLoadingIndicator = answers.showLoadingIndicator;
                 this.options.isFullScreen = answers.isFullScreen;
                 this.options.unitTestsEnabled = answers.unitTestsEnabled;
+                this.options.lintingSupport = answers.quickScaffolding || answers.lintingSupport ;
                 this.options.useAzureAppInsights = answers.useAzureAppInsights;
                 this.options.azureAppInsightsKey = answers.azureAppInsightsKey;
             } else {
@@ -422,10 +432,7 @@ export class GeneratorTeamsApp extends Generator {
 
             let staticFiles = [
                 "_gitignore",
-                "_eslintignore",
-                "_eslintrc.json",
-                "src/server/.eslintrc.json",
-                "src/client/.eslintrc.json",
+                ".vscode/launch.json",
                 "src/server/tsconfig.json",
                 "src/client/tsconfig.json",
                 "src/manifest/icon-outline.png",
@@ -458,22 +465,69 @@ export class GeneratorTeamsApp extends Generator {
                 manifestGenerator.generateManifest(this.options)
             );
 
-            // Add unit tests
-            if (this.options.unitTestsEnabled) {
-                templateFiles.push(
-                    "src/test/test-setup.js",
-                    "src/test/test-shim.js",
-                    "src/client/jest.config.js",
-                    "src/server/jest.config.js"
-                );
-            }
-
             templateFiles.forEach(t => {
                 this.fs.copyTpl(
                     this.templatePath(t),
                     Yotilities.fixFileNames(t, this.options),
                     this.options);
             });
+
+            // Add unit tests
+            if (this.options.unitTestsEnabled) {
+                staticFiles.push(
+                    "src/test/test-setup.js",
+                    "src/test/test-shim.js",
+                    "src/client/jest.config.js",
+                    "src/server/jest.config.js"
+                );
+                Yotilities.addAdditionalDevDeps([
+                    ["enzyme", "^3.9.0"],
+                    ["@types/enzyme", "^3.9.1"],
+                    ["@types/jest", "^26.0.15"],
+                    ["@types/enzyme-to-json", "^1.5.3"],
+                    ["enzyme-adapter-react-16", "^1.11.2"],
+                    ["enzyme-to-json", "^3.3.5"],
+                    ["jest", "^26.6.1"],
+                    ["ts-jest", "^26.4.3"]
+                ], this.fs);
+
+                Yotilities.addScript("test", "jest", this.fs);
+                Yotilities.addScript("coverage", "jest --coverage", this.fs);
+
+                Yotilities.addNode("jest", {
+                    "projects": [
+                        "src/client/jest.config.js",
+                        "src/server/jest.config.js"
+                    ]
+                }, this.fs);
+            }
+
+            // add linting support
+            if (this.options.lintingSupport) {
+                staticFiles.push(
+                    "_eslintignore",
+                    "_eslintrc.json",
+                    "src/server/.eslintrc.json",
+                    "src/client/.eslintrc.json",
+                );
+
+                Yotilities.addAdditionalDevDeps([
+                    ["@typescript-eslint/eslint-plugin", "^4.14.0"],
+                    ["@typescript-eslint/parser", "^4.14.0"],
+                    ["eslint", "^7.18.0"],
+                    ["eslint-config-standard", "^16.0.2"],
+                    ["eslint-plugin-import", "^2.22.1"],
+                    ["eslint-plugin-node", "^11.1.0"],
+                    ["eslint-plugin-promise", "^4.2.1"],
+                    ["eslint-plugin-react", "^7.22.0"],
+                    ["eslint-plugin-react-hooks", "^4.2.0"],
+                    ["eslint-webpack-plugin", "^2.5.0"]
+                ], this.fs);
+
+                Yotilities.addScript("lint", "eslint ./src --ext .js,.jsx,.ts,.tsx", this.fs);
+            }
+
+          
 
             staticFiles.forEach(t => {
                 this.fs.copy(
@@ -497,7 +551,7 @@ export class GeneratorTeamsApp extends Generator {
                     if (this.options.telemetry) {
                         AppInsights.defaultClient.trackEvent({ name: 'update-core-files', properties: { result: result ? "true" : "false" } });
                     }
-                    if(result === false) {
+                    if (result === false) {
                         process.exit(4);
                     }
                 } else {

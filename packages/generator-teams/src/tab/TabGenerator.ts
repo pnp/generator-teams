@@ -118,7 +118,7 @@ export class TabGenerator extends Generator {
                         type: 'confirm',
                         name: 'tabSSO',
                         message: 'Do you require Azure AD Single-Sign-On support for the tab?',
-                        default: true,
+                        default: false,
                         when: (answers: any) => {
                             if (answers.tabType == "viva") {
                                 return false; // SSO will automatically be configured for Viva

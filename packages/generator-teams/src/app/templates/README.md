@@ -36,6 +36,11 @@ To create the Microsoft Teams Apps manifest, run the `manifest` Gulp task. This 
 gulp manifest
 ```
 
+## Deploying the manifest
+
+TODO
+
+
 ## Configuration
 
 Configuration is stored in the `.env` file.
@@ -54,25 +59,25 @@ To debug the code you can append the argument `debug` to the `serve` command as 
 gulp serve --debug
 ```
 
-To step through code in Visual Studio Code you need to add the following snippet in the `./.vscode/launch.json` file. Once done, you can easily attach to the node process after running the `gulp serve --debug` command.
+### Debugging with Visual Studio Code
 
-``` json
- {
-    "name": "Attach",
-    "port": 9229,
-    "request": "attach",
-    "skipFiles": [
-        "<node_internals>/**"
-    ],
-    "type": "pwa-node"
-}
-```
+If the application is started with the `--debug` flag, then you can use the built-in debug configurations to step through your code.
+
+* **Debug (Edge)** will open up Edge in remote debugging mode and also connect to the server side for debugging
+* **Debug (Chrome)** will open up Crhome in remote debugging mode and also connect to the server side for debugging
+* **Attach to server** will only connect to the server side for debugging
+* **Launch client (Edge)** will only open up Edge in remote debugging mode
+* **Launch client (Chrome)** will only open up Chrome in remote debugging mode
 
 ### Using ngrok for local development and hosting
 
 In order to make development locally a great experience it is recommended to use [ngrok](https://ngrok.io), which allows you to publish the localhost on a public DNS, so that you can consume the bot and the other resources in Microsoft Teams.
 
 To use ngrok, it is recommended to use the `gulp ngrok-serve` command, which will read your ngrok settings from the `.env` file and automatically create a correct manifest file and finally start a local development server using the ngrok settings.
+
+### Using Github Codepsaces for development and testing
+
+See TODO for more information
 
 ### Additional build options
 

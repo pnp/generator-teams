@@ -33,6 +33,7 @@ export class GeneratorTeamsAppOptions {
     updateManifestVersion: boolean = false; // Set to true when asked to update manifest
     useAzureAppInsights: boolean = false;
     azureAppInsightsKey?: string = undefined;
+    lintingSupport: boolean = true;
 
     /* Tabs */
     tab: boolean;
