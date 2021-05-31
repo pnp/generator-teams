@@ -9,8 +9,9 @@ import File from "vinyl";
 import through from "through2";
 import jszip from "jszip";
 import PluginError from "plugin-error";
-import { readFileSync } from "fs-extra";
+import { readFileSync, readJSONSync } from "fs-extra";
 import { dependencies } from ".";
+import chalk from "chalk";
 
 export const deployTask = (gulp: GulpClient.Gulp, config: any) => {
 
@@ -130,6 +131,26 @@ export const deployTask = (gulp: GulpClient.Gulp, config: any) => {
     gulp.task("m365:publish", dependencies(gulp, status, publishTask));
 
     gulp.task("m365:deploy", dependencies(gulp, "manifest", "m365:publish"));
+
+    gulp.task("m365:ngrok-serve", dependencies(gulp, "start-ngrok", "manifest", "m365:publish", "serve"));
+
+    gulp.task("m365:serve", dependencies(gulp, "manifest", "m365:publish", "serve"));
+
+    if (process.env.CODESPACES) {
+        try {
+            // only register code spaces tasks when in Github Codespaces
+
+            const codespaceEnvConfig = "/workspaces/.codespaces/shared/environment-variables.json";
+            const codespaceEnv = readJSONSync(codespaceEnvConfig);
+            const codespaceName = codespaceEnv.CODESPACE_NAME;
+
+            process.env.PUBLIC_HOSTNAME = `${codespaceName}-${process.env.PORT}.githubpreview.dev`;
+            log("[Codespace] Public url: " + process.env.PUBLIC_HOSTNAME);
+            gulp.task("m365:codespaces-serve", dependencies(gulp, "manifest", "m365:publish", "serve"));
+        } catch (ex) {
+            log(chalk.red(`Unable to set up Codespaces tasks: ${ex}`));
+        }
+    }
 
     gulp.task("m365:logout", (cb) => {
         logout(cb);
