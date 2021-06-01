@@ -32,8 +32,8 @@ export class TabManifestUpdater implements IManifestUpdater {
         if (options.tabSSO && manifest.webApplicationInfo === undefined) {
             // only add SSO the first time
             manifest.webApplicationInfo = {
-                id: `{{${options.tabUpperName}_APP_ID}}`,
-                resource: `{{${options.tabUpperName}_APP_URI}}`
+                id: `{{TAB_APP_ID}}`,
+                resource: `{{TAB_APP_URI}}`
             }
         }
     }

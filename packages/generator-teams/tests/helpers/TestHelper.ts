@@ -364,10 +364,9 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
     describe(`Schema ${from} upgrading to ${to}${unitTesting ? ", with Unit tests" : ""}`, async () => {
       let projectPath = TEMP_TEST_PATH + `/${prefix}/${from}-${to}-${lodash.snakeCase(test.description)}`;
 
-      let prompts = { manifestVersion: from, ...basePrompts, ...test.prompts };
+      let prompts = {  mpnId: "", manifestVersion: from, ...basePrompts, ...test.prompts };
       if (unitTesting) {
         prompts = {
-          mpnId: "",
           ...prompts, "quickScaffolding": false, "unitTestsEnabled": true
         };
         projectPath += "-withUnitTests"

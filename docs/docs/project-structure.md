@@ -7,7 +7,6 @@ The generated project from the Microsoft Teams Apps generator has the following 
 The root folder contains all the required files you need to build and run your project.
 
 - `gulpfile.js` contains configuration for the Gulp tasks. See [`yoteams-core-build`]() for more information
-- `gulp.config.js` contains settings for your project
 - `README-XXX.md` automatically generated readme file to help you get started
 - `.env` contains replaceable strings that will be used throughout your project and make it easier for you to move projects between environments.
 - `Dockerfile` a pre-configured Docker file

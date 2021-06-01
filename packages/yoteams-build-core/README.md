@@ -66,7 +66,7 @@ The `ngrok-serve` command starts the ngrok client and by default assigns a rando
 
 #### Using Github Codespaces
 
-No additional configuration is required for Github Codespaces.
+No additional configuration is required for Github Codespaces, except by configuring the exposed port (default 3007) to be Public (default is Private).
 
 ### Custom tasks
 

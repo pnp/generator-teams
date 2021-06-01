@@ -2,9 +2,11 @@
 
 [![MIT](https://img.shields.io/npm/l/generator-teams.svg)](https://github.com/PnP/generator-teams/blob/master/LICENSE.md)
 
-A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) Apps projects. **The most comprehensive and complete development toolkit for Microsoft Teams development**. This generator is targeted to developers who prefers to use TypeScript, React and node as their primary technologies, but does not exclude using any frameworks.
+A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) Apps projects. **The most comprehensive and complete development toolkit for Microsoft Teams development**. Yo Teams allows you to build Microsoft Teams applications based on TypeScript and node.js on your terms, in your editor of choice, without any external or online dependencies.
 
-This project consists of the Yeoman Generator for Microsoft Teams Apps ( `generator-teams` ) and a package of Gulp tasks ( `yoteams-build-core`).
+This generator is built and maintained by the community, for the community.
+
+This project consists of the Yeoman Generator for Microsoft Teams Apps ( `generator-teams` ) and package of Gulp tasks ( `yoteams-build-core` and `yoteams-deploy`).
 
 ## Packages
 
@@ -21,6 +23,13 @@ The `generator-teams` documentation and source code is found under [packages/gen
 [![npm](https://img.shields.io/npm/dt/yoteams-build-core.svg)](https://www.npmjs.com/package/yoteams-build-core)
 
 The `yoteams-build-core` documentation and source code is found under [packages/yoteams-build-core](https://github.com/pnp/generator-teams/tree/master/packages/yoteams-build-core)
+
+### yoteams-deploy
+
+[![npm version](https://badge.fury.io/js/yoteams-deploy.svg)](https://www.npmjs.com/package/yoteams-deploy)
+[![npm](https://img.shields.io/npm/dt/yoteams-deploy.svg)](https://www.npmjs.com/package/yoteams-deploy)
+
+The `yoteams-deploy` documentation and source code is found under [packages/yoteams-deploy](https://github.com/pnp/generator-teams/tree/master/packages/yoteams-deploy)
 
 ## Documentation
 

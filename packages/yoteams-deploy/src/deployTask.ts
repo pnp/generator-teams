@@ -13,9 +13,11 @@ import { readFileSync, readJSONSync } from "fs-extra";
 import { dependencies } from ".";
 import chalk from "chalk";
 
+const argv = require("yargs").argv;
+
 export const deployTask = (gulp: GulpClient.Gulp, config: any) => {
 
-    // Updates an existing application
+    // Updates an exisrgsting application
     const update = (cb: TaskFunctionCallback, id: string, filename: string): void => execute(
         ["teams", "app", "update", "--id", id, "--filePath", filename, "-o", "json"],
         chunk => log(`${chunk}`),
@@ -99,7 +101,7 @@ export const deployTask = (gulp: GulpClient.Gulp, config: any) => {
             }
         }
     );
-    status.displayName = "m365:login";
+    status.displayName = "app-store:login";
 
     function publishFn() {
         function p(file: File, enc: string, callback: TaskFunctionCallback) {
@@ -126,15 +128,25 @@ export const deployTask = (gulp: GulpClient.Gulp, config: any) => {
     function publishTask() {
         return gulp.src("./package/*.zip").pipe(publishFn());
     }
-    publishTask.displayName = "m365:application-upload";
+    publishTask.displayName = "app-store:application-upload";
 
-    gulp.task("m365:publish", dependencies(gulp, status, publishTask));
+    gulp.task("app-store:publish", dependencies(gulp, status, publishTask));
 
-    gulp.task("m365:deploy", dependencies(gulp, "manifest", "m365:publish"));
+    gulp.task("app-store:deploy", dependencies(gulp, "manifest", "app-store:publish"));
 
-    gulp.task("m365:ngrok-serve", dependencies(gulp, "start-ngrok", "manifest", "m365:publish", "serve"));
+    // Replace the default serve with a new command
+    gulp.task("serve", (cb) => {
+        if (argv.publish) {
+            dependencies(gulp, "nuke", "app-store:deploy", "build", "nodemon", "watch")(() => { cb(); });
+        } else {
+            dependencies(gulp, "nuke", "build", "nodemon", "watch")(() => { cb(); });
+        }
+    });
 
-    gulp.task("m365:serve", dependencies(gulp, "manifest", "m365:publish", "serve"));
+    // Replace the default ngrok-serve with a new command
+    gulp.task("ngrok-serve", (cb) => {
+        dependencies(gulp, "start-ngrok", "serve")(() => { cb(); });
+    });
 
     if (process.env.CODESPACES) {
         try {
@@ -146,13 +158,13 @@ export const deployTask = (gulp: GulpClient.Gulp, config: any) => {
 
             process.env.PUBLIC_HOSTNAME = `${codespaceName}-${process.env.PORT}.githubpreview.dev`;
             log("[Codespace] Public url: " + process.env.PUBLIC_HOSTNAME);
-            gulp.task("m365:codespaces-serve", dependencies(gulp, "manifest", "m365:publish", "serve"));
+            gulp.task("codespaces-serve", dependencies(gulp, "serve"));
         } catch (ex) {
             log(chalk.red(`Unable to set up Codespaces tasks: ${ex}`));
         }
     }
 
-    gulp.task("m365:logout", (cb) => {
+    gulp.task("app-store:logout", (cb) => {
         logout(cb);
     });
 

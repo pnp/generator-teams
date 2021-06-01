@@ -13,21 +13,28 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Improved conflict resolution when re-running the generator
 * Support for Microsoft Teams manifest schema 1.10
 * Added default debugging tasks for Visual Studio Code
+* Additional Gulp tasks and flags added via new `yoteams-deploy` package
 
 ### Changes
 
 * [BREAKING] Changed the environment variable `HOSTNAME` to `PUBLIC_HOSTNAME` to not reuse the system set HOSTNAME environment variable. Required for Github Codespaces integration and when multiple web apps are load balanced.
 * [BREAKING] Node 10.x no longer supported
+* [BREAKING] Environment variables for SSO Tabs are no longer dynamically named and now have static names `TAB_APP_ID` and `TAB_APP_URI`
 * Updated build packages
 * Moved custom `skip-install` implementation to native Yeoman version
 * Updated to Microsoft Teams JS SDK 1.10
 * Improved integration testing for generator
 * Changed default setting for SSO Tab from Yes to No
 * Linting files and support is now an additional advanced option (default to true)
+* Switched from Dotenv plugin in Webpack to Define plugin (due to issues with some Azure SDK packages)
 
 ### Deleted
 
 * Deleted non used reference to ngrok in scaffolded project (as it is referenced by the build package since v3)
+
+### Fixed
+
+* Fixed an issue where `gulpfile.js` and `webpack.config.js` was minified when scaffolded
 
 > *Tests passing: 8.181*
 

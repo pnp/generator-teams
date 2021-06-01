@@ -3,7 +3,6 @@
 // Licensed under the MIT license.
 
 const webpack = require("webpack");
-const Dotenv = require("dotenv-webpack");
 const nodeExternals = require("webpack-node-externals");
 const ESLintPlugin = require("eslint-webpack-plugin");
 
@@ -75,9 +74,7 @@ const config = [{
         }]
     },
     plugins: [
-        new Dotenv({
-            systemvars: true
-        })
+        new webpack.EnvironmentPlugin(["PUBLIC_HOSTNAME", "TAB_APP_ID", "TAB_APP_URI"])
     ]
 }
 ];

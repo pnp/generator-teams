@@ -74,31 +74,38 @@ const config = [{
             patterns: [
                 {
                     from: 'src/app/templates',
-                    to: 'app/templates'
+                    to: 'app/templates',
+                    info: { minimized: true }
                 },
                 {
                     from: 'src/app/USAGE',
-                    to: 'app'
+                    to: 'app',
+                    info: { minimized: true }
                 },
                 {
                     from: 'src/tab/templates',
-                    to: 'tab/templates'
+                    to: 'tab/templates',
+                    info: { minimized: true }
                 },
                 {
                     from: 'src/bot/templates',
-                    to: 'bot/templates'
+                    to: 'bot/templates',
+                    info: { minimized: true }
                 },
                 {
                     from: 'src/custombot/templates',
-                    to: 'custombot/templates'
+                    to: 'custombot/templates',
+                    info: { minimized: true }
                 },
                 {
                     from: 'src/connector/templates',
-                    to: 'connector/templates'
+                    to: 'connector/templates',
+                    info: { minimized: true }
                 },
                 {
                     from: 'src/messageExtension/templates',
-                    to: 'messageExtension/templates'
+                    to: 'messageExtension/templates',
+                    info: { minimized: true }
                 }
             ]
         })

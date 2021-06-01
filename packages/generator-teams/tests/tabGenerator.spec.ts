@@ -157,11 +157,11 @@ describe("teams:tab", function () {
         });
       });
       it("Should have .env settings for SSO", async () => {
-        assert.fileContent(".env", `TEAMSSOLUTIONTAB_APP_ID=${TABSSOAPPID}`);
-        assert.fileContent(".env", `TEAMSSOLUTIONTAB_APP_URI=${TABSSOAPPURI}`);
+        assert.fileContent(".env", `TAB_APP_ID=${TABSSOAPPID}`);
+        assert.fileContent(".env", `TAB_APP_URI=${TABSSOAPPURI}`);
       });
       it("Should have a reference to jwt-token", async () => {
-        assert.jsonFileContent("package.json", { dependencies: { "jwt-decode": "^3.0.0-beta.2" } });
+        assert.jsonFileContent("package.json", { dependencies: { "jwt-decode": "^3.1.2" } });
       });
     }
   }

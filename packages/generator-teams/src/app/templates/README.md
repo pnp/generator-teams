@@ -24,7 +24,7 @@ For further details see the [Yo Teams documentation](https://github.com/PnP/gene
 The application is built using the `build` Gulp task.
 
 ``` bash
-npm i -g gulp gulp-cli
+npm i -g gulp-cli
 gulp build
 ```
 
@@ -38,7 +38,7 @@ gulp manifest
 
 ## Deploying the manifest
 
-TODO
+Using the `yoteams-deploy` plugin, automatically added to the project, deployment of the manifest to the Teams App store can be done manually using `gulp app-store:deploy` or by passing the `--publish` flag to any of the `serve` tasks.
 
 
 ## Configuration
@@ -59,33 +59,20 @@ To debug the code you can append the argument `debug` to the `serve` command as 
 gulp serve --debug
 ```
 
-### Debugging with Visual Studio Code
+## Useful links
+ * [Debugging with Visual Studio Code](https://github.com/pnp/generator-teams/blob/master/docs/docs/vscode.md)
+ * [Developing with ngrok](https://github.com/pnp/generator-teams/blob/master/docs/docs/ngrok.md)
+ * [Developing with Github Codespaces](https://github.com/pnp/generator-teams/blob/master/docs/docs/codespaces.md)
 
-If the application is started with the `--debug` flag, then you can use the built-in debug configurations to step through your code.
 
-* **Debug (Edge)** will open up Edge in remote debugging mode and also connect to the server side for debugging
-* **Debug (Chrome)** will open up Crhome in remote debugging mode and also connect to the server side for debugging
-* **Attach to server** will only connect to the server side for debugging
-* **Launch client (Edge)** will only open up Edge in remote debugging mode
-* **Launch client (Chrome)** will only open up Chrome in remote debugging mode
-
-### Using ngrok for local development and hosting
-
-In order to make development locally a great experience it is recommended to use [ngrok](https://ngrok.io), which allows you to publish the localhost on a public DNS, so that you can consume the bot and the other resources in Microsoft Teams.
-
-To use ngrok, it is recommended to use the `gulp ngrok-serve` command, which will read your ngrok settings from the `.env` file and automatically create a correct manifest file and finally start a local development server using the ngrok settings.
-
-### Using Github Codepsaces for development and testing
-
-See TODO for more information
-
-### Additional build options
+## Additional build options
 
 You can use the following flags for the `serve`, `ngrok-serve` and build commands:
 
 * `--no-linting` or `-l` - skips the linting of Typescript during build to improve build times
 * `--debug` - builds in debug mode
 * `--env <filename>.env` - use an alternate set of environment files
+* `--publish` - automatically publish the application to the Teams App store
 
 ## Deployment
 

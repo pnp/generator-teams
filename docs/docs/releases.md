@@ -21,10 +21,11 @@ Detailed descriptions can always be found in the [CHANGELOG.md](https://github.c
 | [2.15.0](./Release-notes-2.15.0)  | 2020-06-20| to 2.16.0 |||
 | [2.16.0](./Release-notes-2.16.0)  | 2020-10-28|  |||
 | [2.17.1](./Release-notes-2.16.0)  | 2020-12-07| n/a |||
-| [3.0.0](./Release-notes-3.0.0)  | 2021-02-07| n/a |||
-| [3.0.1](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.0.1)  | 2021-02-11| n/a |||
-| [3.0.2](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.0.2)  | 2021-02-24| n/a |||
-| [3.0.3](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.0.3)  | 2021-03-02| n/a |**latest**||
+| [3.0.0](./Release-notes-3.0.0)  | 2021-02-07| to 3.1.0 |||
+| [3.0.1](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.0.1)  | 2021-02-11| to 3.1.0 |||
+| [3.0.2](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.0.2)  | 2021-02-24| to 3.1.0 |||
+| [3.0.3](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.0.3)  | 2021-03-02| to 3.1.0a |||
+| [3.1.0](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.1.0)  | 2021-05-21| n/a |**latest**||
 
 ## How to install a specific version
 
