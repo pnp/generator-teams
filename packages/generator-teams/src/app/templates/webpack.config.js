@@ -74,7 +74,7 @@ const config = [{
         }]
     },
     plugins: [
-        new webpack.EnvironmentPlugin(["PUBLIC_HOSTNAME", "TAB_APP_ID", "TAB_APP_URI"])
+        new webpack.EnvironmentPlugin({ PUBLIC_HOSTNAME: undefined, TAB_APP_ID: null, TAB_APP_URI: null })
     ]
 }
 ];
