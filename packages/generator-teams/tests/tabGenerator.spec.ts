@@ -151,8 +151,8 @@ describe("teams:tab", function () {
         assert.jsonFileContent("src/manifest/manifest.json", {
           webApplicationInfo:
           {
-            id: "{{TEAMSSOLUTIONTAB_APP_ID}}",
-            resource: "{{TEAMSSOLUTIONTAB_APP_URI}}"
+            id: "{{TAB_APP_ID}}",
+            resource: "{{TAB_APP_URI}}"
           }
         });
       });
