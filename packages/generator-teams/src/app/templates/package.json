@@ -42,7 +42,7 @@
     "webpack": "5.0.0",
     "yargs": "^16.0.3",
     "yoteams-build-core": "^1.2.0-preview3",
-    "yoteams-deploy": "^1.0.0-preview2",
+    "yoteams-deploy": "^1.0.0-preview3",
     "webpack-node-externals": "^2.5.2"
   },
   "browserslist": [
