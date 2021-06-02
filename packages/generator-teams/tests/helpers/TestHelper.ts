@@ -293,7 +293,7 @@ export function integrationTests(manifestVersion: string, prompts: any, projectP
     describe("Integration tests", () => {
 
       it("Should run npm install successfully", async () => {
-        const npmInstallResult = await runNpmCommand("yarn install --prefer-offline", projectPath);
+        const npmInstallResult = await runNpmCommand("npm install --prefer-offline --no-audit", projectPath);
         assert.strictEqual(false, npmInstallResult);
       });
 
