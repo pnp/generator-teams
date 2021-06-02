@@ -87,6 +87,11 @@ export const DIST_FILES = [
 ];
 
 
+export const PACKAGE_FILES = [
+  'package/teamssolution.zip'
+];
+
+
 export const basePrompts = {
   "solutionName": "teams-solution",
   "whichFolder": "current",
@@ -282,10 +287,11 @@ export function coreTests(manifestVersion: string, prompts: any, projectPath: st
   }
 }
 
-export function integrationTests(manifestVersion: string, prompts: any, projectPath: string) {
+export function integrationTests(manifestVersion: string, prompts: any, projectPath: string, unitTesting: boolean) {
   // Integration tests
   if (process.env.TEST_TYPE == TestTypes.INTEGRATION) {
     describe("Integration tests", () => {
+
       it("Should run npm install successfully", async () => {
         const npmInstallResult = await runNpmCommand("yarn install --prefer-offline", projectPath);
         assert.strictEqual(false, npmInstallResult);
@@ -296,14 +302,39 @@ export function integrationTests(manifestVersion: string, prompts: any, projectP
         assert.strictEqual(false, npmRunBuildResult);
       });
 
+      it("Should have ./dist files", async () => {
+        assert.file(DIST_FILES);
+      });
+
       it("Should validate manifest successfully", async () => {
         const npmResult = await runNpmCommand("npm run manifest", projectPath);
         assert.strictEqual(false, npmResult);
       });
 
-      it("Should have ./dist files", async () => {
-        assert.file(DIST_FILES);
+      it("Should have ./package files", async () => {
+        assert.file(PACKAGE_FILES);
       });
+
+      if (unitTesting) {
+        it("Should run unit tests successfully", async () => {
+          const npmResult = await runNpmCommand("npm run test", projectPath);
+          assert.strictEqual(false, npmResult);
+        });
+      }
+
+      if (prompts.lintingSupport) {
+        it("Should run lint successfully", async () => {
+          const npmResult = await runNpmCommand("npm run lint", projectPath);
+          assert.strictEqual(false, npmResult);
+        });
+      }
+
+      // clean up
+      after(async () => {
+        await runNpmCommand("rm node_modules -rf", projectPath);
+        await runNpmCommand("rm dist -rf", projectPath);
+      });
+
     });
   }
 }
@@ -333,8 +364,8 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
       if (unitTesting) {
         prompts = {
           mpnId: "",
-          ...prompts, 
-          "quickScaffolding": false, 
+          ...prompts,
+          "quickScaffolding": false,
           "unitTestsEnabled": true
         };
         projectPath += "-withUnitTests"
@@ -351,7 +382,7 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
 
       coreTests(manifestVersion, prompts, projectPath);
 
-      integrationTests(manifestVersion, prompts, projectPath);
+      integrationTests(manifestVersion, prompts, projectPath, unitTesting);
 
       if (additionalTests) {
         additionalTests(prompts);
@@ -364,7 +395,7 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
     describe(`Schema ${from} upgrading to ${to}${unitTesting ? ", with Unit tests" : ""}`, async () => {
       let projectPath = TEMP_TEST_PATH + `/${prefix}/${from}-${to}-${lodash.snakeCase(test.description)}`;
 
-      let prompts = {  mpnId: "", manifestVersion: from, ...basePrompts, ...test.prompts };
+      let prompts = { mpnId: "", manifestVersion: from, ...basePrompts, ...test.prompts };
       if (unitTesting) {
         prompts = {
           ...prompts, "quickScaffolding": false, "unitTestsEnabled": true
@@ -398,7 +429,7 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
 
       coreTests(to, prompts, projectPath);
 
-      integrationTests(to, prompts, projectPath);
+      integrationTests(to, prompts, projectPath, unitTesting);
 
     });
   }
