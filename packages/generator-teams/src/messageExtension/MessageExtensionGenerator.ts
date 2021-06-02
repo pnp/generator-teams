@@ -116,6 +116,10 @@ export class MessageExtensionGenerator extends Generator {
                             {
                                 name: "Action based messaging extension",
                                 value: "action"
+                            },
+                            {
+                                name: "Link unfurling messaging extension",
+                                value: "queryLink"
                             }
                         ]
                     },
@@ -230,6 +234,21 @@ export class MessageExtensionGenerator extends Generator {
                             return input.length > 0;
                         }
                     },
+                    {
+                        type: 'input',
+                        name: 'messageExtensionLinkDomains',
+                        message: 'Provide a comma separated list of domains for your Message Extension Link Unfurling:',
+                        default: '*.contoso.com',
+                        validate: (input: string, answers: any) => {
+                            if (!(/[\*]?.[\w]*[.[\w]*]*[,]?/gm.test(input))) {
+                                return "Must contain a comma separated list of domains";
+                            }
+                            return input.length > 0;
+                        },
+                        when: (answers: any) => {
+                            return answers.messagingExtensionType == "queryLink"
+                        }
+                    },
                 ]
             ).then((answers: any) => {
                 this.options.messageExtensionHost = answers.messageExtensionHost;
@@ -248,6 +267,9 @@ export class MessageExtensionGenerator extends Generator {
                 }
                 if (!this.options.messageExtensionName.endsWith(`MessageExtension`)) {
                     this.options.messageExtensionName += `MessageExtension`;
+                }
+                if (answers.messageExtensionLinkDomains) {
+                    this.options.messageExtensionLinkDomains = answers.messageExtensionLinkDomains.split(",");
                 }
 
                 this.options.messageExtensionClassName = this.options.messageExtensionName.charAt(0).toUpperCase() + this.options.messageExtensionName.slice(1);

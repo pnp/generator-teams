@@ -5,13 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [*Unreleased*]- <**>
+## [*3.1.0*]- <*2021-05-21*>
+
+### Added
+
+* Support for link unfurling (#200) - @PaoloPia
+* Dedicated option for creating a static tab for Viva Connections (manifest schema 1.9 or later)
+
+### Changes
+
+* Microsoft Teams Schema 1.9 set as default schema
 
 ### Fixed
 
 * Typo in question for bot (#191)
 * Invalid messaging extension description (#192)
 * Invalid condition in prompt for Bot Id (#193)
+* Fixed state/closure issue on Connector configuration
+
+> *Tests passing: 4.211*
 
 ## [*3.0.3*]- <*2021-03-02*>
 

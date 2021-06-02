@@ -16,15 +16,15 @@ export class ManifestGeneratorFactory {
             manifestVersion: ManifestVersions.v18,
             schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.8/MicrosoftTeams.schema.json",
             manifestValue: "1.8",
-            default: true,
+            default: false,
             hide: false
         },
         {
             manifestVersion: ManifestVersions.v19,
             schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.9/MicrosoftTeams.schema.json",
             manifestValue: "1.9",
-            default: false,
-            hide: true
+            default: true,
+            hide: false
         },
         {
             manifestVersion: ManifestVersions.devPreview,

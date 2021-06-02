@@ -14,3 +14,4 @@ webpack.config.js
 gulpfile.js
 tsconfig.json 
 .travis.yml
+.editorconfig

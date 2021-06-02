@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Provider, Flex, Header, Dropdown } from "@fluentui/react-northstar";
-import { useState, useEffect } from "react";
+import { Provider, Flex, Header, Dropdown, ShorthandCollection, DropdownItemProps } from "@fluentui/react-northstar";
+import { useState, useEffect, useRef } from "react";
 import { useTeams } from "msteams-react-base-component";
 import * as microsoftTeams from "@microsoft/teams-js";
 
@@ -27,15 +27,17 @@ export const <%=connectorComponentName%>Config = () => {
 
     const [{ theme, context }] = useTeams();
     const [color, setColor] = useState<IColor>();
+    const colorRef = useRef(color);
+    colorRef.current = color;
 
     useEffect(() => {
         if (context) {
             microsoftTeams.settings.registerOnSaveHandler((saveEvent: microsoftTeams.settings.SaveEvent) => {
                 // INFO: Should really be of type microsoftTeams.settings.Settings, but configName does not exist in the Teams JS SDK
                 const settings: any = {
-                    entityId: color ? color.code : availableColors[0].code,
+                    entityId: colorRef.current ? colorRef.current.code : availableColors[0].code,
                     contentUrl: `https://${process.env.HOSTNAME}/<%=connectorName%>/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
-                    configName: color ? color.title : availableColors[0].title
+                    configName: colorRef.current ? colorRef.current.title : availableColors[0].title
                 };
                 microsoftTeams.settings.setSettings(settings);
 
@@ -50,7 +52,7 @@ export const <%=connectorComponentName%>Config = () => {
                             user: setting.userObjectId,
                             appType: setting.appType,
                             groupName: context.groupId,
-                            color: color ? color.code : availableColors[0].code,
+                            color: colorRef.current ? colorRef.current.code : availableColors[0].code,
                             state: "myAppsState"
                         })
                     }).then(response => {
@@ -64,15 +66,23 @@ export const <%=connectorComponentName%>Config = () => {
                     });
                 });
             });
-            setColor(availableColors.find(c => c.code === context.entityId));
-            microsoftTeams.settings.setValidityState(color !== undefined);
+
+            microsoftTeams.settings.getSettings((settings: any) => {
+                setColor(availableColors.find(c => c.code === settings.entityId));
+            });
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [context]);
 
-    const colors = availableColors.map(clr => {
+    useEffect(() => {
+        if (context) {
+            microsoftTeams.settings.setValidityState(color !== undefined);
+        }
+    }, [color, context]);
+
+    const colors: ShorthandCollection<DropdownItemProps> = availableColors.map(clr => {
         return {
             header: clr.title,
+            selected: color && clr.code === color.code,
             onClick: () => {
                 setColor(clr);
                 microsoftTeams.settings.setValidityState(clr !== undefined);

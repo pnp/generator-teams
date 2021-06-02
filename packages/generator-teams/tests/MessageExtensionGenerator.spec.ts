@@ -87,7 +87,7 @@ describe('teams:messageExtension', function () {
             it("Bot middleware should not have the onQuery method", async () => {
                 assert.noFileContent(MESSAGEEXTSION_FILES[0], "public async onQuery(");
             });
-        } else {
+        } else if (prompts.messagingExtensionType == "query") {
             it("Manifest should declare a query messaging extension", async () => {
                 assert.jsonFileContent('src/manifest/manifest.json',{ composeExtensions: [{ commands: [{ type: "query" }] }] });
             });
@@ -99,6 +99,16 @@ describe('teams:messageExtension', function () {
             });
             it("Middleware should define onSubmitAction", async () => {
                 assert.noFileContent(MESSAGEEXTSION_FILES[0], "public async onSubmitAction(");
+            });
+        } else {
+            it("Manifest should have empty commands", async () => {
+                assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ commands: [] }] });
+            });
+            it("Manifest should have messageHandlers section with type link", async () => {
+                assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ messageHandlers: [{ type: "link" }] }] });
+            });
+            it("Bot middleware should have the onQueryLink method", async () => {
+                assert.fileContent(MESSAGEEXTSION_FILES[0], "public async onQueryLink(");
             });
         }
         if (prompts.messagingExtensionType == "action" && prompts.messagingExtensionActionInputType == "static") {
@@ -117,22 +127,19 @@ describe('teams:messageExtension', function () {
                 assert.fileContent(MESSAGEEXTSION_FILES[0], "public async onFetchTask(");
             });
         }
-        if (prompts.messagingExtensionActionInputType == "static") {
-            it("Manifest should define parameters", async () => {
-                assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ commands: [{ parameters: {} }] }] });
-            });
-        } else {
-            it("Manifest should not define parameters", async () => {
-                assert.noJsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ commands: [{ parameters: {} }] }] });
-            });
+        if (prompts.messagingExtensionType != "queryLink") {
+            if (prompts.messagingExtensionActionInputType == "static") {
+                it("Manifest should define parameters", async () => {
+                    assert.jsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ commands: [{ parameters: {} }] }] });
+                });
+            } else {
+                it("Manifest should not define parameters", async () => {
+                    assert.noJsonFileContent('src/manifest/manifest.json', { composeExtensions: [{ commands: [{ parameters: {} }] }] });
+                });
+            }
         }
-
-
     }
 
-
     testHelper.runTests("messageExtensions", tests.messagingExtension, messageExtensionTests);
-
-
 
 });
