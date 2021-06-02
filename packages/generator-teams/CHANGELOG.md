@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed default setting for SSO Tab from Yes to No
 * Linting files and support is now an additional advanced option (default to true)
 * Switched from Dotenv plugin in Webpack to Define plugin (due to issues with some Azure SDK packages)
+* Integration tests (running npm install, build, linting, manifest validation and unit testing) covering essentially all generator combinations on node 12, 14, 15 & 16
 
 ### Deleted
 

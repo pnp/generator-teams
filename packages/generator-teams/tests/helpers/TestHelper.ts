@@ -105,9 +105,12 @@ export async function runNpmCommand(command: string, path: string): Promise<bool
     npmRun.exec(command, { cwd: path },
       function (err: any, stdout: any, stderr: any) {
         if (err) {
-          resolve(true);
-        } else {
+          console.log("err:" + err);
+          console.log("stdout:" + stdout);
+          console.log("stderr:" + stderr);
           resolve(false);
+        } else {
+          resolve(true);
         }
       });
   });
@@ -118,6 +121,8 @@ export const SCHEMA_18 = 'https://developer.microsoft.com/en-us/json-schemas/tea
 export const SCHEMA_19 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.9/MicrosoftTeams.schema.json';
 export const SCHEMA_110 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.10/MicrosoftTeams.schema.json';
 export const SCHEMA_DEVPREVIEW = 'https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json';
+
+export const INTEGRATION_TEST_VERSIONS = ["v1.9", "v.10", "devPreview"]; // only keep three versions, so we can stay under Github 600 minute rule
 
 export const SCHEMAS: { [key: string]: string } = {
   "v1.8": SCHEMA_18,
@@ -289,17 +294,17 @@ export function coreTests(manifestVersion: string, prompts: any, projectPath: st
 
 export function integrationTests(manifestVersion: string, prompts: any, projectPath: string, unitTesting: boolean) {
   // Integration tests
-  if (process.env.TEST_TYPE == TestTypes.INTEGRATION) {
+  if (process.env.TEST_TYPE == TestTypes.INTEGRATION && INTEGRATION_TEST_VERSIONS.includes(manifestVersion)) {
     describe("Integration tests", () => {
 
       it("Should run npm install successfully", async () => {
         const npmInstallResult = await runNpmCommand("npm install --prefer-offline --no-audit", projectPath);
-        assert.strictEqual(false, npmInstallResult);
+        assert.strictEqual(true, npmInstallResult);
       });
 
       it("Should run npm build successfully", async () => {
         const npmRunBuildResult = await runNpmCommand("npm run build", projectPath);
-        assert.strictEqual(false, npmRunBuildResult);
+        assert.strictEqual(true, npmRunBuildResult);
       });
 
       it("Should have ./dist files", async () => {
@@ -308,7 +313,7 @@ export function integrationTests(manifestVersion: string, prompts: any, projectP
 
       it("Should validate manifest successfully", async () => {
         const npmResult = await runNpmCommand("npm run manifest", projectPath);
-        assert.strictEqual(false, npmResult);
+        assert.strictEqual(true, npmResult);
       });
 
       it("Should have ./package files", async () => {
@@ -318,14 +323,14 @@ export function integrationTests(manifestVersion: string, prompts: any, projectP
       if (unitTesting) {
         it("Should run unit tests successfully", async () => {
           const npmResult = await runNpmCommand("npm run test", projectPath);
-          assert.strictEqual(false, npmResult);
+          assert.strictEqual(true, npmResult);
         });
       }
 
       if (prompts.lintingSupport) {
         it("Should run lint successfully", async () => {
           const npmResult = await runNpmCommand("npm run lint", projectPath);
-          assert.strictEqual(false, npmResult);
+          assert.strictEqual(true, npmResult);
         });
       }
 
