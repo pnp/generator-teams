@@ -193,7 +193,7 @@ const log = debug("msteams");
                             id: "email",
                             placeholder: "somemail@example.com",
                             style: "email"
-                        },
+                        }
                     ],
                     actions: [
                         {

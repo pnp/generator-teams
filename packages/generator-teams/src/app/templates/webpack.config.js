@@ -4,7 +4,7 @@
 
 const webpack = require("webpack");
 const nodeExternals = require("webpack-node-externals");
-const ESLintPlugin = require("eslint-webpack-plugin");
+<% if (lintingSupport) { %>const ESLintPlugin = require("eslint-webpack-plugin");<% } %>
 
 const path = require("path");
 const fs = require("fs");
@@ -78,10 +78,10 @@ const config = [{
     ]
 }
 ];
-
+<% if (lintingSupport) { %>
 if (lint !== false) {
     config[0].plugins.push(new ESLintPlugin({ extensions: ["ts", "tsx"], failOnError: false }));
     config[1].plugins.push(new ESLintPlugin({ extensions: ["ts", "tsx"], failOnError: false }));
 }
-
+<% } %>
 module.exports = config;

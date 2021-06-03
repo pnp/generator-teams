@@ -58,10 +58,10 @@ describe('teams:localization', function () {
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
             const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
-            assert.equal(false, npmInstallResult);
+            assert.strictEqual(true, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
-            assert.equal(false, npmRunBuildResult);
+            assert.strictEqual(true, npmRunBuildResult);
         }
     });
 
@@ -87,10 +87,10 @@ describe('teams:localization', function () {
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
             const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
-            assert.equal(false, npmInstallResult);
+            assert.strictEqual(true, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
-            assert.equal(false, npmRunBuildResult);
+            assert.strictEqual(true, npmRunBuildResult);
         }
     });
 
@@ -128,10 +128,10 @@ describe('teams:localization', function () {
 
         if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
             const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
-            assert.equal(false, npmInstallResult);
+            assert.strictEqual(true, npmInstallResult);
       
             const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
-            assert.equal(false, npmRunBuildResult);
+            assert.strictEqual(true, npmRunBuildResult);
         }
     });
 

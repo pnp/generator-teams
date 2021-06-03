@@ -185,6 +185,15 @@ export class BotGenerator extends Generator {
                         "src/server/{botName}/dialogs/WelcomeCard.json",
                         "src/server/{botName}/dialogs/WelcomeDialog.ts"
                     );
+                    if (this.options.unitTestsEnabled) {
+                        templateFiles.push(
+                            "src/server/{botName}/dialogs/__tests__/HelpDialog.spec.ts"
+                        );
+                        Yotilities.addAdditionalDevDeps([
+                            ["botbuilder-testing", "^4.11.1"]
+                        ], this.fs);
+                    };
+
                 }
             }
             templateFiles.forEach(t => {

@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Support for Microsoft Teams manifest schema 1.10
 * Added default debugging tasks for Visual Studio Code
 * Additional Gulp tasks and flags added via new `yoteams-deploy` package
+* Starter unit tests for bot help dialog, messaging extension middleware
 
 ### Changes
 
@@ -37,7 +38,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Fixed an issue where `gulpfile.js` and `webpack.config.js` was minified when scaffolded
 
-> *Tests passing: 8.181*
+> *Tests passing: 8.629*
 
 ## [*3.1.0*]- <*2021-05-21*>
 

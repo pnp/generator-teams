@@ -181,12 +181,18 @@ export function coreTests(manifestVersion: string, prompts: any, projectPath: st
     it("Should have a lint script", async () => {
       assert.jsonFileContent("package.json", { scripts: { "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx" } });
     })
+    it("Should reference ESLint plugin in webpack config", async () => {
+      assert.fileContent("webpack.config.js", "ESLintPlugin");
+    })
   } else {
     it("Should not have linting files", async () => {
       assert.noFile(LINT_FILES);
     });
     it("Should not have a lint script", async () => {
       assert.noJsonFileContent("package.json", { scripts: { "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx" } });
+    })
+    it("Should not reference ESLint plugin in webpack config", async () => {
+      assert.noFileContent("webpack.config.js", "ESLintPlugin");
     })
   }
   if (prompts.unitTestsEnabled) {

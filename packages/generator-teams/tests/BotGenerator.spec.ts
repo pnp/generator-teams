@@ -21,6 +21,10 @@ describe("teams:bot", async () => {
     "src/client/teamsSolutionBot/__tests__/AboutTeamsSolutionBotTab.spec.tsx"
   ];
 
+  const BOT_SERVER_TEST_FILES = [
+    "src/server/teamsSolutionBot/dialogs/__tests__/HelpDialog.spec.ts"
+  ];
+
   const BOT_FILES = [
     "src/server/teamsSolutionBot/TeamsSolutionBot.ts",
     "src/server/teamsSolutionBot/dialogs/HelpDialog.ts",
@@ -68,6 +72,26 @@ describe("teams:bot", async () => {
     } else {
       it("Should not have bot unit test files", async () => {
         assert.noFile(BOT_SCRIPT_TEST_FILES);
+      });
+    }
+
+    if (prompts.unitTestsEnabled) {
+      it("Should have bot dialog unit test files", async () => {
+        assert.file(BOT_SERVER_TEST_FILES);
+      });
+      it("Should have package botbuilder-testing", async () => {
+        assert.jsonFileContent("package.json", {
+          devDependencies: { "botbuilder-testing": "^4.11.1" }
+        });
+      });
+    } else {
+      it("Should not have bot unit test files", async () => {
+        assert.noFile(BOT_SERVER_TEST_FILES);
+      });
+      it("Should not have package botbuilder-testing", async () => {
+        assert.noJsonFileContent("package.json", {
+          devDependencies: { "botbuilder-testing": "^4.11.1" }
+        });
       });
     }
 
