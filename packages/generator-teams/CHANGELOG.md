@@ -38,7 +38,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Fixed an issue where `gulpfile.js` and `webpack.config.js` was minified when scaffolded
 
-> *Tests passing: 8.629*
+> *Tests passing: 8.629 (41.668 with integration testing)*
 
 ## [*3.1.0*]- <*2021-05-21*>
 
