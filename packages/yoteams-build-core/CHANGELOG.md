@@ -20,6 +20,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Switched to `gulp-dart-sass` due to deprecated `node-sass`
 * Node 10.x no longer supported
 
+### Fixes
+
+* Fixed typo (#222)
+
 ## [*1.1.0*] - <*2021-04-15*>
 
 ### Added
