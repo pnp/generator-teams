@@ -122,7 +122,7 @@ export const SCHEMA_19 = 'https://developer.microsoft.com/en-us/json-schemas/tea
 export const SCHEMA_110 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.10/MicrosoftTeams.schema.json';
 export const SCHEMA_DEVPREVIEW = 'https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json';
 
-export const INTEGRATION_TEST_VERSIONS = ["v1.9", "v1.10", "devPreview"]; // only keep three versions, so we can stay under Github 600 minute rule
+export const INTEGRATION_TEST_VERSIONS = ["v1.9", "v1.10"]; // only keep two versions, so we can stay under Github 360 minute rule
 
 export const SCHEMAS: { [key: string]: string } = {
   "v1.8": SCHEMA_18,
