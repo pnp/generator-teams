@@ -16,7 +16,7 @@ The package is installed when scaffolding a project using the Microsoft Teams Ap
 
 The first time the `--publish` flag is used the user will be asked to sign in to the tenant using the Azure AD device code flow. Follow the instructions in the terminal window. After the first sign-in, the credentials will be locally cached and reused the next time the Gulp task is performed.
 
-To force a sign-out, for instance if switching to a new tenant, use the `app-store:logout` Gulp task.
+To force a sign-out, for instance if switching to a new tenant, use the `tenant:logout` Gulp task.
 
 The package can safely be removed from any Yo Teams application - with only the loss of the new and modified tasks, which will be restored to its default.
 
@@ -25,11 +25,9 @@ The package can safely be removed from any Yo Teams application - with only the 
 * **`serve`** - Modified default `serve` task to accept the `--publish` flag
 * **`ngrok-serve`** - Modified default `ngrok-serve` task to accept the `--publish` flag
 * **`codespaces-serve`** - Modified default `codespaces-serve` task to accept the `--publish` flag
-* **`app-store:deploy`** - Builds the manifest and publishes the app to the Teams app store
-* **`app-store:publish`** - Publishes the app to the Teams apps tore
-* **`app-store:logout`** - Removes the current cached credentials
-
-
+* **`tenant:deploy`** - Builds the manifest and publishes the app to the Teams app store
+* **`tenant:publish`** - Publishes the app to the Teams apps tore
+* **`tenant:logout`** - Removes the current cached credentials
 
 ## Contributing
 

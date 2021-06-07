@@ -38,7 +38,7 @@ gulp manifest
 
 ## Deploying the manifest
 
-Using the `yoteams-deploy` plugin, automatically added to the project, deployment of the manifest to the Teams App store can be done manually using `gulp app-store:deploy` or by passing the `--publish` flag to any of the `serve` tasks.
+Using the `yoteams-deploy` plugin, automatically added to the project, deployment of the manifest to the Teams App store can be done manually using `gulp tenant:deploy` or by passing the `--publish` flag to any of the `serve` tasks.
 
 
 ## Configuration

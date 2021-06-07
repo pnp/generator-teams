@@ -17,7 +17,7 @@ const argv = require("yargs").argv;
 
 export const deployTask = (gulp: GulpClient.Gulp, config: any) => {
 
-    // Updates an exisrgsting application
+    // Updates an existing application
     const update = (cb: TaskFunctionCallback, id: string, filename: string): void => execute(
         ["teams", "app", "update", "--id", id, "--filePath", filename, "-o", "json"],
         chunk => log(`${chunk}`),
@@ -101,7 +101,7 @@ export const deployTask = (gulp: GulpClient.Gulp, config: any) => {
             }
         }
     );
-    status.displayName = "app-store:login";
+    status.displayName = "tenant:login";
 
     function publishFn() {
         function p(file: File, enc: string, callback: TaskFunctionCallback) {
@@ -128,16 +128,16 @@ export const deployTask = (gulp: GulpClient.Gulp, config: any) => {
     function publishTask() {
         return gulp.src("./package/*.zip").pipe(publishFn());
     }
-    publishTask.displayName = "app-store:application-upload";
+    publishTask.displayName = "tenant:application-upload";
 
-    gulp.task("app-store:publish", dependencies(gulp, status, publishTask));
+    gulp.task("tenant:publish", dependencies(gulp, status, publishTask));
 
-    gulp.task("app-store:deploy", dependencies(gulp, "manifest", "app-store:publish"));
+    gulp.task("tenant:deploy", dependencies(gulp, "manifest", "tenant:publish"));
 
     // Replace the default serve with a new command
     gulp.task("serve", (cb) => {
         if (argv.publish) {
-            dependencies(gulp, "nuke", "app-store:deploy", "build", "nodemon", "watch")(() => { cb(); });
+            dependencies(gulp, "nuke", "tenant:deploy", "build", "nodemon", "watch")(() => { cb(); });
         } else {
             dependencies(gulp, "nuke", "build", "nodemon", "watch")(() => { cb(); });
         }
@@ -164,7 +164,7 @@ export const deployTask = (gulp: GulpClient.Gulp, config: any) => {
         }
     }
 
-    gulp.task("app-store:logout", (cb) => {
+    gulp.task("tenant:logout", (cb) => {
         logout(cb);
     });
 

@@ -1,6 +1,6 @@
 {
   "name": "yoteams-deploy",
-  "version": "1.0.0-preview3",
+  "version": "1.0.0",
   "description": "Deployment Gulp tasks for Yo Teams, Microsoft Teams Apps Generator (https://aka.ms/yoteams)",
   "main": "dist/index.js",
   "scripts": {
@@ -24,7 +24,7 @@
   "bugs": {
     "url": "https://github.com/pnp/generator-teams/issues"
   },
-  "homepage": "https://github.com/pnp/generator-teams/packages/yoteams-deploy",
+  "homepage": "https://github.com/pnp/generator-teams/tree/master/packages/yoteams-deploy",
   "license": "MIT",
   "dependencies": {
     "@pnp/cli-microsoft365": "^3.9.0",
@@ -53,5 +53,8 @@
     "eslint-plugin-promise": "^5.1.0",
     "rimraf": "^3.0.2",
     "typescript": "^4.0.3"
+  },
+  "engines": {
+    "node": ">=12"
   }
 }
