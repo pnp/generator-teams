@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [*Unreleased*]- <**>
+## [*3.2.0*]- <*2021-06-07*>
 
 ### Added
 
@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added default debugging tasks for Visual Studio Code
 * Additional Gulp tasks and flags added via new `yoteams-deploy` package
 * Starter unit tests for bot help dialog, messaging extension middleware
+* Added `engines` to generator package.json to inform about unsupported Node runtimes
 
 ### Changes
 
@@ -38,7 +39,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Fixed an issue where `gulpfile.js` and `webpack.config.js` was minified when scaffolded
 
-> *Tests passing: 8.629 (38.712 with integration testing)*
+> *Tests passing: 8.965 (38.712 with integration testing)*
 
 ## [*3.1.0*]- <*2021-05-21*>
 
