@@ -174,6 +174,9 @@ export function coreTests(manifestVersion: string, prompts: any, projectPath: st
   it("Should have a reference to Fluentui", async () => {
     assert.jsonFileContent("package.json", { dependencies: { "@fluentui/react-northstar": {} } });
   });
+  it("Should have engines >=12", async () => {
+    assert.jsonFileContent("package.json", { engines: { "node": ">=12" } });
+  });
   if (prompts.lintingSupport) {
     it("Should have linting files", async () => {
       assert.file(LINT_FILES);
