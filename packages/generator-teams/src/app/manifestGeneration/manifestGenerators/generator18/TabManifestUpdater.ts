@@ -13,18 +13,18 @@ export class TabManifestUpdater implements IManifestUpdater {
             (<any[]>manifest.staticTabs).push({
                 entityId: uuid(),
                 name: options.tabTitle,
-                contentUrl: `https://{{HOSTNAME}}/${options.tabName}/?name={loginHint}&tenant={tid}&theme={theme}`,
+                contentUrl: `https://{{PUBLIC_HOSTNAME}}/${options.tabName}/?name={loginHint}&tenant={tid}&theme={theme}`,
                 scopes: ["personal"]
             });
         }
         else {
             const tab: any = {
-                configurationUrl: `https://{{HOSTNAME}}/${options.tabName}/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
+                configurationUrl: `https://{{PUBLIC_HOSTNAME}}/${options.tabName}/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
                 canUpdateConfiguration: true,
                 scopes: options.tabScopes
             };
             if (options.tabSharePoint) {
-                tab.sharePointPreviewImage = `https://{{HOSTNAME}}/assets/${options.tabName}-preview.png`;
+                tab.sharePointPreviewImage = `https://{{PUBLIC_HOSTNAME}}/assets/${options.tabName}-preview.png`;
                 tab.supportedSharePointHosts = options.tabSharePointHosts;
             }
             (<any[]>manifest.configurableTabs).push(tab);
@@ -32,8 +32,8 @@ export class TabManifestUpdater implements IManifestUpdater {
         if (options.tabSSO && manifest.webApplicationInfo === undefined) {
             // only add SSO the first time
             manifest.webApplicationInfo = {
-                id: `{{${options.tabUpperName}_APP_ID}}`,
-                resource: `{{${options.tabUpperName}_APP_URI}}`
+                id: `{{TAB_APP_ID}}`,
+                resource: `{{TAB_APP_URI}}`
             }
         }
     }

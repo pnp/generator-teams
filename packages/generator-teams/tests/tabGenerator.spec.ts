@@ -131,7 +131,7 @@ describe("teams:tab", function () {
           configurableTabs: [
             {
               sharePointPreviewImage:
-                "https://{{HOSTNAME}}/assets/teamsSolutionTab-preview.png",
+                "https://{{PUBLIC_HOSTNAME}}/assets/teamsSolutionTab-preview.png",
               supportedSharePointHosts: prompts.tabSharePointHosts
             }
           ]
@@ -151,17 +151,17 @@ describe("teams:tab", function () {
         assert.jsonFileContent("src/manifest/manifest.json", {
           webApplicationInfo:
           {
-            id: "{{TEAMSSOLUTIONTAB_APP_ID}}",
-            resource: "{{TEAMSSOLUTIONTAB_APP_URI}}"
+            id: "{{TAB_APP_ID}}",
+            resource: "{{TAB_APP_URI}}"
           }
         });
       });
       it("Should have .env settings for SSO", async () => {
-        assert.fileContent(".env", `TEAMSSOLUTIONTAB_APP_ID=${TABSSOAPPID}`);
-        assert.fileContent(".env", `TEAMSSOLUTIONTAB_APP_URI=${TABSSOAPPURI}`);
+        assert.fileContent(".env", `TAB_APP_ID=${TABSSOAPPID}`);
+        assert.fileContent(".env", `TAB_APP_URI=${TABSSOAPPURI}`);
       });
       it("Should have a reference to jwt-token", async () => {
-        assert.jsonFileContent("package.json", { dependencies: { "jwt-decode": "^3.0.0-beta.2" } });
+        assert.jsonFileContent("package.json", { dependencies: { "jwt-decode": "^3.1.2" } });
       });
     }
   }
@@ -197,10 +197,10 @@ describe("teams:tab", function () {
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
-      assert.equal(false, npmInstallResult);
+      assert.strictEqual(true, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
-      assert.equal(false, npmRunBuildResult);
+      assert.strictEqual(true, npmRunBuildResult);
     }
 
     await helpers
@@ -222,10 +222,10 @@ describe("teams:tab", function () {
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
-      assert.equal(false, npmInstallResult);
+      assert.strictEqual(true, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
-      assert.equal(false, npmRunBuildResult);
+      assert.strictEqual(true, npmRunBuildResult);
     }
   });
 
@@ -288,10 +288,10 @@ describe("teams:tab", function () {
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
-      assert.equal(false, npmInstallResult);
+      assert.strictEqual(true, npmInstallResult);
 
       const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
-      assert.equal(false, npmRunBuildResult);
+      assert.strictEqual(true, npmRunBuildResult);
     }
 
   });

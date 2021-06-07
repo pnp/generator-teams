@@ -29,12 +29,20 @@ export class Yotilities {
      * @param options object with replacement properties
      */
     public static fixFileNames(filename: string, options: any) {
+        
         if (filename !== undefined) {
+           
+            if(filename[0] === "_") {
+                filename = '.' + filename.substr(1);
+            }
             var basename = path.basename(filename);
+            
             if (basename[0] === '_') {
                 var filename = '.' + basename.substr(1);
                 var dirname = path.dirname(filename);
+               
                 filename = path.join(dirname, filename);
+                console.log(filename)
             }
             for (var prop in options) {
                 if (options.hasOwnProperty(prop) && typeof options[prop] === 'string') {
@@ -42,7 +50,6 @@ export class Yotilities {
                 }
             }
         }
-
         return filename;
     }
 
@@ -59,6 +66,18 @@ export class Yotilities {
         devDependencies.forEach(dep => {
             (<any>pkg.devDependencies)[dep[0]] = dep[1];
         });
+        fs.writeJSON(packagePath, pkg);
+    }
+
+    public static addScript(name: string, script: string, fs: Editor) {
+        var pkg: any = fs.readJSON(packagePath);
+        pkg.scripts[name] = script;
+        fs.writeJSON(packagePath, pkg);
+    }
+
+    public static addNode(name: string, node: any, fs: Editor) {
+        var pkg: any = fs.readJSON(packagePath);
+        pkg[name] = node;
         fs.writeJSON(packagePath, pkg);
     }
 

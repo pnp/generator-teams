@@ -33,6 +33,10 @@ export const ROOT_FILES = [
   'Dockerfile'
 ];
 
+export const VSCODE_FILES = [
+  '.vscode/launch.json'
+];
+
 export const LINT_FILES = [
   ".eslintrc.json",
   ".eslintignore",
@@ -72,11 +76,28 @@ export const SCRIPT_FILES = [
   "src/client/tsconfig.json"
 ];
 
+export const DIST_FILES = [
+  'dist/server.js',
+  'dist/web/index.html',
+  'dist/web/privacy.html',
+  'dist/web/tou.html',
+  'dist/web/assets/icon.png',
+  'dist/web/scripts/client.js',
+  'dist/web/styles/main.css',
+];
+
+
+export const PACKAGE_FILES = [
+  'package/teamssolution.zip'
+];
+
+
 export const basePrompts = {
   "solutionName": "teams-solution",
   "whichFolder": "current",
   "name": "teamsSolution",
   "developer": "generator teams developer",
+  "lintingSupport": true
 };
 
 export async function runNpmCommand(command: string, path: string): Promise<boolean> {
@@ -84,33 +105,45 @@ export async function runNpmCommand(command: string, path: string): Promise<bool
     npmRun.exec(command, { cwd: path },
       function (err: any, stdout: any, stderr: any) {
         if (err) {
-          resolve(true);
-        } else {
+          console.log("err:" + err);
+          console.log("stdout:" + stdout);
+          console.log("stderr:" + stderr);
           resolve(false);
+        } else {
+          resolve(true);
         }
       });
   });
 }
 
+// Define the available schemas
 export const SCHEMA_18 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.8/MicrosoftTeams.schema.json';
 export const SCHEMA_19 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.9/MicrosoftTeams.schema.json';
+export const SCHEMA_110 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.10/MicrosoftTeams.schema.json';
 export const SCHEMA_DEVPREVIEW = 'https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json';
+
+export const INTEGRATION_TEST_VERSIONS = ["v1.9", "v1.10"]; // only keep two versions, so we can stay under Github 360 minute rule
 
 export const SCHEMAS: { [key: string]: string } = {
   "v1.8": SCHEMA_18,
   "v1.9": SCHEMA_19,
+  "v1.10": SCHEMA_110,
   "devPreview": SCHEMA_DEVPREVIEW
 }
+
+// All the paths for upgrading
 const UPGRADE_PATHS: { [key: string]: string[] } = {
-  "v1.8": ["v1.9", "devPreview"],
-  "v1.9": ["devPreview"]
+  "v1.8": ["v1.9", "v1.10", "devPreview"],
+  "v1.9": ["v1.10", "devPreview"],
+  "v1.10": ["devPreview"]
 }
 
 export enum TestTypes {
   UNIT = "UNIT",
   INTEGRATION = "INTEGRATION"
 }
-export function coreTests(manifestVersion: string, prompts: any) {
+
+export function coreTests(manifestVersion: string, prompts: any, projectPath: string) {
   it("Should have root files", async () => {
     assert.file(ROOT_FILES);
   });
@@ -122,6 +155,9 @@ export function coreTests(manifestVersion: string, prompts: any) {
   });
   it("Should have web files", async () => {
     assert.file(WEB_FILES);
+  });
+  it("Should have vscode files", async () => {
+    assert.file(VSCODE_FILES);
   });
   it("Should have manifest files", async () => {
     assert.file(MANIFEST_FILES);
@@ -138,17 +174,47 @@ export function coreTests(manifestVersion: string, prompts: any) {
   it("Should have a reference to Fluentui", async () => {
     assert.jsonFileContent("package.json", { dependencies: { "@fluentui/react-northstar": {} } });
   });
-  it("Should have linting files", async () => {
-    assert.file(LINT_FILES);
-  });
+  if (prompts.lintingSupport) {
+    it("Should have linting files", async () => {
+      assert.file(LINT_FILES);
+    });
+    it("Should have a lint script", async () => {
+      assert.jsonFileContent("package.json", { scripts: { "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx" } });
+    })
+    it("Should reference ESLint plugin in webpack config", async () => {
+      assert.fileContent("webpack.config.js", "ESLintPlugin");
+    })
+  } else {
+    it("Should not have linting files", async () => {
+      assert.noFile(LINT_FILES);
+    });
+    it("Should not have a lint script", async () => {
+      assert.noJsonFileContent("package.json", { scripts: { "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx" } });
+    })
+    it("Should not reference ESLint plugin in webpack config", async () => {
+      assert.noFileContent("webpack.config.js", "ESLintPlugin");
+    })
+  }
   if (prompts.unitTestsEnabled) {
     it("Should have unit test files", async () => {
       assert.file(TEST_FILES);
     });
+    it("Should have a test script", async () => {
+      assert.jsonFileContent("package.json", { scripts: { "test": "jest" } });
+    })
+    it("Should have a coverage script", async () => {
+      assert.jsonFileContent("package.json", { scripts: { "coverage": "jest --coverage" } });
+    })
   } else {
     it("Should not have unit test files", async () => {
       assert.noFile(TEST_FILES);
     });
+    it("Should not have a test script", async () => {
+      assert.noJsonFileContent("package.json", { scripts: { "test": "jest" } });
+    })
+    it("Should not have a coverage script", async () => {
+      assert.noJsonFileContent("package.json", { scripts: { "coverage": "jest --coverage" } });
+    })
   }
 
   if (prompts.isFullScreen) {
@@ -232,10 +298,61 @@ export function coreTests(manifestVersion: string, prompts: any) {
   }
 }
 
+export function integrationTests(manifestVersion: string, prompts: any, projectPath: string, unitTesting: boolean) {
+  // Integration tests
+  if (process.env.TEST_TYPE == TestTypes.INTEGRATION && INTEGRATION_TEST_VERSIONS.includes(manifestVersion)) {
+    describe("Integration tests", () => {
+
+      it("Should run npm install successfully", async () => {
+        const npmInstallResult = await runNpmCommand("npm install --prefer-offline --no-audit", projectPath);
+        assert.strictEqual(true, npmInstallResult);
+      });
+
+      it("Should run npm build successfully", async () => {
+        const npmRunBuildResult = await runNpmCommand("npm run build", projectPath);
+        assert.strictEqual(true, npmRunBuildResult);
+      });
+
+      it("Should have ./dist files", async () => {
+        assert.file(DIST_FILES);
+      });
+
+      it("Should validate manifest successfully", async () => {
+        const npmResult = await runNpmCommand("npm run manifest", projectPath);
+        assert.strictEqual(true, npmResult);
+      });
+
+      it("Should have ./package files", async () => {
+        assert.file(PACKAGE_FILES);
+      });
+
+      if (unitTesting) {
+        it("Should run unit tests successfully", async () => {
+          const npmResult = await runNpmCommand("npm run test -- -u", projectPath); // pass in -u to Jest to always recreate snapshots in CI
+          assert.strictEqual(true, npmResult);
+        });
+      }
+
+      if (prompts.lintingSupport) {
+        it("Should run lint successfully", async () => {
+          const npmResult = await runNpmCommand("npm run lint", projectPath);
+          assert.strictEqual(true, npmResult);
+        });
+      }
+
+      // clean up
+      after(async () => {
+        await runNpmCommand("rm node_modules -rf", projectPath);
+        await runNpmCommand("rm dist -rf", projectPath);
+      });
+
+    });
+  }
+}
 
 export async function runTests(prefix: string, tests: any[], additionalTests: Function) {
   for (const test of tests) {
-    describe(test.description, async () => {
+    describe(test.description, () => {
       for (const manifestVersion of test.manifestVersions as string[]) {
         // run without unit tests
         runTest(manifestVersion, test, false);
@@ -251,14 +368,16 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
   }
 
   async function runTest(manifestVersion: string, test: any, unitTesting: boolean) {
-    describe(`Schema ${manifestVersion}${unitTesting ? ", with Unit tests" : ""}`, async () => {
+    describe(`Schema ${manifestVersion}${unitTesting ? ", with Unit tests" : ""}`, () => {
       let projectPath = TEMP_TEST_PATH + `/${prefix}/${manifestVersion}-${lodash.snakeCase(test.description)}`;
 
       let prompts = { manifestVersion, ...basePrompts, ...test.prompts };
       if (unitTesting) {
         prompts = {
           mpnId: "",
-          ...prompts, "quickScaffolding": false, "unitTestsEnabled": true
+          ...prompts,
+          "quickScaffolding": false,
+          "unitTestsEnabled": true
         };
         projectPath += "-withUnitTests"
       }
@@ -272,22 +391,14 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
           .withGenerators(DEPENDENCIES);
       });
 
-      coreTests(manifestVersion, prompts);
+      coreTests(manifestVersion, prompts, projectPath);
 
+      integrationTests(manifestVersion, prompts, projectPath, unitTesting);
 
       if (additionalTests) {
-        await additionalTests(prompts);
+        additionalTests(prompts);
       }
 
-
-
-      if (process.env.TEST_TYPE == TestTypes.INTEGRATION) {
-        const npmInstallResult = await runNpmCommand("npm install --prefer-offline", projectPath);
-        assert.equal(false, npmInstallResult);
-
-        const npmRunBuildResult = await runNpmCommand("npm run build", projectPath);
-        assert.equal(false, npmRunBuildResult);
-      }
     });
   }
 
@@ -295,10 +406,9 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
     describe(`Schema ${from} upgrading to ${to}${unitTesting ? ", with Unit tests" : ""}`, async () => {
       let projectPath = TEMP_TEST_PATH + `/${prefix}/${from}-${to}-${lodash.snakeCase(test.description)}`;
 
-      let prompts = { manifestVersion: from, ...basePrompts, ...test.prompts };
+      let prompts = { mpnId: "", manifestVersion: from, ...basePrompts, ...test.prompts };
       if (unitTesting) {
         prompts = {
-          mpnId: "",
           ...prompts, "quickScaffolding": false, "unitTestsEnabled": true
         };
         projectPath += "-withUnitTests"
@@ -328,16 +438,10 @@ export async function runTests(prefix: string, tests: any[], additionalTests: Fu
           .withGenerators(DEPENDENCIES);
       });
 
+      coreTests(to, prompts, projectPath);
 
-      coreTests(to, prompts);
+      integrationTests(to, prompts, projectPath, unitTesting);
 
-      if (process.env.TEST_TYPE == TestTypes.INTEGRATION) {
-        const npmInstallResult = await runNpmCommand("npm install --prefer-offline", projectPath);
-        assert.equal(false, npmInstallResult);
-
-        const npmRunBuildResult = await runNpmCommand("npm run build", projectPath);
-        assert.equal(false, npmRunBuildResult);
-      }
     });
   }
 }

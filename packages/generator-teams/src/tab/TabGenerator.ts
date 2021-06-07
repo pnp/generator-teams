@@ -118,7 +118,7 @@ export class TabGenerator extends Generator {
                         type: 'confirm',
                         name: 'tabSSO',
                         message: 'Do you require Azure AD Single-Sign-On support for the tab?',
-                        default: true,
+                        default: false,
                         when: (answers: any) => {
                             if (answers.tabType == "viva") {
                                 return false; // SSO will automatically be configured for Viva
@@ -287,12 +287,12 @@ export class TabGenerator extends Generator {
             if (this.options.tabType !== "viva") {
                 if (this.options.tabSSO) {
                     Yotilities.addAdditionalDeps([
-                        ["jwt-decode", "^3.0.0-beta.2"]
+                        ["jwt-decode", "^3.1.2"]
                     ], this.fs);
 
                     // update .env file
-                    Yotilities.addOrUpdateEnv(".env", `${this.options.tabUpperName}_APP_ID`, this.options.tabSSOAppId, this.fs);
-                    Yotilities.addOrUpdateEnv(".env", `${this.options.tabUpperName}_APP_URI`, this.options.tabSSOAppUri, this.fs);
+                    Yotilities.addOrUpdateEnv(".env", `TAB_APP_ID`, this.options.tabSSOAppId, this.fs);
+                    Yotilities.addOrUpdateEnv(".env", `TAB_APP_URI`, this.options.tabSSOAppUri, this.fs);
                 }
 
                 // update client.ts

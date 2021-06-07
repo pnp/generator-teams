@@ -30,7 +30,7 @@ export const <%=tabReactComponentName%> = () => {
                         message
                     });
                 },
-                resources: [process.env.<%=tabUpperName%>_APP_URI as string]
+                resources: [process.env.TAB_APP_URI as string]
             });<% } else { %>
             microsoftTeams.appInitialization.notifySuccess();<% } %>
         } else {

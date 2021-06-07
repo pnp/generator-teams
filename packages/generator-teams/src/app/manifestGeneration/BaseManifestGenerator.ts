@@ -20,9 +20,9 @@ export abstract class BaseManifestGenerator {
             "packageName": "{{PACKAGE_NAME}}",
             "developer": {
                 "name": options.developer,
-                "websiteUrl": "https://{{HOSTNAME}}",
-                "privacyUrl": "https://{{HOSTNAME}}/privacy.html",
-                "termsOfUseUrl": "https://{{HOSTNAME}}/tou.html"
+                "websiteUrl": "https://{{PUBLIC_HOSTNAME}}",
+                "privacyUrl": "https://{{PUBLIC_HOSTNAME}}/privacy.html",
+                "termsOfUseUrl": "https://{{PUBLIC_HOSTNAME}}/tou.html"
             },
             "name": {
                 "short": options.title,
@@ -44,7 +44,7 @@ export abstract class BaseManifestGenerator {
             "composeExtensions": [],
             "permissions": ["identity", "messageTeamMembers"],
             "validDomains": [
-                "{{HOSTNAME}}"
+                "{{PUBLIC_HOSTNAME}}"
             ]
         };
 

@@ -30,6 +30,23 @@ export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
         "./dist/public/styles/**/*.css"
     ];
 
+    // Task that reloads the environment variables
+    const reloadEnv = () => {
+        log("Reloading environment");
+        const env = argv.env;
+        const dotenv = require("dotenv");
+        const envConfig = dotenv.parse(fs.readFileSync(env ? path.resolve(process.cwd(), env) : ".env"));
+        for (const k in envConfig) {
+            if (k !== "PUBLIC_HOSTNAME") { // overwrite all but PUBLIC_HOSTNAME as that can be set by ngrok/codespaces
+                process.env[k] = envConfig[k];
+            }
+        }
+        return Promise.resolve();
+    };
+
+    // restart nodemon task
+    const nodemonRestart = () => { nodemon.restart(); return Promise.resolve(); };
+
     /**
      * Register watches
      */
@@ -57,10 +74,8 @@ export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
                 console.log(cssPath, fs.existsSync(cssPath));
 
                 if (fs.existsSync(cssPath)) {
-
                     fs.unlinkSync(cssPath);
                     injectSources(gulp, config);
-
                 }
 
             });
@@ -73,6 +88,11 @@ export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
         // watch for static files
         gulp.watch(config.staticFiles ? staticFilesWatches.concat(config.staticFiles) : staticFilesWatches,
             gulp.series("static:copy", "static:inject"));
+
+        // watch for .env files
+        const envFile = argv.env ?? ".env";
+        log(`Watching ${envFile}`);
+        gulp.watch(envFile, gulp.series(reloadEnv, gulp.parallel("manifest", "webpack:client"), nodemonRestart));
     };
 
     gulp.task("watch", registerWatches);
@@ -88,9 +108,10 @@ export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
             if (!started) {
                 done();
                 started = true;
-                log("HOSTNAME: " + process.env.HOSTNAME);
+                log("PUBLIC_HOSTNAME: " + process.env.PUBLIC_HOSTNAME || process.env.HOSTNAME); // keep HOSTNAME for backwards compatibility
             }
         });
+
     });
 
     gulp.task("serve", dependencies(gulp, "nuke", "build", "nodemon", "watch"));

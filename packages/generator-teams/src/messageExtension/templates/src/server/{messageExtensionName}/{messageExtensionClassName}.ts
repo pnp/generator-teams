@@ -26,7 +26,7 @@ const log = debug("msteams");
                     },
                     {
                         type: "Image",
-                        url: `https://${process.env.HOSTNAME}/assets/icon.png`
+                        url: `https://${process.env.PUBLIC_HOSTNAME}/assets/icon.png`
                     }
                 ],
                 actions: [
@@ -46,7 +46,7 @@ const log = debug("msteams");
                 text: query.url,
                 images: [
                     {
-                        url: `https://${process.env.HOSTNAME}/assets/icon.png`
+                        url: `https://${process.env.PUBLIC_HOSTNAME}/assets/icon.png`
                     }
                 ]
             }
@@ -77,7 +77,7 @@ const log = debug("msteams");
                     },
                     {
                         type: "Image",
-                        url: `https://${process.env.HOSTNAME}/assets/icon.png`
+                        url: `https://${process.env.PUBLIC_HOSTNAME}/assets/icon.png`
                     }
                 ],
                 actions: [
@@ -100,7 +100,7 @@ const log = debug("msteams");
                 text: "Description",
                 images: [
                     {
-                        url: `https://${process.env.HOSTNAME}/assets/icon.png`
+                        url: `https://${process.env.PUBLIC_HOSTNAME}/assets/icon.png`
                     }
                 ]
             }
@@ -144,7 +144,7 @@ const log = debug("msteams");
                 actions: [
                     {
                         type: "openUrl",
-                        value: `https://${process.env.HOSTNAME}/<%= messageExtensionName %>/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
+                        value: `https://${process.env.PUBLIC_HOSTNAME}/<%= messageExtensionName %>/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
                         title: "Configuration"
                     }
                 ]
@@ -158,7 +158,7 @@ const log = debug("msteams");
                     actions: [
                         {
                             type: "openUrl",
-                            value: `https://${process.env.HOSTNAME}/<%= messageExtensionName %>/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
+                            value: `https://${process.env.PUBLIC_HOSTNAME}/<%= messageExtensionName %>/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
                             title: "Configuration"
                         }
                     ]
@@ -170,7 +170,7 @@ const log = debug("msteams");
             type: "continue",
             value: {
                 title: "Input form",
-                url: `https://${process.env.HOSTNAME}/<%= messageExtensionName %>/action.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
+                url: `https://${process.env.PUBLIC_HOSTNAME}/<%= messageExtensionName %>/action.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
                 height: "medium"
             }
         });
@@ -193,7 +193,7 @@ const log = debug("msteams");
                             id: "email",
                             placeholder: "somemail@example.com",
                             style: "email"
-                        },
+                        }
                     ],
                     actions: [
                         {
@@ -245,7 +245,7 @@ const log = debug("msteams");
     public async onQuerySettingsUrl(context: TurnContext): Promise<{ title: string, value: string }> {
         return Promise.resolve({
             title: "<%=messageExtensionTitle%> Configuration",
-            value: `https://${process.env.HOSTNAME}/<%= messageExtensionName %>/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`
+            value: `https://${process.env.PUBLIC_HOSTNAME}/<%= messageExtensionName %>/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`
         });
     }
 

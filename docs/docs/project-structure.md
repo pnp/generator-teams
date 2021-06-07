@@ -6,8 +6,7 @@ The generated project from the Microsoft Teams Apps generator has the following 
 
 The root folder contains all the required files you need to build and run your project.
 
-- `gulpfile.js` contains configuration for the Gulp tasks. See [`yoteams-core-build`]() for more information
-- `gulp.config.js` contains settings for your project
+- `gulpfile.js` contains configuration for the Gulp tasks. See [`yoteams-core-build`](https://github.com/pnp/generator-teams/tree/master/packages/yoteams-build-core) for more information
 - `README-XXX.md` automatically generated readme file to help you get started
 - `.env` contains replaceable strings that will be used throughout your project and make it easier for you to move projects between environments.
 - `Dockerfile` a pre-configured Docker file
@@ -28,17 +27,14 @@ The `manifest` folder contains the manifest file (`manifest.json`) as well as th
 
 ### The `client` folder
 
+The `client` folder contains the client side React components. All client side components are automatically when scaffolding being added to `client.ts`.
 
-### The `app` folder
+### The `server` folder
 
-The `app` folder contains the actual code files/folders for your application. In the root of the `app` folder are two files; `server.ts` and `TeamsAppsComponents.ts`. The `server.ts` file is the file that creates the web server [Express](https://www.npmjs.com/package/express) and loads all your components you define in your project using the [express-msteams-host](https://www.npmjs.com/package/express-msteams-host) npm package. It will load all exported classes from the `TeamsAppsComponents.ts`. 
+The `server` folder contains the server side  [Express](https://www.npmjs.com/package/express) application, defined in `server.ts`. 
 
-> Note: if you manually add more tabs, bots etc, you need to export those classes in the `TeamsAppsComponents.ts` file so that the *express-msteams-host* middleware can find them.
+The `TeamsAppsComponents.ts` file is used to export all classes for automatic Express routing detection, that uses the [express-msteams-host](https://www.npmjs.com/package/express-msteams-host) npm package for the routing setup.
 
-Each component requiring a server side implementation will get its own folder under the `app` folder, with their unique names. 
+### The `public` folder
 
-The folder called `web` contains all the files required for the web application, such as html, assets and css files. Eeach component that requires a web interface will create its corresponding folder under the `web` folder. 
-
-> Note: most components does not require any modification of the actual html files as they are pure client side React components.
-
-The `scripts` folder contains all the client-side code, also with a folder for each component. The file called `client.ts` inside the `scripts` folder must contain exports of all client side React components so that they can be loaded in the html files.
+The folder called `public` contains all the files required for the web application, such as html, assets and css files. 

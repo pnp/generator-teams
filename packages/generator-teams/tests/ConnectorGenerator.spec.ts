@@ -25,7 +25,7 @@ describe('teams:connector', function () {
     ];
 
 
-    const CONNECTOR_THEME_URL = "https://{{HOSTNAME}}/teamsSolutionConnector/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}";
+    const CONNECTOR_THEME_URL = "https://{{PUBLIC_HOSTNAME}}/teamsSolutionConnector/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}";
 
 
     beforeEach(async () => {

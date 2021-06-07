@@ -7,7 +7,7 @@ import Plumber from "gulp-plumber";
 import autoprefixer from "autoprefixer";
 import gulpif from "gulp-if";
 import sourcemaps from "gulp-sourcemaps";
-import sass from "gulp-sass";
+import sass from "gulp-dart-sass";
 import postcss from "gulp-postcss";
 import { argv } from "yargs";
 
@@ -19,9 +19,7 @@ export const styleTasks = (gulp: GulpClient.Gulp, config: any) => {
             .pipe(gulpif(debug, sourcemaps.init()))
             .pipe(sass.sync({
                 outputStyle: debug ? "expanded" : "compressed",
-                precision: 10,
-                includePaths: ["."],
-                sourceComments: debug
+                includePaths: ["."]
             }).on("error", sass.logError))
             .pipe(postcss([
                 autoprefixer()

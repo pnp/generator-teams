@@ -392,6 +392,11 @@ export class MessageExtensionGenerator extends Generator {
                         "src/client/{messageExtensionName}/__tests__/{messageExtensionClassName}Config.spec.tsx"
                     );
                 }
+                if (this.options.unitTestsEnabled) {
+                    templateFiles.push(
+                        "src/server/{messageExtensionName}/__tests__/{messageExtensionClassName}.spec.ts"
+                    );
+                }
 
                 templateFiles.forEach(t => {
                     this.fs.copyTpl(
