@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*]- <*2021-06-10*>
+
+### Fixes
+
+* Fixed an issue where `ngrok-start` task threw an exception in the exception handler (#225)
+
 ## [*1.2.0*]- <*2021-06-07*>
 
 ### Added

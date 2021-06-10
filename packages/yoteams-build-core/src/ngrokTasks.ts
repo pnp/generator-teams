@@ -6,6 +6,7 @@ import GulpClient from "gulp";
 import log from "fancy-log";
 import ngrok from "ngrok";
 import { dependencies } from ".";
+import PluginError from "plugin-error";
 
 export const ngrokTasks = (gulp: GulpClient.Gulp, config: any) => {
 
@@ -26,16 +27,16 @@ export const ngrokTasks = (gulp: GulpClient.Gulp, config: any) => {
             let hostName = url.replace("http://", "");
             hostName = hostName.replace("https://", "");
 
-            log("[NGROK] Public url: " + hostName);
+            log("[NGROK] PUBLIC_HOSTNAME set to: " + hostName);
             process.env.PUBLIC_HOSTNAME = hostName;
 
             cb();
 
         }).catch((err) => {
-            log.error(`[NGROK] Error: ${JSON.stringify(err)}`);
-            cb(err.msg);
+            cb(new PluginError("yoteams-build.core", err));
         });
     });
+
     gulp.task("ngrok-serve", dependencies(gulp, "start-ngrok", "manifest", "serve"));
 
 };
