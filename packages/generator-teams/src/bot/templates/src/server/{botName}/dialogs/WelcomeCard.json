@@ -19,18 +19,21 @@
       "text": "Hello, nice to meet you!",
       "wrap": true,
       "maxLines": 0
-    }
-  ],
-  "actions": [
-    {
-      "type": "Action.OpenUrl",
-      "title": "Learn more about Yo Teams",
-      "url": "https://aka.ms/yoteams"
     },
     {
-      "type": "Action.OpenUrl",
-      "title": "<%=title%>",
-      "url": "https://<%=hostname%>"
+      "type": "ActionSet",
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "Learn more about Yo Teams",
+          "url": "https://aka.ms/yoteams"
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "<%=title%>",
+          "url": "https://<%=hostname%>"
+        }
+      ]
     }
   ]
 }
