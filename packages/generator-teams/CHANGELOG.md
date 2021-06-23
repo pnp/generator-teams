@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*]- <**>
+
+### Added
+
+* Support for messaging extensions with Adaptive Card 1.4 Universal Action
+
+### Fixes
+
+* Fixed an issue where the bot help dialog caused an error
+
 ## [*3.2.0*]- <*2021-06-07*>
 
 ### Added
