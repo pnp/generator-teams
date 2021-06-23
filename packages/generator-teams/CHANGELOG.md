@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Support for messaging extensions with Adaptive Card 1.4 Universal Action
 
+### Changes
+
+* Changed Adaptive Card versions to 1.4 (#227)
+
 ### Fixes
 
 * Fixed an issue where the bot help dialog caused an error
