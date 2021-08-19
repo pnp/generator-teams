@@ -139,7 +139,7 @@ export const deployTask = (gulp: GulpClient.Gulp, config: any) => {
         if (argv.publish) {
             dependencies(gulp, "nuke", "tenant:deploy", "build", "nodemon", "watch")(() => { cb(); });
         } else {
-            dependencies(gulp, "nuke", "build", "nodemon", "watch")(() => { cb(); });
+            dependencies(gulp, "nuke", "manifest", "build", "nodemon", "watch")(() => { cb(); });
         }
     });
 
