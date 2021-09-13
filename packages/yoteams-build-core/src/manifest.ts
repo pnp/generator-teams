@@ -13,12 +13,13 @@ import ZSchema from "z-schema";
 import rename from "gulp-rename";
 import SCHEMAS from "./schemas.json";
 import fs from "fs";
-
-import { dependencies } from ".";
+import chalk from "chalk";
+import * as _ from ".";
+import zip from "gulp-zip";
+import log from "fancy-log";
 
 const flatmap = require("gulp-flatmap");
-const zip = require("gulp-zip");
-const log = require("fancy-log");
+const argv = require("yargs").argv;
 
 export const manifest = (gulp: GulpClient.Gulp, config: any) => {
 
@@ -45,7 +46,12 @@ export const manifest = (gulp: GulpClient.Gulp, config: any) => {
                 const definition = SCHEMAS.find((s: any) => {
                     return s.version === json.manifestVersion;
                 });
+
                 if (definition === undefined) {
+                    if (argv["schema-validation"] === false) {
+                        return true;
+                    }
+                    log(chalk.yellow(`Unable to find "${json.manifestVersion}" amongst supported schemas. Use --no-schema-validation to skip validation of schema.`));
                     return false;
                 }
                 return true;
@@ -85,6 +91,12 @@ export const manifest = (gulp: GulpClient.Gulp, config: any) => {
             }
             const data = file.contents.toString("utf-8");
             const json = JSON.parse(data);
+
+            if (argv["schema-validation"] === false) {
+                log(chalk.yellow(`Using unsupported schema "${json.manifestVersion}".`));
+                callback(null, file);
+                return;
+            }
 
             log(`${file.basename} is using manifest schema ${json.manifestVersion}`);
             const definition = SCHEMAS.find((s: any) => {
@@ -215,6 +227,6 @@ export const manifest = (gulp: GulpClient.Gulp, config: any) => {
     };
 
     // export the tasks
-    gulp.task("validate-manifest", dependencies(gulp, generateManifests, validateSchemas));
-    gulp.task("manifest", dependencies(gulp, "validate-manifest", zipTask));
+    gulp.task("validate-manifest", _.dependencies(gulp, generateManifests, validateSchemas));
+    gulp.task("manifest", _.dependencies(gulp, "validate-manifest", zipTask));
 };

@@ -49,6 +49,10 @@ The following Gulp tasks are defined by the package:
 * **`static:inject`** - injects generated JavaScript and CSS files into the static files
 * **`styles`** - compiles SASS to CSS
 
+#### Flags
+
+* **`--no-schema-validation`** - skips validation of schemas for the `manifest` task
+
 #### Internally used tasks
 
 * **`watch`** - internal watcher task
@@ -102,8 +106,7 @@ This package supports plugins. Plugins has to be added as `devDependencies` to t
 
 ### Available plugins
 
-* [`yoteams-deploy`](https://github.com/pnp/generator-teams/packages/yoteams-deploy) - contains additional tasks for automatic deployment to a Microsoft Teams environment 
-
+* [`yoteams-deploy`](https://github.com/pnp/generator-teams/packages/yoteams-deploy) - contains additional tasks for automatic deployment to a Microsoft Teams environment.
 
 ## Contributing
 
