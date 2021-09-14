@@ -1,0 +1,110 @@
+name: Bug report
+description: Let us know about functionality that is not working as expected
+title: "Bug report: <short description>"
+labels: ["bug: product"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting the issue you are facing.
+
+        Please complete the below form to ensure we have the necessary details to assist you.
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Provide a short description of the issue you are facing
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Provide the steps you have taken so that we can reproduce the error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected results
+      description: Provide a description of what you expect to happen
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual results
+      description: Provide a description of what actually happens
+    validations:
+      required: true
+  - type: dropdown
+    id: project
+    attributes:
+      label: Project you experience issues with
+      description: Provide the project name that you experience issues with
+      options:
+        - generator-teams
+        - yoteams-build-core
+        - yoteams-deploy
+    validations:
+      required: true
+  - type: input
+    id: generatorversion
+    attributes:
+      label: generator version
+      description: |
+        Provide the version of the yo teams you are using
+
+        Execute `npm info generator-teams version` in your terminal to identify yo teams version
+    validations:
+      required: true
+  - type: input
+    id: buildtoolversion
+    attributes:
+      label: build tools version
+      description: |
+        Provide the version of the yoteams-build-core you are using
+
+        Execute `npm info yoteams-build-core version` in your terminal (from within the context of the project that has issue) to identify yo teams version
+    validations:
+      required: true
+  - type: input
+    id: nodeversion
+    attributes:
+      label: nodejs version
+      description: |
+        Provide the version of nodejs you are using
+
+        Execute `node -v` in your terminal to identify your version
+    validations:
+      required: true
+  - type: input
+    id: npmversion
+    attributes:
+      label: npm version
+      description: |
+        Provide the version of npm/yarn you are using
+
+        Execute `npm -v` or `yarn -v` in your terminal to identify your version
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system (environment)
+      description: Provide the operating system that you are using
+      options:
+        - Windows
+        - macOS
+        - Linux
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: info
+    attributes:
+      label: Additional Info
+      description: |
+        Provide any additional information (screenshots) that may help with the identification of the root cause of this issue
+    validations:
+      required: false
