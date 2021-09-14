@@ -9,7 +9,8 @@ import gulpif from "gulp-if";
 import sourcemaps from "gulp-sourcemaps";
 import sass from "gulp-dart-sass";
 import postcss from "gulp-postcss";
-import { argv } from "yargs";
+
+const argv = require("yargs").argv;
 
 export const styleTasks = (gulp: GulpClient.Gulp, config: any) => {
     const debug = argv.debug !== undefined;
