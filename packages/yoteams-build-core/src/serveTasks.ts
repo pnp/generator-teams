@@ -7,6 +7,7 @@ import log from "fancy-log";
 import nodemon from "nodemon";
 import path from "path";
 import fs from "fs";
+import { ChildProcess, fork } from "child_process";
 import { injectSources } from "./webTasks";
 import { dependencies } from ".";
 const argv = require("yargs").argv;
@@ -47,6 +48,27 @@ export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
     // restart nodemon task
     const nodemonRestart = () => { nodemon.restart(); return Promise.resolve(); };
 
+    let webpackDevServerProcess: ChildProcess;
+    const restartDevServer = () => {
+        if (webpackDevServerProcess) {
+            const killed = webpackDevServerProcess.kill("SIGINT");
+
+            if (!killed) {
+                throw new Error("Unable to stop webpack dev server. Please restart the last command.");
+            }
+        }
+
+        startWebpackDevServer();
+
+        return Promise.resolve();
+    };
+
+    const startWebpackDevServer = () => {
+        webpackDevServerProcess = fork(path.resolve(__dirname, "./webpackServe"), process.argv.slice(2), {
+            stdio: "inherit"
+        });
+    };
+
     /**
      * Register watches
      */
@@ -58,10 +80,8 @@ export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
             gulp.series("webpack:server")
         );
 
-        gulp.watch(
-            config.clientWatches ? clientWatches.concat(config.clientWatches) : clientWatches,
-            gulp.series("webpack:client")
-        );
+        // webpack dev server - incrementally rebuilds client bundle on source change
+        startWebpackDevServer();
 
         // watch for style changes
         gulp.watch("src/public/**/*.scss", gulp.series("styles", "static:copy", "static:inject"))
@@ -92,7 +112,7 @@ export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
         // watch for .env files
         const envFile = argv.env ?? ".env";
         log(`Watching ${envFile}`);
-        gulp.watch(envFile, gulp.series(reloadEnv, gulp.parallel("manifest", "webpack:client"), nodemonRestart));
+        gulp.watch(envFile, gulp.series(reloadEnv, gulp.parallel("manifest", restartDevServer), nodemonRestart));
     };
 
     gulp.task("watch", registerWatches);
