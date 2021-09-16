@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changes
 
 * Changed Adaptive Card versions to 1.4 (#227)
+* Separated Typescript type checking into separate child process to improve build performance (PR #233 by s-KaiNet)
+* Dependency bumps
 
 ### Fixes
 
