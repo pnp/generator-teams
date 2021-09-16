@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*]- <**>
+
+### Changes
+
+* `serve` commands will now use Webpack dev server to improve client side build and also allows for live-reloading (PR #233 by s-KaiNet)
+
 ## [*1.2.1*]- <*2021-09-14*>
 
 ### Added

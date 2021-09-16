@@ -1,3 +1,6 @@
+// Licensed under the MIT license.
+// SPDX-License-Identifier: MIT
+
 import WebpackDevServer from "webpack-dev-server";
 import Webpack from "webpack";
 import log from "fancy-log";

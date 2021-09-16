@@ -48,6 +48,7 @@ export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
     // restart nodemon task
     const nodemonRestart = () => { nodemon.restart(); return Promise.resolve(); };
 
+    // Webpack dev server for client side rebuilds
     let webpackDevServerProcess: ChildProcess;
     const restartDevServer = () => {
         if (webpackDevServerProcess) {
