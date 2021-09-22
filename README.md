@@ -61,7 +61,7 @@ For more information on how Tabs and Bots can be used with Teams see the [Teams 
 
 ## Be a part of the movement
 
-If you want to be a part of the #YoTeams movement then head on over to the discussion at the [generator-teams Github Discussions forum](https://github.com/pnp/generator-teams/discussions) or follow us on [Twitter using the hashtag #yoteams](https://twitter.com/search?q=%23yoteams&src=typd).
+If you want to be a part of the #YoTeams movement then head on over to the discussion at the [generator-teams Github Discussions forum](https://github.com/pnp/generator-teams/discussions) or follow us on [Twitter using the hashtag #yoteams](https://twitter.com/search?q=%23yoteams&src=typd). In case you want to contribute yourself, please read the contribution [guidelines](https://github.com/pnp/generator-teams/blob/master/docs/docs/contributing/contribution-guidelines.md) before.
 
 ## Contributing
 
