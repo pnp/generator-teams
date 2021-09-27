@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [*Unreleased*]- <**>
 
+### Added
+
+* Support for Teams manifest schema 1.11 (#234)
+
 ### Changes
 
 * `serve` commands will now use Webpack dev server to improve client side build and also allows for live-reloading (PR #233 by s-KaiNet)

@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 * Support for messaging extensions with Adaptive Card 1.4 Universal Action
+* Support for Teams manifest schema 1.11 (#234, #240)
 
 ### Changes
 
@@ -20,6 +21,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixes
 
 * Fixed an issue where the bot help dialog caused an error
+
+> *Tests passing: 12.033*
 
 ## [*3.2.0*]- <*2021-06-07*>
 
