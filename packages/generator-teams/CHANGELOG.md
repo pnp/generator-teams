@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixes
 
 * Fixed an issue where the bot help dialog caused an error
+* Dependency bump
 
 > *Tests passing: 12.033*
 
