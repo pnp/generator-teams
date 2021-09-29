@@ -6,6 +6,9 @@ nav:
   - Project Structure: 'project-structure.md'
 theme:
   name: 'material'
+  logo: 'images/yoTeams_logo_inverse.svg'
+  feature:
+    tabs: true
 markdown_extensions:
   - admonition
   - codehilite:
@@ -14,3 +17,5 @@ markdown_extensions:
       permalink: true
 repo_url: https://github.com/pnp/generator-teams
 edit_uri: blob/master/docs/docs
+extra_css:
+  - 'css/styles.css'
