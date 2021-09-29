@@ -1,16 +1,54 @@
 site_name: Yo Teams - Microsoft Teams Apps generator
+site_url: https://pnp.github.io/generator-teams/
 nav:
   - Home: 'index.md'
-  - Releases: 'releases.md'
-  - Tutorials: 'tutorials.md'
-  - Project Structure: 'project-structure.md'
+  - User guide:
+    - 'Setup a developer tenant': 'user-guides/setup-tenant.md'
+    - 'Setup your developer environment': 'user-guides/setup-machine.md'
+    - 'Deploy to teams': 'user-guides/deploy-to-teams.md'
+    - 'Upgrading projects': 'user-guides/upgrading-projects.md'
+    - 'Debugging': 'user-guides/vscode.md'
+    - 'Using GitHub code spaces': 'user-guides/codespaces.md'
+  - Concepts:
+    - 'Tunneling': 'concepts/ngrok.md'
+    - 'Project structure': 'concepts/project-structure.md'
+  - Tutorials: 
+    - 'Your first Microsoft Teams App': 'tutorials/build-your-first-microsoft-teams-app.md'
+    - 'Build a SharePoint Online Provider hosted web parts': 'tutorials/build-a-sharepoint-online-provider-hosted-web-part.md'
+    - 'Build a connector for Microsoft Teams': 'tutorials/build-a-connector-for-microsoft-teams.md'
+    - 'build a tab with SSO': 'tutorials/build-a-tab-with-sso-support.md'
+  - Releases: 
+    - 'Releases': 'releases/releases.md'
+    - 'Release notes': 'releases/release-notes.md'
+  - About:
+    - 'Why this generator': 'about/why-generator.md'
+    - 'License': 'about/license.md'
+    
 theme:
   name: 'material'
+  logo: 'images/yoTeams_logo_inverse.svg'
+  palette:
+    primary: 'purple'
+  feature:
+    tabs: true
+extra_css:
+  - 'css/styles.css'
 markdown_extensions:
   - admonition
   - codehilite:
      guess_lang: false
   - toc:
       permalink: true
+  - pymdownx.superfences
+  - pymdownx.snippets
+  - def_list
+extra:
+  social:
+    - type: 'twitter'
+      link: 'https://twitter.com/m365pnp'
+    - type: 'youtube'
+      link: 'http://aka.ms/sppnp-videos'
+    - type: 'link'
+      link: 'https://aka.ms/sppnp'
 repo_url: https://github.com/pnp/generator-teams
 edit_uri: blob/master/docs/docs
