@@ -8,20 +8,20 @@ Detailed descriptions can always be found in the [CHANGELOG.md](https://github.c
 
 | Version | Release date | Upgrades | Tag | Notes |
 | - | - | -| - | - |
-| [2.7.1](./Release-notes-2.7.1) | 2019-05-08 | n/a |||
-| [2.8.0](./Release-notes-2.8.0) | 2019-05-20 | n/a |||
-| [2.9.0](./Release-notes-2.9.0) | 2019-06-14 | to 2.11.1 || *deprecated* |
-| [2.9.1](./Release-notes-2.9.1) | 2019-06-15 | to 2.11.1 |||
-| [2.10.0](./Release-notes-2.10.0) | 2019-07-18 | to 2.11.1 |||
-| [2.11.0](./Release-notes-2.11.0) | 2019-08-06 | to 2.11.1 || *deprecated* |
-| [2.11.1](./Release-notes-2.11.1) | 2019-08-14 | n/a | ||
-| [2.12.0](./Release-notes-2.12.0)  | 2020-03-15 | to 2.14.0 |||
-| [2.13.0](./Release-notes-2.13.0)  | 2020-04-16 | to 2.14.0 |||
-| [2.14.0](./Release-notes-2.14.0)  | 2020-05-18| to 2.16.0 |||
-| [2.15.0](./Release-notes-2.15.0)  | 2020-06-20| to 2.16.0 |||
-| [2.16.0](./Release-notes-2.16.0)  | 2020-10-28|  |||
-| [2.17.1](./Release-notes-2.16.0)  | 2020-12-07| n/a |||
-| [3.0.0](./Release-notes-3.0.0)  | 2021-02-07| to 3.3.0 |||
+| [2.7.1](https://github.com/pnp/generator-teams/releases/tag/2.7.1) | 2019-05-08 | n/a |||
+| [2.8.0](https://github.com/pnp/generator-teams/releases/tag/2.8.0) | 2019-05-20 | n/a |||
+| [2.9.0](https://github.com/pnp/generator-teams/releases/tag/2.9.0) | 2019-06-14 | to 2.11.1 || *deprecated* |
+| [2.9.1](https://github.com/pnp/generator-teams/releases/tag/2.9.1) | 2019-06-15 | to 2.11.1 |||
+| [2.10.0](https://github.com/pnp/generator-teams/releases/tag/2.10.0) | 2019-07-18 | to 2.11.1 |||
+| [2.11.0](https://github.com/pnp/generator-teams/releases/tag/2.11.0) | 2019-08-06 | to 2.11.1 || *deprecated* |
+| [2.11.1](https://github.com/pnp/generator-teams/releases/tag/2.11.1) | 2019-08-14 | n/a | ||
+| [2.12.0](https://github.com/pnp/generator-teams/releases/tag/2.12.0)  | 2020-03-15 | to 2.14.0 |||
+| [2.13.0](https://github.com/pnp/generator-teams/releases/tag/2.13.0)  | 2020-04-16 | to 2.14.0 |||
+| [2.14.0](https://github.com/pnp/generator-teams/releases/tag/2.14.0)  | 2020-05-18| to 2.16.0 |||
+| [2.15.0](https://github.com/pnp/generator-teams/releases/tag/2.15.0)  | 2020-06-20| to 2.16.0 |||
+| [2.16.0](https://github.com/pnp/generator-teams/releases/tag/2.16.0)  | 2020-10-28|  |||
+| [2.17.1](https://github.com/pnp/generator-teams/releases/tag/2.17.1)  | 2020-12-07| n/a |||
+| [3.0.0](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.0.0-preview)  | 2021-02-07| to 3.1.0 |||
 | [3.0.1](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.0.1)  | 2021-02-11| to 3.3.0 |||
 | [3.0.2](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.0.2)  | 2021-02-24| to 3.3.0 |||
 | [3.0.3](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.0.3)  | 2021-03-02| to 3.3.0 |||
