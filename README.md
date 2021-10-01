@@ -58,10 +58,12 @@ For more information on how Tabs and Bots can be used with Teams see the [Teams 
 * [Oleksandr Fediashov](https://github.com/layershifter)
 * [Paolo Pialorsi](https://github.com/PaoloPia)
 * [Nanddeep Nachan](https://github.com/nanddeepn)
+* [Sergei Sergeev](https://github.com/s-KaiNet)
+* [Stephan Bisser](https://github.com/stephanbisser)
 
 ## Be a part of the movement
 
-If you want to be a part of the #YoTeams movement then head on over to the discussion at the [generator-teams Github Discussions forum](https://github.com/pnp/generator-teams/discussions) or follow us on [Twitter using the hashtag #yoteams](https://twitter.com/search?q=%23yoteams&src=typd).
+If you want to be a part of the #YoTeams movement then head on over to the discussion at the [generator-teams Github Discussions forum](https://github.com/pnp/generator-teams/discussions) or follow us on [Twitter using the hashtag #yoteams](https://twitter.com/search?q=%23yoteams&src=typd). In case you want to contribute yourself, please read the contribution [guidelines](https://github.com/pnp/generator-teams/blob/master/docs/docs/contributing/contribution-guidelines.md) before.
 
 ## Contributing
 

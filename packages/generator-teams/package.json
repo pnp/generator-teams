@@ -1,6 +1,6 @@
 {
   "name": "generator-teams",
-  "version": "3.3.0-preview",
+  "version": "3.3.0",
   "description": "Yeoman generator for Microsoft Teams Apps",
   "main": "generators/app/index.js",
   "scripts": {
@@ -55,7 +55,8 @@
     "Bauer, Stefan <https://github.com/StfBauer>",
     "Connell, Andrew <https://github.com/andrewconnell>",
     "Brennscheidt, Ralf <https://github.com/RalfBrennscheidt>",
-    "Bliss, Bill, <https://github.com/billbliss>"
+    "Bliss, Bill, <https://github.com/billbliss>",
+    "Bisser, Stephan, <https://github.com/stephanbisser>"
   ],
   "license": "MIT",
   "devDependencies": {
@@ -73,7 +74,7 @@
     "@types/yeoman-test": "^4.0.1",
     "@types/yosay": "2.0.0",
     "chai": "^4.2.0",
-    "clean-webpack-plugin": "^3.0.0",
+    "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^9.0.0",
     "cross-env": "^7.0.2",
     "del": "^6.0.0",
@@ -86,7 +87,7 @@
     "webpack": "^5.37.1",
     "webpack-cli": "^4.0.0",
     "yeoman-assert": "^3.1.1",
-    "yeoman-environment": "^3.4.1",
+    "yeoman-environment": "^3.6.0",
     "yeoman-test": "^6.1.0"
   },
   "dependencies": {

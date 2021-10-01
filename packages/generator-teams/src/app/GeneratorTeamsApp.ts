@@ -100,7 +100,7 @@ export class GeneratorTeamsApp extends Generator {
         };
         // find out what manifest versions we can use
         const manifestGeneratorFactory = new ManifestGeneratorFactory();
-        const versions: inquirer.ChoiceOptions<IAnswers>[] = ManifestGeneratorFactory.supportedManifestVersions.filter(version => {
+        const versions: inquirer.ChoiceOptions[] = ManifestGeneratorFactory.supportedManifestVersions.filter(version => {
             // filter out non supported upgrades
             if (this.options.existingManifest) {
                 const manifestGenerator = manifestGeneratorFactory.createManifestGenerator(version.manifestVersion);
@@ -194,8 +194,8 @@ export class GeneratorTeamsApp extends Generator {
                     name: 'manifestVersion',
                     message: 'Which manifest version would you like to use?',
                     choices: versions,
-                    default: versions.find((v: inquirer.ChoiceOptions<IAnswers>) => v.extra.default) ?
-                        versions.find((v: inquirer.ChoiceOptions<IAnswers>) => v.extra.default)!.value :
+                    default: versions.find((v: inquirer.ChoiceOptions) => v.extra.default) ?
+                        versions.find((v: inquirer.ChoiceOptions) => v.extra.default)!.value :
                         (versions[0] ? versions[0].value : ""),
                     when: (answers: IAnswers) => (this.options.existingManifest && answers.updateManifestVersion && versions.length > 0) || (!this.options.existingManifest)
                 },
@@ -373,7 +373,7 @@ export class GeneratorTeamsApp extends Generator {
                 this.options.showLoadingIndicator = answers.showLoadingIndicator;
                 this.options.isFullScreen = answers.isFullScreen;
                 this.options.unitTestsEnabled = answers.unitTestsEnabled;
-                this.options.lintingSupport = answers.quickScaffolding || answers.lintingSupport ;
+                this.options.lintingSupport = answers.quickScaffolding || answers.lintingSupport;
                 this.options.useAzureAppInsights = answers.useAzureAppInsights;
                 this.options.azureAppInsightsKey = answers.azureAppInsightsKey;
             } else {
@@ -521,13 +521,13 @@ export class GeneratorTeamsApp extends Generator {
                     ["eslint-plugin-promise", "^4.2.1"],
                     ["eslint-plugin-react", "^7.22.0"],
                     ["eslint-plugin-react-hooks", "^4.2.0"],
-                    ["eslint-webpack-plugin", "^2.5.0"]
+                    ["eslint-webpack-plugin", "^3.0.1"]
                 ], this.fs);
 
                 Yotilities.addScript("lint", "eslint ./src --ext .js,.jsx,.ts,.tsx", this.fs);
             }
 
-          
+
 
             staticFiles.forEach(t => {
                 this.fs.copy(
@@ -577,7 +577,7 @@ export class GeneratorTeamsApp extends Generator {
         // if we have added any react based components
         if (this.options.reactComponents) {
             Yotilities.addAdditionalDeps([
-                ["msteams-react-base-component", "^3.1.0"]
+                ["msteams-react-base-component", "^3.1.1"]
             ], this.fs);
         }
 
