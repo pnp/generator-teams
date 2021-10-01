@@ -22,7 +22,7 @@ nav:
     - 'Releases': 'releases/releases.md'
     - 'Release notes': 'releases/release-notes.md'
   - Contributing:
-    - 'Guidelines': 'contributing/contributing.md'
+    - 'Guidelines': 'contributing/contributing-guidelines.md'
     - 'Getting started': 'contributing/getting-started.md'
   - About:
     - 'Why this generator': 'about/why-generator.md'
