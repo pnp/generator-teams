@@ -117,7 +117,7 @@ npm install generator-teams@2.12.0 --global
 
 *Date released: 2019-08-14*
 
-This release is a bug fix for [2.11.0](./Release-notes-2.11.0)
+This release is a bug fix for 2.11.0
 
 #### Fixes
 
@@ -146,7 +146,7 @@ npm install generator-teams@2.11.1 --global
 
 *Date released: 2019-08-06*
 
-> 2.11.0 has been deprecated - please install [2.11.1](./Release-notes-2.11.1)
+> 2.11.0 has been deprecated - please install 2.11.1
 
 
 This release introduces one major feature - the option of including localization to your Microsoft Teams App, which requires manifest version 1.5 and higher. Initial support for [upgrading projects](./Upgrading-projects) created by earlier versions of the generator has also been introduced. Note that upgrading projects will only work for projects created generator 2.9 and later. 
@@ -215,7 +215,7 @@ npm install generator-teams@2.10.0 --global
 
 *Date released: 2019-06-15*
 
-Hot fix for version [2.9.0](/Release-notes-2.9.0). See [2.9.0 release notes for all details](./Release-notes-2.9.0)
+Hot fix for version 2.9.0. See 2.9.0 release notes for all details
 
 #### Updates and changes
 The 2.9.1 is a hotfix for 2.9.0, due to a postinstall command causing issues.
@@ -244,7 +244,7 @@ npm install generator-teams@2.9.1 --global
 
 *Date released: 2019-06-14*
 
-> 2.9.0 has been deprecated - please install [2.9.1](./Release-notes-2.9.1)
+> 2.9.0 has been deprecated - please install 2.9.1
 
 This release was focused on bringing the generator up to Microsoft Teams manifest version 1.5 and add support for the latest Microsoft Teams JavaScript SDK. 
 

@@ -4,3 +4,4 @@ A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.micr
 
 This generator is built and maintained by the community, for the community.
 
+[Change cookie settings](#__consent)

@@ -44,7 +44,7 @@ See the [User Guide](user-guide/setup-machine.md) to learn more about the Teams 
 ## Getting started
 
 Open up a command prompt and create a new directory where you want to create your project and in that directory type the command `yo teams`. This will start the Teams Apps generator and you will be asked a set of questions.
-![yo teams](../images/teams-first-app-1.png)
+![yo teams](images/teams-first-app-1.png)
 
 ```sh
 yo teams
