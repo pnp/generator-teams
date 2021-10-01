@@ -21,6 +21,9 @@ nav:
   - Releases: 
     - 'Releases': 'releases/releases.md'
     - 'Release notes': 'releases/release-notes.md'
+  - Contributing:
+    - 'Guidelines': 'contributing/contributing.md'
+    - 'Getting started': 'contributing/getting-started.md'
   - About:
     - 'Why this generator': 'about/why-generator.md'
     - 'License': 'about/license.md'
