@@ -5,14 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [*3.3.1*]- <*2021-10-01*>
+## [*Unreleased*]- <**>
 
-### Added
 ### Changes
 
-* Updated to `@microsoft/teams-js` version `1.11.0`
+* Updated to `@microsoft/teams-js` version `1.11.0` (#241, #243)
 
-### Fixes
+> *Tests passing: 12.033*
+
 ## [*3.3.0*]- <*2021-09-30*>
 
 ### Added
