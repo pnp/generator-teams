@@ -5,19 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [*Unreleased*]- <**>
+## [*3.3.0*]- <*2021-09-30*>
 
 ### Added
 
 * Support for messaging extensions with Adaptive Card 1.4 Universal Action
+* Support for Teams manifest schema 1.11 (#234, #240)
 
 ### Changes
 
 * Changed Adaptive Card versions to 1.4 (#227)
+* Separated Typescript type checking into separate child process to improve build performance (PR #233 by s-KaiNet)
+* Dependency bumps
 
 ### Fixes
 
 * Fixed an issue where the bot help dialog caused an error
+* Dependency bump
+
+> *Tests passing: 12.033*
 
 ## [*3.2.0*]- <*2021-06-07*>
 

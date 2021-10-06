@@ -32,7 +32,10 @@ export class ManifestGenerator extends BaseManifestGenerator {
     }
 
     public supportsUpdateManifest(from: string): boolean {
-        return from === "1.8" || from === "1.9" || from === "1.10";
+        return from === "1.8" ||
+            from === "1.9" ||
+            from === "1.10" ||
+            from === "1.11";
     }
 
     public updateManifest(manifest: any, log?: (message?: string, context?: any) => void): any {
@@ -40,6 +43,7 @@ export class ManifestGenerator extends BaseManifestGenerator {
             case "1.8":
             case "1.9":
             case "1.10":
+            case "1.11":
                 manifest["$schema"] = "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json";
                 manifest.manifestVersion = "devPreview";
                 return manifest;

@@ -21,12 +21,13 @@ Detailed descriptions can always be found in the [CHANGELOG.md](https://github.c
 | [2.15.0](./Release-notes-2.15.0)  | 2020-06-20| to 2.16.0 |||
 | [2.16.0](./Release-notes-2.16.0)  | 2020-10-28|  |||
 | [2.17.1](./Release-notes-2.16.0)  | 2020-12-07| n/a |||
-| [3.0.0](./Release-notes-3.0.0)  | 2021-02-07| to 3.1.0 |||
-| [3.0.1](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.0.1)  | 2021-02-11| to 3.2.0 |||
-| [3.0.2](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.0.2)  | 2021-02-24| to 3.2.0 |||
-| [3.0.3](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.0.3)  | 2021-03-02| to 3.2.0 |||
-| [3.1.0](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.1.0)  | 2021-05-21| to 3.2.0 |**latest**||
-| [3.2.0](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.2.0)  | 2021-06-??| n/a |**latest**||
+| [3.0.0](./Release-notes-3.0.0)  | 2021-02-07| to 3.3.0 |||
+| [3.0.1](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.0.1)  | 2021-02-11| to 3.3.0 |||
+| [3.0.2](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.0.2)  | 2021-02-24| to 3.3.0 |||
+| [3.0.3](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.0.3)  | 2021-03-02| to 3.3.0 |||
+| [3.1.0](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.1.0)  | 2021-05-21| to 3.3.0 |||
+| [3.2.0](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.2.0)  | 2021-06-07| to 3.3.0 |||
+| [3.3.0](https://github.com/pnp/generator-teams/releases/tag/generator-teams%403.3.0)  | 2021-09-30| n/a |||
 
 ## How to install a specific version
 
@@ -35,7 +36,7 @@ Execute the following using the version or tag of your choice
 Using version:
 
 ``` bash
-npm install -g generator-teams@2.17.1
+npm install -g generator-teams@3.2.0
 ```
 
 Using tag:
@@ -55,5 +56,5 @@ npm install -g npx
 Execute the following using the version of your choice
 
 ``` bash
-npx -p yo -p generator-teams@2.17.1 -- yo teams
+npx -p yo -p generator-teams@3.2.0 -- yo teams
 ```

@@ -28,6 +28,7 @@ When scaffolding the project you will also have the option of adding additional 
 * Simple deployment (including a pre-configured Docker file)
 * Add unit testing framework and sample unit tests
 * Easily develop and debug using ngrok
+* Easily develop and debug using Github Codespaces
 * Application Insights support
 
 ## Documentation
@@ -55,7 +56,6 @@ Install `yo` (Yeoman), `gulp-cli` (Gulp global command line interface) and `type
 ``` Shell
 npm install yo gulp-cli typescript --global
 ```
-
 
 ### Released and stable version
 
