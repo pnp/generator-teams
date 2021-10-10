@@ -5,15 +5,22 @@ import WebpackDevServer from "webpack-dev-server";
 import Webpack from "webpack";
 import log from "fancy-log";
 import path from "path";
+import merge from "lodash.merge";
 
 (async () => {
     const webpackConfig = require(path.join(process.cwd(), "webpack.config"));
-    const compiler = Webpack(webpackConfig[1]);
-    const server = new WebpackDevServer({
+    const feWebpackConfig: Webpack.Configuration = webpackConfig[1];
+    let defaultDevServerConfig: WebpackDevServer.Configuration = {
         hot: false,
         host: "localhost",
         port: 9000,
         allowedHosts: "all",
+        client: {
+            overlay: {
+                warnings: false,
+                errors: true
+            }
+        },
         devMiddleware: {
             writeToDisk: true,
             stats: {
@@ -25,7 +32,14 @@ import path from "path";
                 entrypoints: true
             }
         }
-    }, compiler);
+    };
+
+    if (feWebpackConfig.devServer) {
+        defaultDevServerConfig = merge(defaultDevServerConfig, feWebpackConfig.devServer);
+    }
+
+    const compiler = Webpack(feWebpackConfig);
+    const server = new WebpackDevServer(defaultDevServerConfig, compiler);
 
     try {
         await server.start();
