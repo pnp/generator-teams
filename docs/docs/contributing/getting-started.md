@@ -14,5 +14,5 @@ The JavaScript a Yeoman generator uses is based on Node.js and many things are t
 * [Yeoman API Documentation](http://yeoman.io/generator/) - 
 Besides the getting started guide, there is official documentation available that covers the complete Yeoman API
 
-* [Node.js documentation](https://nodejs.org/dist/latest-v8.x/docs/api/) -
+* [Node.js documentation](https://nodejs.org/en/docs/) -
 In general, a Yeoman generator is written in JavaScript but it is based on Node.js where the development patterns are slightly different. In some cases it might be handy to consult the Node.js documentation.
