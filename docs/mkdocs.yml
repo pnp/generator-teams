@@ -1,16 +1,73 @@
 site_name: Yo Teams - Microsoft Teams Apps generator
+site_url: https://pnp.github.io/generator-teams/
 nav:
   - Home: 'index.md'
-  - Releases: 'releases.md'
-  - Tutorials: 'tutorials.md'
-  - Project Structure: 'project-structure.md'
+  - User guide:
+    - 'Setup a developer tenant': 'user-guide/setup-tenant.md'
+    - 'Setup your developer environment': 'user-guide/setup-machine.md'
+    - 'Deploy to teams': 'user-guide/deploy-to-teams.md'
+    - 'Upgrading projects': 'user-guide/upgrading-projects.md'
+    - 'Debugging': 'user-guide/vscode.md'
+    - 'Using GitHub code spaces': 'user-guide/codespaces.md'
+    - 'Using multiple manifests': 'user-guide/using-multiple-manifests.md'
+  - Concepts:
+    - 'Tunneling': 'concepts/ngrok.md'
+    - 'Project structure': 'concepts/project-structure.md'
+  - Tutorials: 
+    - 'Your first Microsoft Teams App': 'tutorials/build-your-first-microsoft-teams-app.md'
+    - 'Build a SharePoint Online Provider hosted web parts': 'tutorials/build-a-sharepoint-online-provider-hosted-web-part.md'
+    - 'Build a connector for Microsoft Teams': 'tutorials/build-a-connector-for-microsoft-teams.md'
+    - 'Build a tab with SSO': 'tutorials/build-a-tab-with-sso-support.md'
+  - Releases: 
+    - 'Releases': 'releases/releases.md'
+    - 'Release notes': 'releases/release-notes.md'
+  - Contributing:
+    - 'Guidelines': 'contributing/contribution-guidelines.md'
+    - 'Getting started': 'contributing/getting-started.md'
+  - About:
+    - 'Why this generator': 'about/why-generator.md'
+    - 'License': 'about/license.md'
+    
 theme:
   name: 'material'
+  logo: images/parker-teams-300.png
+  favicon: images/favicon.ico
+  icon:
+    repo: fontawesome/brands/git-alt
+  palette:  
+    - scheme: default
+      primary: deep purple
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - scheme: slate
+      primary: deep purple
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.instant
+    - search.share
 markdown_extensions:
   - admonition
   - codehilite:
      guess_lang: false
   - toc:
       permalink: true
+  - pymdownx.superfences
+  - pymdownx.snippets
+  - def_list
+extra:
+  social:
+    - icon: fontawesome/brands/twitter
+      link: 'https://twitter.com/m365pnp'
+    - icon: fontawesome/brands/youtube
+      link: 'http://aka.ms/sppnp-videos'
+    - icon: fontawesome/solid/link
+      link: 'https://aka.ms/sppnp'
+  analytics:
+    provider: google
+    property: UA-209929913-1
 repo_url: https://github.com/pnp/generator-teams
-edit_uri: blob/master/docs/docs
+edit_uri: tree/master/docs/docs

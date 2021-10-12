@@ -4,3 +4,9 @@ generators
 temp-templates
 *.tgz
 dist
+
+# generated docs
+docs/site
+
+# VS env folder
+.vs/
