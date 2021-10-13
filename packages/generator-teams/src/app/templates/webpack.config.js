@@ -97,7 +97,33 @@ const config = [{
                 configFile: "./src/client/tsconfig.json"
             }
         })
-    ]
+    ],
+    devServer: {
+        hot: false,
+        host: "localhost",
+        port: 9000,
+        allowedHosts: "all",
+        client: {
+            overlay: debug
+                ? {
+                    warnings: false,
+                    errors: true
+                }
+                : false
+        },
+        liveReload: debug,
+        devMiddleware: {
+            writeToDisk: true,
+            stats: {
+                all: false,
+                colors: true,
+                errors: true,
+                warnings: true,
+                timings: true,
+                entrypoints: true
+            }
+        }
+    }
 }
 ];
 <% if (lintingSupport) { %>
