@@ -2,7 +2,7 @@
 
 > NOTE: Not updated with version `3.0.0` changes
 
-In this tutorial we will walk through creating a Connector for Microsoft Teams using the Microsoft Teams Yeoman generator. It assumes that you have [enabled side-loading of Microsoft Teams apps](../setup-tenant.md) in Microsoft Teams as well as have installed [all the prerequisites](../setup-machine.md).
+In this tutorial we will walk through creating a Connector for Microsoft Teams using the Microsoft Teams Yeoman generator. It assumes that you have [enabled side-loading of Microsoft Teams apps](../user-guide/setup-tenant.md) in Microsoft Teams as well as have installed [all the prerequisites](../user-guide/setup-machine.md).
 
 ## Generate your project
 
