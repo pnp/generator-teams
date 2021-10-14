@@ -104,14 +104,11 @@ const config = [{
         port: 9000,
         allowedHosts: "all",
         client: {
-            overlay: debug
-                ? {
-                    warnings: false,
-                    errors: true
-                }
-                : false
+            overlay: {
+              warnings: false,
+              errors: true
+          }
         },
-        liveReload: debug,
         devMiddleware: {
             writeToDisk: true,
             stats: {
