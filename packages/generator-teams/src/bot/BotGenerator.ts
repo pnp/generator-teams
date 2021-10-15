@@ -190,7 +190,7 @@ export class BotGenerator extends Generator {
                             "src/server/{botName}/dialogs/__tests__/HelpDialog.spec.ts"
                         );
                         Yotilities.addAdditionalDevDeps([
-                            ["botbuilder-testing", "4.11.1"]
+                            ["botbuilder-testing", "4.14.1"]
                         ], this.fs);
                     };
 

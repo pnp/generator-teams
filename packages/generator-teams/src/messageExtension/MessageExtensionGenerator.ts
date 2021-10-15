@@ -406,7 +406,7 @@ export class MessageExtensionGenerator extends Generator {
                 });
 
                 Yotilities.addAdditionalDeps([
-                    ["botbuilder-teams-messagingextensions", "1.8.0-preview2"]
+                    ["botbuilder-teams-messagingextensions", "1.8.0-preview3"]
                 ], this.fs);
 
                 if (this.options.messagingExtensionCanUpdateConfiguration || this.options.messagingExtensionActionResponseTypeConfig) {
