@@ -1,6 +1,6 @@
 name: Build yoteams-deploy
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
