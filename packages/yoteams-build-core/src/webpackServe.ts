@@ -12,7 +12,7 @@ import path from "path";
     const compiler = Webpack(clientConfig);
 
     compiler.hooks.beforeCompile.tap("webpackServe", () => {
-        console.log("webpack compiling");
+        log.info("webpack compiling");
     });
 
     const defaultDevServerConfig = {
