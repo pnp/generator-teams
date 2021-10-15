@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changes
 
 * `webpack.config.js` contains default settings for the webpack-dev-server (PR #251 by s-KaiNet)
+* Migrated to botbuilder 4.14.1
 
 ## [*3.3.1*]- <*2021-10-08*>
 
