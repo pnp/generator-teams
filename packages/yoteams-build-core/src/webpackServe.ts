@@ -15,7 +15,30 @@ import path from "path";
         console.log("webpack compiling");
     });
 
-    const server = new WebpackDevServer(clientConfig.devServer, compiler);
+    const defaultDevServerConfig = {
+        hot: false,
+        host: "localhost",
+        port: 9000,
+        allowedHosts: "all",
+        client: {
+            overlay: {
+                warnings: false,
+                errors: true
+            }
+        },
+        devMiddleware: {
+            writeToDisk: true,
+            stats: {
+                all: false,
+                colors: true,
+                errors: true,
+                warnings: true,
+                timings: true,
+                entrypoints: true
+            }
+        }
+    };
+    const server = new WebpackDevServer(clientConfig.devServer || defaultDevServerConfig, compiler);
 
     try {
         await server.start();
