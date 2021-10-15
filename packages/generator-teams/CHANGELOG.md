@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*]- <>
+
+### Changes
+
+* `webpack.config.js` contains default settings for the webpack-dev-server (PR #251 by s-KaiNet)
+
 ## [*3.3.1*]- <*2021-10-08*>
 
 ### Changes
