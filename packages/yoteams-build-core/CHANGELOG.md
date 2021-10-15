@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*]- <>
+
+### Changes
+
+* Webpack dev server now runs only in `--debug` mode, added webpack dev server "compilation starting" notification message (PR #251 by s-KaiNet)
+
 ## [*1.3.0*]- <*2021-09-30*>
 
 ### Added
