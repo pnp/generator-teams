@@ -105,9 +105,9 @@ const config = [{
         allowedHosts: "all",
         client: {
             overlay: {
-              warnings: false,
-              errors: true
-          }
+                warnings: false,
+                errors: true
+            }
         },
         devMiddleware: {
             writeToDisk: true,
