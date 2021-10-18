@@ -338,7 +338,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 * Added support for manifest version 1.5, new default
-* Added suppot for optionally adding Microsoft Partner Id. More info at https://aka.ms/partner
+* Added support for optionally adding Microsoft Partner Id. More info at https://aka.ms/partner
 * Added files support option for bots (schema version 1.4+)
 * Now persists settings for using unit testing, application insights and the library name
 * Added default logging of "msteams" in the `.env` file
