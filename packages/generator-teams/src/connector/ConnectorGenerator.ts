@@ -1,4 +1,4 @@
-// Copyright (c) Wictor Wilén. All rights reserved. 
+// Copyright (c) Wictor Wilén. All rights reserved.
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
@@ -27,12 +27,15 @@ export class ConnectorGenerator extends Generator {
 
     public prompting() {
         if (this.options.connector) {
+            const generatorPrefix = "[connector]";
+
             return this.prompt(
                 [
                     {
                         type: 'list',
                         name: 'connectorType',
                         message: 'What type of Connector would you like to include?',
+                        prefix: generatorPrefix,
                         default: 'new',
                         choices: [
                             {
@@ -49,6 +52,7 @@ export class ConnectorGenerator extends Generator {
                         type: 'input',
                         name: 'connectorId',
                         message: 'What is the ID of your Connector (found in the Connector Developer Portal)?',
+                        prefix: generatorPrefix,
                         default: (answers: any) => {
                             return EmptyGuid.empty;
                         },
@@ -60,6 +64,7 @@ export class ConnectorGenerator extends Generator {
                         type: 'input',
                         name: 'connectorName',
                         message: 'What is the name of your Connector?',
+                        prefix: generatorPrefix,
                         default: this.options.title,
                         validate: (input) => {
                             if(! (/^[a-zA-Z].*/.test(input))) {
@@ -79,7 +84,7 @@ export class ConnectorGenerator extends Generator {
                     this.options.connectorName = this.options.connectorName + 'Connector';
                 }
                 this.options.connectorComponentName = this.options.connectorName.charAt(0).toUpperCase() + this.options.connectorName.slice(1);
-                
+
                 this.options.reactComponents = true;
             });
         }

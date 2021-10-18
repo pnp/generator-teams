@@ -1,4 +1,4 @@
-// Copyright (c) Wictor Wilén. All rights reserved. 
+// Copyright (c) Wictor Wilén. All rights reserved.
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
@@ -19,12 +19,15 @@ export class LocalizationGenerator extends Generator {
     }
     public prompting() {
         if (this.options.localization) {
+            const generatorPrefix = "[localization]";
+
             return this.prompt(
                 [
                     {
                         type: 'input',
                         name: 'defaultLanguage',
                         message: 'What is the default language tag? (format: en-us)',
+                        prefix: generatorPrefix,
                         default: "en-us",
                         validate: (input: string, answers: any) => {
                             return /^[A-Za-z0-9]{1,8}(-[A-Za-z0-9]{1,8}){0,2}$/.test(input); // same def as in the schema
@@ -40,12 +43,14 @@ export class LocalizationGenerator extends Generator {
                         type: 'confirm',
                         name: 'addMoreLanguages',
                         message: 'Would you like to add a translation?',
+                        prefix: generatorPrefix,
                         default: true
                     },
                     {
                         type: 'input',
                         name: 'additionalLanguage',
                         message: "What is the language tag of the translation? (format: en-us)",
+                        prefix: generatorPrefix,
                         validate: (input: string, answers: any) => {
                             if (input == answers.defaultLanguage ||
                                 this.options.existingManifest &&

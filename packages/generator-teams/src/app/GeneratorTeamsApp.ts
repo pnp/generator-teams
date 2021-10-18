@@ -1,4 +1,4 @@
-// Copyright (c) Wictor Wilén. All rights reserved. 
+// Copyright (c) Wictor Wilén. All rights reserved.
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
@@ -123,6 +123,8 @@ export class GeneratorTeamsApp extends Generator {
             generatorVersion = "3.0.0";
         }
 
+        const generatorPrefix = "[solution]";
+
         // return the question series
         return this.prompt<IAnswers>(
             [
@@ -131,6 +133,7 @@ export class GeneratorTeamsApp extends Generator {
                     name: 'confirmedAdd',
                     default: false,
                     message: `You are running the generator on an already existing project, "${this.options.existingManifest && this.options.existingManifest.name.short}", are you sure you want to continue?`,
+                    prefix: generatorPrefix,
                     when: () => this.options.existingManifest,
                 },
                 {
@@ -138,6 +141,7 @@ export class GeneratorTeamsApp extends Generator {
                     name: 'updateBuildSystem',
                     default: false,
                     message: 'Update yo teams core files? WARNING: Ensure your source code is under version control so you can merge any customizations of the core files!',
+                    prefix: generatorPrefix,
                     when: (answers: IAnswers) => this.options.existingManifest && generatorVersion && generatorVersion != pkg.version && answers.confirmedAdd == true
                 },
                 {
@@ -145,7 +149,8 @@ export class GeneratorTeamsApp extends Generator {
                     name: 'solutionName',
                     default: lodash.kebabCase(this.appname),
                     when: () => !(this.options.solutionName || this.options.existingManifest),
-                    message: 'What is your solution name?'
+                    prefix: generatorPrefix,
+                    message: 'What is your solution name?',
                 },
                 {
                     type: 'list',
@@ -153,6 +158,7 @@ export class GeneratorTeamsApp extends Generator {
                     default: 'current',
                     when: () => !(this.options.solutionName || this.options.existingManifest),
                     message: 'Where do you want to place the files?',
+                    prefix: generatorPrefix,
                     choices: [
                         {
                             name: 'Use the current folder',
@@ -168,6 +174,7 @@ export class GeneratorTeamsApp extends Generator {
                     type: 'input',
                     name: 'name',
                     message: 'Title of your Microsoft Teams App project?',
+                    prefix: generatorPrefix,
                     when: () => !this.options.existingManifest,
                     default: this.appname
                 },
@@ -175,6 +182,7 @@ export class GeneratorTeamsApp extends Generator {
                     type: 'input',
                     name: 'developer',
                     message: 'Your (company) name? (max 32 characters)',
+                    prefix: generatorPrefix,
                     default: this.user.git.name,
                     validate: (input: string) => {
                         return input.length > 0 && input.length <= 32;
@@ -186,6 +194,7 @@ export class GeneratorTeamsApp extends Generator {
                     type: "confirm",
                     name: "updateManifestVersion",
                     message: `Do you want to change the current manifest version ${this.options.existingManifest && "(" + this.options.existingManifest.manifestVersion + ")"}?`,
+                    prefix: generatorPrefix,
                     when: (answers: IAnswers) => this.options.existingManifest && versions.length > 0 && answers.confirmedAdd != false,
                     default: false
                 },
@@ -193,6 +202,7 @@ export class GeneratorTeamsApp extends Generator {
                     type: 'list',
                     name: 'manifestVersion',
                     message: 'Which manifest version would you like to use?',
+                    prefix: generatorPrefix,
                     choices: versions,
                     default: versions.find((v: inquirer.ChoiceOptions) => v.extra.default) ?
                         versions.find((v: inquirer.ChoiceOptions) => v.extra.default)!.value :
@@ -203,12 +213,14 @@ export class GeneratorTeamsApp extends Generator {
                     type: "confirm",
                     name: "quickScaffolding",
                     message: `Quick scaffolding`,
+                    prefix: generatorPrefix,
                     default: true
                 },
                 {
                     type: 'input',
                     name: 'mpnId',
                     message: 'Enter your Microsoft Partner ID, if you have one? (Leave blank to skip)',
+                    prefix: generatorPrefix,
                     default: undefined,
                     when: (answers: IAnswers) => !answers.quickScaffolding && !this.options.existingManifest,
                     validate: (input: string) => {
@@ -218,6 +230,7 @@ export class GeneratorTeamsApp extends Generator {
                 {
                     type: 'checkbox',
                     message: 'What features do you want to add to your project?',
+                    prefix: generatorPrefix,
                     name: 'parts',
                     choices: [
                         {
@@ -278,6 +291,7 @@ export class GeneratorTeamsApp extends Generator {
                     type: 'input',
                     name: 'host',
                     message: 'The URL where you will host this solution?',
+                    prefix: generatorPrefix,
                     default: (answers: IAnswers) => {
                         return `https://${lodash.camelCase(answers.solutionName).toLocaleLowerCase()}.azurewebsites.net`;
                     },
@@ -288,6 +302,7 @@ export class GeneratorTeamsApp extends Generator {
                     type: 'confirm',
                     name: 'showLoadingIndicator',
                     message: 'Would you like show a loading indicator when your app/tab loads?',
+                    prefix: generatorPrefix,
                     default: false, // set to false until the 20 second timeout bug is fixed in Teams
                     when: () => !this.options.existingManifest
                 },
@@ -295,6 +310,7 @@ export class GeneratorTeamsApp extends Generator {
                     type: 'confirm',
                     name: 'isFullScreen',
                     message: 'Would you like personal apps to be rendered without a tab header-bar?',
+                    prefix: generatorPrefix,
                     default: false,
                     when: (answers: IAnswers) => !answers.quickScaffolding && !this.options.existingManifest,
                 },
@@ -302,6 +318,7 @@ export class GeneratorTeamsApp extends Generator {
                     type: 'confirm',
                     name: 'unitTestsEnabled',
                     message: 'Would you like to include Test framework and initial tests?',
+                    prefix: generatorPrefix,
                     when: (answers: IAnswers) => !this.options.existingManifest && !answers.quickScaffolding,
                     store: true,
                     default: false
@@ -310,6 +327,7 @@ export class GeneratorTeamsApp extends Generator {
                     type: 'confirm',
                     name: 'lintingSupport',
                     message: 'Would you like to include ESLint support',
+                    prefix: generatorPrefix,
                     when: (answers: IAnswers) => !this.options.existingManifest && !answers.quickScaffolding,
                     store: true,
                     default: true
@@ -318,6 +336,7 @@ export class GeneratorTeamsApp extends Generator {
                     type: 'confirm',
                     name: 'useAzureAppInsights',
                     message: 'Would you like to use Azure Applications Insights for telemetry?',
+                    prefix: generatorPrefix,
                     when: (answers: IAnswers) => !this.options.existingManifest && !answers.quickScaffolding,
                     store: true,
                     default: false
@@ -326,6 +345,7 @@ export class GeneratorTeamsApp extends Generator {
                     type: 'input',
                     name: 'azureAppInsightsKey',
                     message: 'What is the Azure Application Insights Instrumentation Key?',
+                    prefix: generatorPrefix,
                     default: (answers: IAnswers) => {
                         return EmptyGuid.empty;
                     },
