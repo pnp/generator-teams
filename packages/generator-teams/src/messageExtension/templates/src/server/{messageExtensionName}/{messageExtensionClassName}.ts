@@ -83,18 +83,18 @@ const log = debug("msteams");
                         url: `https://${process.env.PUBLIC_HOSTNAME}/assets/icon.png`
                     },
                     {
-                      type: "ActionSet",
-                      actions: [
-                        {
-                            type: "Action.Execute",
-                            title: "More details",
-                            data: {
-                                action: "moreDetails",
-                                id: "1234-5678"
-                            },
-                            fallback: "Action.Submit"
-                        }
-                      ]
+                        type: "ActionSet",
+                        actions: [
+                            {
+                                type: "Action.Execute",
+                                title: "More details",
+                                data: {
+                                    action: "moreDetails",
+                                    id: "1234-5678"
+                                },
+                                fallback: "Action.Submit"
+                            }
+                        ]
                     }
                 ],
                 $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
