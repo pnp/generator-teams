@@ -1,4 +1,4 @@
-// Copyright (c) Wictor Wilén. All rights reserved. 
+// Copyright (c) Wictor Wilén. All rights reserved.
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
@@ -18,12 +18,15 @@ export class CustomBotGenerator extends Generator {
     }
     public prompting() {
         if (this.options.customBot) {
+            const generatorPrefix = "[custombot]";
+
             return this.prompt(
                 [
                     {
                         type: 'input',
                         name: 'title',
                         message: 'What is the name of your outgoing webhook?',
+                        prefix: generatorPrefix,
                         default: this.options.title + ' Outgoing Webhook',
                         validate: (input) => {
                             if(! (/^[a-zA-Z].*/.test(input))) {

@@ -8,12 +8,24 @@ import path from "path";
 
 (async () => {
     const webpackConfig = require(path.join(process.cwd(), "webpack.config"));
-    const compiler = Webpack(webpackConfig[1]);
-    const server = new WebpackDevServer({
+    const clientConfig = webpackConfig[1];
+    const compiler = Webpack(clientConfig);
+
+    compiler.hooks.beforeCompile.tap("webpackServe", () => {
+        log.info("webpack compiling");
+    });
+
+    const defaultDevServerConfig = {
         hot: false,
         host: "localhost",
         port: 9000,
         allowedHosts: "all",
+        client: {
+            overlay: {
+                warnings: false,
+                errors: true
+            }
+        },
         devMiddleware: {
             writeToDisk: true,
             stats: {
@@ -25,7 +37,8 @@ import path from "path";
                 entrypoints: true
             }
         }
-    }, compiler);
+    };
+    const server = new WebpackDevServer(clientConfig.devServer || defaultDevServerConfig, compiler);
 
     try {
         await server.start();

@@ -1,4 +1,4 @@
-// Copyright (c) Wictor Wilén. All rights reserved. 
+// Copyright (c) Wictor Wilén. All rights reserved.
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
@@ -25,12 +25,15 @@ export class TabGenerator extends Generator {
     }
     public prompting() {
         if (this.options.tab) {
+            const generatorPrefix = "[tab]";
+
             return this.prompt(
                 [
                     {
                         type: 'input',
                         name: 'tabTitle',
                         message: 'Default Tab name? (max 16 characters)',
+                        prefix: generatorPrefix,
                         default: this.options.title + ' Tab',
                         validate: (input: string, answers: any) => {
                             if (!(/^[a-zA-Z].*/.test(input))) {
@@ -51,6 +54,7 @@ export class TabGenerator extends Generator {
                         type: 'list',
                         name: 'tabType',
                         message: "What kind of Tab would you like to create?",
+                        prefix: generatorPrefix,
                         choices: [
                             {
                                 name: "Configurable",
@@ -95,6 +99,7 @@ export class TabGenerator extends Generator {
                         type: 'checkbox',
                         name: 'tabScopes',
                         message: "What scopes do you intend to use for your Tab?",
+                        prefix: generatorPrefix,
                         choices: [
                             {
                                 name: "In a Team",
@@ -118,6 +123,7 @@ export class TabGenerator extends Generator {
                         type: 'confirm',
                         name: 'tabSSO',
                         message: 'Do you require Azure AD Single-Sign-On support for the tab?',
+                        prefix: generatorPrefix,
                         default: false,
                         when: (answers: any) => {
                             if (answers.tabType == "viva") {
@@ -132,6 +138,7 @@ export class TabGenerator extends Generator {
                         type: 'input',
                         name: 'tabSSOAppId',
                         message: 'What is the Application ID to associate with the SSO Tab?',
+                        prefix: generatorPrefix,
                         default: (answers: any) => {
                             return EmptyGuid.empty;
                         },
@@ -144,6 +151,7 @@ export class TabGenerator extends Generator {
                         type: 'input',
                         name: 'tabSSOAppUri',
                         message: 'What is the Application ID URI to associate with the SSO Tab?',
+                        prefix: generatorPrefix,
                         default: (answers: any) => {
                             return `api://${this.options.hostname}/${answers.tabSSOAppId}`;
                         },
@@ -156,6 +164,7 @@ export class TabGenerator extends Generator {
                         type: 'confirm',
                         name: 'tabSharePoint',
                         message: 'Do you want this tab to be available in SharePoint Online?',
+                        prefix: generatorPrefix,
                         default: false,
                         when: (answers: any) => {
                             return answers.tabType == "configurable" && !answers.quickScaffolding
@@ -165,6 +174,7 @@ export class TabGenerator extends Generator {
                         type: 'checkbox',
                         name: 'tabSharePointHosts',
                         message: "How do you want your tab to be available in SharePoint?",
+                        prefix: generatorPrefix,
                         choices: [
                             {
                                 name: "As a full page application",
@@ -185,6 +195,7 @@ export class TabGenerator extends Generator {
                         type: 'input',
                         name: 'vivaUrl',
                         message: 'Enter the link of the SharePoint portal that you want to pin in Teams.',
+                        prefix: generatorPrefix,
                         validate: (input: string) => {
                             const domain = parse(input);
                             if (!domain.isValid) {
