@@ -72,30 +72,19 @@
                   "data": {
                     "msteams": {
                       "type": "messageBack",
-                      "displayText": "Who am I?",
+                      "displayText": "who am i?",
                       "text": "who"
                     }
                   }
               },
               {
                 "type": "Action.Submit",
-                "title": "@Mention me",
+                "title": "Mention me",
                 "data": {
                   "msteams": {
                     "type": "messageBack",
-                    "displayText": "@Mention me",
+                    "displayText": "mention me",
                     "text": "mention"
-                  }
-                }
-              },
-              {
-                "type": "Action.Submit",
-                "title": "Message all members",
-                "data": {
-                  "msteams": {
-                    "type": "messageBack",
-                    "displayText": "Message all members",
-                    "text": "message"
                   }
                 }
               },
@@ -105,7 +94,7 @@
                 "data": {
                   "msteams": {
                     "type": "messageBack",
-                    "displayText": "Get help",
+                    "displayText": "get help",
                     "text": "help"
                   }
                 }
