@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Migrated to botbuilder 4.14.1
 * added category prefix for improved readability in project creation (#109)
 
+### Fixes
+
+* Fixed Adaptive Card and linting issue (#255)
+
 ## [*3.3.1*]- <*2021-10-08*>
 
 ### Changes

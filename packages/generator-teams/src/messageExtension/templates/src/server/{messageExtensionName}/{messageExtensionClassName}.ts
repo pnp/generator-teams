@@ -27,16 +27,16 @@ const log = debug("msteams");
                     {
                         type: "Image",
                         url: `https://${process.env.PUBLIC_HOSTNAME}/assets/icon.png`
-                    }
+                    },
                     {
-                      type: "ActionSet",
-                      actions: [
-                        {
-                          type: "Action.OpenUrl",
-                          title: "Navigate",
-                          url: query.url
-                        }
-                      ]
+                        type: "ActionSet",
+                        actions: [
+                            {
+                                type: "Action.OpenUrl",
+                                title: "Navigate",
+                                url: query.url
+                            }
+                        ]
                     }
                 ],
                 $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
