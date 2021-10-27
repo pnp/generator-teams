@@ -6,16 +6,6 @@ import { MsTeamsApiRouter, MsTeamsPageRouter } from "express-msteams-host";
 import * as debug from "debug";
 import * as compression from "compression";
 <% if (useAzureAppInsights) { %>import * as appInsights from "applicationinsights";<% } %>
-<% if (botid) { %>
-import {
-    BotFrameworkAdapter,
-    ConversationState,
-    MemoryStorage,
-    UserState,
-    TurnContext
-} from "botbuilder";
-import { <%= botClassName %> } from "./<%= botName %>/<%= botClassName %>";
-<% } %>
 // Initialize debug logging module
 const log = debug("msteams");
 
@@ -60,33 +50,6 @@ express.use("/assets", Express.static(path.join(__dirname, "web/assets")));
 // routing for bots, connectors and incoming web hooks - based on the decorators
 // For more information see: https://www.npmjs.com/package/express-msteams-host
 express.use(MsTeamsApiRouter(allComponents));
-
-<% if (botid) { %>
-const adapter = new BotFrameworkAdapter({
-    appId: process.env.MICROSOFT_APP_ID,
-    appPassword: process.env.MICROSOFT_APP_PASSWORD
-});
-
-const memoryStorage = new MemoryStorage();
-const conversationState = new ConversationState(memoryStorage);
-const userState = new UserState(memoryStorage);
-
-const bot = new <%= botClassName %>(conversationState, userState);
-
-// listen for bot messages
-express.post("/api/messages", (req, res) => {
-    adapter.processActivity(req, res, async (context: TurnContext) => {
-        await bot.run(context);
-    });
-});
-
-// handle errors
-adapter.onTurnError = async (context, error) => {
-    console.error(`bot onTurnError: ${error}`);
-    await context.sendActivity('Bot encountered an error... see console');
-    await conversationState.delete(context);
-};  
-<% } %>
 
 // routing for pages for tabs and connector configuration
 // For more information see: https://www.npmjs.com/package/express-msteams-host

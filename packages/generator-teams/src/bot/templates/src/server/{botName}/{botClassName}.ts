@@ -3,6 +3,7 @@ import * as debug from "debug";
 import {
   CardFactory,
   ConversationState,
+  MemoryStorage,
   UserState,
   TurnContext
 } from "botbuilder";
@@ -12,27 +13,38 @@ import WelcomeCard from "./cards/welcomeCard";
 
 // Initialize debug logging module
 const log = debug("msteams");
+
+/**
+ * Implementation for <%= botTitle %>
+ */
+ @BotDeclaration(
+  "/api/messages",
+  new MemoryStorage(),
+  // eslint-disable-next-line no-undef
+  process.env.<%= botidEnv %>,
+  // eslint-disable-next-line no-undef
+  process.env.<%= botidEnvSecret %>)
 <% if (staticTab) { %>@PreventIframe("/<%=botName%>/<%=staticTabName%>.html")<% } %>
 export class <%= botClassName %> extends DialogBot {
-     constructor(conversationState: ConversationState, userState: UserState) {
-        super(conversationState, userState, new MainDialog());
-    
-        this.onMembersAdded(async (context, next) => {
-          const membersAdded = context.activity.membersAdded;
-          if (membersAdded && membersAdded.length > 0) {
-            for (let cnt = 0; cnt < membersAdded.length; cnt++) {
-              if (membersAdded[cnt].id !== context.activity.recipient.id) {
-                await this.sendWelcomeCard( context );
-              }
+    constructor(conversationState: ConversationState, userState: UserState) {
+      super(conversationState, userState, new MainDialog());
+  
+      this.onMembersAdded(async (context, next) => {
+        const membersAdded = context.activity.membersAdded;
+        if (membersAdded && membersAdded.length > 0) {
+          for (let cnt = 0; cnt < membersAdded.length; cnt++) {
+            if (membersAdded[cnt].id !== context.activity.recipient.id) {
+              await this.sendWelcomeCard( context );
             }
           }
-          await next();
-        });
-      }
-      public async sendWelcomeCard( context: TurnContext ): Promise<void> {
-        const welcomeCard = CardFactory.adaptiveCard(WelcomeCard);
-        await context.sendActivity({ attachments: [welcomeCard] });
-      }
+        }
+        await next();
+      });
+    }
+    public async sendWelcomeCard( context: TurnContext ): Promise<void> {
+      const welcomeCard = CardFactory.adaptiveCard(WelcomeCard);
+      await context.sendActivity({ attachments: [welcomeCard] });
+    }
 <% if (botCallingEnabled) { %>
     /**
      * Webhook for incoming calls
