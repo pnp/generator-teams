@@ -1,4 +1,4 @@
-// Copyright (c) Wictor Wilén. All rights reserved. 
+// Copyright (c) Wictor Wilén. All rights reserved.
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
@@ -25,12 +25,15 @@ export class MessageExtensionGenerator extends Generator {
     }
     public prompting() {
         if (this.options.messageExtension) {
+            const generatorPrefix = "[extension]";
+
             return this.prompt(
                 [
                     {
                         type: 'list',
                         name: 'messageExtensionHost',
                         message: 'Where is your message extension hosted?',
+                        prefix: generatorPrefix,
                         default: (answers: any) => {
                             if (this.options.botType == 'botframework') {
                                 return 'existing';
@@ -65,6 +68,7 @@ export class MessageExtensionGenerator extends Generator {
                         type: 'list',
                         name: 'botId',
                         message: 'Choose which bot',
+                        prefix: generatorPrefix,
                         choices: (answers: any) => {
                             let choices: any[] = [];
                             if (this.options.existingManifest.bots) {
@@ -90,6 +94,7 @@ export class MessageExtensionGenerator extends Generator {
                     {
                         type: 'input',
                         name: 'messageExtensionId',
+                        prefix: generatorPrefix,
                         message: (answers: any) => {
                             var message = 'What is the Microsoft App ID for the bot used by the Message Extension? ';
                             return message;
@@ -108,6 +113,7 @@ export class MessageExtensionGenerator extends Generator {
                         type: 'list',
                         name: 'messagingExtensionType',
                         message: 'What type of messaging extension command?',
+                        prefix: generatorPrefix,
                         choices: [
                             {
                                 name: "Search based messaging extension",
@@ -127,6 +133,7 @@ export class MessageExtensionGenerator extends Generator {
                         type: 'checkbox',
                         name: 'messagingExtensionActionContext',
                         message: "What context do you want your action to work from?",
+                        prefix: generatorPrefix,
                         choices: [
                             {
                                 name: "The compose box",
@@ -151,6 +158,7 @@ export class MessageExtensionGenerator extends Generator {
                         type: 'list',
                         name: 'messagingExtensionActionInputType',
                         message: "How would you like to collect information from the user for your action?",
+                        prefix: generatorPrefix,
                         choices: [
                             {
                                 name: "Using an Adaptive Card",
@@ -173,6 +181,7 @@ export class MessageExtensionGenerator extends Generator {
                         type: 'confirm',
                         name: 'messagingExtensionActionResponseTypeConfig',
                         message: "Do you need configuration or authorization when collecting information?",
+                        prefix: generatorPrefix,
                         when: (answers: any) => {
                             return answers.messagingExtensionType == "action" && answers.messagingExtensionActionInputType != "static";
                         },
@@ -182,6 +191,7 @@ export class MessageExtensionGenerator extends Generator {
                         type: 'confirm',
                         name: 'messagingExtensionCanUpdateConfiguration',
                         message: 'Would you like a Settings option for the messaging extension?',
+                        prefix: generatorPrefix,
                         default: (answers: any) => {
                             if (this.options.existingManifest && answers.messageExtensionHost == 'existing') {
                                 return false; // if you haven't added it already, we assume you don't want it this time either
@@ -205,6 +215,7 @@ export class MessageExtensionGenerator extends Generator {
                         type: 'input',
                         name: 'messageExtensionName',
                         message: 'What is the name of your Message Extension command?',
+                        prefix: generatorPrefix,
                         default: this.options.title + ' Message Extension',
                         validate: (input: string, answers: any) => {
                             if (!(/^[a-zA-Z].*/.test(input))) {
@@ -227,6 +238,7 @@ export class MessageExtensionGenerator extends Generator {
                         type: 'input',
                         name: 'messageExtensionDescription',
                         message: 'Describe your Message Extension command?',
+                        prefix: generatorPrefix,
                         default: (answers: any) => {
                             return `Description of ${answers.messageExtensionName}`
                         },
@@ -238,6 +250,7 @@ export class MessageExtensionGenerator extends Generator {
                         type: 'input',
                         name: 'messageExtensionLinkDomains',
                         message: 'Provide a comma separated list of domains for your Message Extension Link Unfurling:',
+                        prefix: generatorPrefix,
                         default: '*.contoso.com',
                         validate: (input: string, answers: any) => {
                             if (!(/[\*]?.[\w]*[.[\w]*]*[,]?/gm.test(input))) {
@@ -406,7 +419,7 @@ export class MessageExtensionGenerator extends Generator {
                 });
 
                 Yotilities.addAdditionalDeps([
-                    ["botbuilder-teams-messagingextensions", "1.8.0-preview2"]
+                    ["botbuilder-teams-messagingextensions", "1.8.0-preview3"]
                 ], this.fs);
 
                 if (this.options.messagingExtensionCanUpdateConfiguration || this.options.messagingExtensionActionResponseTypeConfig) {

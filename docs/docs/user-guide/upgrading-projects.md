@@ -6,7 +6,7 @@ Projects can be updated either automatically using the generator or manually.
 
 > Note: See release notes for upgrade compatibility
 
-![](images/upgrade-project.png)
+![](../images/upgrade-project.png)
 
 ## Automatically upgrade a project
 

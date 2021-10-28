@@ -11,6 +11,7 @@ import { ChildProcess, fork } from "child_process";
 import { injectSources } from "./webTasks";
 import { dependencies } from ".";
 const argv = require("yargs").argv;
+const debug = argv.debug !== undefined;
 
 export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
     const watches = [
@@ -81,8 +82,15 @@ export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
             gulp.series("webpack:server")
         );
 
-        // webpack dev server - incrementally rebuilds client bundle on source change
-        startWebpackDevServer();
+        if (debug) {
+            // webpack dev server - incrementally rebuilds client bundle on source change
+            startWebpackDevServer();
+        } else {
+            gulp.watch(
+                config.clientWatches ? clientWatches.concat(config.clientWatches) : clientWatches,
+                gulp.series("webpack:client")
+            );
+        }
 
         // watch for style changes
         gulp.watch("src/public/**/*.scss", gulp.series("styles", "static:copy", "static:inject"))
@@ -113,13 +121,12 @@ export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
         // watch for .env files
         const envFile = argv.env ?? ".env";
         log(`Watching ${envFile}`);
-        gulp.watch(envFile, gulp.series(reloadEnv, gulp.parallel("manifest", restartDevServer), nodemonRestart));
+        gulp.watch(envFile, gulp.series(reloadEnv, gulp.parallel("manifest", debug ? restartDevServer : "webpack:client"), nodemonRestart));
     };
 
     gulp.task("watch", registerWatches);
     gulp.task("nodemon", (done) => {
         let started = false;
-        const debug = argv.debug !== undefined;
 
         nodemon({
             script: "dist/server.js",

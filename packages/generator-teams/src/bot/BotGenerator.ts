@@ -1,4 +1,4 @@
-// Copyright (c) Wictor Wilén. All rights reserved. 
+// Copyright (c) Wictor Wilén. All rights reserved.
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
@@ -23,7 +23,10 @@ export class BotGenerator extends Generator {
         this.desc('Adds a bot to a Teams project.');
     }
 
+
     public prompting() {
+        const generatorPrefix = "[bot]";
+
         if (this.options.bot) {
             return this.prompt(
 
@@ -32,6 +35,7 @@ export class BotGenerator extends Generator {
                         type: 'list',
                         name: 'bottype',
                         message: 'What type of bot would you like to use?',
+                        prefix: generatorPrefix,
                         default: 'botframework',
                         choices: [
                             {
@@ -48,6 +52,7 @@ export class BotGenerator extends Generator {
                         type: 'input',
                         name: 'botname',
                         message: 'What is the name of your bot?',
+                        prefix: generatorPrefix,
                         default: this.options.title + ' Bot',
                         validate: (input) => {
                             if (!(/^[a-zA-Z].*/.test(input))) {
@@ -68,6 +73,7 @@ export class BotGenerator extends Generator {
                             message += 'It\'s found in the Bot Framework portal (https://dev.botframework.com).';
                             return message;
                         },
+                        prefix: generatorPrefix,
                         default: (answers: any) => {
                             if (answers.bottype == 'botframework') {
                                 return EmptyGuid.empty;
@@ -82,11 +88,13 @@ export class BotGenerator extends Generator {
                         type: 'confirm',
                         name: 'staticTab',
                         message: 'Do you want to add a static tab to your bot?',
+                        prefix: generatorPrefix,
                     },
                     {
                         type: 'input',
                         name: 'staticTabName',
                         message: 'What is the title of your static tab for the bot? (max 16 characters)',
+                        prefix: generatorPrefix,
                         validate: (input) => {
                             if (!(/^[a-zA-Z].*/.test(input))) {
                                 return "Must start with an alphabetical character";
@@ -104,12 +112,14 @@ export class BotGenerator extends Generator {
                         type: 'confirm',
                         name: 'botFilesEnabled',
                         message: 'Do you want to support file upload to the bot?',
+                        prefix: generatorPrefix,
                         default: false
                     },
                     {
                         type: 'confirm',
                         name: 'botCallingEnabled',
                         message: 'Do you want to include bot calling support?',
+                        prefix: generatorPrefix,
                         default: false
                     }
                 ]
@@ -190,7 +200,7 @@ export class BotGenerator extends Generator {
                             "src/server/{botName}/dialogs/__tests__/HelpDialog.spec.ts"
                         );
                         Yotilities.addAdditionalDevDeps([
-                            ["botbuilder-testing", "4.11.1"]
+                            ["botbuilder-testing", "4.14.1"]
                         ], this.fs);
                     };
 

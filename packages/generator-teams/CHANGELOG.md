@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*3.4.0*]- <*2021-10-28*>
+
+### Changes
+
+* `webpack.config.js` contains default settings for the webpack-dev-server (PR #251 by s-KaiNet)
+* Migrated to botbuilder 4.14.1
+* added category prefix for improved readability in project creation (#109)
+
+### Fixes
+
+* Fixed Adaptive Card and linting issue (#255)
+
 ## [*3.3.1*]- <*2021-10-08*>
 
 ### Changes
@@ -329,7 +341,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 * Added support for manifest version 1.5, new default
-* Added suppot for optionally adding Microsoft Partner Id. More info at https://aka.ms/partner 
+* Added support for optionally adding Microsoft Partner Id. More info at https://aka.ms/partner
 * Added files support option for bots (schema version 1.4+)
 * Now persists settings for using unit testing, application insights and the library name
 * Added default logging of "msteams" in the `.env` file
@@ -608,7 +620,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [*2.0.0-preview*] - <*2017-05-30*>
 
-### Changed 
+### Changed
 
 * Adaptation to the new developer preview
 
@@ -682,7 +694,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-* Support for _Pinned tabs_ 
+* Support for _Pinned tabs_
 
 ### Changed
 
