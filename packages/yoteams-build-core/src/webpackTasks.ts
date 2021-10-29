@@ -7,7 +7,7 @@ import path from "path";
 import PluginError from "plugin-error";
 import log from "fancy-log";
 import GulpClient from "gulp";
-import { dependenciesP } from ".";
+import { dependenciesP, trackEvent } from ".";
 import chalk from "chalk";
 
 /**
@@ -50,13 +50,15 @@ export const webpackTasks = (gulp: GulpClient.Gulp, config: any) => {
     };
 
     gulp.task("webpack:client", callback => {
+        trackEvent("webpack:client");
         webpackTask(1, callback);
     });
 
     gulp.task("webpack:server", callback => {
+        trackEvent("webpack:server");
         webpackTask(0, callback);
     });
 
-    gulp.task("webpack", dependenciesP(gulp, "webpack:client", "webpack:server"));
+    gulp.task("webpack", dependenciesP(gulp, "webpack", "webpack:client", "webpack:server"));
 
 };

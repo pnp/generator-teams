@@ -227,6 +227,6 @@ export const manifest = (gulp: GulpClient.Gulp, config: any) => {
     };
 
     // export the tasks
-    gulp.task("validate-manifest", _.dependencies(gulp, generateManifests, validateSchemas));
-    gulp.task("manifest", _.dependencies(gulp, "validate-manifest", zipTask));
+    gulp.task("validate-manifest", _.dependencies(gulp, "validate-manifest", generateManifests, validateSchemas));
+    gulp.task("manifest", _.dependencies(gulp, "manifest", "validate-manifest", zipTask));
 };

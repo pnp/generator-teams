@@ -40,15 +40,33 @@ export class GeneratorTeamsApp extends Generator {
             default: true,
             description: 'Pass usage telemetry, use --no-telemetry to not send telemetry. Note, no personal data is sent.'
         });
-        if (this.options.telemetry) {
-            AppInsights.setup('6d773b93-ff70-45c5-907c-8edae9bf90eb');
-            delete AppInsights.defaultClient.context.tags['ai.cloud.roleInstance'];
+        // Set up telemetry
+        if (this.options.telemetry &&
+            !(process.env.YOTEAMS_TELEMETRY_OPTOUT === "1" ||
+                process.env.YOTEAMS_TELEMETRY_OPTOUT === "true")) {
+
+            // optimize App Insights performance
+            process.env.APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = "none";
+            process.env.APPLICATION_INSIGHTS_NO_STATSBEAT = "true";
+
+            // Set up the App Insights client
+            AppInsights.setup("6d773b93-ff70-45c5-907c-8edae9bf90eb").setInternalLogging(false, false);
+
+            // Delete unnecessary telemetry data
+            delete AppInsights.defaultClient.context.tags["ai.cloud.roleInstance"];
+            delete AppInsights.defaultClient.context.tags["ai.cloud.role"];
+
             AppInsights.Configuration.setAutoCollectExceptions(true);
             AppInsights.Configuration.setAutoCollectPerformance(true);
+
+            // Set common properties for all logging
             AppInsights.defaultClient.commonProperties = {
-                version: pkg.version
+                version: pkg.version,
+                node: process.version
             };
+
             AppInsights.defaultClient.trackEvent({ name: 'start-generator' });
+
         }
 
         this.options.existingManifest = this.fs.readJSON(`./src/manifest/manifest.json`);

@@ -26,6 +26,7 @@ nav:
     - 'Getting started': 'contributing/getting-started.md'
   - About:
     - 'Why this generator': 'about/why-generator.md'
+    - 'Telemetry': 'about/telemetry.md'
     - 'License': 'about/license.md'
     
 theme:
