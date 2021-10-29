@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changes
 
+* Changed the `bot` template to better align with the official Bot Framework samples which now includes the following files:
+    * `{botClassName}.ts` containing the bot declaration from `express-msteams-host` and the `onMembersAdded` method for handling and greeting new users with an Adaptive Card
+    * `dialogBot.ts` containing the `onMessage` method which runs the root dialog(`mainDialog`)
+    * `dialogs\mainDialog.ts` containing the logic of handling different user inputs and calling the following child dialogs based on different inputs:
+      * `dialogs\helpDialog.ts` responding with help information/instructions
+      * `dialogs\mentionUserDialog.ts` responing with an @mention of the user who asked the bot to do so
+      * `dialogs\teamsInfoDialog.ts` responding with the user's name, ID and email address coming from the [TeamsInfo.getMember() method](https://docs.microsoft.com/en-us/javascript/api/botbuilder/teamsinfo?view=botbuilder-ts-latest#getMember_TurnContext__string_)
+
+## [*3.4.0*]- <*2021-10-28*>
+
+### Changes
+
 * `webpack.config.js` contains default settings for the webpack-dev-server (PR #251 by s-KaiNet)
 * Migrated to botbuilder 4.14.1
 * added category prefix for improved readability in project creation (#109)
