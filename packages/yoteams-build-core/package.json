@@ -1,12 +1,12 @@
 {
   "name": "yoteams-build-core",
-  "version": "1.4.0",
+  "version": "1.5.0-preview",
   "description": "Core build Gulp tasks for Yo Teams, Microsoft Teams Apps Generator (https://aka.ms/yoteams)",
   "main": "dist/index.js",
   "scripts": {
     "prepublishOnly ": "npm run clean && npm run build",
     "build": "tsc -p tsconfig.json",
-    "clean": "rimraf lib",
+    "clean": "rimraf dist",
     "lint": "eslint ./src/**/*.{js,ts,tsx}"
   },
   "author": "Wictor Wilén (wictor@wictorwilen.se)",
@@ -27,6 +27,7 @@
   "homepage": "https://github.com/pnp/generator-teams/tree/master/packages/yoteams-build-core",
   "license": "MIT",
   "dependencies": {
+    "applicationinsights": "^2.1.8",
     "autoprefixer": "^10.2.6",
     "axios": "^0.21.1",
     "chalk": "^4.1.0",

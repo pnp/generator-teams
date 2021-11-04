@@ -26,7 +26,7 @@ export const codespacesTasks = (gulp: GulpClient.Gulp, config: any) => {
 
             process.env.PUBLIC_HOSTNAME = `${codespaceName}-${process.env.PORT}.githubpreview.dev`;
             log("[Codespace] Public url: " + process.env.PUBLIC_HOSTNAME);
-            gulp.task("codespaces-serve", dependencies(gulp, "manifest", "serve"));
+            gulp.task("codespaces-serve", dependencies(gulp, "codespaces-serve", "manifest", "serve"));
         } catch (ex) {
             log(chalk.red(`Unable to set up Codespaces tasks: ${ex}`));
         }

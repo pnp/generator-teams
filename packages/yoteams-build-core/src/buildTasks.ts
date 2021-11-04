@@ -11,5 +11,5 @@ import { dependencies } from ".";
  * @param config
  */
 export const buildTasks = (gulp: GulpClient.Gulp, config: any) => {
-    gulp.task("build", dependencies(gulp, "webpack", "styles", "static:copy", "static:inject"));
+    gulp.task("build", dependencies(gulp, "build", "webpack", "styles", "static:copy", "static:inject"));
 };

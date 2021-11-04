@@ -37,6 +37,6 @@ export const ngrokTasks = (gulp: GulpClient.Gulp, config: any) => {
         });
     });
 
-    gulp.task("ngrok-serve", dependencies(gulp, "start-ngrok", "manifest", "serve"));
+    gulp.task("ngrok-serve", dependencies(gulp, "ngrok-serve", "start-ngrok", "manifest", "serve"));
 
 };
