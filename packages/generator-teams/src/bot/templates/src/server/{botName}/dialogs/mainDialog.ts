@@ -6,33 +6,33 @@ import {
     DialogTurnStatus,
     TextPrompt,
     WaterfallDialog,
-    WaterfallStepContext,
+    WaterfallStepContext
 } from "botbuilder-dialogs";
-import { 
+import {
     MessageFactory,
     StatePropertyAccessor,
     InputHints,
     TurnContext
-} from 'botbuilder';
-import { TeamsInfoDialog } from './teamsInfoDialog';
+} from "botbuilder";
+import { TeamsInfoDialog } from "./teamsInfoDialog";
 import { HelpDialog } from "./helpDialog";
 import { MentionUserDialog } from "./mentionUserDialog";
 
-const MAIN_DIALOG_ID = 'mainDialog';
-const MAIN_WATERFALL_DIALOG_ID = 'mainWaterfallDialog';
+const MAIN_DIALOG_ID = "mainDialog";
+const MAIN_WATERFALL_DIALOG_ID = "mainWaterfallDialog";
 
 export class MainDialog extends ComponentDialog {
     public onboarding: boolean;
     constructor() {
         super(MAIN_DIALOG_ID);
-        this.addDialog(new TextPrompt('TextPrompt'))
+        this.addDialog(new TextPrompt("TextPrompt"))
             .addDialog(new TeamsInfoDialog())
             .addDialog(new HelpDialog())
             .addDialog(new MentionUserDialog())
             .addDialog(new WaterfallDialog(MAIN_WATERFALL_DIALOG_ID, [
                 this.introStep.bind(this),
                 this.actStep.bind(this),
-                this.finalStep.bind(this),
+                this.finalStep.bind(this)
             ]));
         this.initialDialogId = MAIN_WATERFALL_DIALOG_ID;
         this.onboarding = false;
@@ -49,10 +49,10 @@ export class MainDialog extends ComponentDialog {
     }
 
     private async introStep(stepContext: WaterfallStepContext): Promise<DialogTurnResult> {
-        if((stepContext.options as any).restartMsg){
+        if ((stepContext.options as any).restartMsg) {
             const messageText = (stepContext.options as any).restartMsg ? (stepContext.options as any).restartMsg : "What can I help you with today?";
             const promptMessage = MessageFactory.text(messageText, messageText, InputHints.ExpectingInput);
-            return await stepContext.prompt('TextPrompt', { prompt: promptMessage });
+            return await stepContext.prompt("TextPrompt", { prompt: promptMessage });
         } else {
             this.onboarding = true;
             return await stepContext.next();
@@ -66,46 +66,45 @@ export class MainDialog extends ComponentDialog {
             ** https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-howto-v4-luis?view=azure-bot-service-4.0&tabs=javascript
             */
             const result = stepContext.result.trim().toLocaleLowerCase();
-            switch(result) { 
+            switch (result) {
                 case "who" :
                 case "who am i?": {
-                    return await stepContext.beginDialog('teamsInfoDialog'); 
+                    return await stepContext.beginDialog("teamsInfoDialog");
                 }
                 case "get help":
-                case "help": { 
-                    return await stepContext.beginDialog('helpDialog');   
+                case "help": {
+                    return await stepContext.beginDialog("helpDialog");
                 }
                 case "mention me":
-                case "mention": { 
-                    return await stepContext.beginDialog('mentionUserDialog');   
-                } 
-                default: {
-                    await stepContext.context.sendActivity(`Ok, maybe next time 😉`);
-                    return await stepContext.next();
-                } 
-            }
-        }
-        else if(this.onboarding){
-            switch(stepContext.context.activity.text) { 
-                case "who": {
-                    return await stepContext.beginDialog('teamsInfoDialog'); 
-                } 
-                case "help": { 
-                    return await stepContext.beginDialog('helpDialog');   
+                case "mention": {
+                    return await stepContext.beginDialog("mentionUserDialog");
                 }
-                case "mention": { 
-                    return await stepContext.beginDialog('mentionUserDialog');   
-                } 
                 default: {
-                    await stepContext.context.sendActivity(`Ok, maybe next time 😉`);
+                    await stepContext.context.sendActivity("Ok, maybe next time 😉");
                     return await stepContext.next();
-                } 
+                }
+            }
+        } else if (this.onboarding) {
+            switch (stepContext.context.activity.text) {
+                case "who": {
+                    return await stepContext.beginDialog("teamsInfoDialog");
+                }
+                case "help": {
+                    return await stepContext.beginDialog("helpDialog");
+                }
+                case "mention": {
+                    return await stepContext.beginDialog("mentionUserDialog");
+                }
+                default: {
+                    await stepContext.context.sendActivity("Ok, maybe next time 😉");
+                    return await stepContext.next();
+                }
             }
         }
         return await stepContext.next();
     }
 
     private async finalStep(stepContext: WaterfallStepContext): Promise<DialogTurnResult> {
-        return await stepContext.replaceDialog(this.initialDialogId, { restartMsg: 'What else can I do for you?' });
+        return await stepContext.replaceDialog(this.initialDialogId, { restartMsg: "What else can I do for you?" });
     }
 }

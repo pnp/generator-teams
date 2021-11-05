@@ -6,23 +6,23 @@ import {
     DialogTurnStatus,
     TextPrompt,
     WaterfallDialog,
-    WaterfallStepContext,
+    WaterfallStepContext
 } from "botbuilder-dialogs";
-import { 
+import {
     MessageFactory,
     StatePropertyAccessor,
     TurnContext
-} from 'botbuilder';
+} from "botbuilder";
 
-const HELP_DIALOG_ID = 'helpDialog';
-const HELP_WATERFALL_DIALOG_ID = 'helpWaterfallDialog';
+const HELP_DIALOG_ID = "helpDialog";
+const HELP_WATERFALL_DIALOG_ID = "helpWaterfallDialog";
 
 export class HelpDialog extends ComponentDialog {
     constructor() {
         super(HELP_DIALOG_ID);
-        this.addDialog(new TextPrompt('TextPrompt'))
+        this.addDialog(new TextPrompt("TextPrompt"))
             .addDialog(new WaterfallDialog(HELP_WATERFALL_DIALOG_ID, [
-                this.introStep.bind(this),
+                this.introStep.bind(this)
             ]));
         this.initialDialogId = HELP_WATERFALL_DIALOG_ID;
     }
@@ -38,7 +38,7 @@ export class HelpDialog extends ComponentDialog {
     }
 
     private async introStep(stepContext: WaterfallStepContext): Promise<DialogTurnResult> {
-        const message = MessageFactory.text(`I'm terribly sorry, but my developer hasn't trained me to do anything yet 😂. Please refer to [this link](https://docs.microsoft.com/microsoftteams/platform/bots/what-are-bots) to see how to develop bots for Teams`);
+        const message = MessageFactory.text("I am terribly sorry, but my developer hasn't trained me to do anything yet 😂. Please refer to [this link](https://docs.microsoft.com/en-us/microsoftteams/platform/bots/what-are-bots) to see how to develop bots for Teams");
         await stepContext.context.sendActivity(message);
         return await stepContext.endDialog();
     }

@@ -6,23 +6,23 @@ import {
     DialogTurnStatus,
     TextPrompt,
     WaterfallDialog,
-    WaterfallStepContext,
+    WaterfallStepContext
 } from "botbuilder-dialogs";
-import { 
+import {
     MessageFactory,
     StatePropertyAccessor,
     TurnContext
-} from 'botbuilder';
+} from "botbuilder";
 
-const MENTION_DIALOG_ID = 'mentionUserDialog';
-const MENTION_WATERFALL_DIALOG_ID = 'mentionUserWaterfallDialog';
+const MENTION_DIALOG_ID = "mentionUserDialog";
+const MENTION_WATERFALL_DIALOG_ID = "mentionUserWaterfallDialog";
 
 export class MentionUserDialog extends ComponentDialog {
     constructor() {
         super(MENTION_DIALOG_ID);
-        this.addDialog(new TextPrompt('TextPrompt'))
+        this.addDialog(new TextPrompt("TextPrompt"))
             .addDialog(new WaterfallDialog(MENTION_WATERFALL_DIALOG_ID, [
-                this.introStep.bind(this),
+                this.introStep.bind(this)
             ]));
         this.initialDialogId = MENTION_WATERFALL_DIALOG_ID;
     }
