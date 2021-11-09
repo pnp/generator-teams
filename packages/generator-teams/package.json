@@ -5,8 +5,8 @@
   "main": "generators/app/index.js",
   "scripts": {
     "build": "webpack",
-    "test": "rimraf temp-templates/* && npm run build && cross-env TEST_TYPE=UNIT mocha -r ts-node/register tests/**/*.spec.ts --timeout 15000",
-    "test-integration": "rimraf temp-templates/* && npm run build && cross-env TEST_TYPE=INTEGRATION mocha -r ts-node/register tests/**/*.spec.ts --timeout 800s"
+    "test": "rimraf temp-templates/* && npm run build && cross-env TEST_TYPE=UNIT YOTEAMS_TELEMETRY_OPTOUT=1 mocha -r ts-node/register tests/**/*.spec.ts --timeout 15000",
+    "test-integration": "rimraf temp-templates/* && npm run build && cross-env TEST_TYPE=INTEGRATION YOTEAMS_TELEMETRY_OPTOUT=1 mocha -r ts-node/register tests/**/*.spec.ts --timeout 800s"
   },
   "files": [
     "generators"
