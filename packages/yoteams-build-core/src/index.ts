@@ -45,8 +45,10 @@ export const dependenciesP = (gulp: GulpClient.Gulp, eventName: string, ...tasks
 };
 
 export const trackEvent = (eventName: string) => {
-    appInsights.defaultClient.trackEvent({ name: "yoteams-build-core:" + eventName });
-    appInsights.defaultClient.flush();
+    if (appInsights && appInsights.defaultClient) {
+        appInsights.defaultClient.trackEvent({ name: "yoteams-build-core:" + eventName });
+        appInsights.defaultClient.flush();
+    }
 };
 
 /**

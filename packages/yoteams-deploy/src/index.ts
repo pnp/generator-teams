@@ -13,7 +13,7 @@ import * as appInsights from "applicationinsights";
  * @param eventName name of event to track
  * @param tasks the tasks
  */
- export const dependencies = (gulp: GulpClient.Gulp, eventName: string, ...tasks: Undertaker.Task[]) => {
+export const dependencies = (gulp: GulpClient.Gulp, eventName: string, ...tasks: Undertaker.Task[]) => {
     return (done: any) => {
         trackEvent(eventName);
         gulp.series(...tasks)(done);
@@ -33,12 +33,12 @@ export const dependenciesP = (gulp: GulpClient.Gulp, eventName: string, ...tasks
     };
 };
 
-
 export const trackEvent = (eventName: string) => {
-    appInsights.defaultClient.trackEvent({ name: "yoteams-deploy:" + eventName });
-    appInsights.defaultClient.flush();
+    if (appInsights && appInsights.defaultClient) {
+        appInsights.defaultClient.trackEvent({ name: "yoteams-build-core:" + eventName });
+        appInsights.defaultClient.flush();
+    }
 };
-
 
 export const setup = (gulp: GulpClient.Gulp, config: any): void => {
     deployTask(gulp, config);
