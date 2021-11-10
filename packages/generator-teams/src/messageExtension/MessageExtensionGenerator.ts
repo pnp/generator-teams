@@ -484,7 +484,7 @@ export class MessageExtensionGenerator extends Generator {
                         type: this.options.messageExtensionClassName,
                         docs: [`Local property for ${this.options.messageExtensionClassName}`],
                         trailingTrivia: writer => { writer.newLine(); writer.newLine(); }, // add a new line after the property to avoid eslint issue
-                        leadingTrivia: writer => writer.newLine(), // add a new line before the property to avoid eslint issue
+                        //leadingTrivia: writer => writer.newLine(), // add a new line before the property to avoid eslint issue
                     });
 
                     // add the decorator

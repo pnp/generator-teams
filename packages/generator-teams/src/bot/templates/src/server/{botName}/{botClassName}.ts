@@ -1,11 +1,11 @@
 import { BotDeclaration<% if (staticTab) { %>, PreventIframe<% } %><% if (botCallingEnabled) { %>, BotCallingWebhook<% } %> } from "express-msteams-host";
 import * as debug from "debug";
-import { <% if (messageExtension) { %>TeamsActivityHandler, StatePropertyAccessor, ActivityTypes,<% } %> CardFactory, ConversationState, MemoryStorage, <% if (bot) { %>UserState,<% } %> TurnContext } from "botbuilder";
+import { <% if (messageExtension) { %>TeamsActivityHandler, StatePropertyAccessor, ActivityTypes, <% } %>CardFactory, ConversationState, MemoryStorage, <% if (bot) { %>UserState,<% } %> TurnContext } from "botbuilder";
 <% if (bot) { %>import { DialogBot } from "./dialogBot";
 import { MainDialog } from "./dialogs/mainDialog";<% } %>
 import WelcomeCard from "./cards/welcomeCard";
-<% if (botCallingEnabled) { %>import express = require("express");<% } %>
-<% if (messageExtension) { %>import { DialogSet, DialogState } from "botbuilder-dialogs";<% } %>
+<% if (botCallingEnabled) { %>import express = require("express");
+<% } %><% if (messageExtension) { %>import { DialogSet, DialogState } from "botbuilder-dialogs";<% } %>
 // Initialize debug logging module
 const log = debug("msteams");
 
@@ -104,5 +104,4 @@ const log = debug("msteams");
                 }
             });
         }
-    }
-<% } %>
+    }<% } %>
