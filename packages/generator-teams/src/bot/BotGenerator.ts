@@ -187,13 +187,13 @@ export class BotGenerator extends Generator {
                 templateFiles.push(
                     "README-{botName}.md",
                     "src/server/{botName}/{botClassName}.ts",
-                    "src/server/{botName}/dialogBot.ts",
                     "src/server/{botName}/cards/welcomeCard.json",
                     "src/server/{botName}/cards/welcomeCard.ts"  
                 );
                 // add additional files if we have a full bot implementation
                 if (this.options.bot) {
                     templateFiles.push(
+                        "src/server/{botName}/dialogBot.ts",
                         "src/server/{botName}/dialogs/mainDialog.ts",
                         "src/server/{botName}/dialogs/helpDialog.ts",
                         "src/server/{botName}/dialogs/mentionUserDialog.ts",
