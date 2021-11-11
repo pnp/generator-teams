@@ -36,6 +36,7 @@ const log = debug("msteams");
             await next();
         });
     }
+
     public async sendWelcomeCard( context: TurnContext ): Promise<void> {
         const welcomeCard = CardFactory.adaptiveCard(WelcomeCard);
         await context.sendActivity({ attachments: [welcomeCard] });
