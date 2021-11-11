@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changes
 
 * Updated telemetry, see https://github.com/pnp/generator-teams/blob/master/docs/docs/about/telemetry.md
+* Updated the bot template files to better reflect the official Bot Framework samples
 
 ## [*3.4.0*]- <*2021-10-28*>
 
