@@ -8,10 +8,10 @@
 [![GitHub stars](https://img.shields.io/github/stars/PnP/generator-teams.svg)](https://github.com/PnP/generator-teams/stargazers)
 [![Discussions](https://img.shields.io/badge/discuss-on%20Github-green)](https://github.com/pnp/generator-teams/discussions)
 
- | @master | @preview |
- :--------:|:---------:
- [![npm (latest)](https://img.shields.io/npm/v/generator-teams/latest.svg)](https://www.npmjs.com/package/generator-teams)|[![npm (preview)](https://img.shields.io/npm/v/generator-teams/preview.svg)](https://www.npmjs.com/package/generator-teams)
- ![Build generator-teams](https://github.com/pnp/generator-teams/workflows/Build%20generator-teams/badge.svg)|![Build generator-teams](https://github.com/pnp/generator-teams/workflows/Build%20generator-teams/badge.svg?branch=preview)
+ | @master | @preview | @next |
+ :--------:|:--------:|:------:
+ [![npm (latest)](https://img.shields.io/npm/v/generator-teams/latest.svg)](https://www.npmjs.com/package/generator-teams)|[![npm (preview)](https://img.shields.io/npm/v/generator-teams/preview.svg)](https://www.npmjs.com/package/generator-teams)|[![npm (next)](https://img.shields.io/npm/v/generator-teams/next.svg)](https://www.npmjs.com/package/generator-teams)
+ ![Build generator-teams](https://github.com/pnp/generator-teams/workflows/Build%20generator-teams/badge.svg)|![Build generator-teams](https://github.com/pnp/generator-teams/workflows/Build%20generator-teams/badge.svg?branch=preview)|![Build generator-teams](https://github.com/pnp/generator-teams/workflows/Build%20generator-teams/badge.svg?branch=next)
 
 A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) Apps projects. **The most comprehensive and complete development toolkit for Microsoft Teams development**. This generator is for developers who prefers to use TypeScript, React and node as their primary technologies.
 
