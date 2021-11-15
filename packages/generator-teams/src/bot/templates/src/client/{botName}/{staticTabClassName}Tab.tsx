@@ -2,7 +2,7 @@ import * as React from "react";
 import { Provider, Flex, Text, Button, Header } from "@fluentui/react-northstar";
 import { useTeams } from "msteams-react-base-component";
 import { useState, useEffect } from "react";
-import * as microsoftTeams from "@microsoft/teams-js";
+import { app } from "@microsoft/teams-js";
 
 /**
  * Implementation of the <%= staticTabName %> content page
@@ -12,7 +12,7 @@ export const <%=staticTabClassName%>Tab = () => {
 
     useEffect(() => {
         if (inTeams === true) {
-            microsoftTeams.appInitialization.notifySuccess();
+            app.notifySuccess();
         }
     }, [inTeams]);
 
