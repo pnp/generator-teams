@@ -17,7 +17,7 @@ describe('teams:localization', function () {
     });
 
 
-    it('should generate a v1.8 project with a localization file', async () => {
+    it('should generate a v1.11 project with a localization file', async () => {
         const projectPath = testHelper.TEMP_LOCALIZATION_GENERATOR_PATH + "/localization01-v15-withLocFile";
 
         await helpers.run(testHelper.GENERATOR_PATH)
@@ -28,7 +28,7 @@ describe('teams:localization', function () {
                 whichFolder: 'current',
                 name: 'localizationtest04',
                 developer: 'generator teams developer',
-                manifestVersion: 'v1.8',
+                manifestVersion: 'v1.11',
                 parts: 'localization',
                 localization: true,
                 defaultLanguage: "en-us",
@@ -65,7 +65,7 @@ describe('teams:localization', function () {
         }
     });
 
-    it('should generate a v1.8 project with a tab, and not add any localization info', async () => {
+    it('should generate a v1.11 project with a tab, and not add any localization info', async () => {
         const projectPath = testHelper.TEMP_LOCALIZATION_GENERATOR_PATH + "/localization01-v17-withTab";
 
         await helpers.run(testHelper.GENERATOR_PATH)
@@ -76,7 +76,7 @@ describe('teams:localization', function () {
                 whichFolder: 'current',
                 name: 'localizationtest06',
                 developer: 'generator teams developer',
-                manifestVersion: 'v1.8',
+                manifestVersion: 'v1.11',
                 parts: 'tab',
                 tabType: "configurable",
                 tabScopes: ["team"]
