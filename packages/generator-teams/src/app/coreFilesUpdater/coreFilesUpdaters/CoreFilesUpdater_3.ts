@@ -11,7 +11,7 @@ import { Project, PropertyAssignment, SyntaxKind } from 'ts-morph';
 import { Logger } from "yeoman-environment";
 import chalk = require("chalk");
 
-export class CoreFilesUpdater_3_6 extends BaseCoreFilesUpdater {
+export class CoreFilesUpdater_3 extends BaseCoreFilesUpdater {
     public constructor(private currentVersion: string) {
         super();
     };
@@ -19,7 +19,7 @@ export class CoreFilesUpdater_3_6 extends BaseCoreFilesUpdater {
     public updateCoreFiles(options: GeneratorTeamsAppOptions, fs: Editor, log?: Logger): boolean {
 
         if (log) {
-            log(chalk.red("Projects generated with earlier versions than 3.6 cannot be updated."));
+            log(chalk.red("Projects generated with earlier versions than 4.0 cannot be updated."));
         }
 
         return false;
