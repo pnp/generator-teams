@@ -122,23 +122,27 @@ export const SCHEMA_19 = 'https://developer.microsoft.com/en-us/json-schemas/tea
 export const SCHEMA_110 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.10/MicrosoftTeams.schema.json';
 export const SCHEMA_111 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.11/MicrosoftTeams.schema.json';
 export const SCHEMA_DEVPREVIEW = 'https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json';
+export const SCHEMA_M365DEVPREVIEW = 'https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json';
 
-export const INTEGRATION_TEST_VERSIONS = ["v1.9", "v1.10"]; // only keep two versions, so we can stay under Github 360 minute rule
+export const INTEGRATION_TEST_VERSIONS = ["v1.11", "devPreview"]; // only keep two versions, so we can stay under Github 360 minute rule
 
 export const SCHEMAS: { [key: string]: string } = {
-  "v1.8": SCHEMA_18,
-  "v1.9": SCHEMA_19,
-  "v1.10": SCHEMA_110,
+  // "v1.8": SCHEMA_18,
+  // "v1.9": SCHEMA_19,
+  // "v1.10": SCHEMA_110,
   "v1.11": SCHEMA_111,
-  "devPreview": SCHEMA_DEVPREVIEW
+  "devPreview": SCHEMA_DEVPREVIEW,
+  "m365DevPreview": SCHEMA_M365DEVPREVIEW
 }
 
 // All the paths for upgrading
 const UPGRADE_PATHS: { [key: string]: string[] } = {
-  "v1.8": ["v1.9", "v1.10", "devPreview"],
-  "v1.9": ["v1.10", "v1.11", "devPreview"],
-  "v1.10": ["v1.11", "devPreview"],
-  "v1.11": ["devPreview"]
+  // "v1.8": ["v1.9", "v1.10", "devPreview"],
+  // "v1.9": ["v1.10", "v1.11", "devPreview"],
+  // "v1.10": ["v1.11", "devPreview"],
+  "v1.11": ["devPreview", "m365DevPreview"],
+  "devPreview": ["m365DevPreview"],
+  "m365DevPreview": ["devPreview"]
 }
 
 export enum TestTypes {

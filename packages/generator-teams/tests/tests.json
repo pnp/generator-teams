@@ -3,11 +3,9 @@
         {
             "description": "Bot project",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
             ],
             "prompts": {
                 "parts": "bot",
@@ -17,11 +15,9 @@
         {
             "description": "Bot project without static tab",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
             ],
             "prompts": {
                 "parts": "bot",
@@ -31,11 +27,9 @@
         {
             "description": "Bot project without unit tests and file support",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
             ],
             "prompts": {
                 "parts": "bot",
@@ -46,11 +40,9 @@
         {
             "description": "Bot project with calling support",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
             ],
             "prompts": {
                 "parts": "bot",
@@ -63,11 +55,9 @@
         {
             "description": "Connector project",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
             ],
             "prompts": {
                 "parts": "connector"
@@ -78,11 +68,9 @@
         {
             "description": "Messaging Extension project",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
             ],
             "prompts": {
                 "parts": "messageextension",
@@ -99,11 +87,9 @@
         {
             "description": "Messaging Extension project, without configuration",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
             ],
             "prompts": {
                 "parts": "messageextension",
@@ -121,11 +107,10 @@
         {
             "description": "Query Messaging Extension project",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
+
             ],
             "prompts": {
                 "parts": "messageextension",
@@ -142,11 +127,10 @@
         {
             "description": "Action Messaging Extension project with static with Adaptive Card response",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
+
             ],
             "prompts": {
                 "parts": "messageextension",
@@ -165,11 +149,10 @@
         {
             "description": "Action Messaging Extension project with Adaptive Card with Adaptive Card response",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
+
             ],
             "prompts": {
                 "parts": "messageextension",
@@ -188,11 +171,10 @@
         {
             "description": "Link Unfurling Messaging Extension",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
+
             ],
             "prompts": {
                 "parts": "messageextension",
@@ -208,11 +190,10 @@
         {
             "description": "Tab project",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
+
             ],
             "prompts": {
                 "parts": "tab",
@@ -224,11 +205,10 @@
         {
             "description": "Static Tab project",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
+
             ],
             "prompts": {
                 "parts": "tab",
@@ -238,11 +218,10 @@
         {
             "description": "Tab project, with SharePoint config",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
+
             ],
             "prompts": {
                 "parts": "tab",
@@ -259,11 +238,10 @@
         {
             "description": "Tab project scoped to group chat",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
+
             ],
             "prompts": {
                 "parts": "tab",
@@ -275,11 +253,10 @@
         {
             "description": "Tab project scoped to team only",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
+
             ],
             "prompts": {
                 "parts": "tab",
@@ -291,11 +268,10 @@
         {
             "description": "Tab project scoped to group chat and team",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
+
             ],
             "prompts": {
                 "parts": "tab",
@@ -308,11 +284,10 @@
         {
             "description": "Tab project with SSO",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
+
             ],
             "prompts": {
                 "parts": "tab",
@@ -329,11 +304,10 @@
         {
             "description": "With Application Insights",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
+
             ],
             "prompts": {
                 "parts": "tab",
@@ -349,11 +323,10 @@
         {
             "description": "With MPN Id",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
+
             ],
             "prompts": {
                 "parts": "tab",
@@ -367,11 +340,10 @@
         {
             "description": "Full screen",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
+
             ],
             "prompts": {
                 "parts": "tab",
@@ -386,11 +358,10 @@
         {
             "description": "Show loading indicator",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
+
             ],
             "prompts": {
                 "parts": "tab",
@@ -405,11 +376,10 @@
         {
             "description": "Without linting support",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
+
             ],
             "prompts": {
                 "parts": "tab",
@@ -423,11 +393,10 @@
         {
             "description": "Quick scaffolding should give linting support",
             "manifestVersions": [
-                "v1.8",
-                "v1.9",
-                "v1.10",
                 "v1.11",
-                "devPreview"
+                "devPreview",
+                "m365DevPreview"
+
             ],
             "prompts": {
                 "parts": "tab",

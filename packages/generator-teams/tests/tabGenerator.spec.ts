@@ -174,7 +174,7 @@ describe("teams:tab", function () {
 
 
 
-  it("should generate tab project with schema 1.8 and upgrade to schema devPreview", async () => {
+  it("should generate tab project with schema 1.11 and upgrade to schema devPreview", async () => {
     const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab-18-to-devPreview-upgrade";
     await helpers
       .run(testHelper.GENERATOR_PATH)
@@ -185,7 +185,7 @@ describe("teams:tab", function () {
         whichFolder: "current",
         name: "tabtest01",
         developer: "generator teams developer",
-        manifestVersion: "v1.8",
+        manifestVersion: "v1.11",
         parts: "tab",
         unitTestsEnabled: false,
         tabSharePoint: false,
@@ -193,7 +193,7 @@ describe("teams:tab", function () {
         tabScopes: ["team"]
       })
       .withGenerators(testHelper.DEPENDENCIES);
-    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_18);
+    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_111);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
@@ -229,7 +229,7 @@ describe("teams:tab", function () {
     }
   });
 
-  it("should generate tab project with schema 1.8 containing two static tabs", async () => {
+  it("should generate tab project with schema 1.11 containing two static tabs", async () => {
     const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab-18-additional-static-tab";
     await helpers
       .run(testHelper.GENERATOR_PATH)
@@ -240,14 +240,14 @@ describe("teams:tab", function () {
         whichFolder: "current",
         name: "tabtest01",
         developer: "generator teams developer",
-        manifestVersion: "v1.8",
+        manifestVersion: "v1.11",
         parts: "tab",
         unitTestsEnabled: false,
         tabType: "static",
         tabTitle: "tab 1"
       })
       .withGenerators(testHelper.DEPENDENCIES);
-    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_18);
+    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_111);
     assert.jsonFileContent("src/manifest/manifest.json", {
       staticTabs: [
         {
@@ -261,7 +261,7 @@ describe("teams:tab", function () {
       .cd(projectPath)
       .withArguments(["--no-telemetry"])
       .withPrompts({
-        manifestVersion: "v1.8",
+        manifestVersion: "v1.11",
         confirmedAdd: true,
         parts: "tab",
         tabType: "static",
@@ -269,7 +269,7 @@ describe("teams:tab", function () {
       })
       .withGenerators(testHelper.DEPENDENCIES);
 
-    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_18);
+    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_111);
     assert.jsonFileContent("src/manifest/manifest.json", {
       staticTabs: [
         {

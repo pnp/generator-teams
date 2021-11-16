@@ -9,7 +9,6 @@ import { ConnectorManifestUpdater } from "../generator18/ConnectorManifestUpdate
 import { MessageExtensionManifestUpdater } from "../generator18/MessageExtensionManifestUpdater";
 import { GeneratorTeamsAppOptions } from "../../../GeneratorTeamsAppOptions";
 import { LocalizationManifestUpdater } from "../generator18/LocalizationManifestUpdater";
-
 import * as chalk from 'chalk';
 
 export class ManifestGenerator extends BaseManifestGenerator {
@@ -26,22 +25,22 @@ export class ManifestGenerator extends BaseManifestGenerator {
     public generateManifest(options: GeneratorTeamsAppOptions): any {
         const manifest = super.generateManifest(options);
         manifest["$schema"] = "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json";
-        manifest.manifestVersion = "devPreview";
+        manifest.manifestVersion = "m365DevPreview";
 
         return manifest;
     }
 
     public supportsUpdateManifest(from: string): boolean {
-        return from === "1.11" ||
-            from === "m365devPreview";
+        return from === "devPreview" ||
+            from === "1.11";
     }
 
     public updateManifest(manifest: any, log?: (message?: string, context?: any) => void): any {
         switch (manifest.manifestVersion) {
             case "1.11":
-            case "m365DevPreview":
+            case "devPreview":
                 manifest["$schema"] = "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json";
-                manifest.manifestVersion = "devPreview";
+                manifest.manifestVersion = "m365DevPreview";
                 return manifest;
             default:
                 throw "Unable to update manifest";

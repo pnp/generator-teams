@@ -2,7 +2,7 @@ import * as React from "react";
 import { Provider, Flex, Text, Button, Header } from "@fluentui/react-northstar";
 import { useState, useEffect } from "react";
 import { useTeams } from "msteams-react-base-component";
-import * as microsoftTeams from "@microsoft/teams-js";<% if (tabSSO) { %>
+import { app<% if (tabSSO) { %>, authentication<% } %> } from "@microsoft/teams-js";<% if (tabSSO) { %>
 import jwtDecode from "jwt-decode";<% } %>
 
 /**
@@ -17,22 +17,21 @@ export const <%=tabReactComponentName%> = () => {
 
     useEffect(() => {
         if (inTeams === true) {<% if (tabSSO) { %>
-            microsoftTeams.authentication.getAuthToken({
-                successCallback: (token: string) => {
-                    const decoded: { [key: string]: any; } = jwtDecode(token) as { [key: string]: any; };
-                    setName(decoded!.name);
-                    microsoftTeams.appInitialization.notifySuccess();
-                },
-                failureCallback: (message: string) => {
-                    setError(message);
-                    microsoftTeams.appInitialization.notifyFailure({
-                        reason: microsoftTeams.appInitialization.FailedReason.AuthFailed,
-                        message
-                    });
-                },
-                resources: [process.env.TAB_APP_URI as string]
+            authentication.getAuthToken({
+                resources: [process.env.TAB_APP_URI as string],
+                silent: false
+            } as authentication.AuthTokenRequestParameters).then(token => {
+                const decoded: { [key: string]: any; } = jwtDecode(token) as { [key: string]: any; };
+                setName(decoded!.name);
+                app.notifySuccess();
+            }).catch(message => {
+                setError(message);
+                app.notifyFailure({
+                    reason: app.FailedReason.AuthFailed,
+                    message
+                });
             });<% } else { %>
-            microsoftTeams.appInitialization.notifySuccess();<% } %>
+            app.notifySuccess();<% } %>
         } else {
             setEntityId("Not in Microsoft Teams");
         }
@@ -40,7 +39,7 @@ export const <%=tabReactComponentName%> = () => {
 
     useEffect(() => {
         if (context) {
-            setEntityId(context.entityId);
+            setEntityId(context.page.id);
         }
     }, [context]);
 

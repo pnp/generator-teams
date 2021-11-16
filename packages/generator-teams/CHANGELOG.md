@@ -7,10 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [*Unreleased*]- <**>
 
+### Added
+
+* Added `m365DevPreview` manifest
 ### Changes
 
+* [Breaking] Upgraded Team JS SDK to version 2.0 (promises based)
 * Updated telemetry, see https://github.com/pnp/generator-teams/blob/master/docs/docs/about/telemetry.md
 * Updated the bot template files to better reflect the official Bot Framework samples
+* Prohibited re-running the generator on version earlier than 4.0
+* Removed support for earlier manifest versions than 1.11
 
 ## [*3.4.0*]- <*2021-10-28*>
 

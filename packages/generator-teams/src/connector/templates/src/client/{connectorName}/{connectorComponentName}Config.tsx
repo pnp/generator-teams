@@ -2,7 +2,7 @@ import * as React from "react";
 import { Provider, Flex, Header, Dropdown, ShorthandCollection, DropdownItemProps } from "@fluentui/react-northstar";
 import { useState, useEffect, useRef } from "react";
 import { useTeams } from "msteams-react-base-component";
-import * as microsoftTeams from "@microsoft/teams-js";
+import { app, pages } from "@microsoft/teams-js";
 
 interface IColor {
     title: string;
@@ -23,7 +23,7 @@ const availableColors: IColor[] = [
 /**
  * Implementation of the <%=connectorName%> Connector connect page
  */
-export const <%=connectorComponentName%>Config = () => {
+export const <%=connectorComponentName %> Config = () => {
 
     const [{ theme, context }] = useTeams();
     const [color, setColor] = useState<IColor>();
@@ -32,50 +32,49 @@ export const <%=connectorComponentName%>Config = () => {
 
     useEffect(() => {
         if (context) {
-            microsoftTeams.settings.registerOnSaveHandler((saveEvent: microsoftTeams.settings.SaveEvent) => {
-                // INFO: Should really be of type microsoftTeams.settings.Settings, but configName does not exist in the Teams JS SDK
+            pages.config.registerOnSaveHandler((saveEvent: pages.config.SaveEvent) => {
                 const settings: any = {
                     entityId: colorRef.current ? colorRef.current.code : availableColors[0].code,
                     contentUrl: `https://${process.env.PUBLIC_HOSTNAME}/<%=connectorName%>/config.html?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
                     configName: colorRef.current ? colorRef.current.title : availableColors[0].title
                 };
-                microsoftTeams.settings.setSettings(settings);
-
-                microsoftTeams.settings.getSettings((setting: any) => {
-                    fetch("/api/connector/connect", {
-                        method: "POST",
-                        headers: [
-                            ["Content-Type", "application/json"]
-                        ],
-                        body: JSON.stringify({
-                            webhookUrl: setting.webhookUrl,
-                            user: setting.userObjectId,
-                            appType: setting.appType,
-                            groupName: context.groupId,
-                            color: colorRef.current ? colorRef.current.code : availableColors[0].code,
-                            state: "myAppsState"
-                        })
-                    }).then(response => {
-                        if (response.status === 200 || response.status === 302) {
-                            saveEvent.notifySuccess();
-                        } else {
-                            saveEvent.notifyFailure(response.statusText);
-                        }
-                    }).catch(e => {
-                        saveEvent.notifyFailure(e);
+                pages.config.setConfig(settings).then(() => {
+                    pages.config.getConfig().then(setting => {
+                        fetch("/api/connector/connect", {
+                            method: "POST",
+                            headers: [
+                                ["Content-Type", "application/json"]
+                            ],
+                            body: JSON.stringify({
+                                webhookUrl: setting.webhookUrl,
+                                user: setting.userObjectId,
+                                appType: setting.appType,
+                                groupName: context.groupId,
+                                color: colorRef.current ? colorRef.current.code : availableColors[0].code,
+                                state: "myAppsState"
+                            })
+                        }).then(response => {
+                            if (response.status === 200 || response.status === 302) {
+                                saveEvent.notifySuccess();
+                            } else {
+                                saveEvent.notifyFailure(response.statusText);
+                            }
+                        }).catch(e => {
+                            saveEvent.notifyFailure(e);
+                        });
                     });
                 });
             });
 
-            microsoftTeams.settings.getSettings((settings: any) => {
-                setColor(availableColors.find(c => c.code === settings.entityId));
+            pages.config.getConfig().then(config => {
+                setColor(availableColors.find(c => c.code === config.entityId));
             });
         }
     }, [context]);
 
     useEffect(() => {
         if (context) {
-            microsoftTeams.settings.setValidityState(color !== undefined);
+            pages.config.setValidityState(color !== undefined);
         }
     }, [color, context]);
 
@@ -85,7 +84,7 @@ export const <%=connectorComponentName%>Config = () => {
             selected: color && clr.code === color.code,
             onClick: () => {
                 setColor(clr);
-                microsoftTeams.settings.setValidityState(clr !== undefined);
+                pages.config..setValidityState(clr !== undefined);
             }
         };
     });
