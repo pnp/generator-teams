@@ -18,19 +18,19 @@ jobs:
     - run: npm run build
       working-directory: packages/generator-teams
     - name: Publish release
-      if: github.ref == 'refs/heads/master'
+      if: "!contains(github.ref, 'preview') && !contains(github.ref, 'next')"
       run: npm publish
       working-directory: packages/generator-teams
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     - name: Publish preview
-      if: github.ref == 'refs/heads/preview'
+      if: "contains(github.ref, 'preview')"
       run: npm publish --tag preview
       working-directory: packages/generator-teams
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     - name: Publish next
-      if: github.ref == 'refs/heads/next'
+      if: "contains(github.ref, 'next')"
       run: npm publish --tag next
       working-directory: packages/generator-teams
       env:

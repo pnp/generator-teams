@@ -1,6 +1,6 @@
 {
   "name": "generator-teams",
-  "version": "4.0.0-preview2",
+  "version": "4.0.0-next",
   "description": "Yeoman generator for Microsoft Teams Apps",
   "main": "generators/app/index.js",
   "scripts": {
