@@ -11,11 +11,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Updated telemetry, see https://github.com/pnp/generator-teams/blob/master/docs/docs/about/telemetry.md
 * Updated the bot template files to better reflect the official Bot Framework samples
-
-## [*3.4.0*]- <*2021-10-28*>
-
-### Changes
-
 * Changed the `bot` template to better align with the official Bot Framework samples which now includes the following files:
     * `{botClassName}.ts` containing the bot declaration from `express-msteams-host` and the `onMembersAdded` method for handling and greeting new users with an Adaptive Card
     * `dialogBot.ts` containing the `onMessage` method which runs the root dialog(`mainDialog`)
