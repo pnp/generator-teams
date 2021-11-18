@@ -30,6 +30,7 @@ export const ngrokTasks = (gulp: GulpClient.Gulp, config: any) => {
             log("[NGROK] PUBLIC_HOSTNAME set to: " + hostName);
             process.env.PUBLIC_HOSTNAME = hostName;
 
+            log("[NGROK] Inspect Url: " + ngrok.getUrl());
             cb();
 
         }).catch((err) => {
@@ -37,6 +38,6 @@ export const ngrokTasks = (gulp: GulpClient.Gulp, config: any) => {
         });
     });
 
-    gulp.task("ngrok-serve", dependencies(gulp, "start-ngrok", "manifest", "serve"));
+    gulp.task("ngrok-serve", dependencies(gulp, "ngrok-serve", "start-ngrok", "manifest", "serve"));
 
 };

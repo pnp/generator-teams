@@ -142,5 +142,5 @@ export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
 
     });
 
-    gulp.task("serve", dependencies(gulp, "nuke", "build", "nodemon", "watch"));
+    gulp.task("serve", dependencies(gulp, "serve", "nuke", "build", "nodemon", "watch"));
 };

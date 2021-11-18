@@ -27,9 +27,12 @@ describe("teams:bot", async () => {
 
   const BOT_FILES = [
     "src/server/teamsSolutionBot/TeamsSolutionBot.ts",
-    "src/server/teamsSolutionBot/dialogs/HelpDialog.ts",
-    "src/server/teamsSolutionBot/dialogs/WelcomeDialog.ts",
-    "src/server/teamsSolutionBot/dialogs/WelcomeCard.json"
+    "src/server/teamsSolutionBot/dialogs/mainDialog.ts",
+    "src/server/teamsSolutionBot/dialogs/helpDialog.ts",
+    "src/server/teamsSolutionBot/dialogs/mentionUserDialog.ts",
+    "src/server/teamsSolutionBot/dialogs/teamsInfoDialog.ts",
+    "src/server/teamsSolutionBot/cards/welcomeCard.json",
+    "src/server/teamsSolutionBot/cards/welcomeCard.ts" 
   ];
 
   beforeEach(async () => {

@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*Unreleased*]- <**>
+
+### Added
+
+* Added telemetry, see https://github.com/pnp/generator-teams/blob/master/docs/docs/about/telemetry.md
+* Added logging of ngrok inspection url (#267 by pschaeflein)
+
 ## [*1.4.0*]- <*2021-10-28*>
 
 ### Changes

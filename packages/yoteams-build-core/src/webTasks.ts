@@ -5,8 +5,10 @@
 import GulpClient from "gulp";
 import replace from "gulp-token-replace";
 import inject from "gulp-inject";
+import { trackEvent } from ".";
 
 export const injectSources = (gulp: GulpClient.Gulp, config: any) => () => {
+    trackEvent("static:inject");
     const htmlFiles = [
         "./src/public/**/*.html",
         "./src/public/**/*.ejs"
@@ -47,6 +49,7 @@ export const webTasks = (gulp: GulpClient.Gulp, config: any) => {
     gulp.task("static:inject", injectSources(gulp, config));
 
     gulp.task("static:copy", () => {
+        trackEvent("static:copy");
         return gulp.src(config.staticFiles ? staticFiles.concat(config.staticFiles) : staticFiles, {
             base: "./src/public"
         })

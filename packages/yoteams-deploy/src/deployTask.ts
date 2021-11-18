@@ -10,7 +10,7 @@ import through from "through2";
 import jszip from "jszip";
 import PluginError from "plugin-error";
 import { readFileSync, readJSONSync } from "fs-extra";
-import { dependencies } from ".";
+import { dependencies, trackEvent } from ".";
 import chalk from "chalk";
 
 const argv = require("yargs").argv;
@@ -24,6 +24,7 @@ export const deployTask = (gulp: GulpClient.Gulp, config: any) => {
         chunk => cb(new Error(chunk)),
         code => {
             if (code === 0) {
+                trackEvent("application-updated");
                 log("Application updated!");
                 cb();
             } else {
@@ -62,6 +63,7 @@ export const deployTask = (gulp: GulpClient.Gulp, config: any) => {
         },
         code => {
             if (code === 0) {
+                trackEvent("application-published");
                 log("Application published to Teams App store!");
                 cb();
             }
@@ -126,26 +128,27 @@ export const deployTask = (gulp: GulpClient.Gulp, config: any) => {
     }
 
     function publishTask() {
+        trackEvent("publish");
         return gulp.src("./package/*.zip").pipe(publishFn());
     }
     publishTask.displayName = "tenant:application-upload";
 
-    gulp.task("tenant:publish", dependencies(gulp, status, publishTask));
+    gulp.task("tenant:publish", dependencies(gulp, "tenant:publish", status, publishTask));
 
-    gulp.task("tenant:deploy", dependencies(gulp, "manifest", "tenant:publish"));
+    gulp.task("tenant:deploy", dependencies(gulp, "tenant:deploy", "manifest", "tenant:publish"));
 
     // Replace the default serve with a new command
     gulp.task("serve", (cb) => {
         if (argv.publish) {
-            dependencies(gulp, "nuke", "tenant:deploy", "build", "nodemon", "watch")(() => { cb(); });
+            dependencies(gulp, "serve:deploy", "nuke", "tenant:deploy", "build", "nodemon", "watch")(() => { cb(); });
         } else {
-            dependencies(gulp, "nuke", "manifest", "build", "nodemon", "watch")(() => { cb(); });
+            dependencies(gulp, "serve", "nuke", "manifest", "build", "nodemon", "watch")(() => { cb(); });
         }
     });
 
     // Replace the default ngrok-serve with a new command
     gulp.task("ngrok-serve", (cb) => {
-        dependencies(gulp, "start-ngrok", "serve")(() => { cb(); });
+        dependencies(gulp, "ngrok-serve", "start-ngrok", "serve")(() => { cb(); });
     });
 
     if (process.env.CODESPACES) {
@@ -158,7 +161,7 @@ export const deployTask = (gulp: GulpClient.Gulp, config: any) => {
 
             process.env.PUBLIC_HOSTNAME = `${codespaceName}-${process.env.PORT}.githubpreview.dev`;
             log("[Codespace] Public url: " + process.env.PUBLIC_HOSTNAME);
-            gulp.task("codespaces-serve", dependencies(gulp, "serve"));
+            gulp.task("codespaces-serve", dependencies(gulp, "codespaces-serve", "serve"));
         } catch (ex) {
             log(chalk.red(`Unable to set up Codespaces tasks: ${ex}`));
         }

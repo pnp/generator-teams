@@ -419,7 +419,7 @@ export class MessageExtensionGenerator extends Generator {
                 });
 
                 Yotilities.addAdditionalDeps([
-                    ["botbuilder-teams-messagingextensions", "1.8.0-preview3"]
+                    ["botbuilder-teams-messagingextensions", "1.8.0"]
                 ], this.fs);
 
                 if (this.options.messagingExtensionCanUpdateConfiguration || this.options.messagingExtensionActionResponseTypeConfig) {
@@ -482,7 +482,9 @@ export class MessageExtensionGenerator extends Generator {
                         scope: Scope.Private,
                         name: `_${this.options.messageExtensionName}`,
                         type: this.options.messageExtensionClassName,
-                        docs: [`Local property for ${this.options.messageExtensionClassName}`]
+                        docs: [`Local property for ${this.options.messageExtensionClassName}`],
+                        trailingTrivia: writer => { writer.newLine(); writer.newLine(); }, // add a new line after the property to avoid eslint issue
+                        //leadingTrivia: writer => writer.newLine(), // add a new line before the property to avoid eslint issue
                     });
 
                     // add the decorator
@@ -490,8 +492,6 @@ export class MessageExtensionGenerator extends Generator {
                         name: 'MessageExtensionDeclaration',
                         arguments: [`"${this.options.messageExtensionName}"`]
                     });
-                    // add a new line after the property to avoid eslint issue
-                    prop.appendWhitespace("\n");
 
                     const children = prop.getChildren();
                     if (children && children.length > 0) {
