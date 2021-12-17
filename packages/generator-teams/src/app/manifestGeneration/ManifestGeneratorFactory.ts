@@ -9,7 +9,7 @@ import { ManifestGenerator as ManifestGenerator19 } from "./manifestGenerators/g
 import { ManifestGenerator as ManifestGenerator110 } from "./manifestGenerators/generator110/ManifestGenerator";
 import { ManifestGenerator as ManifestGenerator111 } from "./manifestGenerators/generator111/ManifestGenerator";
 import { ManifestGenerator as ManifestGeneratorDevPreview } from "./manifestGenerators/generatorDevPreview/ManifestGenerator";
-import { ManifestGenerator as ManifestGeneratorM365DevPreview } from "./manifestGenerators/generatorDevPreview/ManifestGenerator";
+import { ManifestGenerator as ManifestGeneratorM365DevPreview } from "./manifestGenerators/generatorM365DevPreview/ManifestGenerator";
 import { BaseManifestGenerator } from "./BaseManifestGenerator";
 
 export class ManifestGeneratorFactory {
