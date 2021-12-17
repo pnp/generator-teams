@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+
 ## [*Unreleased*]- <**>
 
 ### Added
@@ -14,6 +15,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changes
 
 * [Breaking] Upgraded Team JS SDK to version 2.0 (promises based)
+
+## [*3.5.0*]- <*2021-11-18*>
+
+### Changes
+
 * Updated telemetry, see https://github.com/pnp/generator-teams/blob/master/docs/docs/about/telemetry.md
 * Updated the bot template files to better reflect the official Bot Framework samples
 * Prohibited re-running the generator on version earlier than 4.0
