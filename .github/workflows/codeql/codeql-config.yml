@@ -1,0 +1,4 @@
+paths:
+  - packages/generator-teams/generators
+  - packages/yoteams-build-core/dist
+  - packages/yoteams-deploy/dist
