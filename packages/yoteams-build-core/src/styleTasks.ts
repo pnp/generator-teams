@@ -10,10 +10,11 @@ import sourcemaps from "gulp-sourcemaps";
 import sass from "gulp-dart-sass";
 import postcss from "gulp-postcss";
 import { trackEvent } from ".";
+import { IBuildCoreConfig } from "./ibuildCoreConfig";
 
 const argv = require("yargs").argv;
 
-export const styleTasks = (gulp: GulpClient.Gulp, config: any) => {
+export const styleTasks = (gulp: GulpClient.Gulp, config: IBuildCoreConfig) => {
     const debug = argv.debug !== undefined;
     const styles = () => {
         trackEvent("styles");

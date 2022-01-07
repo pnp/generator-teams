@@ -6,9 +6,10 @@ import GulpClient from "gulp";
 import log from "fancy-log";
 import ngrok from "ngrok";
 import { dependencies } from ".";
+import { IBuildCoreConfig } from "./ibuildCoreConfig";
 import PluginError from "plugin-error";
 
-export const ngrokTasks = (gulp: GulpClient.Gulp, config: any) => {
+export const ngrokTasks = (gulp: GulpClient.Gulp, config: IBuildCoreConfig) => {
 
     gulp.task("start-ngrok", (cb) => {
         log("[NGROK] starting ngrok...");

@@ -4,12 +4,13 @@
 
 import GulpClient from "gulp";
 import { dependencies } from ".";
+import { IBuildCoreConfig } from "./ibuildCoreConfig";
 
 /**
  * Registers the "build" Gulp task
  * @param gulp
  * @param config
  */
-export const buildTasks = (gulp: GulpClient.Gulp, config: any) => {
+export const buildTasks = (gulp: GulpClient.Gulp, config: IBuildCoreConfig) => {
     gulp.task("build", dependencies(gulp, "build", "webpack", "styles", "static:copy", "static:inject"));
 };

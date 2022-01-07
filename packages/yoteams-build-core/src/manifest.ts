@@ -12,6 +12,7 @@ import through from "through2";
 import ZSchema from "z-schema";
 import rename from "gulp-rename";
 import SCHEMAS from "./schemas.json";
+import { IBuildCoreConfig } from "./ibuildCoreConfig";
 import fs from "fs";
 import chalk from "chalk";
 import * as _ from ".";
@@ -21,7 +22,7 @@ import log from "fancy-log";
 const flatmap = require("gulp-flatmap");
 const argv = require("yargs").argv;
 
-export const manifest = (gulp: GulpClient.Gulp, config: any) => {
+export const manifest = (gulp: GulpClient.Gulp, config: IBuildCoreConfig) => {
 
     /**
      * Reads a file and returns JSON

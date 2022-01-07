@@ -5,6 +5,7 @@
 import GulpClient from "gulp";
 import log from "fancy-log";
 import { dependencies } from ".";
+import { IBuildCoreConfig } from "./ibuildCoreConfig";
 import fs from "fs-extra";
 import chalk from "chalk";
 
@@ -15,7 +16,7 @@ const argv = require("yargs").argv;
  * @param gulp Gulp object
  * @param config configuration - not used
  */
-export const codespacesTasks = (gulp: GulpClient.Gulp, config: any) => {
+export const codespacesTasks = (gulp: GulpClient.Gulp, config: IBuildCoreConfig) => {
     if (process.env.CODESPACES) {
         try {
             // only register code spaces tasks when in Github Codespaces

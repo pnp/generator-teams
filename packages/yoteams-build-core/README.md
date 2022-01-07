@@ -32,6 +32,7 @@ The configuration object can be used to include additional/optional configuratio
 | `clientWatches`| An array of additional file paths to monitor for client side webpack configuration |
 | `staticFiles`| An array of additional file paths to monitor static file copy |
 | `injectSources`| An array of additional file paths to monitor for static file injections of JavaScript and CSS |
+| `injectOptions`| An object to set [options for gulp-inject](https://github.com/klei/gulp-inject#options) |
 | `htmlFiles`| An array of additional file paths to monitor for static file injections of environment variables |
 
 ### Default Gulp tasks
