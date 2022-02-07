@@ -14,10 +14,12 @@ import { serveTasks } from "./serveTasks";
 import { styleTasks } from "./styleTasks";
 import { webpackTasks } from "./webpackTasks";
 import { webTasks } from "./webTasks";
-import { IBuildCoreConfig } from "./ibuildCoreConfig";
+import { IBuildCoreConfig } from "./iBuildCoreConfig";
 import * as appInsights from "applicationinsights";
 const argv = require("yargs").argv;
 const debug = argv.debug !== undefined;
+
+export * from "./iBuildCoreConfig";
 
 /**
  * Run the dependencies in series

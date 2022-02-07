@@ -6,7 +6,7 @@ import GulpClient from "gulp";
 import replace from "gulp-token-replace";
 import inject from "gulp-inject";
 import { trackEvent } from ".";
-import { IBuildCoreConfig } from "./ibuildCoreConfig";
+import { IBuildCoreConfig } from "./iBuildCoreConfig";
 
 export const injectSources = (gulp: GulpClient.Gulp, config: IBuildCoreConfig) => () => {
     trackEvent("static:inject");

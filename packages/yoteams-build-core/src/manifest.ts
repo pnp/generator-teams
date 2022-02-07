@@ -12,7 +12,7 @@ import through from "through2";
 import ZSchema from "z-schema";
 import rename from "gulp-rename";
 import SCHEMAS from "./schemas.json";
-import { IBuildCoreConfig } from "./ibuildCoreConfig";
+import { IBuildCoreConfig } from "./iBuildCoreConfig";
 import fs from "fs";
 import chalk from "chalk";
 import * as _ from ".";

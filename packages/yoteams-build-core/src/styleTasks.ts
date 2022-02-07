@@ -7,12 +7,15 @@ import Plumber from "gulp-plumber";
 import autoprefixer from "autoprefixer";
 import gulpif from "gulp-if";
 import sourcemaps from "gulp-sourcemaps";
-import sass from "gulp-dart-sass";
+import dartSass from "sass";
+import gulpSass from "gulp-sass";
 import postcss from "gulp-postcss";
 import { trackEvent } from ".";
-import { IBuildCoreConfig } from "./ibuildCoreConfig";
+import { IBuildCoreConfig } from "./iBuildCoreConfig";
 
 const argv = require("yargs").argv;
+
+const sass = gulpSass(dartSass);
 
 export const styleTasks = (gulp: GulpClient.Gulp, config: IBuildCoreConfig) => {
     const debug = argv.debug !== undefined;

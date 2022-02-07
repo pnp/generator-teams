@@ -8,7 +8,7 @@ import PluginError from "plugin-error";
 import log from "fancy-log";
 import GulpClient from "gulp";
 import { dependenciesP, trackEvent } from ".";
-import { IBuildCoreConfig } from "./ibuildCoreConfig";
+import { IBuildCoreConfig } from "./iBuildCoreConfig";
 import chalk from "chalk";
 
 /**

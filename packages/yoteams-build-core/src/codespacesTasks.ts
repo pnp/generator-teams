@@ -5,7 +5,7 @@
 import GulpClient from "gulp";
 import log from "fancy-log";
 import { dependencies } from ".";
-import { IBuildCoreConfig } from "./ibuildCoreConfig";
+import { IBuildCoreConfig } from "./iBuildCoreConfig";
 import fs from "fs-extra";
 import chalk from "chalk";
 

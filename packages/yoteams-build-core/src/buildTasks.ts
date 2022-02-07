@@ -4,7 +4,7 @@
 
 import GulpClient from "gulp";
 import { dependencies } from ".";
-import { IBuildCoreConfig } from "./ibuildCoreConfig";
+import { IBuildCoreConfig } from "./iBuildCoreConfig";
 
 /**
  * Registers the "build" Gulp task
