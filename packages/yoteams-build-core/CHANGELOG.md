@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*1.6.0*]- <*2022-02-17*>
+
+### Added
+
+* Added Gulp-inject options to build config (#278 by pschaeflein)
+* Added support for Teams manifest `1.12` and `m365DevPreview`
+* Moved to `gulp-sass`, with native Dart support, from `gulp-dart-sass`
+
+### Changes
+
+* Static typing for build config options
+
 ## [*1.5.0*]- <*2021-11-18*>
 
 ### Added

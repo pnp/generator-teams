@@ -8,12 +8,13 @@ import PluginError from "plugin-error";
 import log from "fancy-log";
 import GulpClient from "gulp";
 import { dependenciesP, trackEvent } from ".";
+import { IBuildCoreConfig } from "./iBuildCoreConfig";
 import chalk from "chalk";
 
 /**
  * Defines the two webpack tasks
  */
-export const webpackTasks = (gulp: GulpClient.Gulp, config: any) => {
+export const webpackTasks = (gulp: GulpClient.Gulp, config: IBuildCoreConfig) => {
 
     const webpackTask = (idx: number, callback: Function) => {
         const webpackConfig = require(
