@@ -2,7 +2,7 @@
 
 > NOTE: This tutorial is adapted for `generator-teams` version `3.0.0` or higher.
 
-In this tutorial we will walk through creating your very first Microsoft Teams app using the Microsoft Teams Yeoman generator. It assumes that you have [enabled side-loading of Microsoft Teams apps](../user-guide/setup-tenant) in Microsoft Teams as well as have installed [all the prerequisites](../user-guide/setup-machine).
+In this tutorial we will walk through creating your very first Microsoft Teams app using the Microsoft Teams Yeoman generator. It assumes that you have [enabled side-loading of Microsoft Teams apps](../user-guide/setup-tenant.md) in Microsoft Teams as well as have installed [all the prerequisites](../user-guide/setup-machine.md).
 
 ## Generate your project
 

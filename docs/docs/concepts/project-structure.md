@@ -27,7 +27,7 @@ The `manifest` folder contains the manifest file (`manifest.json`) as well as th
 
 ### The `client` folder
 
-The `client` folder contains the client side React components. All client side components are automatically when scaffolding being added to `client.ts`.
+The `client` folder contains the client side React components. All scaffolded client side components are automatically added to `client.ts`.
 
 ### The `server` folder
 

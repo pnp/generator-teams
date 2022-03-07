@@ -14,9 +14,12 @@ import { serveTasks } from "./serveTasks";
 import { styleTasks } from "./styleTasks";
 import { webpackTasks } from "./webpackTasks";
 import { webTasks } from "./webTasks";
+import { IBuildCoreConfig } from "./iBuildCoreConfig";
 import * as appInsights from "applicationinsights";
 const argv = require("yargs").argv;
 const debug = argv.debug !== undefined;
+
+export * from "./iBuildCoreConfig";
 
 /**
  * Run the dependencies in series
@@ -56,7 +59,7 @@ export const trackEvent = (eventName: string) => {
  * @param gulp the gulp client
  * @param config optional config
  */
-export const setup = (gulp: GulpClient.Gulp, config: any): void => {
+export const setup = (gulp: GulpClient.Gulp, config: IBuildCoreConfig): void => {
 
     const pkg: any = require("../package.json");
 
