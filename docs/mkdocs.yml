@@ -24,6 +24,7 @@ nav:
   - Contributing:
     - 'Guidelines': 'contributing/contribution-guidelines.md'
     - 'Getting started': 'contributing/getting-started.md'
+    - 'Minimal Path to Awesome': 'contributing/minimal-path.md'
   - About:
     - 'Why this generator': 'about/why-generator.md'
     - 'Telemetry': 'about/telemetry.md'

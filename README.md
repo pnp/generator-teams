@@ -33,7 +33,7 @@ The `yoteams-deploy` documentation and source code is found under [packages/yote
 
 ## Documentation
 
-The documentation for the generator and the generated project can be found in the [generator-teams Github repository](https://github.com/pnp/generator-teams/tree/master/docs/docs).
+The documentation for the generator and the generated project can be found in the generator-teams [Github repository](https://github.com/pnp/generator-teams/tree/master/docs/docs) or in the [documentation website](https://pnp.github.io/generator-teams).
 
 ## More information
 
