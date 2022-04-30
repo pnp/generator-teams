@@ -57,11 +57,20 @@ For more information on how Tabs and Bots can be used with Teams see the [Teams 
 * [Orta Therox](https://github.com/orta)
 * [Oleksandr Fediashov](https://github.com/layershifter)
 * [Paolo Pialorsi](https://github.com/PaoloPia)
+* [Nanddeep Nachan](https://github.com/nanddeepn)
+* [Sergei Sergeev](https://github.com/s-KaiNet)
+* [Stephan Bisser](https://github.com/stephanbisser)
+* [Albert-Jan Schot](https://github.com/appieschot)
+* [Elia](https://github.com/twopill)
+* [Rick Van Rousselt](https://github.com/rickvanrousselt)
 
 ## Be a part of the movement
 
-If you want to be a part of the #YoTeams movement then head on over to the discussion at the [generator-teams Github Discussions forum](https://github.com/pnp/generator-teams/discussions) or follow us on [Twitter using the hashtag #yoteams](https://twitter.com/search?q=%23yoteams&src=typd).
+If you want to be a part of the #YoTeams movement then head on over to the discussion at the [generator-teams Github Discussions forum](https://github.com/pnp/generator-teams/discussions) or follow us on [Twitter using the hashtag #yoteams](https://twitter.com/search?q=%23yoteams&src=typd). In case you want to contribute yourself, please read the contribution [guidelines](https://github.com/pnp/generator-teams/blob/master/docs/docs/contributing/contribution-guidelines.md) before.
 
 ## Contributing
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+## Supportability and SLA
+This library is open-source and community provided library with active community providing support for it. This is not Microsoft provided module so there's no SLA or direct support for this open-source component from Microsoft. Please report any issues using the [issues list](https://github.com/pnp/generator-teams/issues).

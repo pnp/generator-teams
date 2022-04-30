@@ -24,6 +24,14 @@ export class BotManifestUpdater implements IManifestUpdater {
                         {
                             "title": "Help",
                             "description": "Shows help information"
+                        },
+                        {
+                            "title": "Who am I?",
+                            "description": "Shows information about your Teams user"
+                        },
+                        {
+                            "title": "Mention me",
+                            "description": "Let the bot @mention you"
                         }
                     ]
                 }

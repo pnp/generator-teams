@@ -5,6 +5,60 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*3.5.0*]- <*2021-11-18*>
+
+### Changes
+
+* Updated telemetry, see https://github.com/pnp/generator-teams/blob/master/docs/docs/about/telemetry.md
+* Updated the bot template files to better reflect the official Bot Framework samples
+* Changed the `bot` template to better align with the official Bot Framework samples which now includes the following files:
+    * `{botClassName}.ts` containing the bot declaration from `express-msteams-host` and the `onMembersAdded` method for handling and greeting new users with an Adaptive Card
+    * `dialogBot.ts` containing the `onMessage` method which runs the root dialog(`mainDialog`)
+    * `dialogs\mainDialog.ts` containing the logic of handling different user inputs and calling the following child dialogs based on different inputs:
+      * `dialogs\helpDialog.ts` responding with help information/instructions
+      * `dialogs\mentionUserDialog.ts` responing with an @mention of the user who asked the bot to do so
+      * `dialogs\teamsInfoDialog.ts` responding with the user's name, ID and email address coming from the [TeamsInfo.getMember() method](https://docs.microsoft.com/en-us/javascript/api/botbuilder/teamsinfo?view=botbuilder-ts-latest#getMember_TurnContext__string_)
+
+## [*3.4.0*]- <*2021-10-28*>
+
+### Changes
+
+* `webpack.config.js` contains default settings for the webpack-dev-server (PR #251 by s-KaiNet)
+* Migrated to botbuilder 4.14.1
+* added category prefix for improved readability in project creation (#109)
+
+### Fixes
+
+* Fixed Adaptive Card and linting issue (#255)
+
+## [*3.3.1*]- <*2021-10-08*>
+
+### Changes
+
+* Updated to `@microsoft/teams-js` version `1.11.0` (#241, #243)
+
+> *Tests passing: 12.033*
+
+## [*3.3.0*]- <*2021-09-30*>
+
+### Added
+
+* Support for messaging extensions with Adaptive Card 1.4 Universal Action
+* Support for Teams manifest schema 1.11 (#234, #240)
+
+### Changes
+
+* Changed Adaptive Card versions to 1.4 (#227)
+* Separated Typescript type checking into separate child process to improve build performance (PR #233 by s-KaiNet)
+* Dependency bumps
+
+### Fixes
+
+* Fixed an issue where the bot help dialog caused an error
+* Dependency bump
+
+> *Tests passing: 12.033*
+
 ## [*3.2.0*]- <*2021-06-07*>
 
 ### Added
@@ -301,7 +355,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 * Added support for manifest version 1.5, new default
-* Added suppot for optionally adding Microsoft Partner Id. More info at https://aka.ms/partner 
+* Added support for optionally adding Microsoft Partner Id. More info at https://aka.ms/partner
 * Added files support option for bots (schema version 1.4+)
 * Now persists settings for using unit testing, application insights and the library name
 * Added default logging of "msteams" in the `.env` file
@@ -580,7 +634,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [*2.0.0-preview*] - <*2017-05-30*>
 
-### Changed 
+### Changed
 
 * Adaptation to the new developer preview
 
@@ -654,7 +708,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-* Support for _Pinned tabs_ 
+* Support for _Pinned tabs_
 
 ### Changed
 

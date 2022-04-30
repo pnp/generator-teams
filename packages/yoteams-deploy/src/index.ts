@@ -5,23 +5,39 @@
 import GulpClient from "gulp";
 import Undertaker from "undertaker";
 import { deployTask } from "./deployTask";
+import * as appInsights from "applicationinsights";
 
 /**
  * Run the dependencies in series
  * @param gulp the gulp client
+ * @param eventName name of event to track
  * @param tasks the tasks
  */
-export const dependencies = (gulp: GulpClient.Gulp, ...tasks: Undertaker.Task[]) => {
-    return (done: any) => gulp.series(...tasks)(done);
+export const dependencies = (gulp: GulpClient.Gulp, eventName: string, ...tasks: Undertaker.Task[]) => {
+    return (done: any) => {
+        trackEvent(eventName);
+        gulp.series(...tasks)(done);
+    };
 };
 
 /**
  * Run the dependencies in parallel
  * @param gulp the gulp client
+ * @param eventName name of event to track
  * @param tasks the tasks
  */
-export const dependenciesP = (gulp: GulpClient.Gulp, ...tasks: Undertaker.Task[]) => {
-    return (done: any) => gulp.parallel(...tasks)(done);
+export const dependenciesP = (gulp: GulpClient.Gulp, eventName: string, ...tasks: Undertaker.Task[]) => {
+    return (done: any) => {
+        trackEvent(eventName);
+        gulp.parallel(...tasks)(done);
+    };
+};
+
+export const trackEvent = (eventName: string) => {
+    if (appInsights && appInsights.defaultClient) {
+        appInsights.defaultClient.trackEvent({ name: "yoteams-build-core:" + eventName });
+        appInsights.defaultClient.flush();
+    }
 };
 
 export const setup = (gulp: GulpClient.Gulp, config: any): void => {

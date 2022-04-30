@@ -7,11 +7,14 @@ import log from "fancy-log";
 import nodemon from "nodemon";
 import path from "path";
 import fs from "fs";
+import { ChildProcess, fork } from "child_process";
 import { injectSources } from "./webTasks";
 import { dependencies } from ".";
+import { IBuildCoreConfig } from "./iBuildCoreConfig";
 const argv = require("yargs").argv;
+const debug = argv.debug !== undefined;
 
-export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
+export const serveTasks = (gulp: GulpClient.Gulp, config: IBuildCoreConfig) => {
     const watches = [
         "./src/server/**/*.*"
     ];
@@ -47,6 +50,28 @@ export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
     // restart nodemon task
     const nodemonRestart = () => { nodemon.restart(); return Promise.resolve(); };
 
+    // Webpack dev server for client side rebuilds
+    let webpackDevServerProcess: ChildProcess;
+    const restartDevServer = () => {
+        if (webpackDevServerProcess) {
+            const killed = webpackDevServerProcess.kill("SIGINT");
+
+            if (!killed) {
+                throw new Error("Unable to stop webpack dev server. Please restart the last command.");
+            }
+        }
+
+        startWebpackDevServer();
+
+        return Promise.resolve();
+    };
+
+    const startWebpackDevServer = () => {
+        webpackDevServerProcess = fork(path.resolve(__dirname, "./webpackServe"), process.argv.slice(2), {
+            stdio: "inherit"
+        });
+    };
+
     /**
      * Register watches
      */
@@ -58,10 +83,15 @@ export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
             gulp.series("webpack:server")
         );
 
-        gulp.watch(
-            config.clientWatches ? clientWatches.concat(config.clientWatches) : clientWatches,
-            gulp.series("webpack:client")
-        );
+        if (debug) {
+            // webpack dev server - incrementally rebuilds client bundle on source change
+            startWebpackDevServer();
+        } else {
+            gulp.watch(
+                config.clientWatches ? clientWatches.concat(config.clientWatches) : clientWatches,
+                gulp.series("webpack:client")
+            );
+        }
 
         // watch for style changes
         gulp.watch("src/public/**/*.scss", gulp.series("styles", "static:copy", "static:inject"))
@@ -92,13 +122,12 @@ export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
         // watch for .env files
         const envFile = argv.env ?? ".env";
         log(`Watching ${envFile}`);
-        gulp.watch(envFile, gulp.series(reloadEnv, gulp.parallel("manifest", "webpack:client"), nodemonRestart));
+        gulp.watch(envFile, gulp.series(reloadEnv, gulp.parallel("manifest", debug ? restartDevServer : "webpack:client"), nodemonRestart));
     };
 
     gulp.task("watch", registerWatches);
     gulp.task("nodemon", (done) => {
         let started = false;
-        const debug = argv.debug !== undefined;
 
         nodemon({
             script: "dist/server.js",
@@ -114,5 +143,5 @@ export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
 
     });
 
-    gulp.task("serve", dependencies(gulp, "nuke", "build", "nodemon", "watch"));
+    gulp.task("serve", dependencies(gulp, "serve", "nuke", "build", "nodemon", "watch"));
 };

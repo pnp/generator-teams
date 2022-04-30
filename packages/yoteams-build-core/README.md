@@ -32,6 +32,7 @@ The configuration object can be used to include additional/optional configuratio
 | `clientWatches`| An array of additional file paths to monitor for client side webpack configuration |
 | `staticFiles`| An array of additional file paths to monitor static file copy |
 | `injectSources`| An array of additional file paths to monitor for static file injections of JavaScript and CSS |
+| `injectOptions`| An object to set [options for gulp-inject](https://github.com/klei/gulp-inject#options) |
 | `htmlFiles`| An array of additional file paths to monitor for static file injections of environment variables |
 
 ### Default Gulp tasks
@@ -48,6 +49,10 @@ The following Gulp tasks are defined by the package:
 * **`static:copy`** - copies all static files to the dist folder
 * **`static:inject`** - injects generated JavaScript and CSS files into the static files
 * **`styles`** - compiles SASS to CSS
+
+#### Flags
+
+* **`--no-schema-validation`** - skips validation of schemas for the `manifest` task
 
 #### Internally used tasks
 
@@ -102,8 +107,7 @@ This package supports plugins. Plugins has to be added as `devDependencies` to t
 
 ### Available plugins
 
-* [`yoteams-deploy`](https://github.com/pnp/generator-teams/packages/yoteams-deploy) - contains additional tasks for automatic deployment to a Microsoft Teams environment 
-
+* [`yoteams-deploy`](https://github.com/pnp/generator-teams/packages/yoteams-deploy) - contains additional tasks for automatic deployment to a Microsoft Teams environment.
 
 ## Contributing
 

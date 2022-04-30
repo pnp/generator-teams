@@ -7,13 +7,20 @@ import Plumber from "gulp-plumber";
 import autoprefixer from "autoprefixer";
 import gulpif from "gulp-if";
 import sourcemaps from "gulp-sourcemaps";
-import sass from "gulp-dart-sass";
+import dartSass from "sass";
+import gulpSass from "gulp-sass";
 import postcss from "gulp-postcss";
-import { argv } from "yargs";
+import { trackEvent } from ".";
+import { IBuildCoreConfig } from "./iBuildCoreConfig";
 
-export const styleTasks = (gulp: GulpClient.Gulp, config: any) => {
+const argv = require("yargs").argv;
+
+const sass = gulpSass(dartSass);
+
+export const styleTasks = (gulp: GulpClient.Gulp, config: IBuildCoreConfig) => {
     const debug = argv.debug !== undefined;
     const styles = () => {
+        trackEvent("styles");
         return gulp.src("src/public/**/*.scss")
             .pipe(Plumber())
             .pipe(gulpif(debug, sourcemaps.init()))

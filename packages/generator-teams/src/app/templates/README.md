@@ -40,7 +40,6 @@ gulp manifest
 
 Using the `yoteams-deploy` plugin, automatically added to the project, deployment of the manifest to the Teams App store can be done manually using `gulp tenant:deploy` or by passing the `--publish` flag to any of the `serve` tasks.
 
-
 ## Configuration
 
 Configuration is stored in the `.env` file.
@@ -60,17 +59,17 @@ gulp serve --debug
 ```
 
 ## Useful links
- * [Debugging with Visual Studio Code](https://github.com/pnp/generator-teams/blob/master/docs/docs/vscode.md)
- * [Developing with ngrok](https://github.com/pnp/generator-teams/blob/master/docs/docs/ngrok.md)
- * [Developing with Github Codespaces](https://github.com/pnp/generator-teams/blob/master/docs/docs/codespaces.md)
 
+* [Debugging with Visual Studio Code](https://github.com/pnp/generator-teams/blob/master/docs/docs/vscode.md)
+* [Developing with ngrok](https://github.com/pnp/generator-teams/blob/master/docs/docs/ngrok.md)
+* [Developing with Github Codespaces](https://github.com/pnp/generator-teams/blob/master/docs/docs/codespaces.md)
 
 ## Additional build options
 
 You can use the following flags for the `serve`, `ngrok-serve` and build commands:
 
 * `--no-linting` or `-l` - skips the linting of Typescript during build to improve build times
-* `--debug` - builds in debug mode
+* `--debug` - builds in debug mode and significantly improves build time with support for hot reloading of client side components
 * `--env <filename>.env` - use an alternate set of environment files
 * `--publish` - automatically publish the application to the Teams App store
 

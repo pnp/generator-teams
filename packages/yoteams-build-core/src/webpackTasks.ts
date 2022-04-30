@@ -7,13 +7,14 @@ import path from "path";
 import PluginError from "plugin-error";
 import log from "fancy-log";
 import GulpClient from "gulp";
-import { dependenciesP } from ".";
+import { dependenciesP, trackEvent } from ".";
+import { IBuildCoreConfig } from "./iBuildCoreConfig";
 import chalk from "chalk";
 
 /**
  * Defines the two webpack tasks
  */
-export const webpackTasks = (gulp: GulpClient.Gulp, config: any) => {
+export const webpackTasks = (gulp: GulpClient.Gulp, config: IBuildCoreConfig) => {
 
     const webpackTask = (idx: number, callback: Function) => {
         const webpackConfig = require(
@@ -50,13 +51,15 @@ export const webpackTasks = (gulp: GulpClient.Gulp, config: any) => {
     };
 
     gulp.task("webpack:client", callback => {
+        trackEvent("webpack:client");
         webpackTask(1, callback);
     });
 
     gulp.task("webpack:server", callback => {
+        trackEvent("webpack:server");
         webpackTask(0, callback);
     });
 
-    gulp.task("webpack", dependenciesP(gulp, "webpack:client", "webpack:server"));
+    gulp.task("webpack", dependenciesP(gulp, "webpack", "webpack:client", "webpack:server"));
 
 };

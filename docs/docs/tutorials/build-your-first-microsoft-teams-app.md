@@ -2,7 +2,7 @@
 
 > NOTE: This tutorial is adapted for `generator-teams` version `3.0.0` or higher.
 
-In this tutorial we will walk through creating your very first Microsoft Teams app using the Microsoft Teams Yeoman generator. It assumes that you have [enabled side-loading of Microsoft Teams apps](../setup-tenant) in Microsoft Teams as well as have installed [all the prerequisites](../setup-machine).
+In this tutorial we will walk through creating your very first Microsoft Teams app using the Microsoft Teams Yeoman generator. It assumes that you have [enabled side-loading of Microsoft Teams apps](../user-guide/setup-tenant.md) in Microsoft Teams as well as have installed [all the prerequisites](../user-guide/setup-machine.md).
 
 ## Generate your project
 
@@ -29,7 +29,7 @@ Once all questions is answered the generator will scaffold the required files an
 
 ## Add some code to your tab
 
-Once the generator is done you can open up the solution in your favorite code editor. Take a minute or two and familiarize yourself with how the code is organized - you can read more about that in the [Project Structure](../project-structure.md) documentation.
+Once the generator is done you can open up the solution in your favorite code editor. Take a minute or two and familiarize yourself with how the code is organized - you can read more about that in the [Project Structure](../concepts/project-structure.md) documentation.
 
 Your Tab will be located in the `./src/client/helloWorldTab/HelloWorldTab.tsx` file. This is the TypeScript React based functional component for your Tab. Locate the `return` statments and replace the code inside the second `<Flex.Item>` control so it looks like this:
 

@@ -27,17 +27,20 @@ const log = debug("msteams");
                     {
                         type: "Image",
                         url: `https://${process.env.PUBLIC_HOSTNAME}/assets/icon.png`
-                    }
-                ],
-                actions: [
+                    },
                     {
-                        type: "Action.OpenUrl",
-                        title: "Navigate",
-                        url: query.url
+                        type: "ActionSet",
+                        actions: [
+                            {
+                                type: "Action.OpenUrl",
+                                title: "Navigate",
+                                url: query.url
+                            }
+                        ]
                     }
                 ],
                 $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
-                version: "1.2"
+                version: "1.4"
             });
         const preview = {
             contentType: "application/vnd.microsoft.card.thumbnail",
@@ -78,20 +81,24 @@ const log = debug("msteams");
                     {
                         type: "Image",
                         url: `https://${process.env.PUBLIC_HOSTNAME}/assets/icon.png`
-                    }
-                ],
-                actions: [
+                    },
                     {
-                        type: "Action.Submit",
-                        title: "More details",
-                        data: {
-                            action: "moreDetails",
-                            id: "1234-5678"
-                        }
+                        type: "ActionSet",
+                        actions: [
+                            {
+                                type: "Action.Execute",
+                                title: "More details",
+                                data: {
+                                    action: "moreDetails",
+                                    id: "1234-5678"
+                                },
+                                fallback: "Action.Submit"
+                            }
+                        ]
                     }
                 ],
                 $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
-                version: "1.2"
+                version: "1.4"
             });
         const preview = {
             contentType: "application/vnd.microsoft.card.thumbnail",
@@ -182,7 +189,7 @@ const log = debug("msteams");
                 card: CardFactory.adaptiveCard({
                     $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
                     type: "AdaptiveCard",
-                    version: "1.2",
+                    version: "1.4",
                     body: [
                         {
                             type: "TextBlock",
@@ -193,13 +200,17 @@ const log = debug("msteams");
                             id: "email",
                             placeholder: "somemail@example.com",
                             style: "email"
-                        }
-                    ],
-                    actions: [
+                        },
                         {
-                            type: "Action.Submit",
-                            title: "OK",
-                            data: { id: "unique-id" }
+                            type: "ActionSet",
+                            actions: [
+                                {
+                                    type: "Action.Execute",
+                                    title: "OK",
+                                    data: { id: "unique-id" },
+                                    fallback: "Action.Submit"
+                                }
+                            ]
                         }
                     ]
                 })
@@ -232,7 +243,7 @@ const log = debug("msteams");
                     }
                 ],
                 $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
-                version: "1.2"
+                version: "1.4"
             });
         return Promise.resolve({
             type: "result",

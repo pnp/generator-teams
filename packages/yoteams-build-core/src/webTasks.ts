@@ -5,8 +5,11 @@
 import GulpClient from "gulp";
 import replace from "gulp-token-replace";
 import inject from "gulp-inject";
+import { trackEvent } from ".";
+import { IBuildCoreConfig } from "./iBuildCoreConfig";
 
-export const injectSources = (gulp: GulpClient.Gulp, config: any) => () => {
+export const injectSources = (gulp: GulpClient.Gulp, config: IBuildCoreConfig) => () => {
+    trackEvent("static:inject");
     const htmlFiles = [
         "./src/public/**/*.html",
         "./src/public/**/*.ejs"
@@ -17,7 +20,7 @@ export const injectSources = (gulp: GulpClient.Gulp, config: any) => () => {
     ];
     const injectSrc = gulp.src(config.injectSources ? injectSourceFiles.concat(config.injectSources) : injectSourceFiles);
 
-    const injectOptions = {
+    const defaultInjectOptions = {
         relative: false,
         ignorePath: "dist/web",
         addRootSlash: true
@@ -29,7 +32,7 @@ export const injectSources = (gulp: GulpClient.Gulp, config: any) => () => {
             }
         }))
         .pipe(
-            inject(injectSrc, injectOptions)
+            inject(injectSrc, config.injectOptions || defaultInjectOptions)
         )
         .pipe(
             gulp.dest("./dist/web")
@@ -37,7 +40,7 @@ export const injectSources = (gulp: GulpClient.Gulp, config: any) => () => {
 
 };
 
-export const webTasks = (gulp: GulpClient.Gulp, config: any) => {
+export const webTasks = (gulp: GulpClient.Gulp, config: IBuildCoreConfig) => {
     const staticFiles = [
         "./src/public/**/*.html",
         "./src/public/**/*.ejs",
@@ -47,6 +50,7 @@ export const webTasks = (gulp: GulpClient.Gulp, config: any) => {
     gulp.task("static:inject", injectSources(gulp, config));
 
     gulp.task("static:copy", () => {
+        trackEvent("static:copy");
         return gulp.src(config.staticFiles ? staticFiles.concat(config.staticFiles) : staticFiles, {
             base: "./src/public"
         })
