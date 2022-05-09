@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * TBA
 * Requires Node 14 or later
+* Dependency package updates
 
 ## [*1.6.0*]- <*2022-02-07*>
 
