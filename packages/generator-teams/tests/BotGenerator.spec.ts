@@ -71,7 +71,7 @@ describe("teams:bot", async () => {
       });
       it("Should have package botbuilder-testing", async () => {
         assert.jsonFileContent("package.json", {
-          devDependencies: { "botbuilder-testing": "4.14.1" }
+          devDependencies: { "botbuilder-testing": "~4.16.0" }
         });
       });
     } else {
@@ -80,7 +80,7 @@ describe("teams:bot", async () => {
       });
       it("Should not have package botbuilder-testing", async () => {
         assert.noJsonFileContent("package.json", {
-          devDependencies: { "botbuilder-testing": "4.14.1" }
+          devDependencies: { "botbuilder-testing": "~4.16.0" }
         });
       });
     }

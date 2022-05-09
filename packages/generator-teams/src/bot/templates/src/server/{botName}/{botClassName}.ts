@@ -1,4 +1,4 @@
-import { BotDeclaration<% if (staticTab) { %>, PreventIframe<% } %> from "express-msteams-host";
+import { BotDeclaration<% if (staticTab) { %>, PreventIframe<% } %> } from "express-msteams-host";
 import * as debug from "debug";
 import { <% if (messageExtension) { %>TeamsActivityHandler, StatePropertyAccessor, ActivityTypes, <% } %>CardFactory, ConversationState, MemoryStorage, <% if (bot) { %>UserState,<% } %> TurnContext } from "botbuilder";
 <% if (bot) { %>import { DialogBot } from "./dialogBot";

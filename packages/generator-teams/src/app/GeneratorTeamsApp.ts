@@ -522,12 +522,12 @@ export class GeneratorTeamsApp extends Generator {
                 Yotilities.addAdditionalDevDeps([
                     ["enzyme", "^3.9.0"],
                     ["@types/enzyme", "^3.9.1"],
-                    ["@types/jest", "^26.0.15"],
+                    ["@types/jest", "^27.5.0"],
                     ["@types/enzyme-to-json", "^1.5.3"],
                     ["enzyme-adapter-react-16", "^1.11.2"],
                     ["enzyme-to-json", "^3.3.5"],
-                    ["jest", "^26.6.1"],
-                    ["ts-jest", "^26.4.3"]
+                    ["jest", "^28.1.0"],
+                    ["ts-jest", "^28.0.2"]
                 ], this.fs);
 
                 Yotilities.addScript("test", "jest", this.fs);
@@ -551,13 +551,13 @@ export class GeneratorTeamsApp extends Generator {
                 );
 
                 Yotilities.addAdditionalDevDeps([
-                    ["@typescript-eslint/eslint-plugin", "^4.14.0"],
-                    ["@typescript-eslint/parser", "^4.14.0"],
-                    ["eslint", "^7.18.0"],
-                    ["eslint-config-standard", "^16.0.2"],
+                    ["@typescript-eslint/eslint-plugin", "^5.22.0"],
+                    ["@typescript-eslint/parser", "^5.22.0"],
+                    ["eslint", "^8.15.0"],
+                    ["eslint-config-standard", "^17.0.0"],
                     ["eslint-plugin-import", "^2.22.1"],
                     ["eslint-plugin-node", "^11.1.0"],
-                    ["eslint-plugin-promise", "^4.2.1"],
+                    ["eslint-plugin-promise", "^6.0.0"],
                     ["eslint-plugin-react", "^7.22.0"],
                     ["eslint-plugin-react-hooks", "^4.2.0"],
                     ["eslint-webpack-plugin", "^3.0.1"]
