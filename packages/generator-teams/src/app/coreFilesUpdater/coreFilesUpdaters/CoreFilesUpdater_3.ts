@@ -9,7 +9,7 @@ import * as Generator from 'yeoman-generator';
 import * as semver from "semver";
 import { Project, PropertyAssignment, SyntaxKind } from 'ts-morph';
 import { Logger } from "yeoman-environment";
-import chalk from "chalk";
+import * as chalk from "chalk";
 
 export class CoreFilesUpdater_3 extends BaseCoreFilesUpdater {
     public constructor(private currentVersion: string) {

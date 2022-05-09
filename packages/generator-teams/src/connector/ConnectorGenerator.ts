@@ -7,13 +7,8 @@ import * as lodash from 'lodash';
 import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
 import { ManifestGeneratorFactory } from '../app/manifestGeneration/ManifestGeneratorFactory';
-import EmptyGuid = require('../app/EmptyGuid');
-import validate = require('uuid-validate');
-
-
-let yosay = require('yosay');
-let path = require('path');
-
+import * as EmptyGuid from '../app/EmptyGuid';
+import * as validate from 'uuid-validate';
 
 export class ConnectorGenerator extends Generator {
     options: GeneratorTeamsAppOptions;
@@ -67,7 +62,7 @@ export class ConnectorGenerator extends Generator {
                         prefix: generatorPrefix,
                         default: this.options.title,
                         validate: (input) => {
-                            if(! (/^[a-zA-Z].*/.test(input))) {
+                            if (!(/^[a-zA-Z].*/.test(input))) {
                                 return "Must start with an alphabetical character";
                             }
                             return input.length > 0;
@@ -99,7 +94,7 @@ export class ConnectorGenerator extends Generator {
                     "src/server/{connectorName}/{connectorComponentName}.ts",
                 ];
 
-                if(this.options.unitTestsEnabled) {
+                if (this.options.unitTestsEnabled) {
                     templateFiles.push(
                         "src/client/{connectorName}/__tests__/{connectorComponentName}Config.spec.tsx"
                     );

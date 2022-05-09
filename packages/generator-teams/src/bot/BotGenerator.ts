@@ -7,8 +7,8 @@ import * as lodash from 'lodash';
 import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
 import { ManifestGeneratorFactory } from '../app/manifestGeneration/ManifestGeneratorFactory';
-import EmptyGuid = require('../app/EmptyGuid');
-import validate = require('uuid-validate');
+import * as EmptyGuid from '../app/EmptyGuid';
+import * as validate from 'uuid-validate';
 import * as semver from "semver";
 import { ManifestVersions } from '../app/manifestGeneration/ManifestVersions';
 
@@ -114,19 +114,11 @@ export class BotGenerator extends Generator {
                         message: 'Do you want to support file upload to the bot?',
                         prefix: generatorPrefix,
                         default: false
-                    },
-                    {
-                        type: 'confirm',
-                        name: 'botCallingEnabled',
-                        message: 'Do you want to include bot calling support?',
-                        prefix: generatorPrefix,
-                        default: false
                     }
                 ]
             ).then((answers: any) => {
                 this.options.botid = answers.botid;
                 this.options.staticTab = answers.staticTab;
-                this.options.botCallingEnabled = answers.botCallingEnabled;
                 this.options.botFilesEnabled = answers.botFilesEnabled;
                 if (this.options.staticTab) {
                     this.options.staticTabTitle = answers.staticTabName;
@@ -188,7 +180,7 @@ export class BotGenerator extends Generator {
                     "README-{botName}.md",
                     "src/server/{botName}/{botClassName}.ts",
                     "src/server/{botName}/cards/welcomeCard.json",
-                    "src/server/{botName}/cards/welcomeCard.ts"  
+                    "src/server/{botName}/cards/welcomeCard.ts"
                 );
                 // add additional files if we have a full bot implementation
                 if (this.options.bot) {

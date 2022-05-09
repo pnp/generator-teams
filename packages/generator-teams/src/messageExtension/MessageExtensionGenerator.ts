@@ -4,14 +4,14 @@
 
 import * as Generator from 'yeoman-generator';
 import * as lodash from 'lodash';
-import chalk from 'chalk';
+import * as chalk from 'chalk';
 import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
 import { Project, Scope, Decorator, ClassDeclaration } from "ts-morph";
 import * as ts from 'typescript';
 import * as path from 'path';
-import EmptyGuid = require('../app/EmptyGuid');
-import validate = require('uuid-validate');
+import * as EmptyGuid from '../app/EmptyGuid';
+import * as validate from 'uuid-validate';
 import { ManifestGeneratorFactory } from '../app/manifestGeneration/ManifestGeneratorFactory';
 
 export class MessageExtensionGenerator extends Generator {
@@ -444,8 +444,8 @@ export class MessageExtensionGenerator extends Generator {
                 const file = project.createSourceFile(
                     `src/server/${this.options.botName}/${this.options.botClassName}.ts`,
                     this.fs.read(`src/server/${this.options.botName}/${this.options.botClassName}.ts`), {
-                        overwrite: true
-                    });
+                    overwrite: true
+                });
 
                 const classes = file.getClasses();
                 const cl = classes.find(x => {

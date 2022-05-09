@@ -36,19 +36,6 @@
                 "botFilesEnabled": true,
                 "staticTab": true
             }
-        },
-        {
-            "description": "Bot project with calling support",
-            "manifestVersions": [
-                "v1.11",
-                "devPreview",
-                "m365DevPreview"
-            ],
-            "prompts": {
-                "parts": "bot",
-                "botCallingEnabled": true,
-                "staticTab": true
-            }
         }
     ],
     "connector": [

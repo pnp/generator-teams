@@ -44,11 +44,11 @@ export class GeneratorTeamsAppOptions {
     tabSharePoint: boolean;
     tabSharePointHosts: string[] = [];
     tabScopes: string[];
-    tabType: "configurable" | "static" | "viva";
+    tabType: "configurable" | "static" /*| "viva" */; // Viva removed in 4+
     tabSSO: boolean;
     tabSSOAppId: string;
     tabSSOAppUri: string;
-    vivaUrl: string | undefined;
+    // vivaUrl: string | undefined;
 
     /* Bots */
     botid: string = '';
@@ -62,7 +62,7 @@ export class GeneratorTeamsAppOptions {
     botTitle: string;
     botName: string;
     botClassName: string;
-    botCallingEnabled: boolean = false;
+    // botCallingEnabled: boolean = false; // Deprecated in 4+
     botFilesEnabled: boolean = false;
     /* Outgoing webhook */
     customBot: boolean;

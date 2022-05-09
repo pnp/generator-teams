@@ -45,7 +45,7 @@ const config = [{
     output: {
         path: __dirname + '/generators/',
         filename: '[name]/index.js',
-        libraryTarget: 'commonjs-module'
+        libraryTarget: 'umd'
     },
     externals: nodeModules,
     devtool: 'source-map',

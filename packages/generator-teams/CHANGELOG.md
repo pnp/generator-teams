@@ -17,6 +17,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * [Breaking] Upgraded Team JS SDK to version 2.0 (promises based)
 * Updated all outdated references
 
+### Removed
+
+* Calling bot support removed
+* Viva Connections Tab scaffolding removed
+
 ## [*3.5.0*]- <*2021-11-18*>
 
 ### Changes

@@ -54,19 +54,6 @@ describe("teams:bot", async () => {
         });
       });
     }
-    if (prompts.botCallingEnabled) {
-      it("Manifest has calling support", async () => {
-        assert.jsonFileContent("src/manifest/manifest.json", {
-          bots: [{ supportsCalling: true, supportsVideo: true }]
-        });
-      });
-    } else {
-      it("Manifest should not have calling support", async () => {
-        assert.noJsonFileContent("src/manifest/manifest.json", {
-          bots: [{ supportsCalling: true, supportsVideo: true }]
-        });
-      });
-    }
 
     if (prompts.unitTestsEnabled && prompts.staticTab) {
       it("Should have bot unit test files", async () => {

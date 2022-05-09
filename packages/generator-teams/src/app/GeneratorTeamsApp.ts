@@ -4,20 +4,21 @@
 
 import * as Generator from 'yeoman-generator';
 import * as lodash from 'lodash';
-import chalk from 'chalk';
+import * as chalk from 'chalk';
 import { GeneratorTeamsAppOptions } from './GeneratorTeamsAppOptions';
 import { Yotilities } from './Yotilities';
 import * as AppInsights from 'applicationinsights';
 import { ManifestGeneratorFactory } from './manifestGeneration/ManifestGeneratorFactory';
-import inquirer = require('inquirer');
+import * as inquirer from 'inquirer';
 import { ManifestVersions } from './manifestGeneration/ManifestVersions';
 import { v1 as uuid } from 'uuid';
-import validate = require('uuid-validate');
-import EmptyGuid = require('./EmptyGuid');
+import * as validate from 'uuid-validate';
+import * as EmptyGuid from './EmptyGuid';
 import { CoreFilesUpdaterFactory } from './coreFilesUpdater/CoreFilesUpdaterFactory';
 
+const yosay = require('yosay');
 
-let yosay = require('yosay');
+
 let pkg: any = require('../../package.json');
 
 /**
@@ -645,7 +646,6 @@ export class GeneratorTeamsApp extends Generator {
                     name: 'bot',
                     properties: {
                         type: this.options.botType,
-                        calling: this.options.botCallingEnabled ? "true" : "false",
                         files: this.options.botFilesEnabled ? "true" : "false",
                     }
                 });
@@ -653,9 +653,6 @@ export class GeneratorTeamsApp extends Generator {
                     AppInsights.defaultClient.trackEvent({ name: 'bot-existing' });
                 } else {
                     AppInsights.defaultClient.trackEvent({ name: 'bot-new' });
-                }
-                if (this.options.botCallingEnabled) {
-                    AppInsights.defaultClient.trackEvent({ name: 'botCalling' });
                 }
             }
             if (this.options.messageExtension) {
