@@ -5,8 +5,9 @@
 import GulpClient from "gulp";
 import del from "del";
 import { trackEvent } from ".";
+import { IBuildCoreConfig } from "./iBuildCoreConfig";
 
-export const nukeTasks = (gulp: GulpClient.Gulp, config: any) => {
+export const nukeTasks = (gulp: GulpClient.Gulp, config: IBuildCoreConfig) => {
 
     gulp.task("nuke", () => {
         trackEvent("nuke");

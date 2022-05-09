@@ -7,9 +7,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [*Unreleased*]- <**>
 
+### Changes
+
+* TBA
+* Requires Node 14 or later
+
+## [*1.6.0*]- <*2022-02-07*>
+
 ### Added
 
-* Added support for `m365DevPreview` manifest version
+* Added Gulp-inject options to build config (#278 by pschaeflein)
+* Added support for Teams manifest `1.12` and `m365DevPreview`
+* Moved to `gulp-sass`, with native Dart support, from `gulp-dart-sass`
+
+### Changes
+
+* Static typing for build config options
 
 ## [*1.5.0*]- <*2021-11-18*>
 

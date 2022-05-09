@@ -10,10 +10,11 @@ import fs from "fs";
 import { ChildProcess, fork } from "child_process";
 import { injectSources } from "./webTasks";
 import { dependencies } from ".";
+import { IBuildCoreConfig } from "./iBuildCoreConfig";
 const argv = require("yargs").argv;
 const debug = argv.debug !== undefined;
 
-export const serveTasks = (gulp: GulpClient.Gulp, config: any) => {
+export const serveTasks = (gulp: GulpClient.Gulp, config: IBuildCoreConfig) => {
     const watches = [
         "./src/server/**/*.*"
     ];
