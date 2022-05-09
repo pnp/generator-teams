@@ -4,7 +4,7 @@
 
 import * as Generator from 'yeoman-generator';
 import * as lodash from 'lodash';
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import { GeneratorTeamsAppOptions } from './GeneratorTeamsAppOptions';
 import { Yotilities } from './Yotilities';
 import * as AppInsights from 'applicationinsights';

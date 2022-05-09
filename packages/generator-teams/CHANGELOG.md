@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changes
 
 * [Breaking] Upgraded Team JS SDK to version 2.0 (promises based)
+* Updated all outdated references
 
 ## [*3.5.0*]- <*2021-11-18*>
 
