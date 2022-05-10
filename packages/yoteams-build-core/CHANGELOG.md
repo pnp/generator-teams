@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Fixed issue with telemetry timeout at the end of scaffolding
 
-## [*1.6.0*]- <*2022-02-07*>
+## [*1.6.0*]- <*2022-02-17*>
 
 ### Added
 
