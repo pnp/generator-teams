@@ -22,6 +22,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Calling bot support removed
 * Viva Connections Tab scaffolding removed
 
+### Fixes
+
+* Fixed issue with telemetry timeout at the end of scaffolding
+
 ## [*3.5.0*]- <*2021-11-18*>
 
 ### Changes

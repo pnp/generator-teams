@@ -65,7 +65,7 @@ export class TabGenerator extends Generator {
                                 }
                             },
                             {
-                                name: "Personal (static)",
+                                name: "Personal (for Teams, Outlook and Office)",
                                 value: "static",
                                 disabled: () => {
                                     // only 16 static tabs are allowed

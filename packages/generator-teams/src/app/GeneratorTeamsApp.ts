@@ -7,16 +7,21 @@ import * as lodash from 'lodash';
 import * as chalk from 'chalk';
 import { GeneratorTeamsAppOptions } from './GeneratorTeamsAppOptions';
 import { Yotilities } from './Yotilities';
-import * as AppInsights from 'applicationinsights';
 import { ManifestGeneratorFactory } from './manifestGeneration/ManifestGeneratorFactory';
 import * as inquirer from 'inquirer';
 import { ManifestVersions } from './manifestGeneration/ManifestVersions';
 import { v1 as uuid } from 'uuid';
 import * as validate from 'uuid-validate';
 import * as EmptyGuid from './EmptyGuid';
+import * as crypto from 'crypto';
 import { CoreFilesUpdaterFactory } from './coreFilesUpdater/CoreFilesUpdaterFactory';
 
 const yosay = require('yosay');
+
+ // optimize App Insights performance
+ process.env.APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = "none";
+ process.env.APPLICATION_INSIGHTS_NO_STATSBEAT = "true";
+ import * as AppInsights from 'applicationinsights';
 
 
 let pkg: any = require('../../package.json');
@@ -46,13 +51,14 @@ export class GeneratorTeamsApp extends Generator {
             !(process.env.YOTEAMS_TELEMETRY_OPTOUT === "1" ||
                 process.env.YOTEAMS_TELEMETRY_OPTOUT === "true")) {
 
-            // optimize App Insights performance
-            process.env.APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = "none";
-            process.env.APPLICATION_INSIGHTS_NO_STATSBEAT = "true";
-
+        
             // Set up the App Insights client
-            AppInsights.setup("6d773b93-ff70-45c5-907c-8edae9bf90eb").setInternalLogging(false, false);
+            const config = AppInsights.setup("6d773b93-ff70-45c5-907c-8edae9bf90eb");
+            config.setInternalLogging(false, false);
 
+            // Add a random session ID to the telemetry
+            AppInsights.defaultClient.context.tags['ai.session.id'] = crypto.randomBytes(24).toString('base64');
+            
             // Delete unnecessary telemetry data
             delete AppInsights.defaultClient.context.tags["ai.cloud.roleInstance"];
             delete AppInsights.defaultClient.context.tags["ai.cloud.role"];

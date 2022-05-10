@@ -15,11 +15,18 @@ import { styleTasks } from "./styleTasks";
 import { webpackTasks } from "./webpackTasks";
 import { webTasks } from "./webTasks";
 import { IBuildCoreConfig } from "./iBuildCoreConfig";
-import * as appInsights from "applicationinsights";
+import * as crypto from "crypto";
+
 const argv = require("yargs").argv;
 const debug = argv.debug !== undefined;
 
 export * from "./iBuildCoreConfig";
+
+// optimize App Insights performance
+process.env.APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = "none";
+process.env.APPLICATION_INSIGHTS_NO_STATSBEAT = "true";
+// eslint-disable-next-line import/first
+import * as appInsights from "applicationinsights";
 
 /**
  * Run the dependencies in series
@@ -67,12 +74,11 @@ export const setup = (gulp: GulpClient.Gulp, config: IBuildCoreConfig): void => 
     if (!(process.env.YOTEAMS_TELEMETRY_OPTOUT === "1" ||
         process.env.YOTEAMS_TELEMETRY_OPTOUT === "true")) {
 
-        // optimize App Insights performance
-        process.env.APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = "none";
-        process.env.APPLICATION_INSIGHTS_NO_STATSBEAT = "true";
-
         // Set up the App Insights client
         appInsights.setup("6d773b93-ff70-45c5-907c-8edae9bf90eb").setInternalLogging(false, false);
+
+        // Add a random session ID to the telemetry
+        appInsights.defaultClient.context.tags["ai.session.id"] = crypto.randomBytes(24).toString("base64");
 
         // Delete unnecessary telemetry data
         delete appInsights.defaultClient.context.tags["ai.cloud.roleInstance"];

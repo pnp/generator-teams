@@ -28,7 +28,7 @@
   "license": "MIT",
   "dependencies": {
     "@pnp/cli-microsoft365": "^5.2.0",
-    "applicationinsights": "^2.1.8",
+    "applicationinsights": "^2.3.1",
     "chalk": "^5.0.1",
     "fancy-log": "^2.0.0",
     "fs-extra": "^10.0.0",
