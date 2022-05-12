@@ -1,6 +1,6 @@
 {
   "name": "yoteams-build-core",
-  "version": "1.7.0-preview.1",
+  "version": "1.7.0-preview.2",
   "description": "Core build Gulp tasks for Yo Teams, Microsoft Teams Apps Generator (https://aka.ms/yoteams)",
   "main": "dist/index.js",
   "scripts": {
@@ -30,7 +30,7 @@
     "applicationinsights": "^2.3.1",
     "autoprefixer": "^10.2.6",
     "axios": "^0.27.2",
-    "chalk": "^5.0.1",
+    "chalk": "^4.1.2",
     "del": "^6.0.0",
     "dotenv": "^16.0.0",
     "fancy-log": "^2.0.0",
