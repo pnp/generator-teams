@@ -30,7 +30,7 @@
     "@types/express-session": "~1.17.4",
     "@types/morgan": "~1.9.3",
     "@types/react": "16.8.10",
-    "@types/react-dom": "16.8.3",
+    "@types/react-dom": "^16.9.7",
     "browser-sync": "^2.26.5",
     "fancy-log": "^2.0.0",
     "file-loader": "~6.2.0",

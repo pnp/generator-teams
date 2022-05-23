@@ -18,10 +18,10 @@ import { CoreFilesUpdaterFactory } from './coreFilesUpdater/CoreFilesUpdaterFact
 
 const yosay = require('yosay');
 
- // optimize App Insights performance
- process.env.APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = "none";
- process.env.APPLICATION_INSIGHTS_NO_STATSBEAT = "true";
- import * as AppInsights from 'applicationinsights';
+// optimize App Insights performance
+process.env.APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = "none";
+process.env.APPLICATION_INSIGHTS_NO_STATSBEAT = "true";
+import * as AppInsights from 'applicationinsights';
 
 
 let pkg: any = require('../../package.json');
@@ -51,14 +51,14 @@ export class GeneratorTeamsApp extends Generator {
             !(process.env.YOTEAMS_TELEMETRY_OPTOUT === "1" ||
                 process.env.YOTEAMS_TELEMETRY_OPTOUT === "true")) {
 
-        
+
             // Set up the App Insights client
             const config = AppInsights.setup("6d773b93-ff70-45c5-907c-8edae9bf90eb");
             config.setInternalLogging(false, false);
 
             // Add a random session ID to the telemetry
             AppInsights.defaultClient.context.tags['ai.session.id'] = crypto.randomBytes(24).toString('base64');
-            
+
             // Delete unnecessary telemetry data
             delete AppInsights.defaultClient.context.tags["ai.cloud.roleInstance"];
             delete AppInsights.defaultClient.context.tags["ai.cloud.role"];
@@ -533,7 +533,9 @@ export class GeneratorTeamsApp extends Generator {
                     ["enzyme-adapter-react-16", "^1.11.2"],
                     ["enzyme-to-json", "^3.3.5"],
                     ["jest", "^28.1.0"],
-                    ["ts-jest", "^28.0.2"]
+                    ["ts-jest", "^28.0.2"],
+                    ["jest-environment-jsdom", "^28.1.0"],
+                    ["cheerio", "1.0.0-rc.10"]
                 ], this.fs);
 
                 Yotilities.addScript("test", "jest", this.fs);

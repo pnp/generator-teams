@@ -2,6 +2,8 @@ import * as React from "react";
 import { shallow, mount } from "enzyme";
 import toJson from "enzyme-to-json";
 import { Header } from "@fluentui/react-northstar";
+import { act } from "react-dom/test-utils";
+
 
 import { <%=tabReactComponentName%> } from "../<%=tabReactComponentName%>";
 
@@ -21,15 +23,19 @@ describe("<%=tabReactComponentName%> Component", () => {
     });
 
     // Mocking Sample
-    it("should show alert on button click", () => {
+    it("should show alert on button click", async () => {
         window.alert = jest.fn();
 
-        const component = mount(<<%=tabReactComponentName%> />);
-        const button = component.find("button");
-        button.simulate("click");
+        let component;
+        await act (async () => {
+            component = mount(<<%=tabReactComponentName%> />);
+        });
 
+        const button = component.find("button");
+
+        button.simulate("click");
+        
         expect(window.alert).toHaveBeenCalledWith("It worked!");
 
-        component.unmount();
     });
 });
