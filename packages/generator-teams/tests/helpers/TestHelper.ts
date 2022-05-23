@@ -126,13 +126,15 @@ export const SCHEMA_113 = 'https://developer.microsoft.com/en-us/json-schemas/te
 export const SCHEMA_DEVPREVIEW = 'https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json';
 export const SCHEMA_M365DEVPREVIEW = 'https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json';
 
-export const INTEGRATION_TEST_VERSIONS = ["v1.11", "devPreview"]; // only keep two versions, so we can stay under Github 360 minute rule
+export const INTEGRATION_TEST_VERSIONS = ["v1.13", "devPreview"]; // only keep two versions, so we can stay under Github 360 minute rule
 
 export const SCHEMAS: { [key: string]: string } = {
   // "v1.8": SCHEMA_18,
   // "v1.9": SCHEMA_19,
   // "v1.10": SCHEMA_110,
   "v1.11": SCHEMA_111,
+  "v1.12": SCHEMA_112,
+  "v1.13": SCHEMA_113,
   "devPreview": SCHEMA_DEVPREVIEW,
   "m365DevPreview": SCHEMA_M365DEVPREVIEW
 }
