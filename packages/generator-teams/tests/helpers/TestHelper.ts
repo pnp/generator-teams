@@ -180,7 +180,7 @@ export function coreTests(manifestVersion: string, prompts: any, projectPath: st
     assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
   });
   it("Should have correct React typings version", async () => {
-    assert.jsonFileContent("package.json", { devDependencies: { "@types/react": "16.8.10", "@types/react-dom": "16.8.3" } });
+    assert.jsonFileContent("package.json", { devDependencies: { "@types/react": "16.8.10", "@types/react-dom": "^16.9.7" } });
   });
   it("Should have a reference to Fluentui", async () => {
     assert.jsonFileContent("package.json", { dependencies: { "@fluentui/react-northstar": {} } });
@@ -219,6 +219,15 @@ export function coreTests(manifestVersion: string, prompts: any, projectPath: st
     it("Should have a coverage script", async () => {
       assert.jsonFileContent("package.json", { scripts: { "coverage": "jest --coverage" } });
     })
+    it("Should have correct Enzyme version", async () => {
+      assert.jsonFileContent("package.json", { devDependencies: { "@types/enzyme": "^3.9.1", "enzyme": "^3.9.0" } });
+    });
+    it("Should have correct Jest version", async () => {
+      assert.jsonFileContent("package.json", { devDependencies: { "@types/jest": "^27.5.0", "jest": "^28.1.0", "ts-jest": "^28.0.2" } });
+    });
+    it("Should have correct cheerio version", async () => {
+      assert.jsonFileContent("package.json", { devDependencies: { "cheerio": "1.0.0-rc.10" } });
+    });
   } else {
     it("Should not have unit test files", async () => {
       assert.noFile(TEST_FILES);
@@ -229,6 +238,15 @@ export function coreTests(manifestVersion: string, prompts: any, projectPath: st
     it("Should not have a coverage script", async () => {
       assert.noJsonFileContent("package.json", { scripts: { "coverage": "jest --coverage" } });
     })
+    it("Should not have Enzyme", async () => {
+      assert.noJsonFileContent("package.json", { devDependencies: { "@types/enzyme": "^3.9.1", "enzyme": "3.9.0" } });
+    });
+    it("Should not have Jest", async () => {
+      assert.noJsonFileContent("package.json", { devDependencies: { "@types/jest": "^27.5.0", "jest": "^28.1.0", "ts-jest": "^28.0.2" } });
+    });
+    it("Should not have cheerio", async () => {
+      assert.noJsonFileContent("package.json", { devDependencies: { "cheerio": "1.0.0-rc.10" } });
+    });
   }
 
   if (prompts.isFullScreen) {
