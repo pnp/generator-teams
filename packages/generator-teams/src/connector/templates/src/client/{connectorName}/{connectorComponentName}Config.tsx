@@ -23,7 +23,7 @@ const availableColors: IColor[] = [
 /**
  * Implementation of the <%=connectorName%> Connector connect page
  */
-export const <%=connectorComponentName %> Config = () => {
+export const <%=connectorComponentName %>Config = () => {
 
     const [{ theme, context }] = useTeams();
     const [color, setColor] = useState<IColor>();
@@ -39,7 +39,7 @@ export const <%=connectorComponentName %> Config = () => {
                     configName: colorRef.current ? colorRef.current.title : availableColors[0].title
                 };
                 pages.config.setConfig(settings).then(() => {
-                    pages.config.getConfig().then(setting => {
+                    pages.getConfig().then((setting:any) => {
                         fetch("/api/connector/connect", {
                             method: "POST",
                             headers: [
@@ -49,7 +49,7 @@ export const <%=connectorComponentName %> Config = () => {
                                 webhookUrl: setting.webhookUrl,
                                 user: setting.userObjectId,
                                 appType: setting.appType,
-                                groupName: context.groupId,
+                                groupName: context.team?.groupId,
                                 color: colorRef.current ? colorRef.current.code : availableColors[0].code,
                                 state: "myAppsState"
                             })
@@ -66,7 +66,7 @@ export const <%=connectorComponentName %> Config = () => {
                 });
             });
 
-            pages.config.getConfig().then(config => {
+            pages.getConfig().then(config => {
                 setColor(availableColors.find(c => c.code === config.entityId));
             });
         }
@@ -84,7 +84,7 @@ export const <%=connectorComponentName %> Config = () => {
             selected: color && clr.code === color.code,
             onClick: () => {
                 setColor(clr);
-                pages.config..setValidityState(clr !== undefined);
+                pages.config.setValidityState(clr !== undefined);
             }
         };
     });

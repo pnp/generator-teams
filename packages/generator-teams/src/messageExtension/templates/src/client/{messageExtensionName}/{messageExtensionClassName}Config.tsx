@@ -30,10 +30,7 @@ export const <%=messageExtensionClassName%>Config = () => {
                             toggle
                             checked={onOrOff}
                             onChange={() => { setOnOrOff(!onOrOff); }} />
-                        <Button onClick={() =>
-                            microsoftTeams.authentication.notifySuccess(JSON.stringify({
-                                setting: onOrOff
-                            }))} primary>OK</Button>
+                        <Button onClick={() => app.notifySuccess()} primary>OK</Button>
                     </div>
                 </Flex.Item>
             </Flex>

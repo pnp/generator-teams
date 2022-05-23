@@ -119,13 +119,8 @@ export class ConnectorGenerator extends Generator {
 
             this.fs.writeJSON(manifestPath, manifest);
 
-
             Yotilities.addAdditionalDeps([
                 ['node-json-db', '~1.5.0']
-            ], this.fs);
-
-            Yotilities.addAdditionalDevDeps([
-                ['@types/node-json-db', '~0.9.3']
             ], this.fs);
 
             // update client.ts

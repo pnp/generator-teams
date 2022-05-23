@@ -1,9 +1,8 @@
 import Axios from "axios";
 import { Request } from "express";
 import { ConnectorDeclaration, IConnector, PreventIframe } from "express-msteams-host";
-import { CardFactory } from "botbuilder-core";
 import * as debug from "debug";
-import JsonDB = require("node-json-db");
+import { JsonDB } from "node-json-db";
 
 const log = debug("msteams");
 
