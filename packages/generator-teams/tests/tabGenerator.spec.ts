@@ -171,10 +171,7 @@ describe("teams:tab", function () {
 
 
 
-
-
-
-  it("should generate tab project with schema 1.11 and upgrade to schema devPreview", async () => {
+  it("should generate tab project with schema 1.12 and upgrade to schema 1.13", async () => {
     const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab-18-to-devPreview-upgrade";
     await helpers
       .run(testHelper.GENERATOR_PATH)
@@ -185,7 +182,7 @@ describe("teams:tab", function () {
         whichFolder: "current",
         name: "tabtest01",
         developer: "generator teams developer",
-        manifestVersion: "v1.11",
+        manifestVersion: "v1.12",
         parts: "tab",
         unitTestsEnabled: false,
         tabSharePoint: false,
@@ -193,7 +190,118 @@ describe("teams:tab", function () {
         tabScopes: ["team"]
       })
       .withGenerators(testHelper.DEPENDENCIES);
-    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_111);
+    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_112);
+
+    if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
+      assert.strictEqual(true, npmInstallResult);
+
+      const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+      assert.strictEqual(true, npmRunBuildResult);
+    }
+
+    await helpers
+      .run(testHelper.GENERATOR_PATH)
+      .cd(projectPath)
+      .withArguments(["--no-telemetry"])
+      .withPrompts({
+        manifestVersion: "v1.13",
+        confirmedAdd: true,
+        updateBuildSystem: false,
+        updateManifestVersion: true,
+        parts: ""
+      })
+      .withGenerators(testHelper.DEPENDENCIES);
+
+    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_113);
+
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+
+    if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
+      assert.strictEqual(true, npmInstallResult);
+
+      const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+      assert.strictEqual(true, npmRunBuildResult);
+    }
+  });
+
+
+  it("should generate tab project with schema 1.12 and upgrade to schema devPreview", async () => {
+    const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab-18-to-devPreview-upgrade";
+    await helpers
+      .run(testHelper.GENERATOR_PATH)
+      .inDir(projectPath)
+      .withArguments(["--no-telemetry"])
+      .withPrompts({
+        solutionName: "tab-test-01-sso",
+        whichFolder: "current",
+        name: "tabtest01",
+        developer: "generator teams developer",
+        manifestVersion: "v1.12",
+        parts: "tab",
+        unitTestsEnabled: false,
+        tabSharePoint: false,
+        tabType: "configurable",
+        tabScopes: ["team"]
+      })
+      .withGenerators(testHelper.DEPENDENCIES);
+    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_112);
+
+    if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
+      assert.strictEqual(true, npmInstallResult);
+
+      const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+      assert.strictEqual(true, npmRunBuildResult);
+    }
+
+    await helpers
+      .run(testHelper.GENERATOR_PATH)
+      .cd(projectPath)
+      .withArguments(["--no-telemetry"])
+      .withPrompts({
+        manifestVersion: "devPreview",
+        confirmedAdd: true,
+        updateBuildSystem: false,
+        updateManifestVersion: true,
+        parts: ""
+      })
+      .withGenerators(testHelper.DEPENDENCIES);
+
+    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_DEVPREVIEW);
+
+    assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
+
+    if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
+      const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);
+      assert.strictEqual(true, npmInstallResult);
+
+      const npmRunBuildResult = await testHelper.runNpmCommand("npm run build", projectPath);
+      assert.strictEqual(true, npmRunBuildResult);
+    }
+  });
+
+  it("should generate tab project with schema 1.13 and upgrade to schema devPreview", async () => {
+    const projectPath = testHelper.TEMP_TAB_GENERATOR_PATH + "/tab-18-to-devPreview-upgrade";
+    await helpers
+      .run(testHelper.GENERATOR_PATH)
+      .inDir(projectPath)
+      .withArguments(["--no-telemetry"])
+      .withPrompts({
+        solutionName: "tab-test-01-sso",
+        whichFolder: "current",
+        name: "tabtest01",
+        developer: "generator teams developer",
+        manifestVersion: "v1.13",
+        parts: "tab",
+        unitTestsEnabled: false,
+        tabSharePoint: false,
+        tabType: "configurable",
+        tabScopes: ["team"]
+      })
+      .withGenerators(testHelper.DEPENDENCIES);
+    assert.fileContent("src/manifest/manifest.json", testHelper.SCHEMA_113);
 
     if (process.env.TEST_TYPE == testHelper.TestTypes.INTEGRATION) {
       const npmInstallResult = await testHelper.runNpmCommand("npm install --prefer-offline", projectPath);

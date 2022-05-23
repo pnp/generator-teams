@@ -135,7 +135,7 @@ export class GeneratorTeamsApp extends Generator {
             }
         }).map(version => {
             return {
-                name: version.manifestVersion,
+                name: version.manifestVersion + (version.comment ? ` (${version.comment})` : ""),
                 value: version.manifestVersion,
                 extra: {
                     default: version.default

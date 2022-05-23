@@ -7,9 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [*Unreleased*]- <**>
 
+### Added
+
+* Added support for Schema 1.13. This schema version supports extending Teams apps to other parts of the Microsoft 365 ecosystem. More info at https://aka.ms/extendteamsapps.
+
 ### Changes
 
-* TBA
 * Requires Node 14 or later
 * Dependency package updates
 

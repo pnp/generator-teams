@@ -9,8 +9,8 @@ import { ConnectorManifestUpdater } from "../generator18/ConnectorManifestUpdate
 import { MessageExtensionManifestUpdater } from "../generator18/MessageExtensionManifestUpdater";
 import { GeneratorTeamsAppOptions } from "../../../GeneratorTeamsAppOptions";
 import { LocalizationManifestUpdater } from "../generator18/LocalizationManifestUpdater";
-
 import * as chalk from 'chalk';
+
 
 export class ManifestGenerator extends BaseManifestGenerator {
     constructor() {
@@ -20,30 +20,29 @@ export class ManifestGenerator extends BaseManifestGenerator {
         this.connectorUpdater = new ConnectorManifestUpdater();
         this.messageExtensionUpdater = new MessageExtensionManifestUpdater();
         this.localizationUpdater = new LocalizationManifestUpdater();
-
     }
 
     public generateManifest(options: GeneratorTeamsAppOptions): any {
         const manifest = super.generateManifest(options);
-        manifest["$schema"] = "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json";
-        manifest.manifestVersion = "devPreview";
+        manifest["$schema"] = "https://developer.microsoft.com/en-us/json-schemas/teams/v1.13/MicrosoftTeams.schema.json";
+        manifest.manifestVersion = "1.13";
 
         return manifest;
     }
 
     public supportsUpdateManifest(from: string): boolean {
-        return from === "1.11" ||
-            from === "m365devPreview" ||
-            from === "1.12";
+        return from === "1.8" || from === "1.9" || from === "1.10" || from === "1.11" || from === "1.12";
     }
 
     public updateManifest(manifest: any, log?: (message?: string, context?: any) => void): any {
         switch (manifest.manifestVersion) {
+            case "1.8":
+            case "1.9":
+            case "1.10":
             case "1.11":
             case "1.12":
-            case "m365DevPreview":
-                manifest["$schema"] = "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json";
-                manifest.manifestVersion = "devPreview";
+                manifest["$schema"] = "https://developer.microsoft.com/en-us/json-schemas/teams/v1.13/MicrosoftTeams.schema.json";
+                manifest.manifestVersion = "1.13";
                 return manifest;
             default:
                 throw "Unable to update manifest";

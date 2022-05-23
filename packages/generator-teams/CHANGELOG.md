@@ -10,12 +10,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Added `1.13` manifest. This schema version supports extending Teams apps to other parts of the Microsoft 365 ecosystem. More info at https://aka.ms/extendteamsapps.
+* Added `1.12` manifest
 * Added `m365DevPreview` manifest
 
 ### Changes
 
 * [Breaking] Upgraded Team JS SDK to version 2.0 (promises based)
 * Updated all outdated references
+* Manifest version 1.11 no longer selectable in scaffolding
+* Default manifest version is 1.13
 
 ### Removed
 
