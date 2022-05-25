@@ -219,7 +219,7 @@ export class TabGenerator extends Generator {
                 }
             }
 
-            this.sourceRoot()
+            this.sourceRoot();
 
             templateFiles.forEach(t => {
                 this.fs.copyTpl(

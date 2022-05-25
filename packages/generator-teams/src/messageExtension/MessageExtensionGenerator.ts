@@ -330,7 +330,7 @@ export class MessageExtensionGenerator extends Generator {
                                             return { c: c, id: `{{${idargval.substring(12)}}}` };
                                         }
                                         if (idargval.startsWith("{") && idargval.endsWith("}")) {
-                                            this.log(chalk.red("Please update your bot ID references to use a Guids that are not encapsulated in { and }."))
+                                            this.log(chalk.red("Please update your bot ID references to use a Guids that are not encapsulated in { and }."));
                                         }
                                         this.log(chalk.red('Unable to continue, as I cannot correlate the bot ID and the TypeScript class'));
                                         this.log(chalk.red('Please verify that you have a valid Guid or a valid environment variable in your BotDeclaration.'));
@@ -340,7 +340,7 @@ export class MessageExtensionGenerator extends Generator {
                             }).filter(x => {
                                 return x !== undefined;
                             });
-                        })
+                        });
                         let botId: string = answers.botId;
                         const botClass = lodash.flatten(botClasses).find(c => {
                             return c !== undefined && c.id == botId;

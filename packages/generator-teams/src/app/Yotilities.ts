@@ -20,7 +20,7 @@ export class Yotilities {
      * @param url Url to validate
      */
     public static validateUrl(url: string) {
-        return /(https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(url);
+        return /(https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@\-\/]))?/.test(url);
     }
 
     /**

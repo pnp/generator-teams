@@ -146,7 +146,7 @@ export class BotGenerator extends Generator {
         // This should run if we add a bot or just a messaging extension
         if (this.options.bot || this.options.messagingExtensionBot) {
 
-            this.sourceRoot()
+            this.sourceRoot();
             let templateFiles = [];
 
             // only when we have a full bot implementation

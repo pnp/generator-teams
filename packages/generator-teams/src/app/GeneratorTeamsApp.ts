@@ -33,7 +33,7 @@ export class GeneratorTeamsApp extends Generator {
     options: GeneratorTeamsAppOptions = new GeneratorTeamsAppOptions();
 
     public constructor(args: any, opts: any) {
-        super(args, (!(opts.force = true)) || opts);
+        super(args, (!(opts.force == true)) || opts);
         opts.force = true;
         this.options.namespace = "yoteams";
         this.desc('Generate a Microsoft Teams application.');
@@ -382,7 +382,7 @@ export class GeneratorTeamsApp extends Generator {
             ]
         ).then((answers: IAnswers) => {
             if (answers.confirmedAdd == false) {
-                process.exit(0)
+                process.exit(0);
             }
             if (!this.options.existingManifest) {
                 // for new projects
@@ -406,7 +406,7 @@ export class GeneratorTeamsApp extends Generator {
                 var arr: string[] = tmp.split('.');
                 this.options.namespace = lodash.reverse(arr).join('.').toLocaleLowerCase();
                 this.options.id = uuid();
-                if (this.options.host.indexOf('azurewebsites.net') >= 0) {
+                if (this.options.host.en('azurewebsites.net') >= 0) {
                     this.options.websitePrefix = this.options.host.substring(this.options.host.indexOf('://') + 3, this.options.host.indexOf('.'));
                 } else {
                     this.options.websitePrefix = '[your Azure web app name]';
@@ -486,7 +486,7 @@ export class GeneratorTeamsApp extends Generator {
                 "src/public/styles/main.scss",
                 "src/server/TeamsAppsComponents.ts",
                 "Dockerfile"
-            ]
+            ];
 
             let templateFiles = [
                 "README.md",
