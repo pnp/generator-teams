@@ -33,9 +33,9 @@ export class GeneratorTeamsApp extends Generator {
     options: GeneratorTeamsAppOptions = new GeneratorTeamsAppOptions();
 
     public constructor(args: any, opts: any) {
-        super(args, (!(opts.force == true)) || opts);
+        super(args, opts);
         opts.force = true;
-        this.options.namespace = "yoteams";
+        this.options.namespace = "teams";
         this.desc('Generate a Microsoft Teams application.');
         this.argument('solutionName', {
             description: 'Solution name, as well as folder name',
