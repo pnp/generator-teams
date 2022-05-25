@@ -88,7 +88,6 @@ export class ConnectorGenerator extends Generator {
         if (this.options.connector) {
             if (this.options.connectorType != 'existing') {
                 let templateFiles = [
-                    "README-{connectorName}.md",
                     "src/client/{connectorName}/{connectorComponentName}Config.tsx",
                     "src/public/{connectorName}/config.html",
                     "src/server/{connectorName}/{connectorComponentName}.ts",

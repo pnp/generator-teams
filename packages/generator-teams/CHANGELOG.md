@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added `1.13` manifest. This schema version supports extending Teams apps to other parts of the Microsoft 365 ecosystem. More info at https://aka.ms/extendteamsapps.
 * Added `1.12` manifest
 * Added `m365DevPreview` manifest
+* Added component documentation for configuration and scaffolding details
 
 ### Changes
 
@@ -25,6 +26,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Calling bot support removed
 * Viva Connections Tab scaffolding removed
+* Removed individual component README files (available in Yo Teams docs)
+* Integration testing is not done with Node 14.x
 
 ### Fixes
 

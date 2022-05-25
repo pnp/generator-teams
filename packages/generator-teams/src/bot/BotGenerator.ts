@@ -177,7 +177,6 @@ export class BotGenerator extends Generator {
 
             if (this.options.botType != 'existing') {
                 templateFiles.push(
-                    "README-{botName}.md",
                     "src/server/{botName}/{botClassName}.ts",
                     "src/server/{botName}/cards/welcomeCard.json",
                     "src/server/{botName}/cards/welcomeCard.ts"
