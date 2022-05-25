@@ -4,7 +4,7 @@ The Yo Teams generator supports scaffolding [custom Office 365 Connectors](https
 
 ## Configuration 
 
-All Connectors has to be registered in the [Connectors Developer Dashboard](https://aka.ms/connectorsdashboard), which you have to log in to using a Microsoft Organizational Account, a Microsoft Account (MSA) will not work. If you're building an internal enterprise connector you only have to register it, and not publish it.
+All Connectors has to be registered in the [Connectors Developer Dashboard](https://outlook.office.com/connectors/publish), which you have to log in to using a Microsoft Organizational Account, a Microsoft Account (MSA) will not work. If you're building an internal enterprise connector you only have to register it, and not publish it.
 
 You need to specify the following details:
 
