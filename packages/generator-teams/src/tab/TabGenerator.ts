@@ -9,8 +9,6 @@ import { Yotilities } from './../app/Yotilities';
 import { ManifestGeneratorFactory } from '../app/manifestGeneration/ManifestGeneratorFactory';
 import * as validate from 'uuid-validate';
 import * as EmptyGuid from '../app/EmptyGuid';
-import { ManifestVersions } from '../app/manifestGeneration/ManifestVersions';
-import { parse } from "tldjs";
 
 export const OFFICE_GUID = "00000003-0000-0ff1-ce00-000000000000";
 
@@ -197,7 +195,7 @@ export class TabGenerator extends Generator {
                 "src/client/{tabName}/{tabReactComponentName}.tsx",
                 "src/server/{tabName}/{tabReactComponentName}.ts",
                 "src/public/{tabName}/index.html",
-            ];
+            ];  
             if (this.options.tabType == "configurable") {
                 templateFiles.push(
                     "src/client/{tabName}/{tabReactComponentName}Config.tsx",

@@ -406,7 +406,7 @@ export class GeneratorTeamsApp extends Generator {
                 var arr: string[] = tmp.split('.');
                 this.options.namespace = lodash.reverse(arr).join('.').toLocaleLowerCase();
                 this.options.id = uuid();
-                if (this.options.host.en('azurewebsites.net') >= 0) {
+                if (this.options.host.indexOf('azurewebsites.net') >= 0) {
                     this.options.websitePrefix = this.options.host.substring(this.options.host.indexOf('://') + 3, this.options.host.indexOf('.'));
                 } else {
                     this.options.websitePrefix = '[your Azure web app name]';
