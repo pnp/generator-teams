@@ -286,7 +286,7 @@ export class GeneratorTeamsApp extends Generator {
                             value: 'custombot'
                         },
                         {
-                            name: 'A Connector',
+                            name: 'A Connector (Not working with Teams JS SDK 2.0, please use version 3.5 of the generator)',
                             disabled: this.options.existingManifest,
                             value: 'connector'
                         },

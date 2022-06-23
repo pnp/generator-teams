@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Updated all outdated references
 * Manifest version 1.11 no longer selectable in scaffolding
 * Default manifest version is 1.13
+* Added a warning regarding Connectors not working with Teams JS SDK 2.0
 
 ### Removed
 
