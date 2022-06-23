@@ -2,7 +2,7 @@ import * as React from "react";
 import { Provider, Flex, Header, Input, Button, Text } from "@fluentui/react-northstar";
 import { useState, useEffect } from "react";
 import { useTeams } from "msteams-react-base-component";
-import * as microsoftTeams from "@microsoft/teams-js";
+import { ap, dialogp } from "@microsoft/teams-js";
 
 /**
  * Implementation of the <%= messageExtensionTitle %> Task Module page
@@ -14,7 +14,7 @@ export const <%=messageExtensionClassName %>Action = () => {
 
     useEffect(() => {
         if (inTeams === true) {
-            microsoftTeams.appInitialization.notifySuccess();
+            app.notifySuccess();
         }
     }, [inTeams]);
 
@@ -38,7 +38,7 @@ export const <%=messageExtensionClassName %>Action = () => {
                                 }
                             }}
                             required />
-                        <Button onClick={() => microsoftTeams.tasks.submitTask({
+                        <Button onClick={() => dialog.submit({
                             email
                         })} primary>OK</Button>
                     </div>

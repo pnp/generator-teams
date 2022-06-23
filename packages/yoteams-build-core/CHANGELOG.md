@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*1.7.0*]- <*2022-06-23*>
+
+### Added
+
+* Added support for Schema 1.13. This schema version supports extending Teams apps to other parts of the Microsoft 365 ecosystem. More info at https://aka.ms/extendteamsapps.
+
+### Changes
+
+* Requires Node 14 or later
+* Dependency package updates
+
+### Fixes
+
+* Fixed issue with telemetry timeout at the end of scaffolding
+
 ## [*1.6.0*]- <*2022-02-17*>
 
 ### Added

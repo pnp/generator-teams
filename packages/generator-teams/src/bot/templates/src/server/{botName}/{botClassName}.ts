@@ -1,11 +1,10 @@
-import { BotDeclaration<% if (staticTab) { %>, PreventIframe<% } %><% if (botCallingEnabled) { %>, BotCallingWebhook<% } %> } from "express-msteams-host";
+import { BotDeclaration<% if (staticTab) { %>, PreventIframe<% } %> } from "express-msteams-host";
 import * as debug from "debug";
 import { <% if (messageExtension) { %>TeamsActivityHandler, StatePropertyAccessor, ActivityTypes, <% } %>CardFactory, ConversationState, MemoryStorage, <% if (bot) { %>UserState,<% } %> TurnContext } from "botbuilder";
 <% if (bot) { %>import { DialogBot } from "./dialogBot";
 import { MainDialog } from "./dialogs/mainDialog";<% } %>
 import WelcomeCard from "./cards/welcomeCard";
-<% if (botCallingEnabled) { %>import express = require("express");
-<% } %><% if (messageExtension) { %>import { DialogSet, DialogState } from "botbuilder-dialogs";<% } %>
+<% if (messageExtension) { %>import { DialogSet, DialogState } from "botbuilder-dialogs";<% } %>
 // Initialize debug logging module
 const log = debug("msteams");
 
@@ -41,18 +40,7 @@ const log = debug("msteams");
         const welcomeCard = CardFactory.adaptiveCard(WelcomeCard);
         await context.sendActivity({ attachments: [welcomeCard] });
     }
-<% if (botCallingEnabled) { %>
-    /**
-     * Webhook for incoming calls
-     */
-    @BotCallingWebhook("/api/calling")
-    public async onIncomingCall(req: express.Request, res: express.Response) {
-        log("Incoming call");
-        // TODO: Implement authorization header validation
-        // TODO: Add your management of calls (answer, reject etc.)
-        // default, send an access denied
-        res.sendStatus(401);
-    }<% } %>
+
 }<% } %><% if (messageExtension && !bot) { %>export class <%= botClassName %> extends TeamsActivityHandler {
         
         private readonly conversationState: ConversationState;

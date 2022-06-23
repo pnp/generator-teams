@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Provider, Flex, Header, Checkbox, Button } from "@fluentui/react-northstar";
-import * as microsoftTeams from "@microsoft/teams-js";
+import { app } from "@microsoft/teams-js";
 import { useState, useEffect } from "react";
 import { useTeams } from "msteams-react-base-component";
 
@@ -14,7 +14,7 @@ export const <%=messageExtensionClassName%>Config = () => {
 
     useEffect(() => {
         if (inTeams === true) {
-            microsoftTeams.appInitialization.notifySuccess();
+            app.notifySuccess();
             setOnOrOff(true);
         }
     }, [inTeams]);
@@ -30,10 +30,7 @@ export const <%=messageExtensionClassName%>Config = () => {
                             toggle
                             checked={onOrOff}
                             onChange={() => { setOnOrOff(!onOrOff); }} />
-                        <Button onClick={() =>
-                            microsoftTeams.authentication.notifySuccess(JSON.stringify({
-                                setting: onOrOff
-                            }))} primary>OK</Button>
+                        <Button onClick={() => app.notifySuccess()} primary>OK</Button>
                     </div>
                 </Flex.Item>
             </Flex>

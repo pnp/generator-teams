@@ -2,6 +2,8 @@
 
 A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) Apps projects. **The most comprehensive and complete development toolkit for Microsoft Teams development**. Yo Teams allows you to build Microsoft Teams applications based on TypeScript and node.js on your terms, in your editor of choice, without any external or online dependencies.
 
+ Yo Teams allows you to build Microsoft Teams applications based on TypeScript and node.js on your terms, in your editor of choice, without any external or online dependencies. Including support for extending Teams app sto other parts of the Microsoft 365 eco-system. More info at https://aka.ms/extendteamsapps.
+
 This generator is built and maintained by the community, for the community.
 
 ## Generator support:
@@ -20,6 +22,7 @@ This generator is built and maintained by the community, for the community.
   * Link unfurling
 * Microsoft Teams and Outlook connectors
 * Microsoft Teams outgoing web hooks
+* Personal Tabs for Office.com, Outlook and Outlook on the web
 
 The generated project is ready to run and deploy to Azure and includes a variety of features such as modifying the Microsoft Teams schema, support for Azure Application Insights, a pluggable framework to add additional features.
 

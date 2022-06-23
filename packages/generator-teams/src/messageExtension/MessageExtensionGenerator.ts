@@ -10,8 +10,8 @@ import { Yotilities } from './../app/Yotilities';
 import { Project, Scope, Decorator, ClassDeclaration } from "ts-morph";
 import * as ts from 'typescript';
 import * as path from 'path';
-import EmptyGuid = require('../app/EmptyGuid');
-import validate = require('uuid-validate');
+import * as EmptyGuid from '../app/EmptyGuid';
+import * as validate from 'uuid-validate';
 import { ManifestGeneratorFactory } from '../app/manifestGeneration/ManifestGeneratorFactory';
 
 export class MessageExtensionGenerator extends Generator {
@@ -330,7 +330,7 @@ export class MessageExtensionGenerator extends Generator {
                                             return { c: c, id: `{{${idargval.substring(12)}}}` };
                                         }
                                         if (idargval.startsWith("{") && idargval.endsWith("}")) {
-                                            this.log(chalk.red("Please update your bot ID references to use a Guids that are not encapsulated in { and }."))
+                                            this.log(chalk.red("Please update your bot ID references to use a Guids that are not encapsulated in { and }."));
                                         }
                                         this.log(chalk.red('Unable to continue, as I cannot correlate the bot ID and the TypeScript class'));
                                         this.log(chalk.red('Please verify that you have a valid Guid or a valid environment variable in your BotDeclaration.'));
@@ -340,7 +340,7 @@ export class MessageExtensionGenerator extends Generator {
                             }).filter(x => {
                                 return x !== undefined;
                             });
-                        })
+                        });
                         let botId: string = answers.botId;
                         const botClass = lodash.flatten(botClasses).find(c => {
                             return c !== undefined && c.id == botId;
@@ -419,7 +419,7 @@ export class MessageExtensionGenerator extends Generator {
                 });
 
                 Yotilities.addAdditionalDeps([
-                    ["botbuilder-teams-messagingextensions", "1.8.0"]
+                    ["botbuilder-teams-messagingextensions", "1.8.1"]
                 ], this.fs);
 
                 if (this.options.messagingExtensionCanUpdateConfiguration || this.options.messagingExtensionActionResponseTypeConfig) {
@@ -444,8 +444,8 @@ export class MessageExtensionGenerator extends Generator {
                 const file = project.createSourceFile(
                     `src/server/${this.options.botName}/${this.options.botClassName}.ts`,
                     this.fs.read(`src/server/${this.options.botName}/${this.options.botClassName}.ts`), {
-                        overwrite: true
-                    });
+                    overwrite: true
+                });
 
                 const classes = file.getClasses();
                 const cl = classes.find(x => {

@@ -7,17 +7,23 @@ import * as lodash from 'lodash';
 import * as chalk from 'chalk';
 import { GeneratorTeamsAppOptions } from './GeneratorTeamsAppOptions';
 import { Yotilities } from './Yotilities';
-import * as AppInsights from 'applicationinsights';
 import { ManifestGeneratorFactory } from './manifestGeneration/ManifestGeneratorFactory';
-import inquirer = require('inquirer');
+import * as inquirer from 'inquirer';
 import { ManifestVersions } from './manifestGeneration/ManifestVersions';
 import { v1 as uuid } from 'uuid';
-import validate = require('uuid-validate');
-import EmptyGuid = require('./EmptyGuid');
+import * as validate from 'uuid-validate';
+import * as EmptyGuid from './EmptyGuid';
+import * as crypto from 'crypto';
 import { CoreFilesUpdaterFactory } from './coreFilesUpdater/CoreFilesUpdaterFactory';
 
+const yosay = require('yosay');
 
-let yosay = require('yosay');
+// optimize App Insights performance
+process.env.APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = "none";
+process.env.APPLICATION_INSIGHTS_NO_STATSBEAT = "true";
+import * as AppInsights from 'applicationinsights';
+
+
 let pkg: any = require('../../package.json');
 
 /**
@@ -27,9 +33,9 @@ export class GeneratorTeamsApp extends Generator {
     options: GeneratorTeamsAppOptions = new GeneratorTeamsAppOptions();
 
     public constructor(args: any, opts: any) {
-        super(args, (!(opts.force = true)) || opts);
+        super(args, opts);
         opts.force = true;
-        this.options.namespace = "yoteams";
+        this.options.namespace = "teams";
         this.desc('Generate a Microsoft Teams application.');
         this.argument('solutionName', {
             description: 'Solution name, as well as folder name',
@@ -45,12 +51,13 @@ export class GeneratorTeamsApp extends Generator {
             !(process.env.YOTEAMS_TELEMETRY_OPTOUT === "1" ||
                 process.env.YOTEAMS_TELEMETRY_OPTOUT === "true")) {
 
-            // optimize App Insights performance
-            process.env.APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = "none";
-            process.env.APPLICATION_INSIGHTS_NO_STATSBEAT = "true";
 
             // Set up the App Insights client
-            AppInsights.setup("6d773b93-ff70-45c5-907c-8edae9bf90eb").setInternalLogging(false, false);
+            const config = AppInsights.setup("6d773b93-ff70-45c5-907c-8edae9bf90eb");
+            config.setInternalLogging(false, false);
+
+            // Add a random session ID to the telemetry
+            AppInsights.defaultClient.context.tags['ai.session.id'] = crypto.randomBytes(24).toString('base64');
 
             // Delete unnecessary telemetry data
             delete AppInsights.defaultClient.context.tags["ai.cloud.roleInstance"];
@@ -128,7 +135,7 @@ export class GeneratorTeamsApp extends Generator {
             }
         }).map(version => {
             return {
-                name: version.manifestVersion,
+                name: version.manifestVersion + (version.comment ? ` (${version.comment})` : ""),
                 value: version.manifestVersion,
                 extra: {
                     default: version.default
@@ -279,7 +286,7 @@ export class GeneratorTeamsApp extends Generator {
                             value: 'custombot'
                         },
                         {
-                            name: 'A Connector',
+                            name: 'A Connector (Not working with Teams JS SDK 2.0, please use version 3.5 of the generator)',
                             disabled: this.options.existingManifest,
                             value: 'connector'
                         },
@@ -375,7 +382,7 @@ export class GeneratorTeamsApp extends Generator {
             ]
         ).then((answers: IAnswers) => {
             if (answers.confirmedAdd == false) {
-                process.exit(0)
+                process.exit(0);
             }
             if (!this.options.existingManifest) {
                 // for new projects
@@ -479,7 +486,7 @@ export class GeneratorTeamsApp extends Generator {
                 "src/public/styles/main.scss",
                 "src/server/TeamsAppsComponents.ts",
                 "Dockerfile"
-            ]
+            ];
 
             let templateFiles = [
                 "README.md",
@@ -521,12 +528,14 @@ export class GeneratorTeamsApp extends Generator {
                 Yotilities.addAdditionalDevDeps([
                     ["enzyme", "^3.9.0"],
                     ["@types/enzyme", "^3.9.1"],
-                    ["@types/jest", "^26.0.15"],
+                    ["@types/jest", "^27.5.0"],
                     ["@types/enzyme-to-json", "^1.5.3"],
                     ["enzyme-adapter-react-16", "^1.11.2"],
                     ["enzyme-to-json", "^3.3.5"],
-                    ["jest", "^26.6.1"],
-                    ["ts-jest", "^26.4.3"]
+                    ["jest", "^28.1.0"],
+                    ["ts-jest", "^28.0.2"],
+                    ["jest-environment-jsdom", "^28.1.0"],
+                    ["cheerio", "1.0.0-rc.10"]
                 ], this.fs);
 
                 Yotilities.addScript("test", "jest", this.fs);
@@ -550,13 +559,13 @@ export class GeneratorTeamsApp extends Generator {
                 );
 
                 Yotilities.addAdditionalDevDeps([
-                    ["@typescript-eslint/eslint-plugin", "^4.14.0"],
-                    ["@typescript-eslint/parser", "^4.14.0"],
-                    ["eslint", "^7.18.0"],
-                    ["eslint-config-standard", "^16.0.2"],
+                    ["@typescript-eslint/eslint-plugin", "^5.22.0"],
+                    ["@typescript-eslint/parser", "^5.22.0"],
+                    ["eslint", "^8.15.0"],
+                    ["eslint-config-standard", "^17.0.0"],
                     ["eslint-plugin-import", "^2.22.1"],
                     ["eslint-plugin-node", "^11.1.0"],
-                    ["eslint-plugin-promise", "^4.2.1"],
+                    ["eslint-plugin-promise", "^6.0.0"],
                     ["eslint-plugin-react", "^7.22.0"],
                     ["eslint-plugin-react-hooks", "^4.2.0"],
                     ["eslint-webpack-plugin", "^3.0.1"]
@@ -615,7 +624,7 @@ export class GeneratorTeamsApp extends Generator {
         // if we have added any react based components
         if (this.options.reactComponents) {
             Yotilities.addAdditionalDeps([
-                ["msteams-react-base-component", "^3.1.1"]
+                ["msteams-react-base-component", "^4.0.0"]
             ], this.fs);
         }
 
@@ -645,7 +654,6 @@ export class GeneratorTeamsApp extends Generator {
                     name: 'bot',
                     properties: {
                         type: this.options.botType,
-                        calling: this.options.botCallingEnabled ? "true" : "false",
                         files: this.options.botFilesEnabled ? "true" : "false",
                     }
                 });
@@ -653,9 +661,6 @@ export class GeneratorTeamsApp extends Generator {
                     AppInsights.defaultClient.trackEvent({ name: 'bot-existing' });
                 } else {
                     AppInsights.defaultClient.trackEvent({ name: 'bot-new' });
-                }
-                if (this.options.botCallingEnabled) {
-                    AppInsights.defaultClient.trackEvent({ name: 'botCalling' });
                 }
             }
             if (this.options.messageExtension) {

@@ -51,11 +51,6 @@ export class BotManifestUpdater implements IManifestUpdater {
             newbot.supportsFiles = true;
         }
 
-        if (options.botCallingEnabled) {
-            newbot.supportsCalling = true;
-            newbot.supportsVideo = true;
-        }
-
         (<any[]>manifest.bots).push(newbot);
     }
 }

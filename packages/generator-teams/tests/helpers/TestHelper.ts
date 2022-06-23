@@ -121,24 +121,32 @@ export const SCHEMA_18 = 'https://developer.microsoft.com/en-us/json-schemas/tea
 export const SCHEMA_19 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.9/MicrosoftTeams.schema.json';
 export const SCHEMA_110 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.10/MicrosoftTeams.schema.json';
 export const SCHEMA_111 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.11/MicrosoftTeams.schema.json';
+export const SCHEMA_112 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.12/MicrosoftTeams.schema.json';
+export const SCHEMA_113 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.13/MicrosoftTeams.schema.json';
 export const SCHEMA_DEVPREVIEW = 'https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json';
+export const SCHEMA_M365DEVPREVIEW = 'https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json';
 
-export const INTEGRATION_TEST_VERSIONS = ["v1.9", "v1.10"]; // only keep two versions, so we can stay under Github 360 minute rule
+export const INTEGRATION_TEST_VERSIONS = ["v1.13", "devPreview"]; // only keep two versions, so we can stay under Github 360 minute rule
 
 export const SCHEMAS: { [key: string]: string } = {
-  "v1.8": SCHEMA_18,
-  "v1.9": SCHEMA_19,
-  "v1.10": SCHEMA_110,
+  // "v1.8": SCHEMA_18,
+  // "v1.9": SCHEMA_19,
+  // "v1.10": SCHEMA_110,
   "v1.11": SCHEMA_111,
-  "devPreview": SCHEMA_DEVPREVIEW
+  "v1.12": SCHEMA_112,
+  "v1.13": SCHEMA_113,
+  "devPreview": SCHEMA_DEVPREVIEW,
+  "m365DevPreview": SCHEMA_M365DEVPREVIEW
 }
 
 // All the paths for upgrading
 const UPGRADE_PATHS: { [key: string]: string[] } = {
-  "v1.8": ["v1.9", "v1.10", "devPreview"],
-  "v1.9": ["v1.10", "v1.11", "devPreview"],
-  "v1.10": ["v1.11", "devPreview"],
-  "v1.11": ["devPreview"]
+  // "v1.8": ["v1.9", "v1.10", "devPreview"],
+  // "v1.9": ["v1.10", "v1.11", "devPreview"],
+  // "v1.10": ["v1.11", "devPreview"],
+  "v1.11": ["devPreview", "m365DevPreview"],
+  "devPreview": ["m365DevPreview"],
+  "m365DevPreview": ["devPreview"]
 }
 
 export enum TestTypes {
@@ -172,7 +180,7 @@ export function coreTests(manifestVersion: string, prompts: any, projectPath: st
     assert.jsonFileContent("package.json", { dependencies: { "react": "^16.8.6", "react-dom": "^16.8.6" } });
   });
   it("Should have correct React typings version", async () => {
-    assert.jsonFileContent("package.json", { devDependencies: { "@types/react": "16.8.10", "@types/react-dom": "16.8.3" } });
+    assert.jsonFileContent("package.json", { devDependencies: { "@types/react": "16.8.10", "@types/react-dom": "^16.9.7" } });
   });
   it("Should have a reference to Fluentui", async () => {
     assert.jsonFileContent("package.json", { dependencies: { "@fluentui/react-northstar": {} } });
@@ -211,6 +219,15 @@ export function coreTests(manifestVersion: string, prompts: any, projectPath: st
     it("Should have a coverage script", async () => {
       assert.jsonFileContent("package.json", { scripts: { "coverage": "jest --coverage" } });
     })
+    it("Should have correct Enzyme version", async () => {
+      assert.jsonFileContent("package.json", { devDependencies: { "@types/enzyme": "^3.9.1", "enzyme": "^3.9.0" } });
+    });
+    it("Should have correct Jest version", async () => {
+      assert.jsonFileContent("package.json", { devDependencies: { "@types/jest": "^27.5.0", "jest": "^28.1.0", "ts-jest": "^28.0.2" } });
+    });
+    it("Should have correct cheerio version", async () => {
+      assert.jsonFileContent("package.json", { devDependencies: { "cheerio": "1.0.0-rc.10" } });
+    });
   } else {
     it("Should not have unit test files", async () => {
       assert.noFile(TEST_FILES);
@@ -221,6 +238,15 @@ export function coreTests(manifestVersion: string, prompts: any, projectPath: st
     it("Should not have a coverage script", async () => {
       assert.noJsonFileContent("package.json", { scripts: { "coverage": "jest --coverage" } });
     })
+    it("Should not have Enzyme", async () => {
+      assert.noJsonFileContent("package.json", { devDependencies: { "@types/enzyme": "^3.9.1", "enzyme": "3.9.0" } });
+    });
+    it("Should not have Jest", async () => {
+      assert.noJsonFileContent("package.json", { devDependencies: { "@types/jest": "^27.5.0", "jest": "^28.1.0", "ts-jest": "^28.0.2" } });
+    });
+    it("Should not have cheerio", async () => {
+      assert.noJsonFileContent("package.json", { devDependencies: { "cheerio": "1.0.0-rc.10" } });
+    });
   }
 
   if (prompts.isFullScreen) {

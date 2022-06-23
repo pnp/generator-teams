@@ -11,21 +11,27 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
       with:
-        node-version: '14.x'
+        node-version: '16.x'
         registry-url: 'https://registry.npmjs.org'
     - run: npm install
       working-directory: packages/generator-teams
     - run: npm run build
       working-directory: packages/generator-teams
     - name: Publish release
-      if: "!contains(github.ref, 'preview')"
+      if: "!contains(github.ref, 'preview') && !contains(github.ref, 'next')"
       run: npm publish
       working-directory: packages/generator-teams
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     - name: Publish preview
-      if: contains(github.ref, 'preview')
+      if: "contains(github.ref, 'preview')"
       run: npm publish --tag preview
       working-directory: packages/generator-teams
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    - name: Publish next
+      if: "contains(github.ref, 'next')"
+      run: npm publish --tag next
+      working-directory: packages/generator-teams
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}        

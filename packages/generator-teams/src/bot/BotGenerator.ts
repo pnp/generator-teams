@@ -7,8 +7,8 @@ import * as lodash from 'lodash';
 import { GeneratorTeamsAppOptions } from './../app/GeneratorTeamsAppOptions';
 import { Yotilities } from './../app/Yotilities';
 import { ManifestGeneratorFactory } from '../app/manifestGeneration/ManifestGeneratorFactory';
-import EmptyGuid = require('../app/EmptyGuid');
-import validate = require('uuid-validate');
+import * as EmptyGuid from '../app/EmptyGuid';
+import * as validate from 'uuid-validate';
 import * as semver from "semver";
 import { ManifestVersions } from '../app/manifestGeneration/ManifestVersions';
 
@@ -114,19 +114,11 @@ export class BotGenerator extends Generator {
                         message: 'Do you want to support file upload to the bot?',
                         prefix: generatorPrefix,
                         default: false
-                    },
-                    {
-                        type: 'confirm',
-                        name: 'botCallingEnabled',
-                        message: 'Do you want to include bot calling support?',
-                        prefix: generatorPrefix,
-                        default: false
                     }
                 ]
             ).then((answers: any) => {
                 this.options.botid = answers.botid;
                 this.options.staticTab = answers.staticTab;
-                this.options.botCallingEnabled = answers.botCallingEnabled;
                 this.options.botFilesEnabled = answers.botFilesEnabled;
                 if (this.options.staticTab) {
                     this.options.staticTabTitle = answers.staticTabName;
@@ -154,7 +146,7 @@ export class BotGenerator extends Generator {
         // This should run if we add a bot or just a messaging extension
         if (this.options.bot || this.options.messagingExtensionBot) {
 
-            this.sourceRoot()
+            this.sourceRoot();
             let templateFiles = [];
 
             // only when we have a full bot implementation
@@ -185,10 +177,9 @@ export class BotGenerator extends Generator {
 
             if (this.options.botType != 'existing') {
                 templateFiles.push(
-                    "README-{botName}.md",
                     "src/server/{botName}/{botClassName}.ts",
                     "src/server/{botName}/cards/welcomeCard.json",
-                    "src/server/{botName}/cards/welcomeCard.ts"  
+                    "src/server/{botName}/cards/welcomeCard.ts"
                 );
                 // add additional files if we have a full bot implementation
                 if (this.options.bot) {
@@ -204,7 +195,7 @@ export class BotGenerator extends Generator {
                             "src/server/{botName}/dialogs/__tests__/HelpDialog.spec.ts"
                         );
                         Yotilities.addAdditionalDevDeps([
-                            ["botbuilder-testing", "4.14.1"]
+                            ["botbuilder-testing", "~4.16.0"]
                         ], this.fs);
                     };
 

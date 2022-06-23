@@ -5,12 +5,48 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## [*4.0.0*]- <*2022-06-23*>
+
+### Added
+
+* Added `1.13` manifest. This schema version supports extending Teams apps to other parts of the Microsoft 365 ecosystem. More info at https://aka.ms/extendteamsapps.
+* Added `1.12` manifest
+* Added `m365DevPreview` manifest
+* Added component documentation for configuration and scaffolding details
+
+### Changes
+
+* [Breaking] Upgraded Team JS SDK to version 2.0 (promises based)
+* Updated all outdated references
+* Manifest version 1.11 no longer selectable in scaffolding
+* Default manifest version is 1.13
+* Added a warning regarding Connectors not working with Teams JS SDK 2.0
+
+### Removed
+
+* Calling bot support removed
+* Viva Connections Tab scaffolding removed
+* Removed individual component README files (available in Yo Teams docs)
+* Integration testing is not done with Node 14.x
+
+### Fixes
+
+* Fixed issue with telemetry timeout at the end of scaffolding
+
 ## [*3.5.0*]- <*2021-11-18*>
 
 ### Changes
 
 * Updated telemetry, see https://github.com/pnp/generator-teams/blob/master/docs/docs/about/telemetry.md
 * Updated the bot template files to better reflect the official Bot Framework samples
+* Prohibited re-running the generator on version earlier than 4.0
+* Removed support for earlier manifest versions than 1.11
+
+## [*3.4.0*]- <*2021-10-28*>
+
+### Changes
+
 * Changed the `bot` template to better align with the official Bot Framework samples which now includes the following files:
     * `{botClassName}.ts` containing the bot declaration from `express-msteams-host` and the `onMembersAdded` method for handling and greeting new users with an Adaptive Card
     * `dialogBot.ts` containing the `onMessage` method which runs the root dialog(`mainDialog`)

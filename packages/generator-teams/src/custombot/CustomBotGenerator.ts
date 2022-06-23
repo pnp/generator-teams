@@ -49,7 +49,6 @@ export class CustomBotGenerator extends Generator {
     public writing() {
         if (this.options.customBot) {
             let templateFiles = [
-                "README-{customBotName}.md",
                 "src/server/{customBotName}/{customBotClassName}.ts"
             ];
 

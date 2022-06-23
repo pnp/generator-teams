@@ -1,5 +1,4 @@
 module.exports = {
-    name: "client",
     displayName: "client",
     rootDir: "./../../",
     globals: {
@@ -10,6 +9,7 @@ module.exports = {
             }
         }
     },
+    testEnvironment: "jsdom",
     preset: "ts-jest/presets/js-with-ts",
     snapshotSerializers: [
         "enzyme-to-json/serializer"

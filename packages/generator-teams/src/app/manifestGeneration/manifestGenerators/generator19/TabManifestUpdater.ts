@@ -30,38 +30,6 @@ export class TabManifestUpdater implements IManifestUpdater {
                 tab.supportedSharePointHosts = options.tabSharePointHosts;
             }
             (<any[]>manifest.configurableTabs).push(tab);
-        } else if (options.tabType == "viva") {
-            const tab: any = {
-                entityId: uuid(),
-                name: `Portals-${options.tabReactComponentName}`,
-                contentUrl: options.vivaUrl + "/_layouts/15/teamslogon.aspx?spfx=true&dest=" + options.vivaUrl + "?app=portals",
-                websiteUrl: options.vivaUrl,
-                searchUrl: options.vivaUrl + "/_layouts/15/search.aspx?q={searchQuery}",
-                scopes: [
-                    "personal"
-                ],
-                supportedPlatform: [
-                    "desktop"
-                ]
-            };
-            (<any[]>manifest.staticTabs).push(tab);
-
-            const domain = parse(options.vivaUrl as string);
-
-            manifest.webApplicationInfo = {
-                id: OFFICE_GUID,
-                resource: `https://${domain.hostname as string}`
-            };
-
-            manifest.validDomains.push(
-                domain.hostname as string,
-                "*.login.microsoftonline.com",
-                "*.sharepoint.com",
-                "*.sharepoint-df.com",
-                "spoppe-a.akamaihd.net",
-                "spoprod-a.akamaihd.net",
-                "resourceseng.blob.core.windows.net",
-                "msft.spoppe.com");
         }
         if (options.tabSSO && manifest.webApplicationInfo === undefined) {
             // only add SSO the first time

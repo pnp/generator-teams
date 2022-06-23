@@ -2,7 +2,7 @@
 
 [![MIT](https://img.shields.io/npm/l/generator-teams.svg)](https://github.com/PnP/generator-teams/blob/master/LICENSE.md)
 
-A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) Apps projects. **The most comprehensive and complete development toolkit for Microsoft Teams development**. Yo Teams allows you to build Microsoft Teams applications based on TypeScript and node.js on your terms, in your editor of choice, without any external or online dependencies.
+A [Yeoman Generator](http://yeoman.io/) for [Microsoft Teams](https://teams.microsoft.com) Apps projects. **The most comprehensive and complete development toolkit for Microsoft Teams development**. Yo Teams allows you to build Microsoft Teams applications based on TypeScript and node.js on your terms, in your editor of choice, without any external or online dependencies. Including support for extending Teams app sto other parts of the Microsoft 365 eco-system. More info at https://aka.ms/extendteamsapps.
 
 This generator is built and maintained by the community, for the community.
 
@@ -33,7 +33,7 @@ The `yoteams-deploy` documentation and source code is found under [packages/yote
 
 ## Documentation
 
-The documentation for the generator and the generated project can be found in the [generator-teams Github repository](https://github.com/pnp/generator-teams/tree/master/docs/docs).
+The documentation for the generator and the generated project can be found in the generator-teams [Github repository](https://github.com/pnp/generator-teams/tree/master/docs/docs) or in the [documentation website](https://pnp.github.io/generator-teams).
 
 ## More information
 
@@ -63,6 +63,7 @@ For more information on how Tabs and Bots can be used with Teams see the [Teams 
 * [Albert-Jan Schot](https://github.com/appieschot)
 * [Elia](https://github.com/twopill)
 * [Rick Van Rousselt](https://github.com/rickvanrousselt)
+* [Luise Freese](https://github.com/LuiseFreese)
 
 ## Be a part of the movement
 
