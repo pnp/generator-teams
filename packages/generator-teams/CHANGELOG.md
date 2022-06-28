@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [*4.0.1*]- <*2022-06-28*>
+
+### Fixes
+
+* Fixed an issue with tab configuration
+
+### Changes
+
+* Updated dependencies
+
 ## [*4.0.0*]- <*2022-06-23*>
 
 ### Added
