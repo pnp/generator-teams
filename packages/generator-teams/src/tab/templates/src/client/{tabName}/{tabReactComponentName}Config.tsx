@@ -21,7 +21,7 @@ export const <%=tabReactComponentName%>Config = () => {
             suggestedDisplayName: "<%=tabTitle%>",
             removeUrl: host + "/<%=tabName%>/remove.html?theme={theme}",
             entityId: entityId.current
-        }).then(()=> {
+        }).then(() => {
             saveEvent.notifySuccess();
         });
     };
