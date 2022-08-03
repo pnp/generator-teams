@@ -1,14 +1,14 @@
 # Telemetry
 
-The `generator-teams` package and the build packages (`yoteams-build-core` and `yoteams-deploy`) includes a telemetry feature that collectes usage data and exception information when the generator or build package tasks crashes. It's important that the `generator-teams` team understands how the generator and the build packages are uses so they can be improved. 
+The `generator-teams` package and the build packages (`yoteams-build-core` and `yoteams-deploy`) includes a telemetry feature that collects usage data and exception information when the generator or build package tasks crashes. It's important that the `generator-teams` team understands how the generator and the build packages are used so they can be improved. 
 
 ## Scope
 
 `generator-teams` *is collecting* telemetry about what configuration is used when scaffolding a new project. 
 
-The build packages *is collecting* telemetry about what tasks is being used when building or debugging a project.
+The build packages *is collecting* telemetry about what tasks are being used when building or debugging a project.
 
-Telemetry *isn't* collected from using the generated project or when the genereated project is running.
+Telemetry *isn't* collected from using the generated project or when the generated project is running.
 
 ## How to opt out
 
@@ -20,11 +20,11 @@ The telemetry feature doesn't collect personal data, such as usernames or email 
 
 The following data is collected:
 
-* Name and aruments of Gulp tasks used
+* Name and arguments of Gulp tasks used
 * Version of `generator-teams` used
 * Version of `yoteams-*` build and helper packages used
 * Client type and operating system
 * Location (city, province and country)
 * Configuration options (excluding any values) when scaffolding a project
 
-Protecting your privacy is important to us. If you suspect telemetry is collecting sensitive data or the data is being insecurely or inappropriately handled, file an issu in the [pnp/generator-teams](https://aka.ms/yoteams) repository.
+Protecting your privacy is important to us. If you suspect telemetry is collecting sensitive data or the data is being insecurely or inappropriately handled, file an issue in the [pnp/generator-teams](https://aka.ms/yoteams) repository.
