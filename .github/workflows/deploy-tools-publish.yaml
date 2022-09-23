@@ -22,16 +22,10 @@ jobs:
       run: npm publish
       working-directory: packages/yoteams-deploy
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
     - name: Publish preview
       if: contains(github.ref, 'preview')
       run: npm publish --tag preview
       working-directory: packages/yoteams-deploy
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-    - name: Publish next
-      if: contains(github.ref, 'next')
-      run: npm publish --tag next
-      working-directory: packages/yoteams-deploy
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}        
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}    
