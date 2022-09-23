@@ -18,7 +18,7 @@ jobs:
     - run: npm run build
       working-directory: packages/generator-teams
     - name: Publish release
-      if: "!contains(github.ref, 'preview') && !contains(github.ref, 'next')"
+      if: "!contains(github.ref, 'preview')"
       run: npm publish
       working-directory: packages/generator-teams
       env:
