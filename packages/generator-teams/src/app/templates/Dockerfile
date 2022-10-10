@@ -1,4 +1,4 @@
-FROM node:14 AS BUILD_IMAGE
+FROM node:16 AS BUILD_IMAGE
 
 RUN curl -sfL https://install.goreleaser.com/github.com/tj/node-prune.sh | bash -s -- -b /usr/local/bin
 
@@ -7,6 +7,8 @@ WORKDIR /app
 COPY . /app/
 
 # install 
+RUN npm install -g npm
+RUN npm install -g node-prune
 RUN npm install 
 
 # build
@@ -18,7 +20,7 @@ RUN npm prune --production
 # run node prune
 RUN /usr/local/bin/node-prune
 
-FROM node:14-alpine
+FROM node:16-alpine
 
 WORKDIR /app
 
