@@ -73,6 +73,6 @@ extra:
       link: 'https://aka.ms/sppnp'
   analytics:
     provider: google
-    property: UA-209929913-1
+    property: G-55J8T06W37
 repo_url: https://github.com/pnp/generator-teams
 edit_uri: tree/master/docs/docs
