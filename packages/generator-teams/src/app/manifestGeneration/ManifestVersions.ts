@@ -9,6 +9,8 @@ export enum ManifestVersions {
     v111 = "v1.11",
     v112 = "v1.12",
     v113 = "v1.13",
+    v114 = "v1.14",
+    v115 = "v1.15",
     devPreview = "devPreview",
     m365DevPreview = "m365DevPreview"
 }
