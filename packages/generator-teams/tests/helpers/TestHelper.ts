@@ -123,6 +123,8 @@ export const SCHEMA_110 = 'https://developer.microsoft.com/en-us/json-schemas/te
 export const SCHEMA_111 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.11/MicrosoftTeams.schema.json';
 export const SCHEMA_112 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.12/MicrosoftTeams.schema.json';
 export const SCHEMA_113 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.13/MicrosoftTeams.schema.json';
+export const SCHEMA_114 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.14/MicrosoftTeams.schema.json';
+export const SCHEMA_115 = 'https://developer.microsoft.com/en-us/json-schemas/teams/v1.15/MicrosoftTeams.schema.json';
 export const SCHEMA_DEVPREVIEW = 'https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json';
 export const SCHEMA_M365DEVPREVIEW = 'https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json';
 
@@ -135,6 +137,8 @@ export const SCHEMAS: { [key: string]: string } = {
   "v1.11": SCHEMA_111,
   "v1.12": SCHEMA_112,
   "v1.13": SCHEMA_113,
+  "v1.14": SCHEMA_114,
+  "v1.15": SCHEMA_115,
   "devPreview": SCHEMA_DEVPREVIEW,
   "m365DevPreview": SCHEMA_M365DEVPREVIEW
 }

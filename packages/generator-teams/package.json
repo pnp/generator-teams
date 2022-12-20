@@ -1,6 +1,6 @@
 {
   "name": "generator-teams",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "Yeoman generator for Microsoft Teams Apps, including support for extending Teams apps to other parts of the Microsoft 365 ecosystem.",
   "main": "generators/app/index.js",
   "scripts": {
@@ -44,6 +44,26 @@
       "name": "Wictor Wilén",
       "email": "wictor@wictorwilen.se",
       "url": "http://www.wictorwilen.se"
+    },
+    {
+      "name": "Rick Van Rousselt",
+      "email": "rick.vanrousselt@outlook.com",
+      "url": "http://www.rickvanrousselt.com"
+    },
+    {
+      "name": "Thomas Gölles",
+      "email": "thomy@outlook.at",
+      "url": "https://thomy.tech"
+    },
+    {
+      "name": "Albert-Jan Schot",
+      "email": "albert.jan.schot@digiwijs.nl",
+      "url": "https://www.cloudappie.nl/"
+    },
+    {
+      "name": "Stephan Bisser",
+      "email": "stephan@bisser.at",
+      "url": "https://bisser.io"
     }
   ],
   "contributors": [
@@ -55,8 +75,7 @@
     "Bauer, Stefan <https://github.com/StfBauer>",
     "Connell, Andrew <https://github.com/andrewconnell>",
     "Brennscheidt, Ralf <https://github.com/RalfBrennscheidt>",
-    "Bliss, Bill <https://github.com/billbliss>",
-    "Bisser, Stephan <https://github.com/stephanbisser>"
+    "Bliss, Bill <https://github.com/billbliss>"
   ],
   "license": "MIT",
   "devDependencies": {
