@@ -47,7 +47,6 @@ export const manifest = (gulp: GulpClient.Gulp, config: IBuildCoreConfig) => {
                 const definition = SCHEMAS.find((s: any) => {
                     return s.version === json.manifestVersion;
                 });
-
                 if (definition === undefined) {
                     if (argv["schema-validation"] === false) {
                         return true;

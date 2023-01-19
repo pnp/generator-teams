@@ -1,6 +1,6 @@
 {
   "name": "yoteams-build-core",
-  "version": "1.7.0",
+  "version": "1.9.0",
   "description": "Core build Gulp tasks for Yo Teams, Microsoft Teams Apps Generator (https://aka.ms/yoteams)",
   "main": "dist/index.js",
   "scripts": {
@@ -15,6 +15,26 @@
       "name": "Wictor Wilén",
       "email": "wictor@wictorwilen.se",
       "url": "http://www.wictorwilen.se"
+    },
+    {
+      "name": "Rick Van Rousselt",
+      "email": "rick.vanrousselt@outlook.com",
+      "url": "http://www.rickvanrousselt.com"
+    },
+    {
+      "name": "Thomas Gölles",
+      "email": "thomy@outlook.at",
+      "url": "https://thomy.tech"
+    },
+    {
+      "name": "Albert-Jan Schot",
+      "email": "albert.jan.schot@digiwijs.nl",
+      "url": "https://www.cloudappie.nl/"
+    },
+    {
+      "name": "Stephan Bisser",
+      "email": "stephan@bisser.at",
+      "url": "https://bisser.io"
     }
   ],
   "repository": {

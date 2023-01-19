@@ -10,6 +10,8 @@ import { ManifestGenerator as ManifestGenerator110 } from "./manifestGenerators/
 import { ManifestGenerator as ManifestGenerator111 } from "./manifestGenerators/generator111/ManifestGenerator";
 import { ManifestGenerator as ManifestGenerator112 } from "./manifestGenerators/generator112/ManifestGenerator";
 import { ManifestGenerator as ManifestGenerator113 } from "./manifestGenerators/generator113/ManifestGenerator";
+import { ManifestGenerator as ManifestGenerator114 } from "./manifestGenerators/generator114/ManifestGenerator";
+import { ManifestGenerator as ManifestGenerator115 } from "./manifestGenerators/generator115/ManifestGenerator";
 import { ManifestGenerator as ManifestGeneratorDevPreview } from "./manifestGenerators/generatorDevPreview/ManifestGenerator";
 import { ManifestGenerator as ManifestGeneratorM365DevPreview } from "./manifestGenerators/generatorM365DevPreview/ManifestGenerator";
 import { BaseManifestGenerator } from "./BaseManifestGenerator";
@@ -61,6 +63,22 @@ export class ManifestGeneratorFactory {
             comment: "With support for extending Teams apps to other parts of the Microsoft 365 ecosystem"
         },
         {
+            manifestVersion: ManifestVersions.v114,
+            schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.14/MicrosoftTeams.schema.json",
+            manifestValue: "1.14",
+            default: true,
+            hide: false,
+            comment: "With support for extending Teams apps to other parts of the Microsoft 365 ecosystem"
+        },
+        {
+            manifestVersion: ManifestVersions.v115,
+            schemaUrl: "https://developer.microsoft.com/en-us/json-schemas/teams/v1.15/MicrosoftTeams.schema.json",
+            manifestValue: "1.15",
+            default: true,
+            hide: false,
+            comment: "With support for extending Teams apps to other parts of the Microsoft 365 ecosystem"
+        },
+        {
             manifestVersion: ManifestVersions.devPreview,
             schemaUrl: "https://raw.githubusercontent.com/OfficeDev/microsoft-teams-app-schema/preview/DevPreview/MicrosoftTeams.schema.json",
             manifestValue: "devPreview",
@@ -107,6 +125,10 @@ export class ManifestGeneratorFactory {
             return new ManifestGenerator112();
         } else if (manifestVersion == ManifestVersions.v113) {
             return new ManifestGenerator113();
+        } else if (manifestVersion == ManifestVersions.v114) {
+            return new ManifestGenerator114();
+        } else if (manifestVersion == ManifestVersions.v115) {
+            return new ManifestGenerator115();
         } else if (manifestVersion == ManifestVersions.devPreview) {
             return new ManifestGeneratorDevPreview();
         } else if (manifestVersion == ManifestVersions.m365DevPreview) {
