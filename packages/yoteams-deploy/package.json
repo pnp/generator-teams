@@ -1,6 +1,6 @@
 {
   "name": "yoteams-deploy",
-  "version": "1.4.0",
+  "version": "1.4.0-preview",
   "description": "Deployment Gulp tasks for Yo Teams, Microsoft Teams Apps Generator (https://aka.ms/yoteams)",
   "main": "dist/index.js",
   "scripts": {
