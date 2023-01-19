@@ -43,7 +43,7 @@ The solution can be built using the Gulp task `build` and hosted on a local web 
 
 ## yo teams Demo
 
-![Demo](https://github.com/pnp/generator-teams/blob/master/docs/assets/demo.gif)
+![Demo](https://github.com/pnp/generator-teams/blob/main/docs/assets/demo.gif?raw=true)
 
 ## Install
 
