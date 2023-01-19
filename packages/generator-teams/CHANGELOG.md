@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*4.1.0-preview.1*]- <*2023-01-19*>
+
+### Changes
+
+* added the possiblity to scaffold manifest version 1.14 & 1.15
 
 ## [*4.0.1*]- <*2022-06-28*>
 
