@@ -32,6 +32,7 @@ nav:
     - 'Why this generator': 'about/why-generator.md'
     - 'Telemetry': 'about/telemetry.md'
     - 'License': 'about/license.md'
+    - 'Hall of Fame': 'about/halloffame.md'
     
 theme:
   name: 'material'
