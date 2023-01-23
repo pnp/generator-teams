@@ -1,4 +1,9 @@
-# Microsoft Teams App Project Generator - #YoTeams
+<h1 align="center">
+  <a href="(https://pnp.github.io/generator-teams/">
+    <img alt="yo Teams" src="./docs/assets/pnp-teams-generator-ocean.svg" height="78">
+  </a>
+  <br>#yoTeams - Teams App Generator<br>
+</h1>
 
 [![MIT](https://img.shields.io/npm/l/generator-teams.svg)](https://github.com/PnP/generator-teams/blob/master/LICENSE.md)
 
@@ -38,32 +43,6 @@ The documentation for the generator and the generated project can be found in th
 ## More information
 
 For more information on how Tabs and Bots can be used with Teams see the [Teams Developer Documentation](https://developer.microsoft.com/en-us/microsoft-teams?utm_source=yoteams)
-
-## Contributors & Hall of fame
-
-* [Wictor Wilén](https://github.com/wictorwilen) - Original author and coordinator
-* [Bill Bliss](https://github.com/billbliss)
-* [Richard DiZerega](https://github.com/richdizz)
-* [Elaine van Bergen](https://github.com/laneyvb)
-* [Daniel Laskewitz](https://github.com/Laskewitz)
-* [Paul Schaeflein](https://github.com/pschaeflein)
-* [Cagdas Davulcu](https://github.com/cagdasdavulcu)
-* [Stefan Bauer](https://github.com/StfBauer)
-* [Andrew Connell](https://github.com/andrewconnell)
-* [Ralf Brennscheidt](https://github.com/RalfBrennscheidt)
-* [Felipe Plets](https://github.com/felipeplets)
-* [Brendan Andrade](https://github.com/BrendanAndrade)
-* [Jason Merino](https://github.com/jasonmerino)
-* [Orta Therox](https://github.com/orta)
-* [Oleksandr Fediashov](https://github.com/layershifter)
-* [Paolo Pialorsi](https://github.com/PaoloPia)
-* [Nanddeep Nachan](https://github.com/nanddeepn)
-* [Sergei Sergeev](https://github.com/s-KaiNet)
-* [Stephan Bisser](https://github.com/stephanbisser)
-* [Albert-Jan Schot](https://github.com/appieschot)
-* [Elia](https://github.com/twopill)
-* [Rick Van Rousselt](https://github.com/rickvanrousselt)
-* [Luise Freese](https://github.com/LuiseFreese)
 
 ## Be a part of the movement
 
