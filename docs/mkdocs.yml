@@ -36,7 +36,7 @@ nav:
     
 theme:
   name: 'material'
-  logo: images/parker-teams-300.png
+  logo: images/pnp-teams-generator-white.svg
   favicon: images/favicon.ico
   icon:
     repo: fontawesome/brands/git-alt
