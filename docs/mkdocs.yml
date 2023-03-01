@@ -32,10 +32,11 @@ nav:
     - 'Why this generator': 'about/why-generator.md'
     - 'Telemetry': 'about/telemetry.md'
     - 'License': 'about/license.md'
+    - 'Hall of Fame': 'about/halloffame.md'
     
 theme:
   name: 'material'
-  logo: images/parker-teams-300.png
+  logo: images/pnp-teams-generator-white.svg
   favicon: images/favicon.ico
   icon:
     repo: fontawesome/brands/git-alt
