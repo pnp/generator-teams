@@ -5,11 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [*4.1.0-preview.1*]- <*2023-01-19*>
+## [*4.1.0*]- <*2023-03-01*>
 
 ### Changes
 
 * added the possiblity to scaffold manifest version 1.14 & 1.15
+* Updated packages to new version
+* Referencing new yoteams-build-core version & new yo-teams-deploy version
 
 ## [*4.0.1*]- <*2022-06-28*>
 
