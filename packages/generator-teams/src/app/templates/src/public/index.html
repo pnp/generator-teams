@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xml:lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta content="text/html; charset=utf-8" />
     <title>
         <%= title %>
     </title>
@@ -15,7 +15,7 @@
         }({
             instrumentationKey: "{{APPINSIGHTS_INSTRUMENTATIONKEY}}"
         });
-      
+
         window.appInsights = appInsights, appInsights.queue && 0 === appInsights.queue.length && appInsights.trackPageView();
       </script><% } %>
 </head>
@@ -34,7 +34,7 @@
     <article class="l-article">
         <p><%= description %></p>
     <% if (botType == 'botframework') { %>
-        <p>Add the bot to Microsoft Teams: 
+        <p>Add the bot to Microsoft Teams:
             <a href='https://teams.microsoft.com/l/chat/0/0?users=28:{{<%= botidEnv %>}}'><img alt="Add bot to Teams" height="30" width="113" src='https://dev.botframework.com/Client/Images/Add-To-MSTeams-Buttons.png'></a></p>
     <% } %>
     </article>
