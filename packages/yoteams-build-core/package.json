@@ -1,6 +1,6 @@
 {
   "name": "yoteams-build-core",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "Core build Gulp tasks for Yo Teams, Microsoft Teams Apps Generator (https://aka.ms/yoteams)",
   "main": "dist/index.js",
   "scripts": {
