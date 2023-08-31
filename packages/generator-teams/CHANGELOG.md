@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [*4.1.1*]- <*2023-08-31*>
+
+### Changes
+
+* added the possiblity to scaffold manifest version 1.15
+* Updated packages to new version
+
+### Fixes
+
+* Added the HTML lang="en" xml:lang="en" to be compliant HTML generated
+
 ## [*4.1.0*]- <*2023-03-01*>
 
 ### Changes
