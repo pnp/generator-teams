@@ -47,7 +47,7 @@
   "homepage": "https://github.com/pnp/generator-teams/tree/master/packages/yoteams-deploy",
   "license": "MIT",
   "dependencies": {
-    "@pnp/cli-microsoft365": "^5.9.0",
+    "@pnp/cli-microsoft365": "^7.1.0",
     "applicationinsights": "^2.3.1",
     "chalk": "^4.1.2",
     "fancy-log": "^2.0.0",
