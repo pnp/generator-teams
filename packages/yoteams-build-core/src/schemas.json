@@ -58,5 +58,13 @@
     {
         "version": "1.15",
         "schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.15/MicrosoftTeams.schema.json"
+    },
+    {
+        "version": "1.16",
+        "schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.16/MicrosoftTeams.schema.json"
+    },
+    {
+        "version": "1.17",
+        "schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.17/MicrosoftTeams.schema.json"
     }
 ]
